@@ -77,7 +77,7 @@ extension SDKSynchronizerClient: DependencyKey {
             stop: { synchronizer.stop() },
             isSyncing: { synchronizer.latestState.syncStatus.isSyncing },
             isInitialized: { synchronizer.latestState.syncStatus != SyncStatus.unprepared },
-            importAccount: { ufvk, seedFingerprint, zip32AccountIndex, purpose, name, keySource in
+            importAccount: { ufvk, seedFingerprint, zip32AccountIndex, purpose, name, keySource, _ in
                 try await synchronizer.importAccount(
                     ufvk: ufvk,
                     seedFingerprint: seedFingerprint,

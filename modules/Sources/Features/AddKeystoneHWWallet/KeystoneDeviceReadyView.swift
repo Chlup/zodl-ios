@@ -47,7 +47,7 @@ public struct KeystoneDeviceReadyView: View {
                 ZashiButton(
                     String(localizable: .keystoneAddHWWalletConnectNew)
                 ) {
-                    store.send(.unlockTapped)
+                    store.send(.unlockTapped(nil))
                 }
                 .padding(.bottom, 24)
             }

@@ -91,7 +91,7 @@ extension SDKSynchronizerClient {
         stop: { },
         isSyncing: { false },
         isInitialized: { false },
-        importAccount: { _, _, _, _, _, _ in nil },
+        importAccount: { _, _, _, _, _, _, _ in nil },
         deleteAccount: { _ in },
         rewind: { _ in Empty<Void, Error>().eraseToAnyPublisher() },
         getAllTransactions: { _ in [] },
@@ -148,7 +148,7 @@ extension SDKSynchronizerClient {
         stop: @escaping () -> Void = { },
         isSyncing: @escaping () -> Bool = { false },
         isInitialized: @escaping () -> Bool = { false },
-        importAccount: @escaping (String, [UInt8]?, Zip32AccountIndex?, AccountPurpose, String, String?) async throws -> AccountUUID? = { _, _, _, _, _, _ in nil },
+    importAccount: @escaping (String, [UInt8]?, Zip32AccountIndex?, AccountPurpose, String, String?, BlockHeight?) async throws -> AccountUUID? = { _, _, _, _, _, _, _ in nil },
         deleteAccount: @escaping (AccountUUID) async throws -> Void = { _ in },
         rewind: @escaping (RewindPolicy) -> AnyPublisher<Void, Error> = { _ in return Empty<Void, Error>().eraseToAnyPublisher() },
         getAllTransactions: @escaping (AccountUUID?) -> IdentifiedArrayOf<TransactionState> = { _ in

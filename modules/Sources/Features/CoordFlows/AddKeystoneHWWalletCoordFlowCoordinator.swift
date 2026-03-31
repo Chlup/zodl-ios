@@ -92,7 +92,7 @@ extension AddKeystoneHWWalletCoordFlow {
                     if case .keystoneDeviceReady = state.path[id: $0] { return true }
                     return false
                 }) {
-                    return .send(.path(.element(id: id, action: .keystoneDeviceReady(.unlockTapped))))
+                    return .send(.path(.element(id: id, action: .keystoneDeviceReady(.unlockTapped(state.birthday)))))
                 }
                 return .none
 
@@ -108,7 +108,7 @@ extension AddKeystoneHWWalletCoordFlow {
                     if case .keystoneDeviceReady = state.path[id: $0] { return true }
                     return false
                 }) {
-                    return .send(.path(.element(id: id, action: .keystoneDeviceReady(.unlockTapped))))
+                    return .send(.path(.element(id: id, action: .keystoneDeviceReady(.unlockTapped(state.birthday)))))
                 }
                 return .none
 
