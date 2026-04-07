@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 enum RecoveryPhraseError: Error {
     /// This error is thrown then the Recovery Phrase can't be generated

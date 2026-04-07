@@ -6,7 +6,7 @@
 //
 
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 extension DatabaseFilesClient: DependencyKey {
     static let liveValue = DatabaseFilesClient.live()

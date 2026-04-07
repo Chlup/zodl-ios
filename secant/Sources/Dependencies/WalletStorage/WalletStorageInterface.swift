@@ -6,8 +6,8 @@
 //
 
 import ComposableArchitecture
-import MnemonicSwift
-import ZcashLightClientKit
+@preconcurrency import MnemonicSwift
+@preconcurrency import ZcashLightClientKit
 
 extension DependencyValues {
     var walletStorage: WalletStorageClient {

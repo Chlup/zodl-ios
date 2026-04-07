@@ -6,10 +6,10 @@
 //
 
 import SwiftUI
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 import ComposableArchitecture
 import XCTestDynamicOverlay
-import Combine
+@preconcurrency import Combine
 
 struct ZatoshiText: View {
     let balance: Zatoshi

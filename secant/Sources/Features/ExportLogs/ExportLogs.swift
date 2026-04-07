@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 // MARK: Alerts
 

@@ -7,7 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 struct ReceiveView: View {
     @Environment(\.colorScheme) var colorScheme

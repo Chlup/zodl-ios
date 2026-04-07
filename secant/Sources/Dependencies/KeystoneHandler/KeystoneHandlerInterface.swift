@@ -6,7 +6,7 @@
 //
 
 import ComposableArchitecture
-import KeystoneSDK
+@preconcurrency import KeystoneSDK
 
 extension DependencyValues {
     var keystoneHandler: KeystoneHandlerClient {

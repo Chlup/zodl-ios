@@ -6,8 +6,8 @@
 //
 
 import XCTest
-import MnemonicSwift
-import ZcashLightClientKit
+@preconcurrency import MnemonicSwift
+@preconcurrency import ZcashLightClientKit
 @testable import secant_testnet
 
 class SensitiveDataTests: XCTestCase {

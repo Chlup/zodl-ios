@@ -5,10 +5,10 @@
 //  Created by Michal Fousek on 06.03.2023.
 //
 
-import Combine
+@preconcurrency import Combine
 import ComposableArchitecture
 import Foundation
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 @Reducer
 struct ExportLogs {

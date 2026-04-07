@@ -1,6 +1,6 @@
 import SwiftUI
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 struct TransactionListView: View {
     let store: StoreOf<TransactionList>

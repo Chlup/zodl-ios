@@ -7,7 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
-import MnemonicSwift
+@preconcurrency import MnemonicSwift
 
 struct RecoveryPhraseSecurityView: View {
     @Environment(\.colorScheme) private var colorScheme

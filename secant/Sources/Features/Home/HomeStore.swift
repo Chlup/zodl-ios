@@ -1,8 +1,8 @@
 import UIKit
 import SwiftUI
-import AVFoundation
+@preconcurrency import AVFoundation
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 @Reducer
 struct Home {

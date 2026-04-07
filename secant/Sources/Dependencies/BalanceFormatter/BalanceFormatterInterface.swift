@@ -7,7 +7,7 @@
 
 import Foundation
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 extension DependencyValues {
     var balanceFormatter: BalanceFormatterClient {

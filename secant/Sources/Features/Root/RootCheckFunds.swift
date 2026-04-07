@@ -5,10 +5,10 @@
 //  Created by Lukáš Korba on 03.11.2025.
 //
 
-import Combine
+@preconcurrency import Combine
 import ComposableArchitecture
 import Foundation
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 extension Root {
     func checkFundsReduce() -> Reduce<Root.State, Root.Action> {

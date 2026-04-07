@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 struct URIParser {
     enum URIParserError: Error { }

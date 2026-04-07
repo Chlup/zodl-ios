@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 import XCTestDynamicOverlay
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 extension DerivationToolClient: TestDependencyKey {
     static let testValue = Self(

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 // Both will be defined in the SDK
 enum CurrencyISO4217: String, CaseIterable, Equatable {

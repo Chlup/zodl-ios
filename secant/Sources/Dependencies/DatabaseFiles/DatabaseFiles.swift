@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 struct DatabaseFiles {
     enum DatabaseFilesError: Error {

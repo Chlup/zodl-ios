@@ -7,7 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 struct PreSendingFailureView: View {
     @Perception.Bindable var store: StoreOf<SendConfirmation>

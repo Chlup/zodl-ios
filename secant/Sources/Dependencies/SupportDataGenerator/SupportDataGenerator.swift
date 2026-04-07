@@ -5,7 +5,7 @@
 //  Created by Michal Fousek on 28.02.2023.
 //
 
-import AVFoundation
+@preconcurrency import AVFoundation
 import Foundation
 import LocalAuthentication
 import UIKit

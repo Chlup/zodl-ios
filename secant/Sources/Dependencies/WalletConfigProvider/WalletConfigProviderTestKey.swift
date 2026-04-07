@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 import XCTestDynamicOverlay
-import Combine
+@preconcurrency import Combine
 
 extension WalletConfigProviderClient: TestDependencyKey {
     static let testValue = Self(

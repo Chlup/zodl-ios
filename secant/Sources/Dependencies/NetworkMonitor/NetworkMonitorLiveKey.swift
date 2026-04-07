@@ -7,7 +7,7 @@
 
 import Foundation
 import Network
-import Combine
+@preconcurrency import Combine
 import ComposableArchitecture
 
 extension NetworkMonitorClient: DependencyKey {

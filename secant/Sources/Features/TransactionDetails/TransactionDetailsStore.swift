@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 import SwiftUI
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 import MessageUI
 
 @Reducer

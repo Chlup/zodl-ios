@@ -7,9 +7,9 @@
 
 import SwiftUI
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
-import KeystoneSDK
+@preconcurrency import KeystoneSDK
 import URKit
 
 struct SignWithKeystoneView: View {

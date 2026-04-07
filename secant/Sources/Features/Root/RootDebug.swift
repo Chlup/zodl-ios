@@ -5,10 +5,10 @@
 //  Created by Lukáš Korba on 02.03.2023.
 //
 
-import Combine
+@preconcurrency import Combine
 import ComposableArchitecture
 import Foundation
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 /// In this file is a collection of helpers that control all state and action related operations
 /// for the `Root` with a connection to the UI navigation.
