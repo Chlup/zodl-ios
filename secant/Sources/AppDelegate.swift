@@ -19,8 +19,9 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     private let bcgSchedulerTaskId = "co.electriccoin.scheduler"
     private var monitor: NWPathMonitor?
     private let workerQueue = DispatchQueue(label: "Monitor")
-    private var isConnectedToWifi = false
-    
+    // `nonisolated(unsafe)` is ok in this case. In worst case code which reads this variables gets slightly stale value
+    private nonisolated(unsafe) var isConnectedToWifi = false
+
     let rootStore = StoreOf<Root>(
         initialState: .initial
     ) {
