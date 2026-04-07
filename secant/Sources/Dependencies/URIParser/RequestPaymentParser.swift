@@ -7,7 +7,7 @@
 
 import Foundation
 import ZcashPaymentURI
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 struct RequestPaymentParser {
     let network: NetworkType 

@@ -8,7 +8,7 @@
 import Foundation
 import ComposableArchitecture
 import UIKit
-import Combine
+@preconcurrency import Combine
 
 extension ShieldingProcessorClient: DependencyKey {
     static let liveValue: ShieldingProcessorClient = Self.live()

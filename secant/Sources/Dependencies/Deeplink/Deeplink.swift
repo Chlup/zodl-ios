@@ -8,7 +8,7 @@
 import Foundation
 import URLRouting
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 struct Deeplink {
     enum Destination: Equatable {

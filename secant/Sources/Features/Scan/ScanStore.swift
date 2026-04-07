@@ -10,9 +10,9 @@ import CoreImage
 import ComposableArchitecture
 import Foundation
 
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 import ZcashPaymentURI
-import KeystoneSDK
+@preconcurrency import KeystoneSDK
 
 @Reducer
 struct Scan {

@@ -7,7 +7,7 @@
 
 import XCTest
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 @testable import secant_testnet
 
 // swiftlint:disable type_body_length

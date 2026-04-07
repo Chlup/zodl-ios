@@ -5,10 +5,10 @@
 //  Created by Lukáš Korba on 16.06.2022.
 //
 
-import Combine
+@preconcurrency import Combine
 import XCTest
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 @testable import secant_testnet
 
 @MainActor

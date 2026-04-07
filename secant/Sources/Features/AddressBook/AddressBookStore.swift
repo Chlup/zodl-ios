@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import SwiftUI
 
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 @Reducer
 struct AddressBook {

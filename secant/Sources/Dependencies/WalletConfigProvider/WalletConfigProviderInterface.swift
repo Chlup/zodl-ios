@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
-import Combine
+@preconcurrency import Combine
 
 extension DependencyValues {
     var walletConfigProvider: WalletConfigProviderClient {

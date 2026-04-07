@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import KeystoneSDK
+@preconcurrency import KeystoneSDK
 import URKit
 import UIKit
 

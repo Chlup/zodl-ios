@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 /// In this file is a collection of helpers that control all state and action related operations
 /// for the `Root` with a connection to the app/wallet initialization and erasure of the wallet.

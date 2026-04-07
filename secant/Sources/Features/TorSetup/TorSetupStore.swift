@@ -6,7 +6,7 @@
 //
 
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 @Reducer
 struct TorSetup {

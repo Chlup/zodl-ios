@@ -6,7 +6,7 @@
 //
 
 import ComposableArchitecture
-import AVFoundation
+@preconcurrency import AVFoundation
 
 extension DependencyValues {
     var audioServices: AudioServicesClient {

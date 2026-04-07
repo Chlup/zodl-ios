@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 struct BalanceWithIconView: View {
     let balance: Zatoshi

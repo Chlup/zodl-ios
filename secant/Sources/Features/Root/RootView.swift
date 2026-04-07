@@ -1,7 +1,7 @@
 import SwiftUI
 import StoreKit
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 struct RootView: View {
     @Environment(\.scenePhase) var scenePhase

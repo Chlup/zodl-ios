@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftUI
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 /// Representation of the transaction on the SDK side, used as a bridge to the TCA wallet side. 
 struct TransactionState: Equatable, Identifiable {

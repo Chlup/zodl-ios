@@ -5,7 +5,7 @@
 //  Created by Lukáš Korba on 24.03.2024.
 //
 
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 extension ZcashError {
     var detailedMessage: String {

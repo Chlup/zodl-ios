@@ -7,9 +7,9 @@
 
 import Foundation
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
-import Combine
+@preconcurrency import Combine
 
 import CryptoKit
 

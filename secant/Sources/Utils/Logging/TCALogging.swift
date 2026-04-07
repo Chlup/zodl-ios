@@ -7,7 +7,7 @@
 
 import Foundation
 import os
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 extension OSLogger {
     static let live = OSLogger(logLevel: .debug, category: LoggerConstants.tcaLogs)
