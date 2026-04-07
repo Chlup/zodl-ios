@@ -6,7 +6,7 @@
 //
 
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 import XCTestDynamicOverlay
 
 extension ZcashSDKEnvironment: TestDependencyKey {

@@ -6,7 +6,7 @@
 //
 
 import ComposableArchitecture
-import KeystoneSDK
+@preconcurrency import KeystoneSDK
 
 class KeystoneSDKWrapper {
     let keystoneSDK = KeystoneSDK()

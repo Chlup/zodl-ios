@@ -6,10 +6,10 @@
 //
 
 import Foundation
-import Combine
+@preconcurrency import Combine
 
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 class ExchangeRateProvider {
     enum Constants {

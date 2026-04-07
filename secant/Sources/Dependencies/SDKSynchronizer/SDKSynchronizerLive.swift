@@ -6,10 +6,10 @@
 //
 
 import Foundation
-import Combine
+@preconcurrency import Combine
 import ComposableArchitecture
-import ZcashLightClientKit
-import KeystoneSDK
+@preconcurrency import ZcashLightClientKit
+@preconcurrency import KeystoneSDK
 
 extension SDKSynchronizerClient: DependencyKey {
     static let liveValue: SDKSynchronizerClient = Self.live()

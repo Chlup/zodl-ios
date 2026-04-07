@@ -7,8 +7,8 @@
 
 import Foundation
 import ComposableArchitecture
-import ZcashLightClientKit
-import Combine
+@preconcurrency import ZcashLightClientKit
+@preconcurrency import Combine
 
 extension DependencyValues {
     var shieldingProcessor: ShieldingProcessorClient {

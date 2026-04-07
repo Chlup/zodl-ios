@@ -5,10 +5,10 @@
 //  Created by Lukáš Korba on 15.11.2022.
 //
 
-import Combine
+@preconcurrency import Combine
 import ComposableArchitecture
 import Foundation
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 import URKit
 
 extension HTTPURLResponse {

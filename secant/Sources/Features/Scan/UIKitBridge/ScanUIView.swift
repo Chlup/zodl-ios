@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-import AVFoundation
+@preconcurrency import AVFoundation
 
 class ScanUIView: UIView {
     var captureSession: AVCaptureSession?

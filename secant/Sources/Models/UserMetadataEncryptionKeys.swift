@@ -7,7 +7,7 @@
 
 import Foundation
 import CryptoKit
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 /// Representation of the user metadata encryption keys
 struct UserMetadataEncryptionKeys: Codable, Equatable {

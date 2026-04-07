@@ -1,5 +1,5 @@
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 import Foundation
 import BackgroundTasks
 import Flexa

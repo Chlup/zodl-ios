@@ -9,7 +9,7 @@ import ComposableArchitecture
 
 import Foundation
 import CryptoKit
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 extension AddressBookClient {
     static func serializeContacts(_ abContacts: AddressBookContacts) -> Data {

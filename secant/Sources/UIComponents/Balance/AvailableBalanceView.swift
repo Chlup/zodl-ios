@@ -8,7 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 struct AvailableBalanceView: View {
     @Environment(\.colorScheme) var colorScheme

@@ -7,7 +7,7 @@
 
 import XCTest
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 import SwiftUI
 @testable import secant_testnet
 

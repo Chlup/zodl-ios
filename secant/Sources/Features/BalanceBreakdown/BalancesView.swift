@@ -7,8 +7,8 @@
 
 import SwiftUI
 import ComposableArchitecture
-import ZcashLightClientKit
-import Combine
+@preconcurrency import ZcashLightClientKit
+@preconcurrency import Combine
 
 struct BalancesView: View {
     @Environment(\.colorScheme) private var colorScheme

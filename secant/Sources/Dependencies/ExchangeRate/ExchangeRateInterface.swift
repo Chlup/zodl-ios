@@ -6,9 +6,9 @@
 //
 
 import ComposableArchitecture
-import Combine
+@preconcurrency import Combine
 
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 extension DependencyValues {
     var exchangeRate: ExchangeRateClient {

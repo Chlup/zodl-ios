@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import Combine
+@preconcurrency import Combine
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 import URKit
 
 extension DependencyValues {

@@ -5,10 +5,10 @@
 //  Created by Lukáš Korba on 31.01.2025.
 //
 
-import Combine
+@preconcurrency import Combine
 import ComposableArchitecture
 import Foundation
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 extension Root {
     func addressBookReduce() -> Reduce<Root.State, Root.Action> {

@@ -7,8 +7,8 @@
 
 import SwiftUI
 import ComposableArchitecture
-import KeystoneSDK
-import ZcashLightClientKit
+@preconcurrency import KeystoneSDK
+@preconcurrency import ZcashLightClientKit
 
 @Reducer
 struct AddKeystoneHWWallet {

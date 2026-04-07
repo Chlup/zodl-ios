@@ -7,7 +7,7 @@
 
 import Foundation
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 struct Near1Click {
     enum Constants {

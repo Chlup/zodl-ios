@@ -6,7 +6,7 @@
 //
 
 import ComposableArchitecture
-import MnemonicSwift
+@preconcurrency import MnemonicSwift
 
 extension MnemonicClient: DependencyKey {
     static let liveValue = Self(

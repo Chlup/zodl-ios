@@ -5,7 +5,7 @@
 //  Created by Lukáš Korba on 11.11.2022.
 //
 
-import AVFoundation
+@preconcurrency import AVFoundation
 import ComposableArchitecture
 
 extension CaptureDeviceClient: DependencyKey {

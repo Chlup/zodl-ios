@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Combine
+@preconcurrency import Combine
 
 struct WalletConfigProvider {
     /// Objects that fetches flags configuration from some source. It can be fetched from user defaults or some backend API for example. It depends

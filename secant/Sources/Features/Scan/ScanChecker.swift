@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import ZcashPaymentURI
 
-import KeystoneSDK
+@preconcurrency import KeystoneSDK
 
 protocol ScanChecker: Equatable {
     var id: Int { get }

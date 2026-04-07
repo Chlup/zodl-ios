@@ -7,7 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
-import Combine
+@preconcurrency import Combine
 
 struct HiddenIfSetModifier: ViewModifier {
     @Shared(.appStorage(.sensitiveContent)) var isSensitiveContentHidden = false
