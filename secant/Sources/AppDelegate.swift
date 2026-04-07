@@ -9,6 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 @preconcurrency import ZcashLightClientKit
 import Network
+import Atomics
 
 import BackgroundTasks
 import UserNotifications
@@ -19,8 +20,8 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     private let bcgSchedulerTaskId = "co.electriccoin.scheduler"
     private var monitor: NWPathMonitor?
     private let workerQueue = DispatchQueue(label: "Monitor")
-    private var isConnectedToWifi = false
-    
+    private let isConnectedToWifi = ManagedAtomic(false)
+
     let rootStore = StoreOf<Root>(
         initialState: .initial
     ) {
@@ -62,11 +63,7 @@ extension AppDelegate {
         // We require the background task to run when connected to the power and wifi
         monitor = NWPathMonitor(requiredInterfaceType: .wifi)
         monitor?.pathUpdateHandler = { [weak self] path in
-            if path.status == .satisfied {
-                self?.isConnectedToWifi = true
-            } else {
-                self?.isConnectedToWifi = false
-            }
+            self?.isConnectedToWifi.store(path.status == .satisfied, ordering: .relaxed)
             LoggerProxy.event("BGTask isConnectedToWifi \(path.status == .satisfied)")
         }
         monitor?.start(queue: workerQueue)
@@ -114,7 +111,7 @@ extension AppDelegate {
         scheduleBackgroundTask()
         scheduleSchedulerBackgroundTask()
 
-        guard isConnectedToWifi else {
+        guard isConnectedToWifi.load(ordering: .relaxed) else {
             LoggerProxy.event("BGTask startBackgroundTask: not connected to the wifi")
             task.setTaskCompleted(success: false)
             return
