@@ -34,11 +34,13 @@ public struct WalletBirthdayView: View {
                     .zFont(.semiBold, size: 24, style: Design.Text.primary)
                     .padding(.top, 40)
                     .padding(.bottom, 8)
-                
+
+                // TODO: loc
                 Text(
                     localizable:
                         store.isKeystoneFlow
-                    ? .addHWWalletBirthdayInfo
+//                    ? .addHWWalletBirthdayInfo
+                    ? .restoreWalletBirthdayInfo
                     : .restoreWalletBirthdayInfo
                 )
                 .zFont(size: 14, style: Design.Text.primary)
