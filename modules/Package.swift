@@ -25,7 +25,11 @@ let package = Package(
         .package(url: "https://github.com/KeystoneHQ/keystone-sdk-ios/", "0.8.6"..<"0.9.0"),
         .package(url: "https://github.com/mgriebling/BigDecimal.git", exact: "2.2.3"),
         .package(url: "https://github.com/mgriebling/UInt128.git", exact: "3.1.5"),
-        .package(url: "https://github.com/liamnichols/xcstrings-tool-plugin", from: "1.2.0")
+        .package(url: "https://github.com/liamnichols/xcstrings-tool-plugin", from: "1.2.0"),
+        // This is pinned to specific versions because in newer versions it contains `SwiftSortedCollections` target. And depedencies of keystone SDK
+        // (specifically BCSwiftDCBOR) is using `wolfmcnally/SwiftSortedCollections` package which also contains `SwiftSortedCollections` target.
+        // And these two are in conflift then.
+        .package(url: "https://github.com/apple/swift-collections.git", exact: "1.1.4")
     ],
     targets: [
         .target(

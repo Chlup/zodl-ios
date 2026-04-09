@@ -2190,6 +2190,7 @@
 		34AA770F2F857D4100D244E2 /* fonts_swift5_swiftui.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 34AA77032F857D4100D244E2 /* fonts_swift5_swiftui.stencil */; };
 		34AA77102F857D4100D244E2 /* assets_swift5_swiftui.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 34AA77052F857D4100D244E2 /* assets_swift5_swiftui.stencil */; };
 		34AA77112F857D4100D244E2 /* fonts_swift5_swiftui.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 34AA77032F857D4100D244E2 /* fonts_swift5_swiftui.stencil */; };
+		34F7425D2F88298A006DC4B0 /* Dummy in Frameworks */ = {isa = PBXBuildFile; productRef = 34F7425C2F88298A006DC4B0 /* Dummy */; };
 		9E0C0D702AFB842B00D69A16 /* TransactionStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0D6F2AFB842B00D69A16 /* TransactionStateTests.swift */; };
 		9E139AAF2B07B3A600D104B8 /* ZatoshiStringRepresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E139AAE2B07B3A600D104B8 /* ZatoshiStringRepresentationTests.swift */; };
 		9E1FAFB72AF2C6D40084CA3D /* PrivateDataConsentSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1FAFB62AF2C6D40084CA3D /* PrivateDataConsentSnapshotTests.swift */; };
@@ -2871,6 +2872,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34F7425D2F88298A006DC4B0 /* Dummy in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4943,6 +4945,7 @@
 			);
 			name = "zashi-internal";
 			packageProductDependencies = (
+				34F7425C2F88298A006DC4B0 /* Dummy */,
 			);
 			productName = secant;
 			productReference = 9E5AB4822C94777800065483 /* zashi-internal.app */;
@@ -8578,6 +8581,13 @@
 			defaultConfigurationName = "Release-Testflight";
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		34F7425C2F88298A006DC4B0 /* Dummy */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Dummy;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		9E2706652AFF99F5000DA6EC /* ReadTransactionsStorageModel.xcdatamodeld */ = {
