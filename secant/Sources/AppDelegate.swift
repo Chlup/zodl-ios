@@ -9,9 +9,9 @@ import SwiftUI
 import ComposableArchitecture
 import ZcashLightClientKit
 import Network
-
 import BackgroundTasks
 import UserNotifications
+import Dummy
 
 // swiftlint:disable indentation_width
 final class AppDelegate: NSObject, UIApplicationDelegate {
