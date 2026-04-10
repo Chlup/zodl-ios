@@ -195,7 +195,7 @@ extension Balances.State {
 }
 
 extension StoreOf<Balances> {
-    static let placeholder = StoreOf<Balances>(
+    @MainActor static let placeholder = StoreOf<Balances>(
         initialState: .placeholder
     ) {
         Balances()

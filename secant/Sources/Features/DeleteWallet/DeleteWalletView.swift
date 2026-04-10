@@ -140,7 +140,7 @@ struct DeleteWalletView: View {
 // MARK: - Store
 
 extension DeleteWallet {
-    static var demo = StoreOf<DeleteWallet>(
+    @MainActor static var demo = StoreOf<DeleteWallet>(
         initialState: .initial
     ) {
         DeleteWallet()

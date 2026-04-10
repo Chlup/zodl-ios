@@ -293,7 +293,7 @@ extension RecoveryPhraseDisplay.State {
 }
 
 extension RecoveryPhraseDisplay {
-    static let placeholder = StoreOf<RecoveryPhraseDisplay>(
+    @MainActor static let placeholder = StoreOf<RecoveryPhraseDisplay>(
         initialState: .initial
     ) {
         RecoveryPhraseDisplay()

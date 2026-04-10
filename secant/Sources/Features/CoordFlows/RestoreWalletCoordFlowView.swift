@@ -171,7 +171,7 @@ extension RestoreWalletCoordFlow.State {
 }
 
 extension RestoreWalletCoordFlow {
-    static let placeholder = StoreOf<RestoreWalletCoordFlow>(
+    @MainActor static let placeholder = StoreOf<RestoreWalletCoordFlow>(
         initialState: .initial
     ) {
         RestoreWalletCoordFlow()

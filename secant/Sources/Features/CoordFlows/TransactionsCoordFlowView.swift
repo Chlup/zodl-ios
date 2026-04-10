@@ -70,7 +70,7 @@ extension TransactionsCoordFlow.State {
 }
 
 extension TransactionsCoordFlow {
-    static let placeholder = StoreOf<TransactionsCoordFlow>(
+    @MainActor static let placeholder = StoreOf<TransactionsCoordFlow>(
         initialState: .initial
     ) {
         TransactionsCoordFlow()

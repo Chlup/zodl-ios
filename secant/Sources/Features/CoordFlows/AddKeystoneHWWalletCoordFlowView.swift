@@ -100,7 +100,7 @@ extension AddKeystoneHWWalletCoordFlow.State {
 }
 
 extension AddKeystoneHWWalletCoordFlow {
-    static let placeholder = StoreOf<AddKeystoneHWWalletCoordFlow>(
+    @MainActor static let placeholder = StoreOf<AddKeystoneHWWalletCoordFlow>(
         initialState: .initial
     ) {
         AddKeystoneHWWalletCoordFlow()

@@ -96,7 +96,7 @@ extension SendCoordFlow.State {
 }
 
 extension SendCoordFlow {
-    static let placeholder = StoreOf<SendCoordFlow>(
+    @MainActor static let placeholder = StoreOf<SendCoordFlow>(
         initialState: .initial
     ) {
         SendCoordFlow()
