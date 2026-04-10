@@ -5,6 +5,7 @@
 //  Created by Lukáš Korba on 05-27-2024.
 //
 
+import Foundation
 import ComposableArchitecture
 @preconcurrency import ZcashLightClientKit
 
@@ -17,9 +18,9 @@ extension DependencyValues {
 
 @DependencyClient
 struct AddressBookClient {
-    let resetAccount: (Account) throws -> Void
-    let allLocalContacts: (Account) throws -> (contacts: AddressBookContacts, remoteStoreResult: RemoteStoreResult)
-    let syncContacts: (Account, AddressBookContacts?) async throws -> (contacts: AddressBookContacts, remoteStoreResult: RemoteStoreResult)
-    let storeContact: (Account, Contact) throws -> (contacts: AddressBookContacts, remoteStoreResult: RemoteStoreResult)
-    let deleteContact: (Account, Contact) throws -> (contacts: AddressBookContacts, remoteStoreResult: RemoteStoreResult)
+    var resetAccount: @Sendable (Account) throws -> Void
+    var allLocalContacts: @Sendable (Account) throws -> (contacts: AddressBookContacts, remoteStoreResult: RemoteStoreResult)
+    var syncContacts: @Sendable (Account, AddressBookContacts?) throws -> (contacts: AddressBookContacts, remoteStoreResult: RemoteStoreResult)
+    var storeContact: @Sendable (Account, Contact) throws -> (contacts: AddressBookContacts, remoteStoreResult: RemoteStoreResult)
+    var deleteContact: @Sendable (Account, Contact) throws -> (contacts: AddressBookContacts, remoteStoreResult: RemoteStoreResult)
 }
