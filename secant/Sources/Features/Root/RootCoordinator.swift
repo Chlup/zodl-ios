@@ -303,7 +303,7 @@ extension Root {
                 return .concatenate(
                     .send(.initialization(.initializeSDK(.restoreWallet))),
                     .send(.initialization(.checkBackupPhraseValidation)),
-                    .send(.batteryStateChanged(nil))
+                    .send(.batteryStateChanged)
                 )
 
                 // MARK: - Scan Coord Flow
