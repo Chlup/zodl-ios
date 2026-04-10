@@ -17,7 +17,7 @@ extension DependencyValues {
 
 @DependencyClient
 struct NumberFormatterClient {
-    var string: (NSDecimalNumber) -> String?
-    var number: (String) -> NSNumber?
-    var convertUSToLocale: (String) -> String?
+    var string: @Sendable (NSDecimalNumber) -> String? = { _ in nil }
+    var number: @Sendable (String) -> NSNumber? = { _ in nil }
+    var convertUSToLocale: @Sendable (String) -> String? = { _ in nil }
 }
