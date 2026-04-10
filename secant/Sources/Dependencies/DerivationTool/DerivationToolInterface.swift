@@ -21,34 +21,34 @@ struct DerivationToolClient {
     /// - Parameter seed: the seed from which to derive spending keys.
     /// - Parameter accountIndex: the ZIP 32 index of the account
     /// - Returns: the spending keys that correspond to the seed, formatted as Strings.
-    var deriveSpendingKey: ([UInt8], Zip32AccountIndex, NetworkType) throws -> UnifiedSpendingKey
+    var deriveSpendingKey: @Sendable ([UInt8], Zip32AccountIndex, NetworkType) throws -> UnifiedSpendingKey
 
     /// Given a unified spending key, returns the associated unified viewwing key.
-    var deriveUnifiedFullViewingKey: (UnifiedSpendingKey, NetworkType) throws -> UnifiedFullViewingKey
+    var deriveUnifiedFullViewingKey: @Sendable (UnifiedSpendingKey, NetworkType) throws -> UnifiedFullViewingKey
 
     /// Checks if given address supports memo
-    var doesAddressSupportMemo: (String, NetworkType) -> Bool = { _, _ in false }
+    var doesAddressSupportMemo: @Sendable (String, NetworkType) -> Bool = { _, _ in false }
 
     /// Checks validity of the unified address.
-    var isUnifiedAddress: (String, NetworkType) -> Bool = { _, _ in false }
+    var isUnifiedAddress: @Sendable (String, NetworkType) -> Bool = { _, _ in false }
 
     /// Checks validity of the shielded address.
-    var isSaplingAddress: (String, NetworkType) -> Bool = { _, _ in false }
+    var isSaplingAddress: @Sendable (String, NetworkType) -> Bool = { _, _ in false }
 
     /// Checks validity of the transparent address.
-    var isTransparentAddress: (String, NetworkType) -> Bool = { _, _ in false }
+    var isTransparentAddress: @Sendable (String, NetworkType) -> Bool = { _, _ in false }
 
     /// Checks validity of the tex address.
-    var isTexAddress: (String, NetworkType) -> Bool = { _, _ in false }
+    var isTexAddress: @Sendable (String, NetworkType) -> Bool = { _, _ in false }
 
     /// Checks if given address is a valid zcash address.
-    var isZcashAddress: (String, NetworkType) -> Bool = { _, _ in false }
+    var isZcashAddress: @Sendable (String, NetworkType) -> Bool = { _, _ in false }
 
     
     /// Derives and returns a UnifiedAddress from a UnifiedFullViewingKey
     /// - Parameter ufvk: UTF-8 encoded String to validate
     /// - Returns: true `UnifiedAddress`
-    var deriveUnifiedAddressFrom: (String, NetworkType) throws -> UnifiedAddress
+    var deriveUnifiedAddressFrom: @Sendable (String, NetworkType) throws -> UnifiedAddress
 
     /// Derives and returns a ZIP 32 Arbitrary Key from the given seed at the "wallet level", i.e.
     /// directly from the seed with no ZIP 32 path applied.
@@ -63,7 +63,7 @@ struct DerivationToolClient {
     ///     - `derivationToolInvalidAccount` if the `accountIndex` is invalid.
     ///     - some `ZcashError.rust*` error if the derivation fails.
     /// - Returns a `[Uint8]`
-    var deriveArbitraryWalletKey: ([UInt8], [UInt8]) throws -> [UInt8]
+    var deriveArbitraryWalletKey: @Sendable ([UInt8], [UInt8]) throws -> [UInt8]
 
     /// Derives and returns a ZIP 32 Arbitrary Key from the given seed at the account level.
     ///
@@ -74,5 +74,5 @@ struct DerivationToolClient {
     ///     - `derivationToolInvalidAccount` if the `accountIndex` is invalid.
     ///     - some `ZcashError.rust*` error if the derivation fails.
     /// - Returns a `[Uint8]`
-    var deriveArbitraryAccountKey: ([UInt8], [UInt8], Zip32AccountIndex, NetworkType) throws -> [UInt8]
+    var deriveArbitraryAccountKey: @Sendable ([UInt8], [UInt8], Zip32AccountIndex, NetworkType) throws -> [UInt8]
 }
