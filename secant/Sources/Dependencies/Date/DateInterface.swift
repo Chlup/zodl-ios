@@ -17,9 +17,5 @@ extension DependencyValues {
 
 @DependencyClient
 struct DateClient {
-    let now: () -> Date
-    
-    init(now: @escaping () -> Date) {
-        self.now = now
-    }
+    var now: @Sendable () -> Date = { Date() }
 }

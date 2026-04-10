@@ -63,7 +63,6 @@
 		34AA6E002F85774F00D244E2 /* BalanceFormatterInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BB82F85774F00D244E2 /* BalanceFormatterInterface.swift */; };
 		34AA6E012F85774F00D244E2 /* SecantApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DD62F85774F00D244E2 /* SecantApp.swift */; };
 		34AA6E022F85774F00D244E2 /* BalanceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DBF2F85774F00D244E2 /* BalanceFormatter.swift */; };
-		34AA6E032F85774F00D244E2 /* DateTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BC82F85774F00D244E2 /* DateTestKey.swift */; };
 		34AA6E042F85774F00D244E2 /* TransactionsManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D0A2F85774F00D244E2 /* TransactionsManagerView.swift */; };
 		34AA6E052F85774F00D244E2 /* ValidationWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D542F85774F00D244E2 /* ValidationWord.swift */; };
 		34AA6E062F85774F00D244E2 /* Decimals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DC42F85774F00D244E2 /* Decimals.swift */; };
@@ -520,7 +519,6 @@
 		34AA6FCE2F85774F00D244E2 /* BalanceFormatterInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BB82F85774F00D244E2 /* BalanceFormatterInterface.swift */; };
 		34AA6FCF2F85774F00D244E2 /* SecantApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DD62F85774F00D244E2 /* SecantApp.swift */; };
 		34AA6FD02F85774F00D244E2 /* BalanceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DBF2F85774F00D244E2 /* BalanceFormatter.swift */; };
-		34AA6FD12F85774F00D244E2 /* DateTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BC82F85774F00D244E2 /* DateTestKey.swift */; };
 		34AA6FD22F85774F00D244E2 /* TransactionsManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D0A2F85774F00D244E2 /* TransactionsManagerView.swift */; };
 		34AA6FD32F85774F00D244E2 /* ValidationWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D542F85774F00D244E2 /* ValidationWord.swift */; };
 		34AA6FD42F85774F00D244E2 /* Decimals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DC42F85774F00D244E2 /* Decimals.swift */; };
@@ -925,7 +923,6 @@
 		34AA71642F85774F00D244E2 /* BalanceFormatterInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BB82F85774F00D244E2 /* BalanceFormatterInterface.swift */; };
 		34AA71652F85774F00D244E2 /* SecantApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DD62F85774F00D244E2 /* SecantApp.swift */; };
 		34AA71662F85774F00D244E2 /* BalanceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DBF2F85774F00D244E2 /* BalanceFormatter.swift */; };
-		34AA71672F85774F00D244E2 /* DateTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BC82F85774F00D244E2 /* DateTestKey.swift */; };
 		34AA71682F85774F00D244E2 /* TransactionsManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D0A2F85774F00D244E2 /* TransactionsManagerView.swift */; };
 		34AA71692F85774F00D244E2 /* ValidationWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D542F85774F00D244E2 /* ValidationWord.swift */; };
 		34AA716A2F85774F00D244E2 /* Decimals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DC42F85774F00D244E2 /* Decimals.swift */; };
@@ -1382,7 +1379,6 @@
 		34AA73322F85774F00D244E2 /* BalanceFormatterInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BB82F85774F00D244E2 /* BalanceFormatterInterface.swift */; };
 		34AA73332F85774F00D244E2 /* SecantApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DD62F85774F00D244E2 /* SecantApp.swift */; };
 		34AA73342F85774F00D244E2 /* BalanceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DBF2F85774F00D244E2 /* BalanceFormatter.swift */; };
-		34AA73352F85774F00D244E2 /* DateTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BC82F85774F00D244E2 /* DateTestKey.swift */; };
 		34AA73362F85774F00D244E2 /* TransactionsManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D0A2F85774F00D244E2 /* TransactionsManagerView.swift */; };
 		34AA73372F85774F00D244E2 /* ValidationWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D542F85774F00D244E2 /* ValidationWord.swift */; };
 		34AA73382F85774F00D244E2 /* Decimals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DC42F85774F00D244E2 /* Decimals.swift */; };
@@ -1787,7 +1783,6 @@
 		34AA74C82F85774F00D244E2 /* BalanceFormatterInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BB82F85774F00D244E2 /* BalanceFormatterInterface.swift */; };
 		34AA74C92F85774F00D244E2 /* SecantApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DD62F85774F00D244E2 /* SecantApp.swift */; };
 		34AA74CA2F85774F00D244E2 /* BalanceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DBF2F85774F00D244E2 /* BalanceFormatter.swift */; };
-		34AA74CB2F85774F00D244E2 /* DateTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BC82F85774F00D244E2 /* DateTestKey.swift */; };
 		34AA74CC2F85774F00D244E2 /* TransactionsManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D0A2F85774F00D244E2 /* TransactionsManagerView.swift */; };
 		34AA74CD2F85774F00D244E2 /* ValidationWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D542F85774F00D244E2 /* ValidationWord.swift */; };
 		34AA74CE2F85774F00D244E2 /* Decimals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DC42F85774F00D244E2 /* Decimals.swift */; };
@@ -2412,7 +2407,6 @@
 		34AA6BC42F85774F00D244E2 /* DatabaseFilesTestKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseFilesTestKey.swift; sourceTree = "<group>"; };
 		34AA6BC62F85774F00D244E2 /* DateInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateInterface.swift; sourceTree = "<group>"; };
 		34AA6BC72F85774F00D244E2 /* DateLiveKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateLiveKey.swift; sourceTree = "<group>"; };
-		34AA6BC82F85774F00D244E2 /* DateTestKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTestKey.swift; sourceTree = "<group>"; };
 		34AA6BCA2F85774F00D244E2 /* Deeplink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deeplink.swift; sourceTree = "<group>"; };
 		34AA6BCB2F85774F00D244E2 /* DeeplinkInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkInterface.swift; sourceTree = "<group>"; };
 		34AA6BCC2F85774F00D244E2 /* DeeplinkLiveKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkLiveKey.swift; sourceTree = "<group>"; };
@@ -3214,7 +3208,6 @@
 			children = (
 				34AA6BC62F85774F00D244E2 /* DateInterface.swift */,
 				34AA6BC72F85774F00D244E2 /* DateLiveKey.swift */,
-				34AA6BC82F85774F00D244E2 /* DateTestKey.swift */,
 			);
 			path = Date;
 			sourceTree = "<group>";
@@ -5794,7 +5787,6 @@
 				34AA73322F85774F00D244E2 /* BalanceFormatterInterface.swift in Sources */,
 				34AA73332F85774F00D244E2 /* SecantApp.swift in Sources */,
 				34AA73342F85774F00D244E2 /* BalanceFormatter.swift in Sources */,
-				34AA73352F85774F00D244E2 /* DateTestKey.swift in Sources */,
 				34AA73362F85774F00D244E2 /* TransactionsManagerView.swift in Sources */,
 				34AA73372F85774F00D244E2 /* ValidationWord.swift in Sources */,
 				34AA73382F85774F00D244E2 /* Decimals.swift in Sources */,
@@ -6209,7 +6201,6 @@
 				34AA6FCE2F85774F00D244E2 /* BalanceFormatterInterface.swift in Sources */,
 				34AA6FCF2F85774F00D244E2 /* SecantApp.swift in Sources */,
 				34AA6FD02F85774F00D244E2 /* BalanceFormatter.swift in Sources */,
-				34AA6FD12F85774F00D244E2 /* DateTestKey.swift in Sources */,
 				34AA6FD22F85774F00D244E2 /* TransactionsManagerView.swift in Sources */,
 				34AA6FD32F85774F00D244E2 /* ValidationWord.swift in Sources */,
 				34AA6FD42F85774F00D244E2 /* Decimals.swift in Sources */,
@@ -6684,7 +6675,6 @@
 				34AA74C82F85774F00D244E2 /* BalanceFormatterInterface.swift in Sources */,
 				34AA74C92F85774F00D244E2 /* SecantApp.swift in Sources */,
 				34AA74CA2F85774F00D244E2 /* BalanceFormatter.swift in Sources */,
-				34AA74CB2F85774F00D244E2 /* DateTestKey.swift in Sources */,
 				34AA74CC2F85774F00D244E2 /* TransactionsManagerView.swift in Sources */,
 				34AA74CD2F85774F00D244E2 /* ValidationWord.swift in Sources */,
 				34AA74CE2F85774F00D244E2 /* Decimals.swift in Sources */,
@@ -7099,7 +7089,6 @@
 				34AA71642F85774F00D244E2 /* BalanceFormatterInterface.swift in Sources */,
 				34AA71652F85774F00D244E2 /* SecantApp.swift in Sources */,
 				34AA71662F85774F00D244E2 /* BalanceFormatter.swift in Sources */,
-				34AA71672F85774F00D244E2 /* DateTestKey.swift in Sources */,
 				34AA71682F85774F00D244E2 /* TransactionsManagerView.swift in Sources */,
 				34AA71692F85774F00D244E2 /* ValidationWord.swift in Sources */,
 				34AA716A2F85774F00D244E2 /* Decimals.swift in Sources */,
@@ -7514,7 +7503,6 @@
 				34AA6E002F85774F00D244E2 /* BalanceFormatterInterface.swift in Sources */,
 				34AA6E012F85774F00D244E2 /* SecantApp.swift in Sources */,
 				34AA6E022F85774F00D244E2 /* BalanceFormatter.swift in Sources */,
-				34AA6E032F85774F00D244E2 /* DateTestKey.swift in Sources */,
 				34AA6E042F85774F00D244E2 /* TransactionsManagerView.swift in Sources */,
 				34AA6E052F85774F00D244E2 /* ValidationWord.swift in Sources */,
 				34AA6E062F85774F00D244E2 /* Decimals.swift in Sources */,
