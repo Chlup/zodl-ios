@@ -9,7 +9,11 @@
 import ComposableArchitecture
 
 extension AudioServicesClient: DependencyKey {
-    static let liveValue = Self(
-        systemSoundVibrate: { AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate)) }
-    )
+    static let liveValue = Self.live()
+
+    static func live() -> Self {
+        return Self(
+            systemSoundVibrate: { AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate)) }
+        )
+    }
 }

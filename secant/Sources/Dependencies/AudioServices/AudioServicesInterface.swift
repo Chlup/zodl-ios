@@ -17,9 +17,5 @@ extension DependencyValues {
 
 @DependencyClient
 struct AudioServicesClient {
-    let systemSoundVibrate: () -> Void
-    
-    init(systemSoundVibrate: @escaping () -> Void) {
-        self.systemSoundVibrate = systemSoundVibrate
-    }
+    var systemSoundVibrate: @Sendable () -> Void = { }
 }

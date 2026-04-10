@@ -386,7 +386,6 @@
 		34AA6F432F85774F00D244E2 /* SwapAndPayCoordFlowStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C852F85774F00D244E2 /* SwapAndPayCoordFlowStore.swift */; };
 		34AA6F442F85774F00D244E2 /* KeystoneConnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C642F85774F00D244E2 /* KeystoneConnectedView.swift */; };
 		34AA6F452F85774F00D244E2 /* URIParserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C352F85774F00D244E2 /* URIParserInterface.swift */; };
-		34AA6F462F85774F00D244E2 /* AudioServicesTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BB22F85774F00D244E2 /* AudioServicesTestKey.swift */; };
 		34AA6F472F85774F00D244E2 /* URIParserLive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C362F85774F00D244E2 /* URIParserLive.swift */; };
 		34AA6F482F85774F00D244E2 /* FileManagerLiveKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE22F85774F00D244E2 /* FileManagerLiveKey.swift */; };
 		34AA6F492F85774F00D244E2 /* AddressBookEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BA72F85774F00D244E2 /* AddressBookEncryption.swift */; };
@@ -844,7 +843,6 @@
 		34AA71112F85774F00D244E2 /* SwapAndPayCoordFlowStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C852F85774F00D244E2 /* SwapAndPayCoordFlowStore.swift */; };
 		34AA71122F85774F00D244E2 /* KeystoneConnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C642F85774F00D244E2 /* KeystoneConnectedView.swift */; };
 		34AA71132F85774F00D244E2 /* URIParserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C352F85774F00D244E2 /* URIParserInterface.swift */; };
-		34AA71142F85774F00D244E2 /* AudioServicesTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BB22F85774F00D244E2 /* AudioServicesTestKey.swift */; };
 		34AA71152F85774F00D244E2 /* URIParserLive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C362F85774F00D244E2 /* URIParserLive.swift */; };
 		34AA71162F85774F00D244E2 /* FileManagerLiveKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE22F85774F00D244E2 /* FileManagerLiveKey.swift */; };
 		34AA71172F85774F00D244E2 /* AddressBookEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BA72F85774F00D244E2 /* AddressBookEncryption.swift */; };
@@ -1250,7 +1248,6 @@
 		34AA72A72F85774F00D244E2 /* SwapAndPayCoordFlowStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C852F85774F00D244E2 /* SwapAndPayCoordFlowStore.swift */; };
 		34AA72A82F85774F00D244E2 /* KeystoneConnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C642F85774F00D244E2 /* KeystoneConnectedView.swift */; };
 		34AA72A92F85774F00D244E2 /* URIParserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C352F85774F00D244E2 /* URIParserInterface.swift */; };
-		34AA72AA2F85774F00D244E2 /* AudioServicesTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BB22F85774F00D244E2 /* AudioServicesTestKey.swift */; };
 		34AA72AB2F85774F00D244E2 /* URIParserLive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C362F85774F00D244E2 /* URIParserLive.swift */; };
 		34AA72AC2F85774F00D244E2 /* FileManagerLiveKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE22F85774F00D244E2 /* FileManagerLiveKey.swift */; };
 		34AA72AD2F85774F00D244E2 /* AddressBookEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BA72F85774F00D244E2 /* AddressBookEncryption.swift */; };
@@ -1708,7 +1705,6 @@
 		34AA74752F85774F00D244E2 /* SwapAndPayCoordFlowStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C852F85774F00D244E2 /* SwapAndPayCoordFlowStore.swift */; };
 		34AA74762F85774F00D244E2 /* KeystoneConnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C642F85774F00D244E2 /* KeystoneConnectedView.swift */; };
 		34AA74772F85774F00D244E2 /* URIParserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C352F85774F00D244E2 /* URIParserInterface.swift */; };
-		34AA74782F85774F00D244E2 /* AudioServicesTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BB22F85774F00D244E2 /* AudioServicesTestKey.swift */; };
 		34AA74792F85774F00D244E2 /* URIParserLive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C362F85774F00D244E2 /* URIParserLive.swift */; };
 		34AA747A2F85774F00D244E2 /* FileManagerLiveKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE22F85774F00D244E2 /* FileManagerLiveKey.swift */; };
 		34AA747B2F85774F00D244E2 /* AddressBookEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BA72F85774F00D244E2 /* AddressBookEncryption.swift */; };
@@ -2114,7 +2110,6 @@
 		34AA760B2F85774F00D244E2 /* SwapAndPayCoordFlowStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C852F85774F00D244E2 /* SwapAndPayCoordFlowStore.swift */; };
 		34AA760C2F85774F00D244E2 /* KeystoneConnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C642F85774F00D244E2 /* KeystoneConnectedView.swift */; };
 		34AA760D2F85774F00D244E2 /* URIParserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C352F85774F00D244E2 /* URIParserInterface.swift */; };
-		34AA760E2F85774F00D244E2 /* AudioServicesTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BB22F85774F00D244E2 /* AudioServicesTestKey.swift */; };
 		34AA760F2F85774F00D244E2 /* URIParserLive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C362F85774F00D244E2 /* URIParserLive.swift */; };
 		34AA76102F85774F00D244E2 /* FileManagerLiveKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE22F85774F00D244E2 /* FileManagerLiveKey.swift */; };
 		34AA76112F85774F00D244E2 /* AddressBookEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BA72F85774F00D244E2 /* AddressBookEncryption.swift */; };
@@ -2396,7 +2391,6 @@
 		34AA6BAE2F85774F00D244E2 /* AppVersionMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionMocks.swift; sourceTree = "<group>"; };
 		34AA6BB02F85774F00D244E2 /* AudioServicesInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioServicesInterface.swift; sourceTree = "<group>"; };
 		34AA6BB12F85774F00D244E2 /* AudioServicesLiveKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioServicesLiveKey.swift; sourceTree = "<group>"; };
-		34AA6BB22F85774F00D244E2 /* AudioServicesTestKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioServicesTestKey.swift; sourceTree = "<group>"; };
 		34AA6BB42F85774F00D244E2 /* AutolockHandlerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutolockHandlerInterface.swift; sourceTree = "<group>"; };
 		34AA6BB52F85774F00D244E2 /* AutolockHandlerLiveKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutolockHandlerLiveKey.swift; sourceTree = "<group>"; };
 		34AA6BB62F85774F00D244E2 /* AutolockHandlerTestKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutolockHandlerTestKey.swift; sourceTree = "<group>"; };
@@ -3159,7 +3153,6 @@
 			children = (
 				34AA6BB02F85774F00D244E2 /* AudioServicesInterface.swift */,
 				34AA6BB12F85774F00D244E2 /* AudioServicesLiveKey.swift */,
-				34AA6BB22F85774F00D244E2 /* AudioServicesTestKey.swift */,
 			);
 			path = AudioServices;
 			sourceTree = "<group>";
@@ -6110,7 +6103,6 @@
 				34AA74752F85774F00D244E2 /* SwapAndPayCoordFlowStore.swift in Sources */,
 				34AA74762F85774F00D244E2 /* KeystoneConnectedView.swift in Sources */,
 				34AA74772F85774F00D244E2 /* URIParserInterface.swift in Sources */,
-				34AA74782F85774F00D244E2 /* AudioServicesTestKey.swift in Sources */,
 				34AA74792F85774F00D244E2 /* URIParserLive.swift in Sources */,
 				34AA747A2F85774F00D244E2 /* FileManagerLiveKey.swift in Sources */,
 				34AA747B2F85774F00D244E2 /* AddressBookEncryption.swift in Sources */,
@@ -6526,7 +6518,6 @@
 				34AA71112F85774F00D244E2 /* SwapAndPayCoordFlowStore.swift in Sources */,
 				34AA71122F85774F00D244E2 /* KeystoneConnectedView.swift in Sources */,
 				34AA71132F85774F00D244E2 /* URIParserInterface.swift in Sources */,
-				34AA71142F85774F00D244E2 /* AudioServicesTestKey.swift in Sources */,
 				34AA71152F85774F00D244E2 /* URIParserLive.swift in Sources */,
 				34AA71162F85774F00D244E2 /* FileManagerLiveKey.swift in Sources */,
 				34AA71172F85774F00D244E2 /* AddressBookEncryption.swift in Sources */,
@@ -7002,7 +6993,6 @@
 				34AA760B2F85774F00D244E2 /* SwapAndPayCoordFlowStore.swift in Sources */,
 				34AA760C2F85774F00D244E2 /* KeystoneConnectedView.swift in Sources */,
 				34AA760D2F85774F00D244E2 /* URIParserInterface.swift in Sources */,
-				34AA760E2F85774F00D244E2 /* AudioServicesTestKey.swift in Sources */,
 				34AA760F2F85774F00D244E2 /* URIParserLive.swift in Sources */,
 				34AA76102F85774F00D244E2 /* FileManagerLiveKey.swift in Sources */,
 				34AA76112F85774F00D244E2 /* AddressBookEncryption.swift in Sources */,
@@ -7418,7 +7408,6 @@
 				34AA72A72F85774F00D244E2 /* SwapAndPayCoordFlowStore.swift in Sources */,
 				34AA72A82F85774F00D244E2 /* KeystoneConnectedView.swift in Sources */,
 				34AA72A92F85774F00D244E2 /* URIParserInterface.swift in Sources */,
-				34AA72AA2F85774F00D244E2 /* AudioServicesTestKey.swift in Sources */,
 				34AA72AB2F85774F00D244E2 /* URIParserLive.swift in Sources */,
 				34AA72AC2F85774F00D244E2 /* FileManagerLiveKey.swift in Sources */,
 				34AA72AD2F85774F00D244E2 /* AddressBookEncryption.swift in Sources */,
@@ -7834,7 +7823,6 @@
 				34AA6F432F85774F00D244E2 /* SwapAndPayCoordFlowStore.swift in Sources */,
 				34AA6F442F85774F00D244E2 /* KeystoneConnectedView.swift in Sources */,
 				34AA6F452F85774F00D244E2 /* URIParserInterface.swift in Sources */,
-				34AA6F462F85774F00D244E2 /* AudioServicesTestKey.swift in Sources */,
 				34AA6F472F85774F00D244E2 /* URIParserLive.swift in Sources */,
 				34AA6F482F85774F00D244E2 /* FileManagerLiveKey.swift in Sources */,
 				34AA6F492F85774F00D244E2 /* AddressBookEncryption.swift in Sources */,
