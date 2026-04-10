@@ -19,10 +19,9 @@ extension DependencyValues {
 
 @DependencyClient
 struct URIParserClient {
-    var isValidURI: (String, NetworkType) -> Bool = { _, _ in false }
-    var checkRP: (String, NetworkType) -> ParserResult? = { _, _ in nil }
+    var isValidURI: @Sendable (String, NetworkType) -> Bool = { _, _ in false }
+    var checkRP: @Sendable (String, NetworkType) -> ParserResult? = { _, _ in nil }
 }
-        
 
 extension ParserContext {
     static func from(networkType: NetworkType) -> ParserContext {
