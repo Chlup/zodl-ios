@@ -16,11 +16,6 @@ extension DependencyValues {
 
 @DependencyClient
 struct AppVersionClient {
-    let appVersion: () -> String
-    let appBuild: () -> String
-    
-    init(appVersion: @escaping () -> String, appBuild: @escaping () -> String) {
-        self.appVersion = appVersion
-        self.appBuild = appBuild
-    }
+    var appVersion: @Sendable () -> String = { "" }
+    var appBuild: @Sendable () -> String = { "" }
 }
