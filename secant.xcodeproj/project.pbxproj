@@ -103,7 +103,6 @@
 		34AA6E282F85774F00D244E2 /* ScanCoordFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C7D2F85774F00D244E2 /* ScanCoordFlowView.swift */; };
 		34AA6E292F85774F00D244E2 /* WelcomeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D142F85774F00D244E2 /* WelcomeStore.swift */; };
 		34AA6E2A2F85774F00D244E2 /* View+InnerShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D702F85774F00D244E2 /* View+InnerShadow.swift */; };
-		34AA6E2B2F85774F00D244E2 /* DeeplinkTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BCD2F85774F00D244E2 /* DeeplinkTestKey.swift */; };
 		34AA6E2C2F85774F00D244E2 /* URIParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C342F85774F00D244E2 /* URIParser.swift */; };
 		34AA6E2D2F85774F00D244E2 /* WalletStorageInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C512F85774F00D244E2 /* WalletStorageInterface.swift */; };
 		34AA6E2E2F85774F00D244E2 /* InfoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D7A2F85774F00D244E2 /* InfoRow.swift */; };
@@ -560,7 +559,6 @@
 		34AA6FF62F85774F00D244E2 /* ScanCoordFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C7D2F85774F00D244E2 /* ScanCoordFlowView.swift */; };
 		34AA6FF72F85774F00D244E2 /* WelcomeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D142F85774F00D244E2 /* WelcomeStore.swift */; };
 		34AA6FF82F85774F00D244E2 /* View+InnerShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D702F85774F00D244E2 /* View+InnerShadow.swift */; };
-		34AA6FF92F85774F00D244E2 /* DeeplinkTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BCD2F85774F00D244E2 /* DeeplinkTestKey.swift */; };
 		34AA6FFA2F85774F00D244E2 /* URIParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C342F85774F00D244E2 /* URIParser.swift */; };
 		34AA6FFB2F85774F00D244E2 /* WalletStorageInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C512F85774F00D244E2 /* WalletStorageInterface.swift */; };
 		34AA6FFC2F85774F00D244E2 /* InfoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D7A2F85774F00D244E2 /* InfoRow.swift */; };
@@ -965,7 +963,6 @@
 		34AA718C2F85774F00D244E2 /* ScanCoordFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C7D2F85774F00D244E2 /* ScanCoordFlowView.swift */; };
 		34AA718D2F85774F00D244E2 /* WelcomeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D142F85774F00D244E2 /* WelcomeStore.swift */; };
 		34AA718E2F85774F00D244E2 /* View+InnerShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D702F85774F00D244E2 /* View+InnerShadow.swift */; };
-		34AA718F2F85774F00D244E2 /* DeeplinkTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BCD2F85774F00D244E2 /* DeeplinkTestKey.swift */; };
 		34AA71902F85774F00D244E2 /* URIParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C342F85774F00D244E2 /* URIParser.swift */; };
 		34AA71912F85774F00D244E2 /* WalletStorageInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C512F85774F00D244E2 /* WalletStorageInterface.swift */; };
 		34AA71922F85774F00D244E2 /* InfoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D7A2F85774F00D244E2 /* InfoRow.swift */; };
@@ -1422,7 +1419,6 @@
 		34AA735A2F85774F00D244E2 /* ScanCoordFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C7D2F85774F00D244E2 /* ScanCoordFlowView.swift */; };
 		34AA735B2F85774F00D244E2 /* WelcomeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D142F85774F00D244E2 /* WelcomeStore.swift */; };
 		34AA735C2F85774F00D244E2 /* View+InnerShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D702F85774F00D244E2 /* View+InnerShadow.swift */; };
-		34AA735D2F85774F00D244E2 /* DeeplinkTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BCD2F85774F00D244E2 /* DeeplinkTestKey.swift */; };
 		34AA735E2F85774F00D244E2 /* URIParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C342F85774F00D244E2 /* URIParser.swift */; };
 		34AA735F2F85774F00D244E2 /* WalletStorageInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C512F85774F00D244E2 /* WalletStorageInterface.swift */; };
 		34AA73602F85774F00D244E2 /* InfoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D7A2F85774F00D244E2 /* InfoRow.swift */; };
@@ -1827,7 +1823,6 @@
 		34AA74F02F85774F00D244E2 /* ScanCoordFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C7D2F85774F00D244E2 /* ScanCoordFlowView.swift */; };
 		34AA74F12F85774F00D244E2 /* WelcomeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D142F85774F00D244E2 /* WelcomeStore.swift */; };
 		34AA74F22F85774F00D244E2 /* View+InnerShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D702F85774F00D244E2 /* View+InnerShadow.swift */; };
-		34AA74F32F85774F00D244E2 /* DeeplinkTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BCD2F85774F00D244E2 /* DeeplinkTestKey.swift */; };
 		34AA74F42F85774F00D244E2 /* URIParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C342F85774F00D244E2 /* URIParser.swift */; };
 		34AA74F52F85774F00D244E2 /* WalletStorageInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C512F85774F00D244E2 /* WalletStorageInterface.swift */; };
 		34AA74F62F85774F00D244E2 /* InfoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D7A2F85774F00D244E2 /* InfoRow.swift */; };
@@ -2416,7 +2411,6 @@
 		34AA6BCA2F85774F00D244E2 /* Deeplink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deeplink.swift; sourceTree = "<group>"; };
 		34AA6BCB2F85774F00D244E2 /* DeeplinkInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkInterface.swift; sourceTree = "<group>"; };
 		34AA6BCC2F85774F00D244E2 /* DeeplinkLiveKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkLiveKey.swift; sourceTree = "<group>"; };
-		34AA6BCD2F85774F00D244E2 /* DeeplinkTestKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkTestKey.swift; sourceTree = "<group>"; };
 		34AA6BCF2F85774F00D244E2 /* DerivationToolInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DerivationToolInterface.swift; sourceTree = "<group>"; };
 		34AA6BD02F85774F00D244E2 /* DerivationToolLiveKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DerivationToolLiveKey.swift; sourceTree = "<group>"; };
 		34AA6BD12F85774F00D244E2 /* DerivationToolTestKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DerivationToolTestKey.swift; sourceTree = "<group>"; };
@@ -3225,7 +3219,6 @@
 				34AA6BCA2F85774F00D244E2 /* Deeplink.swift */,
 				34AA6BCB2F85774F00D244E2 /* DeeplinkInterface.swift */,
 				34AA6BCC2F85774F00D244E2 /* DeeplinkLiveKey.swift */,
-				34AA6BCD2F85774F00D244E2 /* DeeplinkTestKey.swift */,
 			);
 			path = Deeplink;
 			sourceTree = "<group>";
@@ -5834,7 +5827,6 @@
 				34AA735A2F85774F00D244E2 /* ScanCoordFlowView.swift in Sources */,
 				34AA735B2F85774F00D244E2 /* WelcomeStore.swift in Sources */,
 				34AA735C2F85774F00D244E2 /* View+InnerShadow.swift in Sources */,
-				34AA735D2F85774F00D244E2 /* DeeplinkTestKey.swift in Sources */,
 				34AA735E2F85774F00D244E2 /* URIParser.swift in Sources */,
 				34AA735F2F85774F00D244E2 /* WalletStorageInterface.swift in Sources */,
 				34AA73602F85774F00D244E2 /* InfoRow.swift in Sources */,
@@ -6249,7 +6241,6 @@
 				34AA6FF62F85774F00D244E2 /* ScanCoordFlowView.swift in Sources */,
 				34AA6FF72F85774F00D244E2 /* WelcomeStore.swift in Sources */,
 				34AA6FF82F85774F00D244E2 /* View+InnerShadow.swift in Sources */,
-				34AA6FF92F85774F00D244E2 /* DeeplinkTestKey.swift in Sources */,
 				34AA6FFA2F85774F00D244E2 /* URIParser.swift in Sources */,
 				34AA6FFB2F85774F00D244E2 /* WalletStorageInterface.swift in Sources */,
 				34AA6FFC2F85774F00D244E2 /* InfoRow.swift in Sources */,
@@ -6724,7 +6715,6 @@
 				34AA74F02F85774F00D244E2 /* ScanCoordFlowView.swift in Sources */,
 				34AA74F12F85774F00D244E2 /* WelcomeStore.swift in Sources */,
 				34AA74F22F85774F00D244E2 /* View+InnerShadow.swift in Sources */,
-				34AA74F32F85774F00D244E2 /* DeeplinkTestKey.swift in Sources */,
 				34AA74F42F85774F00D244E2 /* URIParser.swift in Sources */,
 				34AA74F52F85774F00D244E2 /* WalletStorageInterface.swift in Sources */,
 				34AA74F62F85774F00D244E2 /* InfoRow.swift in Sources */,
@@ -7139,7 +7129,6 @@
 				34AA718C2F85774F00D244E2 /* ScanCoordFlowView.swift in Sources */,
 				34AA718D2F85774F00D244E2 /* WelcomeStore.swift in Sources */,
 				34AA718E2F85774F00D244E2 /* View+InnerShadow.swift in Sources */,
-				34AA718F2F85774F00D244E2 /* DeeplinkTestKey.swift in Sources */,
 				34AA71902F85774F00D244E2 /* URIParser.swift in Sources */,
 				34AA71912F85774F00D244E2 /* WalletStorageInterface.swift in Sources */,
 				34AA71922F85774F00D244E2 /* InfoRow.swift in Sources */,
@@ -7554,7 +7543,6 @@
 				34AA6E282F85774F00D244E2 /* ScanCoordFlowView.swift in Sources */,
 				34AA6E292F85774F00D244E2 /* WelcomeStore.swift in Sources */,
 				34AA6E2A2F85774F00D244E2 /* View+InnerShadow.swift in Sources */,
-				34AA6E2B2F85774F00D244E2 /* DeeplinkTestKey.swift in Sources */,
 				34AA6E2C2F85774F00D244E2 /* URIParser.swift in Sources */,
 				34AA6E2D2F85774F00D244E2 /* WalletStorageInterface.swift in Sources */,
 				34AA6E2E2F85774F00D244E2 /* InfoRow.swift in Sources */,

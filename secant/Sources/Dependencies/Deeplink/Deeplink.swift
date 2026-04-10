@@ -10,15 +10,13 @@ import URLRouting
 import ComposableArchitecture
 @preconcurrency import ZcashLightClientKit
 
-struct Deeplink {
+enum Deeplink {
     enum Destination: Equatable {
         case home
         case send(amount: Int, address: String, memo: String)
     }
     
-    init() { }
-    
-    func resolveDeeplinkURL(
+    static func resolveDeeplinkURL(
         _ url: URL,
         networkType: NetworkType,
         isValidZcashAddress: (String, NetworkType) throws -> Bool
