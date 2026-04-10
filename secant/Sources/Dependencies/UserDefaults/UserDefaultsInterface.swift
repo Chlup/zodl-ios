@@ -22,13 +22,7 @@ extension DependencyValues {
 
 @DependencyClient
 struct UserDefaultsClient {
-    let objectForKey: (String) -> Any?
-    let remove: (String) -> Void
-    let setValue: (Any?, String) -> Void
-    
-    init(objectForKey: @escaping (String) -> Any?, remove: @escaping (String) -> Void, setValue: @escaping (Any?, String) -> Void) {
-        self.objectForKey = objectForKey
-        self.remove = remove
-        self.setValue = setValue
-    }
+    var objectForKey: @Sendable (String) -> Any?
+    var remove: @Sendable (String) -> Void
+    var setValue: @Sendable (Any?, String) -> Void
 }
