@@ -9,19 +9,23 @@ import ComposableArchitecture
 import UIKit
 
 extension AutolockHandlerClient: DependencyKey {
-    static let liveValue = Self(
-        value: { isRestoring in
-            UIDevice.current.isBatteryMonitoringEnabled = true
-            AutolockHandlerClient.handleAutolock(isRestoring)
-        },
-        batteryStatePublisher: {
-            NotificationCenter.default.publisher(for: UIDevice.batteryStateDidChangeNotification)
-        }
-    )
+    static let liveValue = Self.live()
+
+    static func live() -> Self {
+        return Self(
+            value: { @MainActor isRestoring in
+                UIDevice.current.isBatteryMonitoringEnabled = true
+                AutolockHandlerClient.handleAutolock(isRestoring)
+            },
+            batteryStatePublisher: {
+                NotificationCenter.default.publisher(for: UIDevice.batteryStateDidChangeNotification)
+            }
+        )
+    }
 }
 
 private extension AutolockHandlerClient {
-    static func handleAutolock(_ isRestoring: Bool) -> Void {
+    @MainActor static func handleAutolock(_ isRestoring: Bool) -> Void {
         switch UIDevice.current.batteryState {
         case .charging, .full:
             UIApplication.shared.isIdleTimerDisabled = isRestoring

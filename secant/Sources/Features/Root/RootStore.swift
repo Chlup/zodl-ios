@@ -393,9 +393,9 @@ struct Root {
                 
             case .batteryStateChanged:
                 let leavesScreenOpen = userDefaults.objectForKey(Constants.udLeavesScreenOpen) as? Bool ?? false
-                autolockHandler.value(state.walletStatus == .restoring && leavesScreenOpen)
-                return .none
-                
+                let autolockShouldBeEnabled = state.walletStatus == .restoring && leavesScreenOpen
+                return .run { _ in await autolockHandler.value(autolockShouldBeEnabled) }
+
             case .cancelAllRunningEffects:
                 return .concatenate(
                     .cancel(id: state.CancelId),
