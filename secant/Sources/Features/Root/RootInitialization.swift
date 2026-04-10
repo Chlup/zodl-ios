@@ -208,10 +208,9 @@ extension Root {
                 }
 
             case .initialization(.checkWalletConfig):
-                return .publisher {
-                    walletConfigProvider.load()
-                        .receive(on: mainQueue)
-                        .map(Root.Action.walletConfigLoaded)
+                return .run { send in
+                    let walletConfig = await walletConfigProvider.load()
+                    await send(.walletConfigLoaded(walletConfig))
                 }
                 .cancellable(id: state.WalletConfigCancelId, cancelInFlight: true)
 

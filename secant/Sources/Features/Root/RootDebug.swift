@@ -62,18 +62,16 @@ extension Root {
                 }
                 
             case let .debug(.updateFlag(flag, isEnabled)):
-                return .publisher {
-                    walletConfigProvider.update(flag, !isEnabled)
-                        .receive(on: mainQueue)
-                        .map { _ in return Action.debug(.flagUpdated) }
+                return .run { send in
+                    await walletConfigProvider.update(flag, !isEnabled)
+                    await send(.debug(.flagUpdated))
                 }
                 .cancellable(id: state.WalletConfigCancelId, cancelInFlight: true)
 
             case .debug(.flagUpdated):
-                return .publisher {
-                    walletConfigProvider.load()
-                        .receive(on: mainQueue)
-                        .map { Action.debug(.walletConfigLoaded($0)) }
+                return .run { send in
+                    let walletConfig = await walletConfigProvider.load()
+                    await send(.debug(.walletConfigLoaded(walletConfig)))
                 }
                 .cancellable(id: state.WalletConfigCancelId, cancelInFlight: true)
 

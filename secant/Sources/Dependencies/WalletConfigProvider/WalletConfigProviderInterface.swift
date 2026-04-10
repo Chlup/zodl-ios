@@ -7,7 +7,6 @@
 
 import ComposableArchitecture
 import Foundation
-@preconcurrency import Combine
 
 extension DependencyValues {
     var walletConfigProvider: WalletConfigProviderClient {
@@ -18,6 +17,6 @@ extension DependencyValues {
 
 @DependencyClient
 struct WalletConfigProviderClient {
-    let load: () -> AnyPublisher<WalletConfig, Never>
-    let update: (FeatureFlag, Bool) -> AnyPublisher<Void, Never>
+    var load: @Sendable () async -> WalletConfig = { WalletConfig.initial }
+    var update: @Sendable (FeatureFlag, Bool) async -> Void
 }
