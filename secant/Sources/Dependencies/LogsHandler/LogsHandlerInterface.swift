@@ -17,9 +17,5 @@ extension DependencyValues {
 
 @DependencyClient
 struct LogsHandlerClient {
-    let exportAndStoreLogs: (String, String, String) async throws -> URL?
-    
-    init(exportAndStoreLogs: @escaping (String, String, String) async throws -> URL?) {
-        self.exportAndStoreLogs = exportAndStoreLogs
-    }
+    var exportAndStoreLogs: @Sendable (String, String, String) async throws -> URL?
 }

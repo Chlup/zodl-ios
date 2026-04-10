@@ -8,12 +8,6 @@
 import ComposableArchitecture
 import XCTestDynamicOverlay
 
-extension LogsHandlerClient: TestDependencyKey {
-    static let testValue = Self(
-        exportAndStoreLogs: unimplemented("\(Self.self).exportAndStoreLogs", placeholder: nil)
-    )
-}
-
 extension LogsHandlerClient {
     static let noOp = Self(
         exportAndStoreLogs: { _, _, _ in nil }
