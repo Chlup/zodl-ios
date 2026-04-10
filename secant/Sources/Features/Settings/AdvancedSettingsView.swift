@@ -142,7 +142,7 @@ extension AdvancedSettings.State {
 }
 
 extension StoreOf<AdvancedSettings> {
-    static let initial = StoreOf<AdvancedSettings>(
+    @MainActor static let initial = StoreOf<AdvancedSettings>(
         initialState: .initial
     ) {
         AdvancedSettings()

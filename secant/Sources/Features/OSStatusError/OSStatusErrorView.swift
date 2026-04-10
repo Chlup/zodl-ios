@@ -118,7 +118,7 @@ extension OSStatusError.State {
 }
 
 extension OSStatusError {
-    static let placeholder = StoreOf<OSStatusError>(
+    @MainActor static let placeholder = StoreOf<OSStatusError>(
         initialState: .initial
     ) {
         OSStatusError()

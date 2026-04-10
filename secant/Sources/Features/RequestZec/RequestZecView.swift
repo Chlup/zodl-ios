@@ -125,7 +125,7 @@ extension RequestZec.State {
 }
 
 extension RequestZec {
-    static let placeholder = StoreOf<RequestZec>(
+    @MainActor static let placeholder = StoreOf<RequestZec>(
         initialState: .initial
     ) {
         RequestZec()

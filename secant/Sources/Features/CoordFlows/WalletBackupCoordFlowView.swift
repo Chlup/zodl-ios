@@ -54,7 +54,7 @@ extension WalletBackupCoordFlow.State {
 }
 
 extension WalletBackupCoordFlow {
-    static let placeholder = StoreOf<WalletBackupCoordFlow>(
+    @MainActor static let placeholder = StoreOf<WalletBackupCoordFlow>(
         initialState: .initial
     ) {
         WalletBackupCoordFlow()

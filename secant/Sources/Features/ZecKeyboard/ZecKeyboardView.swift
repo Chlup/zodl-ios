@@ -178,7 +178,7 @@ extension ZecKeyboard.State {
 }
 
 extension ZecKeyboard {
-    static let placeholder = StoreOf<ZecKeyboard>(
+    @MainActor static let placeholder = StoreOf<ZecKeyboard>(
         initialState: .initial
     ) {
         ZecKeyboard()

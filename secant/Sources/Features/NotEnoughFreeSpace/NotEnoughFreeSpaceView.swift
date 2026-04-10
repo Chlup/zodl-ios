@@ -109,7 +109,7 @@ extension NotEnoughFreeSpace.State {
 }
 
 extension NotEnoughFreeSpace {
-    static let placeholder = StoreOf<NotEnoughFreeSpace>(
+    @MainActor static let placeholder = StoreOf<NotEnoughFreeSpace>(
         initialState: .initial
     ) {
         NotEnoughFreeSpace()

@@ -356,7 +356,7 @@ extension Scan.State {
 }
 
 extension Scan {
-    static let placeholder = StoreOf<Scan>(
+    @MainActor static let placeholder = StoreOf<Scan>(
         initialState: .initial
     ) {
         Scan()

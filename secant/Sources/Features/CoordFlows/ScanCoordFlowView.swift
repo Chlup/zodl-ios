@@ -79,7 +79,7 @@ extension ScanCoordFlow.State {
 }
 
 extension ScanCoordFlow {
-    static let placeholder = StoreOf<ScanCoordFlow>(
+    @MainActor static let placeholder = StoreOf<ScanCoordFlow>(
         initialState: .initial
     ) {
         ScanCoordFlow()

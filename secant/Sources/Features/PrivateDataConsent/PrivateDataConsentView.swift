@@ -125,7 +125,7 @@ private extension PrivateDataConsentView {
 // MARK: - Store
 
 extension StoreOf<PrivateDataConsent> {
-    static var demo = StoreOf<PrivateDataConsent>(
+    @MainActor static var demo = StoreOf<PrivateDataConsent>(
         initialState: .initial
     ) {
         PrivateDataConsent()

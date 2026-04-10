@@ -339,7 +339,7 @@ extension ServerSetup.State {
 }
 
 extension ServerSetup {
-    static let placeholder = StoreOf<ServerSetup>(
+    @MainActor static let placeholder = StoreOf<ServerSetup>(
         initialState: .initial
     ) {
         ServerSetup()

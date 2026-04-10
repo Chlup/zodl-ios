@@ -69,7 +69,7 @@ extension SignWithKeystoneCoordFlow.State {
 }
 
 extension SignWithKeystoneCoordFlow {
-    static let placeholder = StoreOf<SignWithKeystoneCoordFlow>(
+    @MainActor static let placeholder = StoreOf<SignWithKeystoneCoordFlow>(
         initialState: .initial
     ) {
         SignWithKeystoneCoordFlow()

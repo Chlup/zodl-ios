@@ -182,7 +182,7 @@ extension AddressDetails.State {
 }
 
 extension AddressDetails {
-    static let placeholder = StoreOf<AddressDetails>(
+    @MainActor static let placeholder = StoreOf<AddressDetails>(
         initialState: .initial
     ) {
         AddressDetails()

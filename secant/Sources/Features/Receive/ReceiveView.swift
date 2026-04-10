@@ -431,7 +431,7 @@ extension Receive.State {
 }
 
 extension Receive {
-    static let placeholder = StoreOf<Receive>(
+    @MainActor static let placeholder = StoreOf<Receive>(
         initialState: .initial
     ) {
         Receive()

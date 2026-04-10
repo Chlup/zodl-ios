@@ -151,7 +151,7 @@ struct MessageEditorView: View {
 // MARK: - Store
 
 extension StoreOf<MessageEditor> {
-    static let placeholder = StoreOf<MessageEditor>(
+    @MainActor static let placeholder = StoreOf<MessageEditor>(
         initialState: .initial
     ) {
         MessageEditor()

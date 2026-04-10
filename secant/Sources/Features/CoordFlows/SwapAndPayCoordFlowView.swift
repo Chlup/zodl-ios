@@ -192,7 +192,7 @@ extension SwapAndPayCoordFlow.State {
 }
 
 extension SwapAndPayCoordFlow {
-    static let placeholder = StoreOf<SwapAndPayCoordFlow>(
+    @MainActor static let placeholder = StoreOf<SwapAndPayCoordFlow>(
         initialState: .initial
     ) {
         SwapAndPayCoordFlow()

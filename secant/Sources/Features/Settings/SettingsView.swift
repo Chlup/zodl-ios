@@ -279,7 +279,7 @@ extension Settings.State {
 }
 
 extension StoreOf<Settings> {
-    static let placeholder = StoreOf<Settings>(
+    @MainActor static let placeholder = StoreOf<Settings>(
         initialState: .initial
     ) {
         Settings()

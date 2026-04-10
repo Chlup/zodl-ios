@@ -61,7 +61,7 @@ extension RequestZecCoordFlow.State {
 }
 
 extension RequestZecCoordFlow {
-    static let placeholder = StoreOf<RequestZecCoordFlow>(
+    @MainActor static let placeholder = StoreOf<RequestZecCoordFlow>(
         initialState: .initial
     ) {
         RequestZecCoordFlow()
