@@ -18,7 +18,7 @@ extension DependencyValues {
 
 @DependencyClient
 struct BalanceFormatterClient {
-    var convert: (
+    var convert: @Sendable (
         Zatoshi,
         ZatoshiStringRepresentation.PrefixSymbol,
         ZatoshiStringRepresentation.Format

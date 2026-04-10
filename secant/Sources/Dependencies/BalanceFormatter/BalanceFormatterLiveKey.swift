@@ -9,7 +9,11 @@ import Foundation
 import ComposableArchitecture
 
 extension BalanceFormatterClient: DependencyKey {
-    static let liveValue = Self(
-        convert: { ZatoshiStringRepresentation($0, prefixSymbol: $1, format: $2) }
-    )
+    static let liveValue = Self.live()
+
+    static func live() -> Self {
+        return Self(
+            convert: { ZatoshiStringRepresentation($0, prefixSymbol: $1, format: $2) }
+        )
+    }
 }
