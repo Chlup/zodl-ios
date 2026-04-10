@@ -141,7 +141,7 @@ struct Root {
         }
 
         case alert(PresentationAction<Action>)
-        case batteryStateChanged(Notification?)
+        case batteryStateChanged
         case binding(BindingAction<Root.State>)
         case cancelAllRunningEffects
         case confirmationDialog(PresentationAction<ConfirmationDialog>)

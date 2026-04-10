@@ -373,10 +373,10 @@ extension Root {
                     .send(.initialization(.registerForSynchronizersUpdate)),
                     .publisher {
                         autolockHandler.batteryStatePublisher()
-                            .map(Root.Action.batteryStateChanged)
+                            .map { _ in Root.Action.batteryStateChanged }
                     }
                     .cancellable(id: state.CancelBatteryStateId, cancelInFlight: true),
-                    .send(.batteryStateChanged(nil)),
+                    .send(.batteryStateChanged),
                     .send(.observeTransactions),
                     .send(.observeShieldingProcessor),
                     .send(.observeTorInit)

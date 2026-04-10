@@ -91,7 +91,7 @@ extension About.State {
 }
 
 extension About {
-    @MAinActor static let initial = StoreOf<About>(
+    @MainActor static let initial = StoreOf<About>(
         initialState: .initial
     ) {
         About()
