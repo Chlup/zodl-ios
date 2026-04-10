@@ -17,6 +17,8 @@ extension DependencyValues {
 
 @DependencyClient
 struct AutolockHandlerClient {
-    var value: (Bool) -> Void
-    var batteryStatePublisher: () -> NotificationCenter.Publisher = { .init(center: .default, name: .AVAssetChapterMetadataGroupsDidChange) }
+    var value: @Sendable (Bool) async -> Void = { _ in }
+    var batteryStatePublisher: @Sendable () -> NotificationCenter.Publisher = {
+        NotificationCenter.Publisher(center: .default, name: .AVAssetChapterMetadataGroupsDidChange)
+    }
 }
