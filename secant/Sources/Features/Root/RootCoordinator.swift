@@ -56,8 +56,7 @@ extension Root {
                     }
                 }
                 userDefaults.setValue(leavesScreenOpen, Constants.udLeavesScreenOpen)
-                autolockHandler.value(leavesScreenOpen)
-                return .none
+                return .run { _ in await autolockHandler.value(leavesScreenOpen) }
 
             case .addKeystoneHWWalletCoordFlow(.path(.element(id: _, action: .accountHWWalletSelection(.forgetThisDeviceTapped)))),
                 .addKeystoneHWWalletCoordFlow(.path(.element(id: _, action: .keystoneDeviceReady(.forgetThisDeviceTapped)))):
