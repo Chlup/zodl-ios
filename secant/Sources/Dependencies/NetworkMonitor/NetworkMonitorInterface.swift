@@ -17,5 +17,5 @@ extension DependencyValues {
 
 @DependencyClient
 struct NetworkMonitorClient {
-    let networkMonitorStream: () -> AnyPublisher<Bool, Never>
+    var networkMonitorStream: @Sendable () -> AnyPublisher<Bool, Never> = { Empty().eraseToAnyPublisher() }
 }
