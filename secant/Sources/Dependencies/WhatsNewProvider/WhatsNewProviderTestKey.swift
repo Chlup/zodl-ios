@@ -8,13 +8,6 @@
 import ComposableArchitecture
 import XCTestDynamicOverlay
 
-extension WhatsNewProviderClient: TestDependencyKey {
-    static let testValue = Self(
-        latest: unimplemented("\(Self.self).latest", placeholder: .zero),
-        all: unimplemented("\(Self.self).all", placeholder: .zero)
-    )
-}
-
 extension WhatsNewProviderClient {
     static let noOp = Self(
         latest: { .zero },
