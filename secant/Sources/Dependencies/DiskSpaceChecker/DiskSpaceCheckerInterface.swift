@@ -16,7 +16,7 @@ extension DependencyValues {
 
 @DependencyClient
 struct DiskSpaceCheckerClient {
-    var freeSpaceRequiredForSync: () -> Int64 = { 0 }
-    var hasEnoughFreeSpaceForSync: () -> Bool = { false }
-    var freeSpace: () -> Int64 = { 0 }
+    var freeSpaceRequiredForSync: @Sendable () -> Int64 = { 0 }
+    var hasEnoughFreeSpaceForSync: @Sendable () -> Bool = { false }
+    var freeSpace: @Sendable () -> Int64 = { 0 }
 }

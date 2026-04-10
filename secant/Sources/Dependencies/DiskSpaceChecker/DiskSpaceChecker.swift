@@ -7,17 +7,17 @@
 
 import Foundation
 
-struct DiskSpaceChecker {
+enum DiskSpaceChecker {
     /// Free space on disk in bytes required to do sync
-    func freeSpaceRequiredForSync() -> Int64 {
+    static func freeSpaceRequiredForSync() -> Int64 {
         1 * 1024 * 1024 * 1024 // 1GB converted to bytes
     }
 
-    func hasEnoughFreeSpaceForSync() -> Bool {
+    static func hasEnoughFreeSpaceForSync() -> Bool {
         freeSpace() > freeSpaceRequiredForSync()
     }
 
-    func freeSpace() -> Int64 {
+    static func freeSpace() -> Int64 {
         do {
             let fileURL = URL(fileURLWithPath: NSHomeDirectory())
             let values = try fileURL.resourceValues(forKeys: [.volumeAvailableCapacityForImportantUsageKey])

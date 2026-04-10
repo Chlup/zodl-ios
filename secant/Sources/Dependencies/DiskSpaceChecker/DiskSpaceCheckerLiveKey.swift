@@ -9,11 +9,10 @@ import ComposableArchitecture
 
 extension DiskSpaceCheckerClient: DependencyKey {
     static let liveValue: Self = {
-        let diskSpaceChecker = DiskSpaceChecker()
         return Self(
-            freeSpaceRequiredForSync: { diskSpaceChecker.freeSpaceRequiredForSync() },
-            hasEnoughFreeSpaceForSync: { diskSpaceChecker.hasEnoughFreeSpaceForSync() },
-            freeSpace: { diskSpaceChecker.freeSpace() }
+            freeSpaceRequiredForSync: { DiskSpaceChecker.freeSpaceRequiredForSync() },
+            hasEnoughFreeSpaceForSync: { DiskSpaceChecker.hasEnoughFreeSpaceForSync() },
+            freeSpace: { DiskSpaceChecker.freeSpace() }
         )
     }()
 }

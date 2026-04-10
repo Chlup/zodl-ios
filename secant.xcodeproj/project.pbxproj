@@ -120,7 +120,6 @@
 		34AA6E3B2F85774F00D244E2 /* RootDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CC02F85774F00D244E2 /* RootDestination.swift */; };
 		34AA6E3C2F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C742F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift */; };
 		34AA6E3D2F85774F00D244E2 /* TCALogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DBB2F85774F00D244E2 /* TCALogging.swift */; };
-		34AA6E3E2F85774F00D244E2 /* DiskSpaceCheckerTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BD72F85774F00D244E2 /* DiskSpaceCheckerTestKey.swift */; };
 		34AA6E3F2F85774F00D244E2 /* SendingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CD82F85774F00D244E2 /* SendingView.swift */; };
 		34AA6E402F85774F00D244E2 /* TorSetupStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CFD2F85774F00D244E2 /* TorSetupStore.swift */; };
 		34AA6E412F85774F00D244E2 /* AddressBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C6A2F85774F00D244E2 /* AddressBookView.swift */; };
@@ -575,7 +574,6 @@
 		34AA70092F85774F00D244E2 /* RootDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CC02F85774F00D244E2 /* RootDestination.swift */; };
 		34AA700A2F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C742F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift */; };
 		34AA700B2F85774F00D244E2 /* TCALogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DBB2F85774F00D244E2 /* TCALogging.swift */; };
-		34AA700C2F85774F00D244E2 /* DiskSpaceCheckerTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BD72F85774F00D244E2 /* DiskSpaceCheckerTestKey.swift */; };
 		34AA700D2F85774F00D244E2 /* SendingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CD82F85774F00D244E2 /* SendingView.swift */; };
 		34AA700E2F85774F00D244E2 /* TorSetupStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CFD2F85774F00D244E2 /* TorSetupStore.swift */; };
 		34AA700F2F85774F00D244E2 /* AddressBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C6A2F85774F00D244E2 /* AddressBookView.swift */; };
@@ -978,7 +976,6 @@
 		34AA719F2F85774F00D244E2 /* RootDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CC02F85774F00D244E2 /* RootDestination.swift */; };
 		34AA71A02F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C742F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift */; };
 		34AA71A12F85774F00D244E2 /* TCALogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DBB2F85774F00D244E2 /* TCALogging.swift */; };
-		34AA71A22F85774F00D244E2 /* DiskSpaceCheckerTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BD72F85774F00D244E2 /* DiskSpaceCheckerTestKey.swift */; };
 		34AA71A32F85774F00D244E2 /* SendingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CD82F85774F00D244E2 /* SendingView.swift */; };
 		34AA71A42F85774F00D244E2 /* TorSetupStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CFD2F85774F00D244E2 /* TorSetupStore.swift */; };
 		34AA71A52F85774F00D244E2 /* AddressBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C6A2F85774F00D244E2 /* AddressBookView.swift */; };
@@ -1433,7 +1430,6 @@
 		34AA736D2F85774F00D244E2 /* RootDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CC02F85774F00D244E2 /* RootDestination.swift */; };
 		34AA736E2F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C742F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift */; };
 		34AA736F2F85774F00D244E2 /* TCALogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DBB2F85774F00D244E2 /* TCALogging.swift */; };
-		34AA73702F85774F00D244E2 /* DiskSpaceCheckerTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BD72F85774F00D244E2 /* DiskSpaceCheckerTestKey.swift */; };
 		34AA73712F85774F00D244E2 /* SendingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CD82F85774F00D244E2 /* SendingView.swift */; };
 		34AA73722F85774F00D244E2 /* TorSetupStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CFD2F85774F00D244E2 /* TorSetupStore.swift */; };
 		34AA73732F85774F00D244E2 /* AddressBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C6A2F85774F00D244E2 /* AddressBookView.swift */; };
@@ -1836,7 +1832,6 @@
 		34AA75032F85774F00D244E2 /* RootDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CC02F85774F00D244E2 /* RootDestination.swift */; };
 		34AA75042F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C742F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift */; };
 		34AA75052F85774F00D244E2 /* TCALogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DBB2F85774F00D244E2 /* TCALogging.swift */; };
-		34AA75062F85774F00D244E2 /* DiskSpaceCheckerTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BD72F85774F00D244E2 /* DiskSpaceCheckerTestKey.swift */; };
 		34AA75072F85774F00D244E2 /* SendingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CD82F85774F00D244E2 /* SendingView.swift */; };
 		34AA75082F85774F00D244E2 /* TorSetupStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CFD2F85774F00D244E2 /* TorSetupStore.swift */; };
 		34AA75092F85774F00D244E2 /* AddressBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C6A2F85774F00D244E2 /* AddressBookView.swift */; };
@@ -2407,7 +2402,6 @@
 		34AA6BD42F85774F00D244E2 /* DiskSpaceCheckerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskSpaceCheckerInterface.swift; sourceTree = "<group>"; };
 		34AA6BD52F85774F00D244E2 /* DiskSpaceCheckerLiveKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskSpaceCheckerLiveKey.swift; sourceTree = "<group>"; };
 		34AA6BD62F85774F00D244E2 /* DiskSpaceCheckerMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskSpaceCheckerMocks.swift; sourceTree = "<group>"; };
-		34AA6BD72F85774F00D244E2 /* DiskSpaceCheckerTestKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskSpaceCheckerTestKey.swift; sourceTree = "<group>"; };
 		34AA6BD92F85774F00D244E2 /* ExchangeRateInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateInterface.swift; sourceTree = "<group>"; };
 		34AA6BDA2F85774F00D244E2 /* ExchangeRateLiveKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateLiveKey.swift; sourceTree = "<group>"; };
 		34AA6BDB2F85774F00D244E2 /* ExchangeRateTestKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateTestKey.swift; sourceTree = "<group>"; };
@@ -3223,7 +3217,6 @@
 				34AA6BD42F85774F00D244E2 /* DiskSpaceCheckerInterface.swift */,
 				34AA6BD52F85774F00D244E2 /* DiskSpaceCheckerLiveKey.swift */,
 				34AA6BD62F85774F00D244E2 /* DiskSpaceCheckerMocks.swift */,
-				34AA6BD72F85774F00D244E2 /* DiskSpaceCheckerTestKey.swift */,
 			);
 			path = DiskSpaceChecker;
 			sourceTree = "<group>";
@@ -5821,7 +5814,6 @@
 				34AA736D2F85774F00D244E2 /* RootDestination.swift in Sources */,
 				34AA736E2F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift in Sources */,
 				34AA736F2F85774F00D244E2 /* TCALogging.swift in Sources */,
-				34AA73702F85774F00D244E2 /* DiskSpaceCheckerTestKey.swift in Sources */,
 				34AA73712F85774F00D244E2 /* SendingView.swift in Sources */,
 				34AA73722F85774F00D244E2 /* TorSetupStore.swift in Sources */,
 				34AA73732F85774F00D244E2 /* AddressBookView.swift in Sources */,
@@ -6234,7 +6226,6 @@
 				34AA70092F85774F00D244E2 /* RootDestination.swift in Sources */,
 				34AA700A2F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift in Sources */,
 				34AA700B2F85774F00D244E2 /* TCALogging.swift in Sources */,
-				34AA700C2F85774F00D244E2 /* DiskSpaceCheckerTestKey.swift in Sources */,
 				34AA700D2F85774F00D244E2 /* SendingView.swift in Sources */,
 				34AA700E2F85774F00D244E2 /* TorSetupStore.swift in Sources */,
 				34AA700F2F85774F00D244E2 /* AddressBookView.swift in Sources */,
@@ -6707,7 +6698,6 @@
 				34AA75032F85774F00D244E2 /* RootDestination.swift in Sources */,
 				34AA75042F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift in Sources */,
 				34AA75052F85774F00D244E2 /* TCALogging.swift in Sources */,
-				34AA75062F85774F00D244E2 /* DiskSpaceCheckerTestKey.swift in Sources */,
 				34AA75072F85774F00D244E2 /* SendingView.swift in Sources */,
 				34AA75082F85774F00D244E2 /* TorSetupStore.swift in Sources */,
 				34AA75092F85774F00D244E2 /* AddressBookView.swift in Sources */,
@@ -7120,7 +7110,6 @@
 				34AA719F2F85774F00D244E2 /* RootDestination.swift in Sources */,
 				34AA71A02F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift in Sources */,
 				34AA71A12F85774F00D244E2 /* TCALogging.swift in Sources */,
-				34AA71A22F85774F00D244E2 /* DiskSpaceCheckerTestKey.swift in Sources */,
 				34AA71A32F85774F00D244E2 /* SendingView.swift in Sources */,
 				34AA71A42F85774F00D244E2 /* TorSetupStore.swift in Sources */,
 				34AA71A52F85774F00D244E2 /* AddressBookView.swift in Sources */,
@@ -7533,7 +7522,6 @@
 				34AA6E3B2F85774F00D244E2 /* RootDestination.swift in Sources */,
 				34AA6E3C2F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift in Sources */,
 				34AA6E3D2F85774F00D244E2 /* TCALogging.swift in Sources */,
-				34AA6E3E2F85774F00D244E2 /* DiskSpaceCheckerTestKey.swift in Sources */,
 				34AA6E3F2F85774F00D244E2 /* SendingView.swift in Sources */,
 				34AA6E402F85774F00D244E2 /* TorSetupStore.swift in Sources */,
 				34AA6E412F85774F00D244E2 /* AddressBookView.swift in Sources */,
