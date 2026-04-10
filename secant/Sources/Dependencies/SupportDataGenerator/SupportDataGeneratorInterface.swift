@@ -16,5 +16,5 @@ extension DependencyValues {
 
 @DependencyClient
 struct SupportDataGeneratorClient {
-    let generate: () -> SupportData
+    var generate: @Sendable () -> SupportData = { SupportData(toAddress: "", subject: "", message: "") }
 }

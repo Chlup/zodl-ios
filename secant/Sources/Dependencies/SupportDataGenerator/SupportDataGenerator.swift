@@ -116,7 +116,8 @@ private struct SystemVersionItem: SupportDataGeneratorItem {
     }
 
     func generate() -> [(String, String)] {
-        return [(Constants.systemVersionKey, UIDevice.current.systemVersion)]
+        let version = ProcessInfo.processInfo.operatingSystemVersion
+        return [(Constants.systemVersionKey, "\(version.majorVersion).\(version.minorVersion).\(version.patchVersion)")]
     }
 }
 
