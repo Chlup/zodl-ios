@@ -8,13 +8,14 @@
 import Foundation
 @preconcurrency import ZcashLightClientKit
 import ComposableArchitecture
+import os
 
-class UserMetadataStorage {
+final class UserMetadataStorage: Sendable {
     enum Constants {
         static let int64Size = MemoryLayout<Int64>.size
         static let udUmRTimestamp = "zashi_udUmRTimestamp"
     }
-    
+
     enum UMError: Error {
         case documentsFolder
         // structure of the encrypted data is either corrupted or version is not present
@@ -28,25 +29,24 @@ class UserMetadataStorage {
         case serialization
     }
 
-    // Bookmarks
-    var bookmarked: [String: UMBookmark] = [:]
-    
-    // Annotations
-    var annotations: [String: UMAnnotation] = [:]
+    struct MutableState: Sendable {
+        var bookmarked: [String: UMBookmark] = [:]
+        var annotations: [String: UMAnnotation] = [:]
+        var read: [String: String] = [:]
+        var swapIds: [String: UMSwapId] = [:]
+        var lastUsedAssetHistory: [String] = []
+    }
 
-    // Read
-    var read: [String: String] = [:]
+    let state = OSAllocatedUnfairLock(initialState: MutableState())
 
-    // Swap Ids
-    var swapIds: [String: UMSwapId] = [:]
-    
-    // Last User SwapAssets
-    var lastUsedAssetHistory: [String] = []
+    var lastUsedAssetHistory: [String] {
+        return state.withLock { $0.self.lastUsedAssetHistory }
+    }
 
     init() { }
-    
+
     // MARK: - General
-    
+
     func filenameForEncryptedFile(account: Account) throws -> String {
         @Dependency(\.walletStorage) var walletStorage
 
@@ -61,19 +61,21 @@ class UserMetadataStorage {
 
         return filename
     }
-    
+
     func reset() throws {
-        bookmarked.removeAll()
-        annotations.removeAll()
-        read.removeAll()
-        swapIds.removeAll()
-        lastUsedAssetHistory.removeAll()
-        
+        state.withLock { state in
+            state.bookmarked.removeAll()
+            state.annotations.removeAll()
+            state.read.removeAll()
+            state.swapIds.removeAll()
+            state.lastUsedAssetHistory.removeAll()
+        }
+
         @Dependency(\.userDefaults) var userDefaults
 
         userDefaults.remove(Constants.udUmRTimestamp)
     }
-    
+
     func resetAccount(_ account: Account) throws {
         // store encrypted data to the local storage
         guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
@@ -99,11 +101,11 @@ class UserMetadataStorage {
 
         let filenameForEncryptedFile = try filenameForEncryptedFile(account: account)
         let fileURL = documentsDirectory.appendingPathComponent(filenameForEncryptedFile)
-        
+
         let metadata = userMetadataFromMemory()
-        
+
         let encryptedUMData = try UserMetadata.encryptUserMetadata(metadata, account: account)
-        
+
         try encryptedUMData.write(to: fileURL, options: .atomic)
 
         @Dependency(\.remoteStorage) var remoteStorage
@@ -111,7 +113,7 @@ class UserMetadataStorage {
         // always push the latest data to the remote
         try? remoteStorage.storeDataToFile(encryptedUMData, filenameForEncryptedFile)
     }
-    
+
     func load(account: Account) throws {
         resolveReadTimestamp()
         clearMemory()
@@ -127,7 +129,7 @@ class UserMetadataStorage {
         } catch {
             checkRemoteAndEventuallyFillMemory(account: account)
         }
-        
+
         return
     }
 
@@ -136,10 +138,10 @@ class UserMetadataStorage {
         guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             throw UMError.documentsFolder
         }
-        
+
         // Try to find and get the data from the encrypted file with the latest encryption version
         let encryptedFileURL = documentsDirectory.appendingPathComponent(try filenameForEncryptedFile(account: account))
-        
+
         if !FileManager.default.fileExists(atPath: encryptedFileURL.path) {
             throw UMError.localFileDoesntExist
         }
@@ -153,10 +155,10 @@ class UserMetadataStorage {
             }
             return loadResult.0
         }
-        
+
         return nil
     }
-    
+
     func resolveReadTimestamp() {
         @Dependency(\.userDefaults) var userDefaults
 
@@ -179,102 +181,114 @@ class UserMetadataStorage {
             try? store(account: account)
         }
     }
-    
-    func fillMemoryWith(_ umData: UserMetadata) {
-        umData.accountMetadata.bookmarked.forEach { bookmark in
-            bookmarked[bookmark.txId] = bookmark
-        }
-        
-        umData.accountMetadata.read.forEach { umRead in
-            read[umRead] = umRead
-        }
-        
-        umData.accountMetadata.annotations.forEach { annotation in
-            annotations[annotation.txId] = annotation
-        }
 
-        umData.accountMetadata.swaps.swapIds.forEach { swapId in
-            swapIds[swapId.depositAddress] = swapId
+    func fillMemoryWith(_ umData: UserMetadata) {
+        state.withLock { state in
+            umData.accountMetadata.bookmarked.forEach { bookmark in
+                state.bookmarked[bookmark.txId] = bookmark
+            }
+
+            umData.accountMetadata.read.forEach { umRead in
+                state.read[umRead] = umRead
+            }
+
+            umData.accountMetadata.annotations.forEach { annotation in
+                state.annotations[annotation.txId] = annotation
+            }
+
+            umData.accountMetadata.swaps.swapIds.forEach { swapId in
+                state.swapIds[swapId.depositAddress] = swapId
+            }
+
+            state.lastUsedAssetHistory = umData.accountMetadata.swaps.lastUsedAssetHistory
         }
-        
-        lastUsedAssetHistory = umData.accountMetadata.swaps.lastUsedAssetHistory
     }
-    
+
     func clearMemory() {
-        bookmarked.removeAll()
-        read.removeAll()
-        annotations.removeAll()
-        swapIds.removeAll()
-        lastUsedAssetHistory.removeAll()
+        state.withLock { state in
+            state.bookmarked.removeAll()
+            state.read.removeAll()
+            state.annotations.removeAll()
+            state.swapIds.removeAll()
+            state.lastUsedAssetHistory.removeAll()
+        }
     }
 
     func userMetadataFromMemory() -> UserMetadata {
-        let umBookmarked = bookmarked.map { $0.value }
-        let umAnnotations = annotations.map { $0.value }
-        let umRead = read.map { $0.value }
-        let umSwapIds = swapIds.map { $0.value }
+        state.withLock { state in
+            let umBookmarked = state.bookmarked.map { $0.value }
+            let umAnnotations = state.annotations.map { $0.value }
+            let umRead = state.read.map { $0.value }
+            let umSwapIds = state.swapIds.map { $0.value }
 
-        let umAccount = UMAccount(
-            bookmarked: umBookmarked,
-            annotations: umAnnotations,
-            read: umRead,
-            swaps: UMSwaps(
-                swapIds: umSwapIds,
-                lastUsedAssetHistory: lastUsedAssetHistory,
-                lastUpdated: Int64(Date().timeIntervalSince1970 * 1000)
+            let umAccount = UMAccount(
+                bookmarked: umBookmarked,
+                annotations: umAnnotations,
+                read: umRead,
+                swaps: UMSwaps(
+                    swapIds: umSwapIds,
+                    lastUsedAssetHistory: state.lastUsedAssetHistory,
+                    lastUpdated: Int64(Date().timeIntervalSince1970 * 1000)
+                )
             )
-        )
-        
-        return UserMetadata(
-            version: UserMetadata.Constants.version,
-            lastUpdated: Int64(Date().timeIntervalSince1970 * 1000),
-            accountMetadata: umAccount
-        )
+
+            return UserMetadata(
+                version: UserMetadata.Constants.version,
+                lastUpdated: Int64(Date().timeIntervalSince1970 * 1000),
+                accountMetadata: umAccount
+            )
+        }
     }
 
     // MARK: - Bookmarking
-    
+
     func isBookmarked(txId: String) -> Bool {
-        bookmarked[txId]?.isBookmarked ?? false
+        state.withLock { $0.bookmarked[txId]?.isBookmarked ?? false }
     }
-    
+
     func toggleBookmarkFor(txId: String) {
-        guard let existingBookmark = bookmarked[txId] else {
-            bookmarked[txId] = UMBookmark(
+        state.withLock { state in
+            guard let existingBookmark = state.bookmarked[txId] else {
+                state.bookmarked[txId] = UMBookmark(
+                    txId: txId,
+                    lastUpdated: Int64(Date().timeIntervalSince1970 * 1000),
+                    isBookmarked: true
+                )
+                return
+            }
+
+            state.bookmarked[txId] = UMBookmark(
                 txId: txId,
                 lastUpdated: Int64(Date().timeIntervalSince1970 * 1000),
-                isBookmarked: true
+                isBookmarked: !existingBookmark.isBookmarked
             )
-            return
         }
-        
-        bookmarked[txId] = UMBookmark(
-            txId: txId,
-            lastUpdated: Int64(Date().timeIntervalSince1970 * 1000),
-            isBookmarked: !existingBookmark.isBookmarked
-        )
     }
-    
+
     // MARK: - Annotations
-    
+
     func annotationFor(txId: String) -> String? {
-        annotations[txId]?.content
+        state.withLock { $0.annotations[txId]?.content }
     }
-    
+
     func add(annotation: String, for txId: String) {
-        annotations[txId] = UMAnnotation(
-            txId: txId,
-            content: annotation,
-            lastUpdated: Int64(Date().timeIntervalSince1970 * 1000) 
-        )
+        state.withLock { state in
+            state.annotations[txId] = UMAnnotation(
+                txId: txId,
+                content: annotation,
+                lastUpdated: Int64(Date().timeIntervalSince1970 * 1000)
+            )
+        }
     }
-    
+
     func deleteAnnotationFor(txId: String) {
-        annotations.removeValue(forKey: txId)
+        _ = state.withLock { state in
+            state.annotations.removeValue(forKey: txId)
+        }
     }
-    
+
     // MARK: - Unread
-    
+
     func isRead(txId: String, txTimestamp: TimeInterval?) -> Bool {
         @Dependency(\.userDefaults) var userDefaults
 
@@ -285,31 +299,33 @@ class UserMetadataStorage {
             }
         }
 
-        return read[txId] != nil
+        return state.withLock { $0.read[txId] != nil }
     }
-    
+
     func readTx(txId: String) {
-        read[txId] = txId
+        state.withLock { $0.read[txId] = txId }
     }
-    
+
     // MARK: - Swap Id
-    
+
     func allSwaps() -> [UMSwapId] {
-        swapIds.values.compactMap(\.self)
+        state.withLock { $0.swapIds.values.compactMap(\.self) }
     }
-    
+
     func isSwapTransaction(depositAddress: String) -> Bool {
-        guard let swapDepositAddress = swapIds[depositAddress]?.depositAddress else {
-            return false
+        state.withLock { state in
+            guard let swapDepositAddress = state.swapIds[depositAddress]?.depositAddress else {
+                return false
+            }
+
+            return swapDepositAddress == depositAddress
         }
-        
-        return swapDepositAddress == depositAddress
     }
-    
+
     func swapDetailsForTransaction(depositAddress: String) -> UMSwapId? {
-        swapIds[depositAddress]
+        state.withLock { $0.swapIds[depositAddress] }
     }
-    
+
     func markTransactionAsSwapFor(
         depositAddress: String,
         provider: String,
@@ -321,31 +337,35 @@ class UserMetadataStorage {
         status: String,
         amountOutFormatted: String
     ) {
-        swapIds[depositAddress] = UMSwapId(
-            depositAddress: depositAddress,
-            provider: provider,
-            totalFees: totalFees,
-            totalUSDFees: totalUSDFees,
-            lastUpdated: Int64(Date().timeIntervalSince1970 * 1000),
-            fromAsset: fromAsset,
-            toAsset: toAsset,
-            exactInput: exactInput,
-            status: status,
-            amountOutFormatted: amountOutFormatted
-        )
+        state.withLock { state in
+            state.swapIds[depositAddress] = UMSwapId(
+                depositAddress: depositAddress,
+                provider: provider,
+                totalFees: totalFees,
+                totalUSDFees: totalUSDFees,
+                lastUpdated: Int64(Date().timeIntervalSince1970 * 1000),
+                fromAsset: fromAsset,
+                toAsset: toAsset,
+                exactInput: exactInput,
+                status: status,
+                amountOutFormatted: amountOutFormatted
+            )
+        }
     }
-    
-    func update(_ swap: UMSwapId) -> Void {
-        swapIds[swap.depositAddress] = swap
+
+    func update(_ swap: UMSwapId) {
+        state.withLock { $0.swapIds[swap.depositAddress] = swap }
     }
 
     // Last Used Asset History
     func addLastUsedSwap(asset: String) {
-        lastUsedAssetHistory.removeAll { $0 == asset }
-        lastUsedAssetHistory.insert(asset, at: 0)
-        
-        if lastUsedAssetHistory.count > 10 {
-            lastUsedAssetHistory = Array(lastUsedAssetHistory.prefix(10))
+        state.withLock { state in
+            state.lastUsedAssetHistory.removeAll { $0 == asset }
+            state.lastUsedAssetHistory.insert(asset, at: 0)
+
+            if state.lastUsedAssetHistory.count > 10 {
+                state.lastUsedAssetHistory = Array(state.lastUsedAssetHistory.prefix(10))
+            }
         }
     }
 }
