@@ -16,10 +16,10 @@ extension UserPreferencesStorageClient: TestDependencyKey {
 
         return UserPreferencesStorageClient(
             server: { mock.server },
-            setServer: mock.setServer(_:),
+            setServer: { try mock.setServer($0) },
             exchangeRate: { mock.exchangeRate },
-            setExchangeRate: mock.setExchangeRate(_:),
-            removeAll: mock.removeAll
+            setExchangeRate: { try mock.setExchangeRate($0) },
+            removeAll: { mock.removeAll() }
         )
     }
 }

@@ -323,7 +323,7 @@ extension Near1Click {
             )
         },
         status: { depositAddress, isSwapToZec in
-            let (data, response) = try await Near1Click.getCall(urlString: "\(Constants.statusUrl)\(depositAddress)", includeJwtKey: true)
+            let (data, _) = try await Near1Click.getCall(urlString: "\(Constants.statusUrl)\(depositAddress)", includeJwtKey: true)
 
             guard let jsonObject = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
                 throw SwapAndPayClient.EndpointError.message("Check status: Cannot parse response")
