@@ -10,6 +10,11 @@
 		0D26AF84299E8196005260EE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D4E7A0F26B364180058B01E /* Preview Assets.xcassets */; };
 		0D26AF88299E8196005260EE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E2F1C8B280ED6A7004E65FE /* LaunchScreen.storyboard */; };
 		0D4E7A1026B364180058B01E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D4E7A0F26B364180058B01E /* Preview Assets.xcassets */; };
+		3403E8E42F898049002B0051 /* Atomics in Frameworks */ = {isa = PBXBuildFile; productRef = 3403E8E32F898049002B0051 /* Atomics */; };
+		3403E8EC2F898059002B0051 /* Atomics in Frameworks */ = {isa = PBXBuildFile; productRef = 3403E8EB2F898059002B0051 /* Atomics */; };
+		3403E8EF2F898060002B0051 /* Atomics in Frameworks */ = {isa = PBXBuildFile; productRef = 3403E8EE2F898060002B0051 /* Atomics */; };
+		3403E8F22F898065002B0051 /* Atomics in Frameworks */ = {isa = PBXBuildFile; productRef = 3403E8F12F898065002B0051 /* Atomics */; };
+		3403E8F52F89806A002B0051 /* Atomics in Frameworks */ = {isa = PBXBuildFile; productRef = 3403E8F42F89806A002B0051 /* Atomics */; };
 		34755C632F8647B00093FC84 /* DisconnectHWWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34755C612F8647B00093FC84 /* DisconnectHWWalletView.swift */; };
 		34755C642F8647B00093FC84 /* DisconnectHWWalletStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34755C602F8647B00093FC84 /* DisconnectHWWalletStore.swift */; };
 		34755C652F8647B00093FC84 /* DisconnectHWWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34755C612F8647B00093FC84 /* DisconnectHWWalletView.swift */; };
@@ -2861,6 +2866,7 @@
 			files = (
 				34AA777D2F8582DD00D244E2 /* ZcashPaymentURI in Frameworks */,
 				34AA77452F85813300D244E2 /* URLRouting in Frameworks */,
+				3403E8EC2F898059002B0051 /* Atomics in Frameworks */,
 				34AA77252F857E2900D244E2 /* XCTestDynamicOverlay in Frameworks */,
 				34AA77162F857DAE00D244E2 /* ComposableArchitecture in Frameworks */,
 				34AA77882F85832500D244E2 /* Lottie in Frameworks */,
@@ -2880,6 +2886,7 @@
 			files = (
 				34AA777B2F8582CC00D244E2 /* ZcashPaymentURI in Frameworks */,
 				34AA77432F85812500D244E2 /* URLRouting in Frameworks */,
+				3403E8E42F898049002B0051 /* Atomics in Frameworks */,
 				34AA77232F857E2300D244E2 /* XCTestDynamicOverlay in Frameworks */,
 				34AA77142F857DA300D244E2 /* ComposableArchitecture in Frameworks */,
 				34AA77862F85830C00D244E2 /* Lottie in Frameworks */,
@@ -2913,6 +2920,7 @@
 			files = (
 				34AA77832F8582F100D244E2 /* ZcashPaymentURI in Frameworks */,
 				34AA774B2F85815200D244E2 /* URLRouting in Frameworks */,
+				3403E8F52F89806A002B0051 /* Atomics in Frameworks */,
 				34AA772B2F857E3800D244E2 /* XCTestDynamicOverlay in Frameworks */,
 				34AA771C2F857DBB00D244E2 /* ComposableArchitecture in Frameworks */,
 				34AA778E2F85833900D244E2 /* Lottie in Frameworks */,
@@ -2932,6 +2940,7 @@
 			files = (
 				34AA777F2F8582E600D244E2 /* ZcashPaymentURI in Frameworks */,
 				34AA77472F85814600D244E2 /* URLRouting in Frameworks */,
+				3403E8EF2F898060002B0051 /* Atomics in Frameworks */,
 				34AA77272F857E2F00D244E2 /* XCTestDynamicOverlay in Frameworks */,
 				34AA77182F857DB300D244E2 /* ComposableArchitecture in Frameworks */,
 				34AA778A2F85832E00D244E2 /* Lottie in Frameworks */,
@@ -2962,6 +2971,7 @@
 				34AA77542F85818500D244E2 /* MnemonicSwift in Frameworks */,
 				34AA773A2F8580D000D244E2 /* CasePaths in Frameworks */,
 				34AA77972F85836E00D244E2 /* KeystoneSDK in Frameworks */,
+				3403E8F22F898065002B0051 /* Atomics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4915,6 +4925,7 @@
 				34AA77922F85836400D244E2 /* KeystoneSDK */,
 				34AA779D2F8583B400D244E2 /* BigDecimal */,
 				34AA77B92F85861300D244E2 /* UInt128 */,
+				3403E8EB2F898059002B0051 /* Atomics */,
 			);
 			productName = secant;
 			productReference = 0D26AF94299E8196005260EE /* secant-mainnet.app */;
@@ -4950,6 +4961,7 @@
 				34AA77902F85835B00D244E2 /* KeystoneSDK */,
 				34AA779B2F8583A500D244E2 /* BigDecimal */,
 				34AA77B72F85860300D244E2 /* UInt128 */,
+				3403E8E32F898049002B0051 /* Atomics */,
 			);
 			productName = secant;
 			productReference = 0D4E7A0526B364170058B01E /* secant-testnet.app */;
@@ -5023,6 +5035,7 @@
 				34AA77982F85837400D244E2 /* KeystoneSDK */,
 				34AA77A32F8583C300D244E2 /* BigDecimal */,
 				34AA77BF2F85862200D244E2 /* UInt128 */,
+				3403E8F42F89806A002B0051 /* Atomics */,
 			);
 			productName = secant;
 			productReference = 9E41FFBB2CB2814500783CFD /* zashi-testnet.app */;
@@ -5058,6 +5071,7 @@
 				34AA77942F85836900D244E2 /* KeystoneSDK */,
 				34AA779F2F8583BA00D244E2 /* BigDecimal */,
 				34AA77BB2F85861800D244E2 /* UInt128 */,
+				3403E8EE2F898060002B0051 /* Atomics */,
 			);
 			productName = secant;
 			productReference = 9E4AB2B72BA1BEE900F5D6DB /* secant-distrib.app */;
@@ -5094,6 +5108,7 @@
 				34AA77A12F8583BF00D244E2 /* BigDecimal */,
 				34AA77BD2F85861E00D244E2 /* UInt128 */,
 				9E4841522F869F5F00D0649B /* ZcashLightClientKit */,
+				3403E8F12F898065002B0051 /* Atomics */,
 			);
 			productName = secant;
 			productReference = 9E5AB4822C94777800065483 /* zashi-internal.app */;
@@ -5146,6 +5161,7 @@
 				34AA77B52F85848A00D244E2 /* XCRemoteSwiftPackageReference "xcstrings-tool-plugin" */,
 				34AA77B62F85860300D244E2 /* XCRemoteSwiftPackageReference "UInt128" */,
 				9E4841512F869F5E00D0649B /* XCLocalSwiftPackageReference "../zcash-swift-wallet-sdk" */,
+				3403E8E22F898049002B0051 /* XCRemoteSwiftPackageReference "swift-atomics" */,
 			);
 			productRefGroup = 0D4E7A0626B364170058B01E /* Products */;
 			projectDirPath = "";
@@ -8737,6 +8753,14 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		3403E8E22F898049002B0051 /* XCRemoteSwiftPackageReference "swift-atomics" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-atomics.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.3.0;
+			};
+		};
 		34AA77122F857DA300D244E2 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
@@ -8838,6 +8862,31 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3403E8E32F898049002B0051 /* Atomics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3403E8E22F898049002B0051 /* XCRemoteSwiftPackageReference "swift-atomics" */;
+			productName = Atomics;
+		};
+		3403E8EB2F898059002B0051 /* Atomics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3403E8E22F898049002B0051 /* XCRemoteSwiftPackageReference "swift-atomics" */;
+			productName = Atomics;
+		};
+		3403E8EE2F898060002B0051 /* Atomics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3403E8E22F898049002B0051 /* XCRemoteSwiftPackageReference "swift-atomics" */;
+			productName = Atomics;
+		};
+		3403E8F12F898065002B0051 /* Atomics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3403E8E22F898049002B0051 /* XCRemoteSwiftPackageReference "swift-atomics" */;
+			productName = Atomics;
+		};
+		3403E8F42F89806A002B0051 /* Atomics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3403E8E22F898049002B0051 /* XCRemoteSwiftPackageReference "swift-atomics" */;
+			productName = Atomics;
+		};
 		34AA77132F857DA300D244E2 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 34AA77122F857DA300D244E2 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;

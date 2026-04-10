@@ -7,23 +7,24 @@
 
 import ComposableArchitecture
 @preconcurrency import KeystoneSDK
+import Atomics
 
-class KeystoneSDKWrapper {
+final class KeystoneSDKWrapper: Sendable {
     let keystoneSDK = KeystoneSDK()
-    var foundResult = false
-    
+    let foundResult = ManagedAtomic<Bool>(false)
+
     func decodeQR(_ qrCode: String) -> DecodeResult? {
-        guard !foundResult else { return nil }
-        
+        guard !foundResult.load(ordering: .acquiring) else { return nil }
+
         let result = try? keystoneSDK.decodeQR(qrCode: qrCode)
-        
-        foundResult = result?.progress == 100
-        
+
+        foundResult.store(result?.progress == 100, ordering: .releasing)
+
         return result
     }
-    
+
     func resetQRDecoder() {
-        foundResult = false
+        foundResult.store(false, ordering: .releasing)
         keystoneSDK.resetQRDecoder()
     }
 }
