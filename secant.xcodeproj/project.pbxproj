@@ -8731,7 +8731,7 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.6.3;
+				minimumVersion = 1.12.0;
 			};
 		};
 		34AA77122F857DA300D244E2 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {

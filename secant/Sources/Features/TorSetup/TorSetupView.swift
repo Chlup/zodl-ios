@@ -231,7 +231,7 @@ extension TorSetupView {
 // MARK: - Store
 
 extension TorSetup {
-    static var initial = StoreOf<TorSetup>(
+    @MainActor static let initial = StoreOf<TorSetup>(
         initialState: .init(isSettingsView: false)
     ) {
         TorSetup()

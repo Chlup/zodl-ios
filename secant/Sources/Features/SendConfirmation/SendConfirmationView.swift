@@ -216,7 +216,7 @@ struct SendConfirmationView: View {
 // MARK: - Store
 
 extension SendConfirmation {
-    static var initial = StoreOf<SendConfirmation>(
+    @MainActor static let initial = StoreOf<SendConfirmation>(
         initialState: .initial
     ) {
         SendConfirmation()

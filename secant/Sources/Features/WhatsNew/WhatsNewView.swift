@@ -162,7 +162,7 @@ struct WhatsNewView: View {
 // MARK: - Store
 
 extension WhatsNew {
-    static var initial = StoreOf<WhatsNew>(
+    @MainActor static let initial = StoreOf<WhatsNew>(
         initialState: .initial
     ) {
         WhatsNew()

@@ -221,7 +221,7 @@ struct TransactionsManagerView: View {
 // MARK: - Store
 
 extension TransactionsManager {
-    static var initial = StoreOf<TransactionsManager>(
+    @MainActor static let initial = StoreOf<TransactionsManager>(
         initialState: .initial
     ) {
         TransactionsManager()
