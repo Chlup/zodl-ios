@@ -23,6 +23,6 @@ struct LocalAuthenticationClient {
         case touchID
     }
     
-    let authenticate: @Sendable () async -> Bool
-    let method: @Sendable () -> Method
+    var authenticate: @Sendable () async -> Bool = { false }
+    var method: @Sendable () -> Method = { .none }
 }
