@@ -205,7 +205,7 @@ extension WalletBalances {
 // MARK: - Placeholders
 
 extension WalletBalances.State {
-    static let initial = WalletBalances.State(
+    static var initial: WalletBalances.State { WalletBalances.State(
         shieldedBalance: .zero
-    )
+    ) }
 }

@@ -50,7 +50,7 @@ struct WalletBackupCoordFlowView: View {
 // MARK: - Placeholders
 
 extension WalletBackupCoordFlow.State {
-    static let initial = WalletBackupCoordFlow.State()
+    static var initial: WalletBackupCoordFlow.State { WalletBackupCoordFlow.State() }
 }
 
 extension WalletBackupCoordFlow {

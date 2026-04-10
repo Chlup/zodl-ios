@@ -853,5 +853,5 @@ extension TransactionDetails {
 // MARK: - Placeholders
 
 extension TransactionDetails.State {
-    static let initial = TransactionDetails.State(transaction: .placeholder())
+    static var initial: TransactionDetails.State { TransactionDetails.State(transaction: .placeholder()) }
 }

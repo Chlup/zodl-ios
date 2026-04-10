@@ -57,7 +57,7 @@ struct RequestZecCoordFlowView: View {
 // MARK: - Placeholders
 
 extension RequestZecCoordFlow.State {
-    static let initial = RequestZecCoordFlow.State()
+    static var initial: RequestZecCoordFlow.State { RequestZecCoordFlow.State() }
 }
 
 extension RequestZecCoordFlow {

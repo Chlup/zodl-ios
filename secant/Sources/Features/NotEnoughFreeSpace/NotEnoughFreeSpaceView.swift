@@ -103,9 +103,9 @@ struct NotEnoughFreeSpaceView: View {
 // MARK: Placeholders
 
 extension NotEnoughFreeSpace.State {
-    static let initial = NotEnoughFreeSpace.State(
+    static var initial: NotEnoughFreeSpace.State { NotEnoughFreeSpace.State(
         settingsState: .initial
-    )
+    ) }
 }
 
 extension NotEnoughFreeSpace {

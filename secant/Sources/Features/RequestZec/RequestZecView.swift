@@ -121,7 +121,7 @@ struct RequestZecView: View {
 // MARK: - Placeholders
 
 extension RequestZec.State {
-    static let initial = RequestZec.State()
+    static var initial: RequestZec.State { RequestZec.State() }
 }
 
 extension RequestZec {

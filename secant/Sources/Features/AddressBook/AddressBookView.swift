@@ -280,5 +280,5 @@ extension AddressBook {
 // MARK: - Placeholders
 
 extension AddressBook.State {
-    static let initial = AddressBook.State()
+    static var initial: AddressBook.State { AddressBook.State() }
 }

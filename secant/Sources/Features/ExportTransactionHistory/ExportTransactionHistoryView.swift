@@ -96,5 +96,5 @@ extension StoreOf<ExportTransactionHistory> {
 // MARK: - Placeholders
 
 extension ExportTransactionHistory.State {
-    static let initial = ExportTransactionHistory.State()
+    static var initial: ExportTransactionHistory.State { ExportTransactionHistory.State() }
 }

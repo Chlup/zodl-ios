@@ -96,7 +96,7 @@ struct AddKeystoneHWWalletCoordFlowView: View {
 // MARK: - Placeholders
 
 extension AddKeystoneHWWalletCoordFlow.State {
-    static let initial = AddKeystoneHWWalletCoordFlow.State()
+    static var initial: AddKeystoneHWWalletCoordFlow.State { AddKeystoneHWWalletCoordFlow.State() }
 }
 
 extension AddKeystoneHWWalletCoordFlow {

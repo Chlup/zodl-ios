@@ -185,12 +185,12 @@ extension Balances.State {
         pendingTransactions: .zero
     )
     
-    static let initial = Balances.State(
+    static var initial: Balances.State { Balances.State(
         autoShieldingThreshold: .zero,
         changePending: .zero,
         isShielding: false,
         pendingTransactions: .zero
-    )
+    ) }
 }
 
 extension StoreOf<Balances> {

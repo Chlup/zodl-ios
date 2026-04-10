@@ -187,7 +187,7 @@ extension SendFeedback {
 // MARK: - Placeholders
 
 extension SendFeedback.State {
-    static let initial = SendFeedback.State()
+    static var initial: SendFeedback.State { SendFeedback.State() }
 }
 
 extension StoreOf<SendFeedback> {

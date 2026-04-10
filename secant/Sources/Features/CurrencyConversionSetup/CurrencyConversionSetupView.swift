@@ -330,5 +330,5 @@ extension CurrencyConversionSetup {
 // MARK: - Placeholders
 
 extension CurrencyConversionSetup.State {
-    static let initial = CurrencyConversionSetup.State()
+    static var initial: CurrencyConversionSetup.State { CurrencyConversionSetup.State() }
 }

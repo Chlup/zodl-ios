@@ -226,11 +226,11 @@ extension SendConfirmation {
 // MARK: - Placeholders
 
 extension SendConfirmation.State {
-    static let initial = SendConfirmation.State(
+    static var initial: SendConfirmation.State { SendConfirmation.State(
         address: "",
         amount: .zero,
         feeRequired: .zero,
         message: "",
         proposal: nil
-    )
+    ) }
 }

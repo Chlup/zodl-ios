@@ -152,5 +152,5 @@ extension WalletBirthday {
 // MARK: - Placeholders
 
 extension WalletBirthday.State {
-    static let initial = WalletBirthday.State()
+    static var initial: WalletBirthday.State { WalletBirthday.State() }
 }
