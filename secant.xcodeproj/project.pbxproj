@@ -225,7 +225,6 @@
 		34AA6EA52F85774F00D244E2 /* DerivationToolLiveKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BD02F85774F00D244E2 /* DerivationToolLiveKey.swift */; };
 		34AA6EA62F85774F00D244E2 /* Tooltip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DAC2F85774F00D244E2 /* Tooltip.swift */; };
 		34AA6EA72F85774F00D244E2 /* AddressBookStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C692F85774F00D244E2 /* AddressBookStore.swift */; };
-		34AA6EA82F85774F00D244E2 /* FileManagerTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE32F85774F00D244E2 /* FileManagerTestKey.swift */; };
 		34AA6EA92F85774F00D244E2 /* BalanceWithIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D662F85774F00D244E2 /* BalanceWithIconView.swift */; };
 		34AA6EAA2F85774F00D244E2 /* ZashiSyncingProgressStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D882F85774F00D244E2 /* ZashiSyncingProgressStyle.swift */; };
 		34AA6EAB2F85774F00D244E2 /* LogStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DC52F85774F00D244E2 /* LogStore.swift */; };
@@ -679,7 +678,6 @@
 		34AA70732F85774F00D244E2 /* DerivationToolLiveKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BD02F85774F00D244E2 /* DerivationToolLiveKey.swift */; };
 		34AA70742F85774F00D244E2 /* Tooltip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DAC2F85774F00D244E2 /* Tooltip.swift */; };
 		34AA70752F85774F00D244E2 /* AddressBookStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C692F85774F00D244E2 /* AddressBookStore.swift */; };
-		34AA70762F85774F00D244E2 /* FileManagerTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE32F85774F00D244E2 /* FileManagerTestKey.swift */; };
 		34AA70772F85774F00D244E2 /* BalanceWithIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D662F85774F00D244E2 /* BalanceWithIconView.swift */; };
 		34AA70782F85774F00D244E2 /* ZashiSyncingProgressStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D882F85774F00D244E2 /* ZashiSyncingProgressStyle.swift */; };
 		34AA70792F85774F00D244E2 /* LogStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DC52F85774F00D244E2 /* LogStore.swift */; };
@@ -1081,7 +1079,6 @@
 		34AA72092F85774F00D244E2 /* DerivationToolLiveKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BD02F85774F00D244E2 /* DerivationToolLiveKey.swift */; };
 		34AA720A2F85774F00D244E2 /* Tooltip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DAC2F85774F00D244E2 /* Tooltip.swift */; };
 		34AA720B2F85774F00D244E2 /* AddressBookStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C692F85774F00D244E2 /* AddressBookStore.swift */; };
-		34AA720C2F85774F00D244E2 /* FileManagerTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE32F85774F00D244E2 /* FileManagerTestKey.swift */; };
 		34AA720D2F85774F00D244E2 /* BalanceWithIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D662F85774F00D244E2 /* BalanceWithIconView.swift */; };
 		34AA720E2F85774F00D244E2 /* ZashiSyncingProgressStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D882F85774F00D244E2 /* ZashiSyncingProgressStyle.swift */; };
 		34AA720F2F85774F00D244E2 /* LogStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DC52F85774F00D244E2 /* LogStore.swift */; };
@@ -1535,7 +1532,6 @@
 		34AA73D72F85774F00D244E2 /* DerivationToolLiveKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BD02F85774F00D244E2 /* DerivationToolLiveKey.swift */; };
 		34AA73D82F85774F00D244E2 /* Tooltip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DAC2F85774F00D244E2 /* Tooltip.swift */; };
 		34AA73D92F85774F00D244E2 /* AddressBookStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C692F85774F00D244E2 /* AddressBookStore.swift */; };
-		34AA73DA2F85774F00D244E2 /* FileManagerTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE32F85774F00D244E2 /* FileManagerTestKey.swift */; };
 		34AA73DB2F85774F00D244E2 /* BalanceWithIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D662F85774F00D244E2 /* BalanceWithIconView.swift */; };
 		34AA73DC2F85774F00D244E2 /* ZashiSyncingProgressStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D882F85774F00D244E2 /* ZashiSyncingProgressStyle.swift */; };
 		34AA73DD2F85774F00D244E2 /* LogStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DC52F85774F00D244E2 /* LogStore.swift */; };
@@ -1937,7 +1933,6 @@
 		34AA756D2F85774F00D244E2 /* DerivationToolLiveKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BD02F85774F00D244E2 /* DerivationToolLiveKey.swift */; };
 		34AA756E2F85774F00D244E2 /* Tooltip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DAC2F85774F00D244E2 /* Tooltip.swift */; };
 		34AA756F2F85774F00D244E2 /* AddressBookStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C692F85774F00D244E2 /* AddressBookStore.swift */; };
-		34AA75702F85774F00D244E2 /* FileManagerTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE32F85774F00D244E2 /* FileManagerTestKey.swift */; };
 		34AA75712F85774F00D244E2 /* BalanceWithIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D662F85774F00D244E2 /* BalanceWithIconView.swift */; };
 		34AA75722F85774F00D244E2 /* ZashiSyncingProgressStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D882F85774F00D244E2 /* ZashiSyncingProgressStyle.swift */; };
 		34AA75732F85774F00D244E2 /* LogStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6DC52F85774F00D244E2 /* LogStore.swift */; };
@@ -2410,7 +2405,6 @@
 		34AA6BDF2F85774F00D244E2 /* FeedbackGeneratorTestKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackGeneratorTestKey.swift; sourceTree = "<group>"; };
 		34AA6BE12F85774F00D244E2 /* FileManagerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerInterface.swift; sourceTree = "<group>"; };
 		34AA6BE22F85774F00D244E2 /* FileManagerLiveKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerLiveKey.swift; sourceTree = "<group>"; };
-		34AA6BE32F85774F00D244E2 /* FileManagerTestKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerTestKey.swift; sourceTree = "<group>"; };
 		34AA6BE52F85774F00D244E2 /* FlexaHandlerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexaHandlerInterface.swift; sourceTree = "<group>"; };
 		34AA6BE62F85774F00D244E2 /* FlexaHandlerLiveKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexaHandlerLiveKey.swift; sourceTree = "<group>"; };
 		34AA6BE72F85774F00D244E2 /* FlexaHandlerTestKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexaHandlerTestKey.swift; sourceTree = "<group>"; };
@@ -3246,7 +3240,6 @@
 			children = (
 				34AA6BE12F85774F00D244E2 /* FileManagerInterface.swift */,
 				34AA6BE22F85774F00D244E2 /* FileManagerLiveKey.swift */,
-				34AA6BE32F85774F00D244E2 /* FileManagerTestKey.swift */,
 			);
 			path = FileManager;
 			sourceTree = "<group>";
@@ -5921,7 +5914,6 @@
 				34AA73D72F85774F00D244E2 /* DerivationToolLiveKey.swift in Sources */,
 				34AA73D82F85774F00D244E2 /* Tooltip.swift in Sources */,
 				34AA73D92F85774F00D244E2 /* AddressBookStore.swift in Sources */,
-				34AA73DA2F85774F00D244E2 /* FileManagerTestKey.swift in Sources */,
 				34AA73DB2F85774F00D244E2 /* BalanceWithIconView.swift in Sources */,
 				34AA73DC2F85774F00D244E2 /* ZashiSyncingProgressStyle.swift in Sources */,
 				34AA73DD2F85774F00D244E2 /* LogStore.swift in Sources */,
@@ -6333,7 +6325,6 @@
 				34AA70732F85774F00D244E2 /* DerivationToolLiveKey.swift in Sources */,
 				34AA70742F85774F00D244E2 /* Tooltip.swift in Sources */,
 				34AA70752F85774F00D244E2 /* AddressBookStore.swift in Sources */,
-				34AA70762F85774F00D244E2 /* FileManagerTestKey.swift in Sources */,
 				34AA70772F85774F00D244E2 /* BalanceWithIconView.swift in Sources */,
 				34AA70782F85774F00D244E2 /* ZashiSyncingProgressStyle.swift in Sources */,
 				34AA70792F85774F00D244E2 /* LogStore.swift in Sources */,
@@ -6805,7 +6796,6 @@
 				34AA756D2F85774F00D244E2 /* DerivationToolLiveKey.swift in Sources */,
 				34AA756E2F85774F00D244E2 /* Tooltip.swift in Sources */,
 				34AA756F2F85774F00D244E2 /* AddressBookStore.swift in Sources */,
-				34AA75702F85774F00D244E2 /* FileManagerTestKey.swift in Sources */,
 				34AA75712F85774F00D244E2 /* BalanceWithIconView.swift in Sources */,
 				34AA75722F85774F00D244E2 /* ZashiSyncingProgressStyle.swift in Sources */,
 				34AA75732F85774F00D244E2 /* LogStore.swift in Sources */,
@@ -7217,7 +7207,6 @@
 				34AA72092F85774F00D244E2 /* DerivationToolLiveKey.swift in Sources */,
 				34AA720A2F85774F00D244E2 /* Tooltip.swift in Sources */,
 				34AA720B2F85774F00D244E2 /* AddressBookStore.swift in Sources */,
-				34AA720C2F85774F00D244E2 /* FileManagerTestKey.swift in Sources */,
 				34AA720D2F85774F00D244E2 /* BalanceWithIconView.swift in Sources */,
 				34AA720E2F85774F00D244E2 /* ZashiSyncingProgressStyle.swift in Sources */,
 				34AA720F2F85774F00D244E2 /* LogStore.swift in Sources */,
@@ -7629,7 +7618,6 @@
 				34AA6EA52F85774F00D244E2 /* DerivationToolLiveKey.swift in Sources */,
 				34AA6EA62F85774F00D244E2 /* Tooltip.swift in Sources */,
 				34AA6EA72F85774F00D244E2 /* AddressBookStore.swift in Sources */,
-				34AA6EA82F85774F00D244E2 /* FileManagerTestKey.swift in Sources */,
 				34AA6EA92F85774F00D244E2 /* BalanceWithIconView.swift in Sources */,
 				34AA6EAA2F85774F00D244E2 /* ZashiSyncingProgressStyle.swift in Sources */,
 				34AA6EAB2F85774F00D244E2 /* LogStore.swift in Sources */,
