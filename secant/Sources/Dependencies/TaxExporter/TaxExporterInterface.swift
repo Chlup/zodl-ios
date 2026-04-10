@@ -17,5 +17,5 @@ extension DependencyValues {
 
 @DependencyClient
 struct TaxExporterClient {
-    let cointrackerCSVfor: ([TransactionState], String) throws -> URL
+    var cointrackerCSVfor: @Sendable ([TransactionState], String) throws -> URL
 }
