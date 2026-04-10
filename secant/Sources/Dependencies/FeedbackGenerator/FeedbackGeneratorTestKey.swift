@@ -8,14 +8,6 @@
 import ComposableArchitecture
 import XCTestDynamicOverlay
 
-extension FeedbackGeneratorClient: TestDependencyKey {
-    static let testValue = Self(
-        generateSuccessFeedback: unimplemented("\(Self.self).generateSuccessFeedback"),
-        generateWarningFeedback: unimplemented("\(Self.self).generateWarningFeedback"),
-        generateErrorFeedback: unimplemented("\(Self.self).generateErrorFeedback")
-    )
-}
-
 extension FeedbackGeneratorClient {
     static let noOp = Self(
         generateSuccessFeedback: { },
