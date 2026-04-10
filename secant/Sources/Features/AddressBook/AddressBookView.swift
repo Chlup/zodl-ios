@@ -270,7 +270,7 @@ struct AddressBookView: View {
 // MARK: - Store
 
 extension AddressBook {
-    static var initial = StoreOf<AddressBook>(
+    @MainActor static let initial = StoreOf<AddressBook>(
         initialState: .initial
     ) {
         AddressBook()

@@ -843,7 +843,7 @@ extension TransactionDetailsView {
 // MARK: - Store
 
 extension TransactionDetails {
-    static var initial = StoreOf<TransactionDetails>(
+    @MainActor static let initial = StoreOf<TransactionDetails>(
         initialState: .initial
     ) {
         TransactionDetails()

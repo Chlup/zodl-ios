@@ -142,7 +142,7 @@ struct WalletBirthdayView: View {
 // MARK: - Store
 
 extension WalletBirthday {
-    static var initial = StoreOf<WalletBirthday>(
+    @MainActor static let initial = StoreOf<WalletBirthday>(
         initialState: .initial
     ) {
         WalletBirthday()

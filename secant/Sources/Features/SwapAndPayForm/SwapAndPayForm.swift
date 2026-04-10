@@ -403,7 +403,7 @@ extension SwapAndPay.State {
 }
 
 extension SwapAndPay {
-    static var initial = StoreOf<SwapAndPay>(
+    @MainActor static let initial = StoreOf<SwapAndPay>(
         initialState: .initial
     ) {
         SwapAndPay()

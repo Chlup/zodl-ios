@@ -86,7 +86,7 @@ private extension ExportTransactionHistoryView {
 // MARK: - Store
 
 extension StoreOf<ExportTransactionHistory> {
-    static var initial = StoreOf<ExportTransactionHistory>(
+    @MainActor static let initial = StoreOf<ExportTransactionHistory>(
         initialState: .initial
     ) {
         ExportTransactionHistory()
