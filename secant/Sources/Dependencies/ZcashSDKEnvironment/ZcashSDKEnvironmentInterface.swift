@@ -111,18 +111,20 @@ extension ZcashSDKEnvironment {
 @DependencyClient
 struct ZcashSDKEnvironment {
     var latestCheckpoint: BlockHeight
-    let endpoint: () -> LightWalletEndpoint
-    let exchangeRateIPRateLimit: TimeInterval
-    let exchangeRateStaleLimit: TimeInterval
-    let memoCharLimit: Int
-    let mnemonicWordsMaxCount: Int
-    let network: ZcashNetwork
-    let requiredTransactionConfirmations: Int
-    let sdkVersion: String
-    let serverConfig: () -> UserPreferencesStorage.ServerConfig
-    let servers: [Server]
-    let shieldingThreshold: Zatoshi
-    let tokenName: String
+    var endpoint: @Sendable () -> LightWalletEndpoint = {
+        LightWalletEndpoint(address: "", port: 0, secure: false, singleCallTimeoutInMillis: 0, streamingCallTimeoutInMillis: 0)
+    }
+    var exchangeRateIPRateLimit: TimeInterval
+    var exchangeRateStaleLimit: TimeInterval
+    var memoCharLimit: Int
+    var mnemonicWordsMaxCount: Int
+    var network: ZcashNetwork
+    var requiredTransactionConfirmations: Int
+    var sdkVersion: String
+    var serverConfig: () -> UserPreferencesStorage.ServerConfig = { UserPreferencesStorage.ServerConfig(host: "", port: 0, isCustom: false) }
+    var servers: [Server]
+    var shieldingThreshold: Zatoshi
+    var tokenName: String
 }
 
 extension LightWalletEndpoint {
