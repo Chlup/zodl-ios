@@ -9,19 +9,6 @@ import ComposableArchitecture
 import XCTestDynamicOverlay
 @preconcurrency import Combine
 
-extension FlexaHandlerClient: TestDependencyKey {
-    static let testValue = Self(
-        prepare: unimplemented("\(Self.self).prepare"),
-        open: unimplemented("\(Self.self).open"),
-        onTransactionRequest: unimplemented("\(Self.self).onTransactionRequest", placeholder: Empty().eraseToAnyPublisher()),
-        clearTransactionRequest: unimplemented("\(Self.self).clearTransactionRequest"),
-        transactionSent: unimplemented("\(Self.self).transactionSent"),
-        updateBalance: unimplemented("\(Self.self).updateBalance"),
-        flexaAlert: unimplemented("\(Self.self).flexaAlert"),
-        signOut: unimplemented("\(Self.self).signOut")
-    )
-}
-
 extension FlexaHandlerClient {
     static let noOp = Self(
         prepare: { },

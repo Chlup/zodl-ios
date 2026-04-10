@@ -12,16 +12,17 @@ import Flexa
 @preconcurrency import ZcashLightClientKit
 import CryptoKit
 import UIKit
+import os
 
 /// This is a quick fix for Flexa changing the balances of the account from an expected value to 0.
-var accountHashInMemoryUUID = UUID()
+private let accountHashInMemoryUUID = OSAllocatedUnfairLock(initialState: UUID())
 
 enum Constants {
     static let zecHash = "bip122:00040fe8ec8471911baa1db1266ea15d"
     static let zecId = "\(Constants.zecHash)/slip44:133"
 
     static func assetAccountHash() -> String {
-        let uuid = accountHashInMemoryUUID
+        let uuid = accountHashInMemoryUUID.withLock { $0 }
         let uuidString = uuid.uuidString
         let data = Data(uuidString.utf8)
         let hash = SHA256.hash(data: data)
@@ -54,7 +55,7 @@ extension FlexaHandlerClient: DependencyKey {
                 isPrepared.value = true
             },
             open: {
-                accountHashInMemoryUUID = UUID()
+                accountHashInMemoryUUID.withLock { $0 = UUID() }
                 
                 if !isPrepared.value {
                     FlexaHandlerClient.prepare()
