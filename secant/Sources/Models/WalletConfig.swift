@@ -32,13 +32,13 @@ struct WalletConfig: Equatable {
         return flags[featureFlag, default: false]
     }
 
-    static var initial: WalletConfig = {
+    static var initial: WalletConfig {
         let defaultSettings = FeatureFlag.allCases
             .filter { $0 != .testFlag1 && $0 != .testFlag2 }
             .map { ($0, $0.enabledByDefault) }
 
         return WalletConfig(flags: Dictionary(uniqueKeysWithValues: defaultSettings))
-    }()
+    }
     
     init(flags: RawFlags) {
         self.flags = flags

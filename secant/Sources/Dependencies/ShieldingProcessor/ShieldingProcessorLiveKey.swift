@@ -23,7 +23,7 @@ extension ShieldingProcessorClient: DependencyKey {
     }
 }
 
-private final class ShieldingProcessorImpl: Sendable {
+private final class ShieldingProcessorImpl: @unchecked Sendable {
     @Dependency(\.derivationTool) var derivationTool
     @Dependency(\.mnemonic) var mnemonic
     @Dependency(\.sdkSynchronizer) var sdkSynchronizer

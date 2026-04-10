@@ -10,7 +10,7 @@ import SwiftUI
 struct UnknownAddressPreferenceKey: PreferenceKey {
     typealias Value = Anchor<CGRect>?
 
-    static var defaultValue: Value = nil
+    nonisolated(unsafe) static var defaultValue: Value = nil
 
     static func reduce(
         value: inout Value,

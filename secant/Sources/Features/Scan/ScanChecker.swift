@@ -10,7 +10,7 @@ import ZcashPaymentURI
 
 @preconcurrency import KeystoneSDK
 
-protocol ScanChecker: Equatable {
+protocol ScanChecker: Equatable, Sendable {
     var id: Int { get }
     
     func checkQRCode(_ qrCode: String) -> Scan.Action?

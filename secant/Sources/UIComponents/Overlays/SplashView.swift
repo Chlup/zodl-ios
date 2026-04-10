@@ -8,7 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 
-final class SplashManager: ObservableObject {
+@MainActor final class SplashManager: ObservableObject {
     struct SplashShape: Shape {
         var points: [CGPoint]
         
@@ -45,9 +45,7 @@ final class SplashManager: ObservableObject {
             if featureFlags.appLaunchBiometric {
                 authenticate()
             } else {
-                Task {
-                    await self.spinTheWheel()
-                }
+                spinTheWheel()
             }
         }
     }
@@ -56,29 +54,31 @@ final class SplashManager: ObservableObject {
         @Dependency(\.localAuthentication) var localAuthentication
 
         authenticationDidntSucceed = false
-        
-        Task {
+
+        Task { @MainActor in
             if await !localAuthentication.authenticate() {
-                await self.authenticationFailed()
+                self.authenticationFailed()
             } else {
-                await self.spinTheWheel()
+                self.spinTheWheel()
             }
         }
     }
     
-    @MainActor func authenticationFailed() {
+    func authenticationFailed() {
         authenticationDidntSucceed = true
     }
     
-    @MainActor func spinTheWheel() {
+    func spinTheWheel() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0 / 60.0, repeats: true) { timer in
-            if self.isOn {
-                Task {
-                    await self.tick()
-                    
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0 / 60.0, repeats: true) { [weak self] _ in
+            guard let self else { return }
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                if self.isOn {
+                    self.tick()
+
                     if self.currentMaxHeight <= 0.0 {
-                        await self.finished()
+                        self.finished()
                     }
                 }
             }
@@ -127,7 +127,7 @@ final class SplashManager: ObservableObject {
         step = currentMaxHeight / 100.0
     }
     
-    @MainActor func tick() {
+    func tick() {
         step *= 1.04
         
         var newMaxHeight: CGFloat = 0.0
@@ -144,7 +144,7 @@ final class SplashManager: ObservableObject {
         currentMaxHeight = newMaxHeight
     }
     
-    @MainActor func finished() {
+    func finished() {
         self.isOn.toggle()
         completion()
     }

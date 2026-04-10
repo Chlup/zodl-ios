@@ -15,7 +15,7 @@ enum LoggerConstants {
     static let walletLogs = "walletLogs"
 }
 
-var walletLogger: ZcashLightClientKit.Logger?
+nonisolated(unsafe) var walletLogger: ZcashLightClientKit.Logger?
 
 enum LoggerProxy {
     static func debug(_ message: String, file: StaticString = #file, function: StaticString = #function, line: Int = #line) {

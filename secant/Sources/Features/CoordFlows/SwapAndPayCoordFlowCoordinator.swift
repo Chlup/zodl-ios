@@ -7,6 +7,7 @@
 
 import Foundation
 import ComposableArchitecture
+@preconcurrency import ZcashLightClientKit
 
 extension SwapAndPayCoordFlow {
     func coordinatorReduce() -> Reduce< SwapAndPayCoordFlow.State,  SwapAndPayCoordFlow.Action> {

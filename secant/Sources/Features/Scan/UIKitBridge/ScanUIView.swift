@@ -118,7 +118,7 @@ extension ScanUIView {
     }
 }
 
-extension ScanUIView: AVCaptureMetadataOutputObjectsDelegate {
+extension ScanUIView: @MainActor AVCaptureMetadataOutputObjectsDelegate {
     func metadataOutput(
         _ output: AVCaptureMetadataOutput,
         didOutput metadataObjects: [AVMetadataObject],

@@ -66,10 +66,11 @@ extension AddressBookClient: DependencyKey {
 }
 
 private final class AddressBookImpl: Sendable {
-    @Dependency(\.remoteStorage) var remoteStorage
     private let latestKnownContacts = OSAllocatedUnfairLock<AddressBookContacts?>(initialState: nil)
 
     func resetAccount(_ account: Account) throws {
+        @Dependency(\.remoteStorage) var remoteStorage
+
         guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             throw AddressBookClient.AddressBookClientError.documentsFolder
         }
@@ -237,6 +238,8 @@ private final class AddressBookImpl: Sendable {
         contacts: AddressBookContacts,
         storeAfterSync: Bool = true
     ) throws -> (contacts: AddressBookContacts, remoteStoreResult: AddressBookClient.RemoteStoreResult) {
+        @Dependency(\.remoteStorage) var remoteStorage
+
         // Ensure remote contacts are prepared
         var remoteContacts: AddressBookContacts = .empty
         var shouldUpdateRemote = false
@@ -312,6 +315,8 @@ private final class AddressBookImpl: Sendable {
         contacts: AddressBookContacts,
         remoteStore: Bool = true
     ) throws -> AddressBookClient.RemoteStoreResult {
+        @Dependency(\.remoteStorage) var remoteStorage
+
         // encrypt data
         let encryptedContacts = try AddressBookClient.encryptContacts(contacts, account: account)
 
