@@ -14,10 +14,10 @@ extension UserPreferencesStorageClient: DependencyKey {
 
         return UserPreferencesStorageClient(
             server: { live.server },
-            setServer: live.setServer(_:),
+            setServer: { try live.setServer($0) },
             exchangeRate: { live.exchangeRate },
-            setExchangeRate: live.setExchangeRate(_:),
-            removeAll: live.removeAll
+            setExchangeRate: { try live.setExchangeRate($0) },
+            removeAll: { live.removeAll() }
         )
     }()
 }
