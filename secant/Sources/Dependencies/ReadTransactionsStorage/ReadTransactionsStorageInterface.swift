@@ -28,8 +28,8 @@ struct ReadTransactionsStorageClient {
         case availability
     }
     
-    let markIdAsRead: (RedactableString) throws -> Void
-    var readIds: () throws -> [RedactableString: Bool]
-    var availabilityTimestamp: () throws -> TimeInterval
-    var resetZashi: () throws -> Void
+    var markIdAsRead: @Sendable (RedactableString) throws -> Void
+    var readIds: @Sendable () throws -> [RedactableString: Bool]
+    var availabilityTimestamp: @Sendable () throws -> TimeInterval
+    var resetZashi: @Sendable () throws -> Void
 }
