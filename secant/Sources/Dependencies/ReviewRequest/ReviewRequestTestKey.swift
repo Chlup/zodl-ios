@@ -8,15 +8,6 @@
 import ComposableArchitecture
 import XCTestDynamicOverlay
 
-extension ReviewRequestClient: TestDependencyKey {
-    static let testValue = Self(
-        canRequestReview: unimplemented("\(Self.self).canRequestReview", placeholder: false),
-        foundTransactions: unimplemented("\(Self.self).foundTransactions", placeholder: {}()),
-        reviewRequested: unimplemented("\(Self.self).reviewRequested", placeholder: {}()),
-        syncFinished: unimplemented("\(Self.self).syncFinished", placeholder: {}())
-    )
-}
-
 extension ReviewRequestClient {
     static let noOp = Self(
         canRequestReview: { false },

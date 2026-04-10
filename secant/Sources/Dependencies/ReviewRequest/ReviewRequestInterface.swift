@@ -16,8 +16,8 @@ extension DependencyValues {
 
 @DependencyClient
 struct ReviewRequestClient {
-    let canRequestReview: () -> Bool
-    let foundTransactions: () -> Void
-    let reviewRequested: () -> Void
-    let syncFinished: () -> Void
+    var canRequestReview: @Sendable () -> Bool = { false }
+    var foundTransactions: @Sendable () -> Void
+    var reviewRequested: @Sendable () -> Void
+    var syncFinished: @Sendable () -> Void
 }
