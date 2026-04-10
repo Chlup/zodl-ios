@@ -26,7 +26,7 @@ extension RestoreWalletCoordFlow {
                 do {
                     // get the random english mnemonic
                     let newRandomPhrase = try mnemonic.randomMnemonic()
-                    let birthday = zcashSDKEnvironment.latestCheckpoint
+                    let birthday = zcashSDKEnvironment.latestCheckpoint()
                     
                     // store the wallet to the keychain
                     try walletStorage.importWallet(newRandomPhrase, birthday, .english, false)

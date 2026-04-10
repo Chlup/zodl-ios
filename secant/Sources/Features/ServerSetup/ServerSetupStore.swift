@@ -86,7 +86,7 @@ struct ServerSetup {
             switch action {
             case .onAppear:
                 // __LD TESTED
-                state.network = zcashSDKEnvironment.network.networkType
+                state.network = zcashSDKEnvironment.network().networkType
                 
                 if !state.topKServers.isEmpty {
                     let allServers = ZcashSDKEnvironment.servers(for: state.network)
