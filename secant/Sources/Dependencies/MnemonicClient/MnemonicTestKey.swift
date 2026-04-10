@@ -8,17 +8,6 @@
 import ComposableArchitecture
 import XCTestDynamicOverlay
 
-extension MnemonicClient: TestDependencyKey {
-    static let testValue = Self(
-        randomMnemonic: unimplemented("\(Self.self).randomMnemonic", placeholder: ""),
-        randomMnemonicWords: unimplemented("\(Self.self).randomMnemonicWords", placeholder: []),
-        toSeed: unimplemented("\(Self.self).toSeed", placeholder: []),
-        asWords: unimplemented("\(Self.self).asWords", placeholder: []),
-        isValid: unimplemented("\(Self.self).isValid", placeholder: {}()),
-        suggestWords: unimplemented("\(Self.self).suggestWords", placeholder: [])
-    )
-}
-
 extension MnemonicClient {
     static let noOp = Self(
         randomMnemonic: { "" },
