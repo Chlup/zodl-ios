@@ -18,13 +18,13 @@ extension DependencyValues {
 
 @DependencyClient
 struct DatabaseFilesClient {
-    let documentsDirectory: () -> URL
-    let fsBlockDbRootFor: (ZcashNetwork) -> URL
-    let cacheDbURLFor: (ZcashNetwork) -> URL
-    var dataDbURLFor: (ZcashNetwork) -> URL = { _ in .emptyURL }
-    let outputParamsURLFor: (ZcashNetwork) -> URL
-    let pendingDbURLFor: (ZcashNetwork) -> URL
-    let spendParamsURLFor: (ZcashNetwork) -> URL
-    var toDirURLFor: (ZcashNetwork) -> URL = { _ in .emptyURL }
-    var areDbFilesPresentFor: (ZcashNetwork) -> Bool = { _ in false }
+    var documentsDirectory: @Sendable () -> URL = { .emptyURL }
+    var fsBlockDbRootFor: @Sendable (ZcashNetwork) -> URL = { _ in .emptyURL }
+    var cacheDbURLFor: @Sendable (ZcashNetwork) -> URL = { _ in .emptyURL }
+    var dataDbURLFor: @Sendable (ZcashNetwork) -> URL = { _ in .emptyURL }
+    var outputParamsURLFor: @Sendable (ZcashNetwork) -> URL = { _ in .emptyURL }
+    var pendingDbURLFor: @Sendable (ZcashNetwork) -> URL = { _ in .emptyURL }
+    var spendParamsURLFor: @Sendable (ZcashNetwork) -> URL = { _ in .emptyURL }
+    var toDirURLFor: @Sendable (ZcashNetwork) -> URL = { _ in .emptyURL }
+    var areDbFilesPresentFor: @Sendable (ZcashNetwork) -> Bool = { _ in false }
 }

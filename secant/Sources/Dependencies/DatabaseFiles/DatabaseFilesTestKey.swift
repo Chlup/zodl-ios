@@ -9,20 +9,6 @@ import Foundation
 import ComposableArchitecture
 import XCTestDynamicOverlay
 
-extension DatabaseFilesClient: TestDependencyKey {
-    static let testValue = Self(
-        documentsDirectory: unimplemented("\(Self.self).documentsDirectory", placeholder: .emptyURL),
-        fsBlockDbRootFor: unimplemented("\(Self.self).fsBlockDbRootFor", placeholder: .emptyURL),
-        cacheDbURLFor: unimplemented("\(Self.self).cacheDbURLFor", placeholder: .emptyURL),
-        dataDbURLFor: unimplemented("\(Self.self).dataDbURLFor", placeholder: .emptyURL),
-        outputParamsURLFor: unimplemented("\(Self.self).outputParamsURLFor", placeholder: .emptyURL),
-        pendingDbURLFor: unimplemented("\(Self.self).pendingDbURLFor", placeholder: .emptyURL),
-        spendParamsURLFor: unimplemented("\(Self.self).spendParamsURLFor", placeholder: .emptyURL),
-        toDirURLFor: unimplemented("\(Self.self).toDirURLFor", placeholder: .emptyURL),
-        areDbFilesPresentFor: unimplemented("\(Self.self).areDbFilesPresentFor", placeholder: false)
-    )
-}
-
 extension DatabaseFilesClient {
     static let noOp = Self(
         documentsDirectory: { .emptyURL },
