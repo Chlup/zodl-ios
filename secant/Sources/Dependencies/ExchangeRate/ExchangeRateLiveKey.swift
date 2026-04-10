@@ -138,7 +138,7 @@ import ComposableArchitecture
 
         if isStale
             && result.state != .fetching
-            && Date().timeIntervalSince1970 - result.date.timeIntervalSince1970 > zcashSDKEnvironment.exchangeRateStaleLimit {
+            && Date().timeIntervalSince1970 - result.date.timeIntervalSince1970 > zcashSDKEnvironment.exchangeRateStaleLimit() {
             eventStream.send(.stale(latestRate))
         } else {
             eventStream.send(.value(latestRate))
@@ -158,7 +158,7 @@ import ComposableArchitecture
             isStale = false
 
             let diff = Date().timeIntervalSince1970 - latestRate.date.timeIntervalSince1970
-            let timeToSchedule = zcashSDKEnvironment.exchangeRateIPRateLimit - diff
+            let timeToSchedule = zcashSDKEnvironment.exchangeRateIPRateLimit() - diff
 
             if timeToSchedule < 0 {
                 eventStream.send(.refreshEnable(latestRate))
@@ -174,7 +174,7 @@ import ComposableArchitecture
                 }
 
                 staleTimer?.invalidate()
-                staleTimer = Timer.scheduledTimer(withTimeInterval: zcashSDKEnvironment.exchangeRateStaleLimit, repeats: false) { [weak self] _ in
+                staleTimer = Timer.scheduledTimer(withTimeInterval: zcashSDKEnvironment.exchangeRateStaleLimit(), repeats: false) { [weak self] _ in
                     Task { @MainActor [weak self] in
                         self?.staleTimer?.invalidate()
                         self?.staleTimer = nil

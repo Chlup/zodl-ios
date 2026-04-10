@@ -27,7 +27,7 @@ extension SDKSynchronizerClient: DependencyKey {
 
         $swapAPIAccess.withLock { $0 = isTorEnabled ? .protected : .direct }
         
-        let network = zcashSDKEnvironment.network
+        let network = zcashSDKEnvironment.network()
         
         #if DEBUG
         let loggingPolicy = Initializer.LoggingPolicy.default(.debug)
