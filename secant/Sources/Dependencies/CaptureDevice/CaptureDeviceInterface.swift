@@ -23,7 +23,7 @@ struct CaptureDeviceClient {
         case torchUnavailable
     }
 
-    let isAuthorized: () -> Bool
-    let isTorchAvailable: () -> Bool
-    let torch: (Bool) throws -> Void
+    var isAuthorized: @Sendable () -> Bool = { false }
+    var isTorchAvailable: @Sendable () -> Bool = { false }
+    var torch: @Sendable(Bool) throws -> Void
 }
