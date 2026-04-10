@@ -233,7 +233,7 @@ extension Image {
 // MARK: Placeholders
 
 extension Settings.State {
-    static let initial = Settings.State()
+    static var initial: Settings.State { Settings.State() }
 }
 
 extension StoreOf<Settings> {

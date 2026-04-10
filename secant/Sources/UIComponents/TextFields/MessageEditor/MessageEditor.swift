@@ -161,8 +161,8 @@ extension StoreOf<MessageEditor> {
 // MARK: - Placeholders
 
 extension MessageEditor.State {
-    static let initial = MessageEditor.State(
+    static var initial: MessageEditor.State { MessageEditor.State(
         charLimit: 0,
         text: ""
-    )
+    ) }
 }

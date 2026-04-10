@@ -75,7 +75,7 @@ struct ScanCoordFlowView: View {
 // MARK: - Placeholders
 
 extension ScanCoordFlow.State {
-    static let initial = ScanCoordFlow.State()
+    static var initial: ScanCoordFlow.State { ScanCoordFlow.State() }
 }
 
 extension ScanCoordFlow {

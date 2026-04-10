@@ -427,7 +427,7 @@ struct ReceiveView: View {
 // MARK: - Placeholders
 
 extension Receive.State {
-    static let initial = Receive.State()
+    static var initial: Receive.State { Receive.State() }
 }
 
 extension Receive {

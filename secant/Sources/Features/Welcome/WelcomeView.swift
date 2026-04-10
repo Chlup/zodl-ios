@@ -102,5 +102,5 @@ extension StoreOf<Welcome> {
 // MARK: - Placeholders
 
 extension Welcome.State {
-    static let initial = Welcome.State()
+    static var initial: Welcome.State { Welcome.State() }
 }

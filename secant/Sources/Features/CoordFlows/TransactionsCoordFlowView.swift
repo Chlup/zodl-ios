@@ -66,7 +66,7 @@ struct TransactionsCoordFlowView: View {
 // MARK: - Placeholders
 
 extension TransactionsCoordFlow.State {
-    static let initial = TransactionsCoordFlow.State()
+    static var initial: TransactionsCoordFlow.State { TransactionsCoordFlow.State() }
 }
 
 extension TransactionsCoordFlow {

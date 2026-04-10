@@ -231,5 +231,5 @@ extension TransactionsManager {
 // MARK: - Placeholders
 
 extension TransactionsManager.State {
-    static let initial = TransactionsManager.State()
+    static var initial: TransactionsManager.State { TransactionsManager.State() }
 }

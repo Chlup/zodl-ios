@@ -137,9 +137,9 @@ extension StoreOf<PrivateDataConsent> {
 // MARK: - Placeholders
 
 extension PrivateDataConsent.State {
-    static let initial = PrivateDataConsent.State(
+    static var initial: PrivateDataConsent.State { PrivateDataConsent.State(
         dataDbURL: [],
         exportBinding: false,
         exportLogsState: .initial
-    )
+    ) }
 }

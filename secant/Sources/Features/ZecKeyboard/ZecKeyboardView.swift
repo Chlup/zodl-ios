@@ -174,7 +174,7 @@ struct ZecKeyboardView: View {
 // MARK: - Placeholders
 
 extension ZecKeyboard.State {
-    static let initial = ZecKeyboard.State()
+    static var initial: ZecKeyboard.State { ZecKeyboard.State() }
 }
 
 extension ZecKeyboard {

@@ -241,5 +241,5 @@ extension TorSetup {
 // MARK: - Placeholders
 
 extension TorSetup.State {
-    static let initial = TorSetup.State()
+    static var initial: TorSetup.State { TorSetup.State() }
 }

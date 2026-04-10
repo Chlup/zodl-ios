@@ -111,10 +111,10 @@ private extension OSStatusErrorView {
 // MARK: Placeholders
 
 extension OSStatusError.State {
-    static let initial = OSStatusError.State(
+    static var initial: OSStatusError.State { OSStatusError.State(
         message: "",
         osStatus: errSecSuccess
-    )
+    ) }
 }
 
 extension OSStatusError {

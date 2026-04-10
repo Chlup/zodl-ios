@@ -335,7 +335,7 @@ struct ServerSetupView: View {
 // MARK: Placeholders
 
 extension ServerSetup.State {
-    static var initial = ServerSetup.State()
+    static var initial: ServerSetup.State { ServerSetup.State() }
 }
 
 extension ServerSetup {

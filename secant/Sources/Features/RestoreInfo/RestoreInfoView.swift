@@ -125,5 +125,5 @@ extension RestoreInfo {
 // MARK: - Placeholders
 
 extension RestoreInfo.State {
-    static let initial = RestoreInfo.State()
+    static var initial: RestoreInfo.State { RestoreInfo.State() }
 }

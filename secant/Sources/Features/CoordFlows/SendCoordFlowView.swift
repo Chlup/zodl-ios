@@ -92,7 +92,7 @@ struct SendCoordFlowView: View {
 // MARK: - Placeholders
 
 extension SendCoordFlow.State {
-    static let initial = SendCoordFlow.State()
+    static var initial: SendCoordFlow.State { SendCoordFlow.State() }
 }
 
 extension SendCoordFlow {

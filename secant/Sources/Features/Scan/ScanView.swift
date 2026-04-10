@@ -352,7 +352,7 @@ struct ScanView_Previews: PreviewProvider {
 // MARK: Placeholders
 
 extension Scan.State {
-    static var initial = Scan.State()
+    static var initial: Scan.State { Scan.State() }
 }
 
 extension Scan {

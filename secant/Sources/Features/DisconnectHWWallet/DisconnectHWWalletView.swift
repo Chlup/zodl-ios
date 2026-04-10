@@ -267,7 +267,7 @@ extension DisconnectHWWalletView {
 // MARK: - Placeholders
 
 extension DisconnectHWWallet.State {
-    static let initial = DisconnectHWWallet.State()
+    static var initial: DisconnectHWWallet.State { DisconnectHWWallet.State() }
 }
 
 extension StoreOf<DisconnectHWWallet> {

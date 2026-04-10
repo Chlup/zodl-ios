@@ -65,7 +65,7 @@ struct SignWithKeystoneCoordFlowView: View {
 // MARK: - Placeholders
 
 extension SignWithKeystoneCoordFlow.State {
-    static let initial = SignWithKeystoneCoordFlow.State()
+    static var initial: SignWithKeystoneCoordFlow.State { SignWithKeystoneCoordFlow.State() }
 }
 
 extension SignWithKeystoneCoordFlow {

@@ -104,7 +104,7 @@ struct AddKeystoneHWWalletView: View {
 // MARK: Placeholders
 
 extension AddKeystoneHWWallet.State {
-    static let initial = AddKeystoneHWWallet.State()
+    static var initial: AddKeystoneHWWallet.State { AddKeystoneHWWallet.State() }
 }
 
 extension AddKeystoneHWWallet {

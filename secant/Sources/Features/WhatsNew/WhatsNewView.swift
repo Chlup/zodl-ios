@@ -172,5 +172,5 @@ extension WhatsNew {
 // MARK: - Placeholders
 
 extension WhatsNew.State {
-    static let initial = WhatsNew.State(latest: .zero, releases: .zero)
+    static var initial: WhatsNew.State { WhatsNew.State(latest: .zero, releases: .zero) }
 }

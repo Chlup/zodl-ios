@@ -130,7 +130,7 @@ struct AdvancedSettingsView: View {
 // MARK: Placeholders
 
 extension AdvancedSettings.State {
-    static let initial = AdvancedSettings.State()
+    static var initial: AdvancedSettings.State { AdvancedSettings.State() }
 }
 
 extension StoreOf<AdvancedSettings> {

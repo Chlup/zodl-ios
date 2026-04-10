@@ -286,10 +286,10 @@ struct RecoveryPhraseDisplayView: View {
 // MARK: Placeholders
 
 extension RecoveryPhraseDisplay.State {
-    static let initial = RecoveryPhraseDisplay.State(
+    static var initial: RecoveryPhraseDisplay.State { RecoveryPhraseDisplay.State(
         birthday: nil,
         phrase: nil
-    )
+    ) }
 }
 
 extension RecoveryPhraseDisplay {
