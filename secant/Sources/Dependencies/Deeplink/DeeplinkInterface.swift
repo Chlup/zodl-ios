@@ -18,9 +18,5 @@ extension DependencyValues {
 
 @DependencyClient
 struct DeeplinkClient {
-    let resolveDeeplinkURL: (URL, NetworkType, DerivationToolClient) throws -> Deeplink.Destination
-    
-    init(resolveDeeplinkURL: @escaping (URL, NetworkType, DerivationToolClient) throws -> Deeplink.Destination) {
-        self.resolveDeeplinkURL = resolveDeeplinkURL
-    }
+    var resolveDeeplinkURL: @Sendable (URL, NetworkType, DerivationToolClient) throws -> Deeplink.Destination
 }
