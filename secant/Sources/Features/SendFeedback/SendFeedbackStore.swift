@@ -53,7 +53,7 @@ struct SendFeedback {
                 // __LD TESTED
                 state.memoState.text = ""
                 state.selectedRating = 4
-                state.canSendMail = MFMailComposeViewController.canSendMail()
+                state.canSendMail = MainActor.assumeIsolated { MFMailComposeViewController.canSendMail() }
                 return .none
 
             case .sendTapped:

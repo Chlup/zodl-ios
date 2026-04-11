@@ -353,7 +353,7 @@ extension Home.State {
 }
 
 extension Home {
-    static var placeholder: StoreOf<Home> {
+    @MainActor static var placeholder: StoreOf<Home> {
         StoreOf<Home>(
             initialState: .initial
         ) {
@@ -361,7 +361,7 @@ extension Home {
         }
     }
 
-    static var error: StoreOf<Home> {
+    @MainActor static var error: StoreOf<Home> {
         StoreOf<Home>(
             initialState: .init(
                 transactionListState: .initial,

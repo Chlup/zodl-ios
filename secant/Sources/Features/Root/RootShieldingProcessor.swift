@@ -57,7 +57,7 @@ extension Root {
                 
                 \(supportData.message)
                 """
-                if MFMailComposeViewController.canSendMail() {
+                if MainActor.assumeIsolated({ MFMailComposeViewController.canSendMail() }) {
                     state.supportData = supportData
                 } else {
                     state.messageShareBinding = supportData.message

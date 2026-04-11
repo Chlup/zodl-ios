@@ -28,6 +28,7 @@ enum QRCodeGenerator {
         overlayedWithZcashLogo: Bool = true
     ) -> Future<CGImage?, Never> {
         Future<CGImage?, Never> { promise in
+            nonisolated(unsafe) let promise = promise
             DispatchQueue.global().async {
                 let image = generateCode(
                     from: string,
@@ -36,7 +37,7 @@ enum QRCodeGenerator {
                     color: color,
                     overlayedWithZcashLogo: overlayedWithZcashLogo
                 )
-                
+
                 return promise(.success(image))
             }
         }

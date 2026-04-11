@@ -312,21 +312,26 @@ struct SendForm {
                     return .none
                 }
                 state.amount = state.isLatestInputFiat ? state.amount.roundToAvoidDustSpend() : state.amount
-                return .run { [state, confirmationType] send in
+                let addressData = state.address.data
+                let isTransparent = state.isValidTransparentAddress || state.isValidTexAddress
+                let memoText: String? = !isTransparent && state.addMemoState ? state.memoState.text : nil
+                let amount = state.amount
+                let accountId = account.id
+                return .run { [confirmationType] send in
                     do {
-                        let recipient = try Recipient(state.address.data, network: zcashSDKEnvironment.network().networkType)
-                        
+                        let recipient = try Recipient(addressData, network: zcashSDKEnvironment.network().networkType)
+
                         let memo: Memo?
-                        if state.isValidTransparentAddress || state.isValidTexAddress {
+                        if isTransparent {
                             memo = nil
-                        } else if let memoText = state.addMemoState ? state.memoState.text : nil {
-                            memo = memoText.isEmpty ? nil : try Memo(string: memoText)
+                        } else if let memoText, !memoText.isEmpty {
+                            memo = try Memo(string: memoText)
                         } else {
                             memo = nil
                         }
 
-                        let proposal = try await sdkSynchronizer.proposeTransfer(account.id, recipient, state.amount, memo)
-                        
+                        let proposal = try await sdkSynchronizer.proposeTransfer(accountId, recipient, amount, memo)
+
                         await send(.proposal(proposal))
                         await send(.confirmationRequired(confirmationType))
                     } catch {

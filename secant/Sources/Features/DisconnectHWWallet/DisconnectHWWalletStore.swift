@@ -54,7 +54,7 @@ struct DisconnectHWWallet {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                state.canSendMail = MFMailComposeViewController.canSendMail()
+                state.canSendMail = MainActor.assumeIsolated { MFMailComposeViewController.canSendMail() }
                 return .none
 
             case .binding:

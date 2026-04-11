@@ -1,15 +1,16 @@
-import SwiftUI
+@preconcurrency import SwiftUI
 import CasePaths
 
 /// taken largely from: https://github.com/pointfreeco/episode-code-samples/blob/main/0167-navigation-pt8/SwiftUINavigation/SwiftUINavigation/SwiftUIHelpers.swift
 extension Binding {
     func isPresent<Wrapped>() -> Binding<Bool>
     where Value == Wrapped? {
-        .init(
-            get: { self.wrappedValue != nil },
+        nonisolated(unsafe) let selfRef = self
+        return .init(
+            get: { selfRef.wrappedValue != nil },
             set: { isPresented in
                 if !isPresented {
-                    self.wrappedValue = nil
+                    selfRef.wrappedValue = nil
                 }
             }
         )
@@ -17,9 +18,10 @@ extension Binding {
 
     func isPresent<Enum, Case>(_ casePath: AnyCasePath<Enum, Case>) -> Binding<Bool>
     where Value == Enum? {
-        Binding<Bool>(
+        nonisolated(unsafe) let selfRef = self
+        return Binding<Bool>(
             get: {
-                if let wrappedValue = self.wrappedValue, casePath.extract(from: wrappedValue) != nil {
+                if let wrappedValue = selfRef.wrappedValue, casePath.extract(from: wrappedValue) != nil {
                     return true
                 } else {
                     return false
@@ -27,7 +29,7 @@ extension Binding {
             },
             set: { isPresented in
                 if !isPresented {
-                    self.wrappedValue = nil
+                    selfRef.wrappedValue = nil
                 }
             }
         )
@@ -35,30 +37,33 @@ extension Binding {
 
     func `case`<Enum, Case>(_ casePath: AnyCasePath<Enum, Case>) -> Binding<Case?>
     where Value == Enum? {
-        Binding<Case?>(
+        nonisolated(unsafe) let selfRef = self
+        return Binding<Case?>(
             get: {
                 guard
-                    let wrappedValue = self.wrappedValue,
+                    let wrappedValue = selfRef.wrappedValue,
                     let `case` = casePath.extract(from: wrappedValue)
                 else { return nil }
                 return `case`
             },
-            
+
             set: { `case` in
                 if let `case` = `case` {
-                    self.wrappedValue = casePath.embed(`case`)
+                    selfRef.wrappedValue = casePath.embed(`case`)
                 } else {
-                    self.wrappedValue = nil
+                    selfRef.wrappedValue = nil
                 }
             }
         )
     }
 
     func didSet(_ callback: @escaping (Value) -> Void) -> Self {
-        .init(
-            get: { self.wrappedValue },
+        nonisolated(unsafe) let selfRef = self
+        nonisolated(unsafe) let callback = callback
+        return .init(
+            get: { selfRef.wrappedValue },
             set: {
-                self.wrappedValue = $0
+                selfRef.wrappedValue = $0
                 callback($0)
             }
         )
@@ -68,27 +73,35 @@ extension Binding {
         guard let wrappedValue = binding.wrappedValue
         else { return nil }
 
+        nonisolated(unsafe) let unsafeBinding = binding
+        nonisolated(unsafe) let capturedValue = wrappedValue
         self.init(
-            get: { wrappedValue },
-            set: { binding.wrappedValue = $0 }
+            get: { capturedValue },
+            set: { unsafeBinding.wrappedValue = $0 }
         )
     }
 
     func map<T>(extract: @escaping (Value) -> T, embed: @escaping (T) -> Value) -> Binding<T> {
-        Binding<T>(
-            get: { extract(wrappedValue) },
-            set: { wrappedValue = embed($0) }
+        nonisolated(unsafe) let selfRef = self
+        nonisolated(unsafe) let extract = extract
+        nonisolated(unsafe) let embed = embed
+        return Binding<T>(
+            get: { extract(selfRef.wrappedValue) },
+            set: { selfRef.wrappedValue = embed($0) }
         )
     }
 
     func compactMap<T>(extract: @escaping (Value) -> T, embed: @escaping (T) -> Value?) -> Binding<T> {
-        Binding<T>(
-            get: { extract(wrappedValue) },
+        nonisolated(unsafe) let selfRef = self
+        nonisolated(unsafe) let extract = extract
+        nonisolated(unsafe) let embed = embed
+        return Binding<T>(
+            get: { extract(selfRef.wrappedValue) },
             set: {
                 guard let value = embed($0) else {
                     return
                 }
-                wrappedValue = value
+                selfRef.wrappedValue = value
             }
         )
     }

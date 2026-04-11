@@ -474,7 +474,7 @@ extension Root.State {
 }
 
 extension Root {
-    static var placeholder: StoreOf<Root> {
+    @MainActor static var placeholder: StoreOf<Root> {
         StoreOf<Root>(
             initialState: .initial
         ) {

@@ -43,7 +43,7 @@ struct Root {
         var appInitializationState: InitializationState = .uninitialized
         var appStartState: AppStartState = .unknown
         var areMetadataPreserved = true
-        nonisolated(unsafe) var bgTask: BGProcessingTask?
+        nonisolated var bgTask: BGProcessingTask?
         @Presents var confirmationDialog: ConfirmationDialogState<Action.ConfirmationDialog>?
         @Shared(.inMemory(.exchangeRate)) var currencyConversion: CurrencyConversion? = nil
         var debugState: DebugState

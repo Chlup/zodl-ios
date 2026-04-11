@@ -50,7 +50,7 @@ struct OSStatusError {
                 
             case .sendSupportMail:
                 let supportData = SupportDataGenerator.generateOSStatusError(osStatus: state.osStatus)
-                if MFMailComposeViewController.canSendMail() {
+                if MainActor.assumeIsolated({ MFMailComposeViewController.canSendMail() }) {
                     state.supportData = supportData
                 } else {
                     state.message = supportData.message
