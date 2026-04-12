@@ -5,7 +5,7 @@
 //  Created by Lukáš Korba on 08-02-2024.
 //
 
-import Combine
+@preconcurrency import Combine
 
 extension ExchangeRateClient {
     static let noOp = Self(

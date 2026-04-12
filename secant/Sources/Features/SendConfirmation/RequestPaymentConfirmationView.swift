@@ -7,7 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 struct RequestPaymentConfirmationView: View {
     @Environment(\.colorScheme) private var colorScheme

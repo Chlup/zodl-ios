@@ -6,7 +6,7 @@
 //
 
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 extension Root {
     func coordinatorReduce() -> Reduce<Root.State, Root.Action> {

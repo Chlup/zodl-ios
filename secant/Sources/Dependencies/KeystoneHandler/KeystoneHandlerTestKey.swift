@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 import XCTestDynamicOverlay
-import KeystoneSDK
+@preconcurrency import KeystoneSDK
 
 extension KeystoneHandlerClient: TestDependencyKey {
     static let testValue = Self(

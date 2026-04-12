@@ -7,7 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 import Flexa
 
 @main
@@ -73,10 +73,6 @@ enum TargetConstants {
     fatalError("SECANT_MAINNET or SECANT_TESTNET flags not defined on Swift Compiler custom flags of your build target.")
 #endif
     }
-}
-
-extension ZcashSDKEnvironment: @retroactive DependencyKey {
-    static let liveValue: ZcashSDKEnvironment = Self.live(network: TargetConstants.zcashNetwork)
 }
 
 extension SecantApp {

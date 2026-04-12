@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import UIKit
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 @Reducer
 struct ZecKeyboard {

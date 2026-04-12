@@ -6,7 +6,7 @@
 //
 
 import ComposableArchitecture
-import Combine
+@preconcurrency import Combine
 
 extension DependencyValues {
     var networkMonitor: NetworkMonitorClient {

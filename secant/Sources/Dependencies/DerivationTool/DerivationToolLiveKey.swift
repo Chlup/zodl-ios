@@ -6,7 +6,7 @@
 //
 
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 extension DerivationToolClient: DependencyKey {
     static let liveValue = DerivationToolClient.live()

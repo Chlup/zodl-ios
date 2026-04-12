@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Combine
+@preconcurrency import Combine
 import CoreImage.CIFilterBuiltins
 import SwiftUI
 

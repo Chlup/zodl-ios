@@ -5,12 +5,12 @@
 //  Created by Lukáš Korba on 29.01.2025.
 //
 
-import Combine
+@preconcurrency import Combine
 import ComposableArchitecture
 import Foundation
 import MessageUI
 
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 extension Root {
     func shieldingProcessorReduce() -> Reduce<Root.State, Root.Action> {

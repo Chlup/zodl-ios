@@ -6,9 +6,12 @@
 //
 
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 extension ZcashSDKEnvironment {
+    
+    static let liveValue: ZcashSDKEnvironment = Self.live(network: TargetConstants.zcashNetwork)
+
     static func live(network: ZcashNetwork) -> Self {
         Self(
             latestCheckpoint: BlockHeight.ofLatestCheckpoint(network: network),

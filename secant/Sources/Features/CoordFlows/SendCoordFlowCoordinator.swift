@@ -6,7 +6,7 @@
 //
 
 import ComposableArchitecture
-import ZcashLightClientKit
+@preconcurrency import ZcashLightClientKit
 
 extension SendCoordFlow {
     func coordinatorReduce() -> Reduce<SendCoordFlow.State, SendCoordFlow.Action> {
