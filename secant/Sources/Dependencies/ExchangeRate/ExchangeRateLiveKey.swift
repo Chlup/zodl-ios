@@ -17,6 +17,10 @@ import ComposableArchitecture
         static let zecKey = "ZEC"
     }
 
+    @Dependency(\.sdkSynchronizer) var sdkSynchronizer
+    @Dependency(\.userStoredPreferences) var userStoredPreferences
+    @Dependency(\.zcashSDKEnvironment) var zcashSDKEnvironment
+
     private var cancellable: AnyCancellable? = nil
     nonisolated let eventStream = CurrentValueSubject<ExchangeRateClient.EchangeRateEvent, Never>(.value(nil))
     private var latestRate: FiatCurrencyResult? = nil
@@ -30,8 +34,6 @@ import ComposableArchitecture
 
     func setup() {
         if !_XCTIsTesting {
-            @Dependency(\.sdkSynchronizer) var sdkSynchronizer
-
             cancellable = sdkSynchronizer.exchangeRateUSDStream().sink { [weak self] result in
                 Task { @MainActor [weak self] in
                     self?.resolveResult(result)
@@ -78,9 +80,6 @@ import ComposableArchitecture
 
     func refreshExchangeRateUSD(_ rateSource: ExchangeRateClient.RateSource = .coinMarketCap) {
         if !_XCTIsTesting {
-            // guard the feature is opted-in by a user
-            @Dependency(\.userStoredPreferences) var userStoredPreferences
-
             guard let exchangeRate = userStoredPreferences.exchangeRate(), exchangeRate.automatic else {
                 return
             }
@@ -107,8 +106,6 @@ import ComposableArchitecture
                     }
                 }
             } else if rateSource == .sdk {
-                @Dependency(\.sdkSynchronizer) var sdkSynchronizer
-
                 sdkSynchronizer.refreshExchangeRateUSD()
             }
         }
@@ -134,8 +131,6 @@ import ComposableArchitecture
 
         latestRate = result
 
-        @Dependency(\.zcashSDKEnvironment) var zcashSDKEnvironment
-
         if isStale
             && result.state != .fetching
             && Date().timeIntervalSince1970 - result.date.timeIntervalSince1970 > zcashSDKEnvironment.exchangeRateStaleLimit() {
@@ -153,8 +148,6 @@ import ComposableArchitecture
         }
 
         if latestRate.state == .success {
-            @Dependency(\.zcashSDKEnvironment) var zcashSDKEnvironment
-
             isStale = false
 
             let diff = Date().timeIntervalSince1970 - latestRate.date.timeIntervalSince1970

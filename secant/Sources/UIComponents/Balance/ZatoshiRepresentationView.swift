@@ -60,7 +60,7 @@ struct ZatoshiRepresentationView: View {
     let couldBeHidden: Bool
 
     @Shared(.appStorage(.sensitiveContent)) var isSensitiveContentHidden = false
-    
+
     init(
         balance: Zatoshi,
         fontName: String,
@@ -74,7 +74,6 @@ struct ZatoshiRepresentationView: View {
     ) {
         if !_XCTIsTesting {
             @Dependency(\.balanceFormatter) var balanceFormatter
-            
             self.zatoshiStringRepresentation = balanceFormatter.convert(
                 balance,
                 prefixSymbol,

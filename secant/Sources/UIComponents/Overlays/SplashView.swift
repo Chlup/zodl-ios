@@ -22,6 +22,8 @@ import ComposableArchitecture
         }
     }
 
+    @Dependency(\.localAuthentication) var localAuthentication
+
     @Published var points: [CGPoint] = []
     @Shared(.inMemory(.featureFlags)) var featureFlags: FeatureFlags = .initial
 
@@ -51,8 +53,6 @@ import ComposableArchitecture
     }
 
     func authenticate() {
-        @Dependency(\.localAuthentication) var localAuthentication
-
         authenticationDidntSucceed = false
 
         Task { @MainActor in
@@ -151,11 +151,11 @@ import ComposableArchitecture
 }
 
 struct SplashView: View {
+    @Dependency(\.localAuthentication) var localAuthentication
+
     @StateObject var splashManager: SplashManager
     let isHidden: Bool
     var authenticationIcon: Image {
-        @Dependency(\.localAuthentication) var localAuthentication
-
         switch localAuthentication.method() {
         case .faceID: return Image(systemName: "faceid")
         case .touchID: return Image(systemName: "touchid")
@@ -165,8 +165,6 @@ struct SplashView: View {
     }
 
     var authenticationDesc: String {
-        @Dependency(\.localAuthentication) var localAuthentication
-
         switch localAuthentication.method() {
         case .faceID: return String(localizable: .splashAuthFaceID)
         case .touchID: return String(localizable: .splashAuthTouchID)
