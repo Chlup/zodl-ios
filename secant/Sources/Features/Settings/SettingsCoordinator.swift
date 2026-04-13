@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+@preconcurrency import ZcashLightClientKit
 
 extension Settings {
     func coordinatorReduce() -> Reduce<Settings.State, Settings.Action> {
@@ -80,11 +81,79 @@ extension Settings {
                     var torSetupState = TorSetup.State.initial
                     torSetupState.isSettingsView = true
                     state.path.append(.torSetup(torSetupState))
+                case .resyncWallet:
+                    state.path.append(.resyncWallet(ResyncWallet.State.initial))
                 case .resetZashi:
                     state.path.append(.resetZashi(DeleteWallet.State.initial))
                 }
                 return .none
                 
+                // MARK: - Resync Wallet
+
+            case .path(.element(id: _, action: .resyncWallet(.changeBirthdayTapped))):
+                var birthdayState = WalletBirthday.State.initial
+                birthdayState.isResyncFlow = true
+                for element in state.path {
+                    if case .resyncWallet(let resyncWalletState) = element {
+                        birthdayState.estimatedHeight = resyncWalletState.birthday ?? BlockHeight(0)
+                        birthdayState.selectedYear = resyncWalletState.birthdayYear
+                        birthdayState.selectedMonth = resyncWalletState.birthdayMonth
+                    }
+                }
+                state.path.append(.resyncEstimateBirthdaysDate(birthdayState))
+                return .none
+
+            case .path(.element(id: _, action: .resyncEstimateBirthdaysDate(.enterManuallyTapped))):
+                var birthdayState = WalletBirthday.State.initial
+                birthdayState.isResyncFlow = true
+                state.path.append(.resyncWalletBirthday(birthdayState))
+                return .none
+
+            case .path(.element(id: _, action: .resyncEstimateBirthdaysDate(.helpSheetRequested))),
+                .path(.element(id: _, action: .resyncEstimatedBirthday(.helpSheetRequested))),
+                .path(.element(id: _, action: .resyncWalletBirthday(.helpSheetRequested))):
+                state.isResyncHelpSheetPresented.toggle()
+                return .none
+
+            case .path(.element(id: _, action: .resyncEstimateBirthdaysDate(.estimateHeightReady))):
+                for element in state.path {
+                    if case .resyncEstimateBirthdaysDate(let estimateBirthdaysDateState) = element {
+                        state.path.append(.resyncEstimatedBirthday(estimateBirthdaysDateState))
+                    }
+                }
+                return .none
+
+            case .path(.element(id: _, action: .resyncEstimatedBirthday(.enterManuallyTapped))):
+                var birthdayState = WalletBirthday.State.initial
+                birthdayState.isResyncFlow = true
+                state.path.append(.resyncWalletBirthday(birthdayState))
+                return .none
+
+            case .path(.element(id: _, action: .resyncEstimatedBirthday(.restoreTapped))):
+                for element in state.path {
+                    if case .resyncEstimatedBirthday(let estimatedBirthdayState) = element {
+                        state.resyncBirthday = estimatedBirthdayState.estimatedHeight
+                    }
+                }
+                var restoreInfoState = RestoreInfo.State.initial
+                restoreInfoState.isResyncFlow = true
+                state.path.append(.resyncRestoreInfo(restoreInfoState))
+                return .none
+
+            case .path(.element(id: _, action: .resyncWalletBirthday(.restoreTapped))):
+                for element in state.path {
+                    if case .resyncWalletBirthday(let walletBirthdayState) = element {
+                        state.resyncBirthday = walletBirthdayState.estimatedHeight
+                    }
+                }
+                var restoreInfoState = RestoreInfo.State.initial
+                restoreInfoState.isResyncFlow = true
+                state.path.append(.resyncRestoreInfo(restoreInfoState))
+                return .none
+
+            case .path(.element(id: _, action: .resyncRestoreInfo(.gotItTapped))):
+                return .send(.resyncFinished)
+
                 // MARK: - Currency Conversion
             
             case .path(.element(id: _, action: .currencyConversionSetup(.backToHomeTapped))):

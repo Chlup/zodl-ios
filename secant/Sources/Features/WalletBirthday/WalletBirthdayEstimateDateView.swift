@@ -35,7 +35,9 @@ struct WalletBirthdayEstimateDateView: View {
 
                 Text(
                     localizable:
-                        store.isKeystoneFlow
+                        store.isResyncFlow
+                    ? .resyncBirthdayEstimateDateInfo
+                    : store.isKeystoneFlow
                     ? .keystoneBirthdayEstimateDateInfo
                     : .restoreWalletBirthdayEstimateDateInfo
                 )
@@ -69,7 +71,7 @@ struct WalletBirthdayEstimateDateView: View {
                 
                 Spacer()
 
-                if !store.isKeystoneFlow {
+                if !store.isKeystoneFlow && !store.isResyncFlow {
                     HStack(spacing: 0) {
                         Asset.Assets.infoOutline.image
                             .zImage(size: 20, style: Design.Utility.Indigo._500)
@@ -82,7 +84,7 @@ struct WalletBirthdayEstimateDateView: View {
                     .screenHorizontalPadding()
                 }
 
-                if store.isKeystoneFlow {
+                if store.isKeystoneFlow || store.isResyncFlow {
                     ZashiButton(
                         String(localizable: .keystoneAddHWWalletEnterManually),
                         type: .ghost
@@ -121,7 +123,12 @@ struct WalletBirthdayEstimateDateView: View {
             )
             .screenHorizontalPadding()
             .applyScreenBackground()
-            .screenTitle(store.isKeystoneFlow ? "" : String(localizable: .importWalletButtonRestoreWallet))
+            .screenTitle(
+                store.isKeystoneFlow ? ""
+                : store.isResyncFlow
+                ? String(localizable: .resyncWalletTitle)
+                : String(localizable: .importWalletButtonRestoreWallet)
+            )
         }
     }
 }

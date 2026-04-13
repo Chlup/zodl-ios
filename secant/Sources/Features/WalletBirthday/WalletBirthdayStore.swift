@@ -22,6 +22,7 @@ struct WalletBirthday {
         var birthday = ""
         var estimatedHeight = BlockHeight(0)
         var isKeystoneFlow = false
+        var isResyncFlow = false
         var isValidBirthday = false
         var months: [String] = []
         var selectedMonth = ""
@@ -32,7 +33,19 @@ struct WalletBirthday {
         var estimatedHeightString: String {
             Zatoshi(Int64(estimatedHeight * 100_000_000)).decimalString()
         }
+
+        var heightString: String {
+            if !birthday.isEmpty {
+                return birthday
+            }
+            
+            return String(estimatedHeight)
+        }
         
+        var selectedDateString: String {
+            "\(selectedMonth) \(selectedYear)"
+        }
+
         init() { }
     }
     
@@ -64,7 +77,9 @@ struct WalletBirthday {
                 // __LD TESTED
                 let currentYear = Calendar.current.component(.year, from: Date())
                 state.years = Array(Constants.startYear...currentYear)
-                state.estimatedHeight = zcashSDKEnvironment.network.constants.saplingActivationHeight
+                if state.estimatedHeight < zcashSDKEnvironment.network.constants.saplingActivationHeight {
+                    state.estimatedHeight = zcashSDKEnvironment.network.constants.saplingActivationHeight
+                }
                 return .send(.updateMonths)
             
             case .binding(\.birthday):
@@ -88,7 +103,7 @@ struct WalletBirthday {
                 return .none
                 
             case .copyBirthdayTapped:
-                pasteboard.setString(state.birthday.redacted)
+                pasteboard.setString(state.heightString.redacted)
                 state.$toast.withLock { $0 = .top(String(localizable: .generalCopiedToTheClipboard)) }
                 return .none
 

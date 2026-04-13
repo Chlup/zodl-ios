@@ -16,7 +16,6 @@ struct TransactionsManagerView: View {
     let tokenName: String
     
     @Shared(.appStorage(.sensitiveContent)) var isSensitiveContentHidden = false
-    @Shared(.inMemory(.walletStatus)) var walletStatus: WalletStatus = .none
 
     init(store: StoreOf<TransactionsManager>, tokenName: String) {
         self.store = store
@@ -78,7 +77,6 @@ struct TransactionsManagerView: View {
                 }
                 .screenHorizontalPadding()
                 .padding(.vertical, 12)
-                .padding(.top, walletStatus == .restoring ? 24 : 0)
                 
                 if store.transactionSections.isEmpty && !store.isInvalidated {
                     noTransactionsView()

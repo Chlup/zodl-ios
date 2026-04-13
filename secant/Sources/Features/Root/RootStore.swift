@@ -31,6 +31,7 @@ struct Root {
         var CancelEventId = UUID()
         var CancelId = UUID()
         var CancelStateId = UUID()
+        var CancelTransactionsStateId = UUID()
         var CancelBatteryStateId = UUID()
         var SynchronizerCancelId = UUID()
         var WalletConfigCancelId = UUID()
@@ -393,13 +394,14 @@ struct Root {
                 
             case .batteryStateChanged:
                 let leavesScreenOpen = userDefaults.objectForKey(Constants.udLeavesScreenOpen) as? Bool ?? false
-                autolockHandler.value(state.walletStatus == .restoring && leavesScreenOpen)
+                autolockHandler.value(state.walletStatus.isNotReadyForFullySyncedOperation && leavesScreenOpen)
                 return .none
                 
             case .cancelAllRunningEffects:
                 return .concatenate(
                     .cancel(id: state.CancelId),
                     .cancel(id: state.CancelStateId),
+                    .cancel(id: state.CancelTransactionsStateId),
                     .cancel(id: state.CancelBatteryStateId),
                     .cancel(id: state.SynchronizerCancelId),
                     .cancel(id: state.WalletConfigCancelId),

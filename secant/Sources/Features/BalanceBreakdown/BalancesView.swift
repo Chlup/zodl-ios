@@ -16,7 +16,6 @@ struct BalancesView: View {
     let tokenName: String
     
     @Shared(.appStorage(.sensitiveContent)) var isSensitiveContentHidden = false
-    @Shared(.inMemory(.walletStatus)) var walletStatus: WalletStatus = .none
 
     init(store: StoreOf<Balances>, tokenName: String) {
         self.store = store

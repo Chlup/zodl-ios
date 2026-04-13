@@ -30,7 +30,7 @@ struct RestoreInfoView: View {
                     .zFont(.semiBold, size: 24, style: Design.Text.primary)
                     .padding(.bottom, 8)
 
-                Text(localizable: store.isKeystoneFlow ? .restoreKSInfoSubTitle : .restoreInfoSubTitle)
+                Text(localizable: (store.isKeystoneFlow || store.isResyncFlow) ? .restoreKSInfoSubTitle : .restoreInfoSubTitle)
                     .zFont(.medium, size: 16, style: Design.Text.primary)
                     .padding(.bottom, 16)
 
@@ -42,7 +42,7 @@ struct RestoreInfoView: View {
                 bulletpoint(String(localizable: .restoreInfoTip2))
                     .padding(.bottom, Design.Spacing._lg)
 
-                if store.isKeystoneFlow {
+                if store.isKeystoneFlow || store.isResyncFlow {
                     if let attrText = try? AttributedString(
                         markdown: String(localizable: .restoreKSWarn),
                         including: \.zashiApp
@@ -62,7 +62,7 @@ struct RestoreInfoView: View {
                 
                 Spacer()
 
-                if !store.isKeystoneFlow {
+                if !store.isKeystoneFlow && !store.isResyncFlow {
                     Text("\(Text(localizable: .restoreInfoNote).bold())\(String(localizable: .restoreInfoNoteInfo))")
                         .zFont(size: 12, style: Design.Text.primary)
                         .padding(.bottom, 24)
@@ -71,7 +71,7 @@ struct RestoreInfoView: View {
                 HStack {
                     ZashiToggle(
                         isOn: $store.isAcknowledged,
-                        label: String(localizable: store.isKeystoneFlow ? .restoreKSCheckbox : .restoreInfoCheckbox),
+                        label: String(localizable: (store.isKeystoneFlow || store.isResyncFlow) ? .restoreKSCheckbox : .restoreInfoCheckbox),
                         textSize: 16
                     )
                     
@@ -79,7 +79,7 @@ struct RestoreInfoView: View {
                 }
                 .padding(.leading, 1)
 
-                ZashiButton(store.isKeystoneFlow ? String(localizable: .generalOk).uppercased() : String(localizable: .restoreInfoGotIt)) {
+                ZashiButton((store.isKeystoneFlow || store.isResyncFlow) ? String(localizable: .generalOk).uppercased() : String(localizable: .restoreInfoGotIt)) {
                     store.send(.gotItTapped)
                 }
                 .padding(.vertical, 24)

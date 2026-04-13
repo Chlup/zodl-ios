@@ -39,7 +39,7 @@ extension Root {
                                 return Root.Action.noChangeInTransactions
                             }
                     }
-                    .cancellable(id: state.CancelStateId, cancelInFlight: true),
+                    .cancellable(id: state.CancelTransactionsStateId, cancelInFlight: true),
                     .send(.fetchTransactionsForTheSelectedAccount)
                 )
                 

@@ -13,6 +13,7 @@ struct RestoreInfo {
     struct State: Equatable {
         var isAcknowledged = true
         var isKeystoneFlow = false
+        var isResyncFlow = false
     }
     
     enum Action: BindableAction, Equatable {

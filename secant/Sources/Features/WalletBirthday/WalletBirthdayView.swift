@@ -37,6 +37,8 @@ struct WalletBirthdayView: View {
                     localizable:
                         store.isKeystoneFlow
                     ? .addHWWalletBirthdayInfo
+                    : store.isResyncFlow
+                    ? .resyncWalletBirthdayInfo
                     : .restoreWalletBirthdayInfo
                 )
                 .zFont(size: 14, style: Design.Text.primary)
@@ -58,7 +60,7 @@ struct WalletBirthdayView: View {
                 
                 Spacer()
                 
-                if !store.isKeystoneFlow {
+                if !store.isKeystoneFlow && !store.isResyncFlow {
                     ZashiButton(
                         String(localizable: .restoreWalletBirthdayEstimate),
                         type: .ghost
@@ -71,6 +73,8 @@ struct WalletBirthdayView: View {
                 ZashiButton(
                     store.isKeystoneFlow
                     ? String(localizable: .keystoneAddHWWalletConnect)
+                    : store.isResyncFlow
+                    ? String(localizable: .generalConfirm)
                     : String(localizable: .importWalletButtonRestoreWallet)
                 ) {
                     store.send(.restoreTapped)
@@ -94,7 +98,12 @@ struct WalletBirthdayView: View {
             )
             .screenHorizontalPadding()
             .applyScreenBackground()
-            .screenTitle(store.isKeystoneFlow ? "" : String(localizable: .importWalletButtonRestoreWallet))
+            .screenTitle(
+                store.isKeystoneFlow ? ""
+                : store.isResyncFlow
+                ? String(localizable: .resyncWalletTitle)
+                : String(localizable: .importWalletButtonRestoreWallet)
+            )
             .overlay {
                 if keyboardVisible {
                     VStack(spacing: 0) {

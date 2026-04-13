@@ -5,6 +5,7 @@
 //  Created by Lukáš Korba on 07.03.2025.
 //
 
+import Combine
 import ComposableArchitecture
 import ZcashLightClientKit
 
@@ -105,6 +106,35 @@ extension Root {
                     .send(.fetchTransactionsForTheSelectedAccount)
                 )
                 
+                // MARK: - Resync Wallet
+
+            case .settings(.resyncFinished):
+                guard let birthday = state.settingsState.resyncBirthday else {
+                    return .none
+                }
+                var leavesScreenOpen = false
+                for element in state.settingsState.path {
+                    if case .resyncRestoreInfo(let restoreInfoState) = element {
+                        leavesScreenOpen = restoreInfoState.isAcknowledged
+                    }
+                }
+                userDefaults.setValue(leavesScreenOpen, Constants.udLeavesScreenOpen)
+                autolockHandler.value(leavesScreenOpen)
+                state.path = nil
+                state.isRestoringWallet = true
+                userDefaults.setValue(true, Constants.udIsResyncingWallet)
+                state.$walletStatus.withLock { $0 = .resyncing }
+                return .concatenate(
+                    .run { send in
+                        do {
+                            try await sdkSynchronizer.rescanFrom(birthday)
+                        } catch {
+                            // TODO: error handling
+                        }
+                    },
+                    .send(.batteryStateChanged(nil))
+                )
+
                 // MARK: - Flexa
 
             case .flexaOpenRequest:

@@ -43,7 +43,7 @@ struct AdvancedSettingsView: View {
                         ) {
                             store.send(.operationAccessCheck(.exportTaxFile))
                         }
-                        .disabled(walletStatus == .restoring)
+                        .disabled(walletStatus.isNotReadyForFullySyncedOperation)
 
                         if store.isEnoughFreeSpaceMode {
                             ActionRow(
@@ -55,12 +55,19 @@ struct AdvancedSettingsView: View {
                         }
 
                         ActionRow(
+                            icon: Asset.Assets.refreshCCW.image,
+                            title: String(localizable: .resyncWalletTitle)
+                        ) {
+                            store.send(.operationAccessCheck(.resyncWallet))
+                        }
+
+                        ActionRow(
                             icon: Asset.Assets.Icons.shieldZap.image,
                             title: String(localizable: .settingsPrivate)
                         ) {
                             store.send(.operationAccessCheck(.torSetup))
                         }
-                        
+
                         if store.isKeystoneConnected {
                             ActionRow(
                                 icon: Asset.Assets.Icons.hardDrive.image,
