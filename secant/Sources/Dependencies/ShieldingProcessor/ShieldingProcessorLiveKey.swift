@@ -18,12 +18,17 @@ extension ShieldingProcessorClient: DependencyKey {
 
         return ShieldingProcessorClient(
             observe: { impl.observe() },
-            shieldFunds: { impl.shieldFunds() }
+            shieldFunds: {
+                Task { @MainActor in
+                    impl.shieldFunds()
+                }
+            }
         )
     }
 }
 
-private final class ShieldingProcessorImpl: @unchecked Sendable {
+@MainActor
+private final class ShieldingProcessorImpl {
     @Dependency(\.derivationTool) var derivationTool
     @Dependency(\.mnemonic) var mnemonic
     @Dependency(\.sdkSynchronizer) var sdkSynchronizer
@@ -32,9 +37,11 @@ private final class ShieldingProcessorImpl: @unchecked Sendable {
 
     @Shared(.inMemory(.selectedWalletAccount)) var selectedWalletAccount: WalletAccount? = nil
 
-    let subject = CurrentValueSubject<ShieldingProcessorClient.State, Never>(.unknown)
+    nonisolated let subject = CurrentValueSubject<ShieldingProcessorClient.State, Never>(.unknown)
 
-    func observe() -> AnyPublisher<ShieldingProcessorClient.State, Never> {
+    nonisolated init() {}
+
+    nonisolated func observe() -> AnyPublisher<ShieldingProcessorClient.State, Never> {
         subject.eraseToAnyPublisher()
     }
 
@@ -47,7 +54,7 @@ private final class ShieldingProcessorImpl: @unchecked Sendable {
         }
 
         if account.vendor == .keystone {
-            Task { [subject, sdkSynchronizer, zcashSDKEnvironment] in
+            Task.detached { [subject, sdkSynchronizer, zcashSDKEnvironment] in
                 do {
                     let proposal = try await sdkSynchronizer.proposeShielding(account.id, zcashSDKEnvironment.shieldingThreshold(), .empty, nil)
 
@@ -58,7 +65,7 @@ private final class ShieldingProcessorImpl: @unchecked Sendable {
                 }
             }
         } else {
-            Task { [subject, derivationTool, mnemonic, sdkSynchronizer, walletStorage, zcashSDKEnvironment] in
+            Task.detached { [subject, derivationTool, mnemonic, sdkSynchronizer, walletStorage, zcashSDKEnvironment] in
                 do {
                     let storedWallet = try walletStorage.exportWallet()
                     let seedBytes = try mnemonic.toSeed(storedWallet.seedPhrase.value())

@@ -73,8 +73,9 @@ extension Root {
                 
             case .initialization(.appDelegate(.didEnterBackground)):
                 sdkSynchronizer.stop()
-                state.bgTask?.setTaskCompleted(success: false)
-                state.bgTask = nil
+                Root.bgTask?.setTaskCompleted(success: false)
+                Root.bgTask = nil
+                state.hasBGTask = false
                 state.appStartState = .didEnterBackground
                 state.isLockedInKeychainUnavailableState = false
                 return .cancel(id: state.CancelStateId)
@@ -84,7 +85,8 @@ extension Root {
                 if state.appStartState == .didFinishLaunching {
                     state.appStartState = .backgroundTask
                     if keysPresent {
-                        state.bgTask = task
+                        Root.bgTask = task
+                        state.hasBGTask = true
                         return .none
                     } else {
                         state.isLockedInKeychainUnavailableState = true
@@ -92,7 +94,8 @@ extension Root {
                         return .cancel(id: state.DidFinishLaunchingId)
                     }
                 } else {
-                    state.bgTask = task
+                    Root.bgTask = task
+                    state.hasBGTask = true
                     state.appStartState = .backgroundTask
                     return .run { send in
                         await send(.initialization(.retryStart))
@@ -126,7 +129,7 @@ extension Root {
                 }
 
                 // handle BCGTask
-                guard state.bgTask != nil else {
+                guard state.hasBGTask else {
                     return .send(.initialization(.checkRestoreWalletFlag(snapshot.syncStatus)))
                 }
                 
@@ -145,8 +148,9 @@ extension Root {
                 
                 if finishBGTask  {
                     LoggerProxy.event("BGTask setTaskCompleted(success: \(successOfBGTask)) from TCA")
-                    state.bgTask?.setTaskCompleted(success: successOfBGTask)
-                    state.bgTask = nil
+                    Root.bgTask?.setTaskCompleted(success: successOfBGTask)
+                    Root.bgTask = nil
+                    state.hasBGTask = false
                     return .cancel(id: state.CancelStateId)
                 }
                 
@@ -178,12 +182,12 @@ extension Root {
                 return .run { [state] send in
                     do {
                         try await sdkSynchronizer.start(true)
-                        if state.bgTask != nil {
+                        if state.hasBGTask {
                             LoggerProxy.event("BGTask synchronizer.start() PASSED")
                         }
                         await send(.initialization(.registerForSynchronizersUpdate))
                     } catch {
-                        if state.bgTask != nil {
+                        if state.hasBGTask {
                             LoggerProxy.event("BGTask synchronizer.start() failed \(error.toZcashError())")
                         }
                         await send(.initialization(.synchronizerStartFailed(error.toZcashError())))
@@ -198,7 +202,7 @@ extension Root {
                         .map(Root.Action.synchronizerStateChanged)
                 }
                 .cancellable(id: state.CancelStateId, cancelInFlight: true)
-                if state.bgTask != nil {
+                if state.hasBGTask {
                     return stateStreamEffect
                 } else {
                     return .merge(

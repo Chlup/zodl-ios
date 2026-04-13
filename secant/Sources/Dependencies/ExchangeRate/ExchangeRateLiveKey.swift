@@ -28,11 +28,14 @@ import ComposableArchitecture
     private var staleTimer: Timer? = nil
     private var isStale = false
     private var nilValuesCounter = 0
+    private var isSetUp = false
 
     // nonisolated init() — empty, so live() can create it without main actor context
     nonisolated init() {}
 
     func setup() {
+        guard !isSetUp else { return }
+        isSetUp = true
         if !_XCTIsTesting {
             cancellable = sdkSynchronizer.exchangeRateUSDStream().sink { [weak self] result in
                 Task { @MainActor [weak self] in
@@ -79,6 +82,7 @@ import ComposableArchitecture
     }
 
     func refreshExchangeRateUSD(_ rateSource: ExchangeRateClient.RateSource = .coinMarketCap) {
+        setup()
         if !_XCTIsTesting {
             guard let exchangeRate = userStoredPreferences.exchangeRate(), exchangeRate.automatic else {
                 return

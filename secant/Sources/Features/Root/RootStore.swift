@@ -43,7 +43,7 @@ struct Root {
         var appInitializationState: InitializationState = .uninitialized
         var appStartState: AppStartState = .unknown
         var areMetadataPreserved = true
-        nonisolated var bgTask: BGProcessingTask?
+        var hasBGTask = false
         @Presents var confirmationDialog: ConfirmationDialogState<Action.ConfirmationDialog>?
         @Shared(.inMemory(.exchangeRate)) var currencyConversion: CurrencyConversion? = nil
         var debugState: DebugState
@@ -258,6 +258,10 @@ struct Root {
     @Dependency(\.walletStorage) var walletStorage
     @Dependency(\.readTransactionsStorage) var readTransactionsStorage
     @Dependency(\.zcashSDKEnvironment) var zcashSDKEnvironment
+
+    /// Holds the BGProcessingTask reference outside of State (BGProcessingTask is not Sendable).
+    /// Safe because all access is from @MainActor (reducer and AppDelegate).
+    nonisolated(unsafe) static var bgTask: BGProcessingTask?
 
     init() { }
     
