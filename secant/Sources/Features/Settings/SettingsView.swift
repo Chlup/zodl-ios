@@ -121,6 +121,16 @@ struct SettingsView: View {
                     ExportTransactionHistoryView(store: store)
                 case let .recoveryPhrase(store):
                     RecoveryPhraseDisplayView(store: store)
+                case let .resyncEstimateBirthdaysDate(store):
+                    WalletBirthdayEstimateDateView(store: store)
+                case let .resyncEstimatedBirthday(store):
+                    WalletBirthdayEstimatedHeightView(store: store)
+                case let .resyncRestoreInfo(store):
+                    RestoreInfoView(store: store)
+                case let .resyncWallet(store):
+                    ResyncWalletView(store: store)
+                case let .resyncWalletBirthday(store):
+                    WalletBirthdayView(store: store)
                 case let .resetZashi(store):
                     DeleteWalletView(store: store)
                 case let .scan(store):
@@ -139,6 +149,9 @@ struct SettingsView: View {
             }
             .zashiSheet(isPresented: $store.isInEnhanceTransactionMode) {
                 enhanceTransactionSheetContent()
+            }
+            .zashiSheet(isPresented: $store.isResyncHelpSheetPresented) {
+                resyncHelpSheetContent()
             }
         }
     }
@@ -180,6 +193,35 @@ struct SettingsView: View {
                 store.send(.checkFundsForAddress(store.addressToRecoverFunds))
             }
             .disabled(store.addressToRecoverFunds.isEmpty || !store.isTorOn)
+            .padding(.bottom, Design.Spacing.sheetBottomSpace)
+        }
+    }
+    
+    @ViewBuilder private func resyncHelpSheetContent() -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Text(localizable: .restoreWalletHelpTitle)
+                .zFont(.semiBold, size: 24, style: Design.Text.primary)
+                .padding(.top, 24)
+                .padding(.bottom, 12)
+
+            HStack(alignment: .top, spacing: 8) {
+                Asset.Assets.infoCircle.image
+                    .zImage(size: 20, style: Design.Text.primary)
+
+                if let attrText = try? AttributedString(
+                    markdown: String(localizable: .addKeystoneWalletHelpBirthday),
+                    including: \.zashiApp
+                ) {
+                    ZashiText(withAttributedString: attrText, colorScheme: colorScheme)
+                        .zFont(size: 14, style: Design.Text.tertiary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .padding(.bottom, 32)
+            
+            ZashiButton(String(localizable: .restoreInfoGotIt)) {
+                store.send(.closeResyncHelpSheetTapped)
+            }
             .padding(.bottom, Design.Spacing.sheetBottomSpace)
         }
     }

@@ -19,6 +19,11 @@ struct Settings {
         case exportTransactionHistory(ExportTransactionHistory)
         case recoveryPhrase(RecoveryPhraseDisplay)
         case resetZashi(DeleteWallet)
+        case resyncEstimateBirthdaysDate(WalletBirthday)
+        case resyncEstimatedBirthday(WalletBirthday)
+        case resyncRestoreInfo(RestoreInfo)
+        case resyncWallet(ResyncWallet)
+        case resyncWalletBirthday(WalletBirthday)
         case scan(Scan)
         case sendUsFeedback(SendFeedback)
         case torSetup(TorSetup)
@@ -34,8 +39,10 @@ struct Settings {
         var isEnoughFreeSpaceMode = true
         var isInEnhanceTransactionMode = false
         var isInRecoverFundsMode = false
+        var isResyncHelpSheetPresented = false
         var isTorOn = false
         var path = StackState<Path.State>()
+        var resyncBirthday: BlockHeight? = nil
         @Shared(.inMemory(.selectedWalletAccount)) var selectedWalletAccount: WalletAccount? = nil
         var txidToEnhance = ""
         @Shared(.inMemory(.walletAccounts)) var walletAccounts: [WalletAccount] = []
@@ -65,6 +72,7 @@ struct Settings {
         case backToHomeTapped
         case binding(BindingAction<Settings.State>)
         case checkFundsForAddress(String)
+        case closeResyncHelpSheetTapped
         case currencyConversionTapped
         case enableEnhanceTransactionMode
         case enableRecoverFundsMode
@@ -72,6 +80,7 @@ struct Settings {
         case onAppear
         case path(StackActionOf<Path>)
         case payWithFlexaTapped
+        case resyncFinished
         case sendUsFeedbackTapped
         case whatsNewTapped
     }
@@ -105,6 +114,10 @@ struct Settings {
                 return .none
                 
             case .binding:
+                return .none
+
+            case .closeResyncHelpSheetTapped:
+                state.isResyncHelpSheetPresented = false
                 return .none
 
             case .aboutTapped:
@@ -145,6 +158,9 @@ struct Settings {
                 return .none
 
             case .payWithFlexaTapped:
+                return .none
+
+            case .resyncFinished:
                 return .none
 
             case .enableEnhanceTransactionMode:

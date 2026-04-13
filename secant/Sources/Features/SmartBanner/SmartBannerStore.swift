@@ -393,7 +393,8 @@ struct SmartBanner {
                     }
                     
                     // return of restoring/syncing
-                    if isSyncing && state.priorityContent == nil {
+                    let isSyncingHigherPriority = (state.priorityContent?.rawValue ?? 0) > State.PriorityContent.priority4.rawValue
+                    if isSyncing && (state.priorityContent == nil || isSyncingHigherPriority) {
                         if state.walletStatus == .restoring {
                             return .send(.triggerPriority(.priority3))
                         } else if state.lastKnownSyncPercentage >= 0 && state.lastKnownSyncPercentage < Constants.smartBannerSyncingThreshold {

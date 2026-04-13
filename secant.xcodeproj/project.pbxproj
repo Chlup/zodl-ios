@@ -262,7 +262,6 @@
 		34AA6EC72F85774F00D244E2 /* SendFormSheets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CE02F85774F00D244E2 /* SendFormSheets.swift */; };
 		34AA6EC82F85774F00D244E2 /* ActionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D692F85774F00D244E2 /* ActionRow.swift */; };
 		34AA6EC92F85774F00D244E2 /* WhatsNewProviderTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C572F85774F00D244E2 /* WhatsNewProviderTestKey.swift */; };
-		34AA6ECA2F85774F00D244E2 /* WalletStatusPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D992F85774F00D244E2 /* WalletStatusPanel.swift */; };
 		34AA6ECB2F85774F00D244E2 /* SwapAndPayInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C2D2F85774F00D244E2 /* SwapAndPayInterface.swift */; };
 		34AA6ECC2F85774F00D244E2 /* AddressDetailsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C6C2F85774F00D244E2 /* AddressDetailsStore.swift */; };
 		34AA6ECD2F85774F00D244E2 /* WalletStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C502F85774F00D244E2 /* WalletStorage.swift */; };
@@ -720,7 +719,6 @@
 		34AA70952F85774F00D244E2 /* SendFormSheets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CE02F85774F00D244E2 /* SendFormSheets.swift */; };
 		34AA70962F85774F00D244E2 /* ActionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D692F85774F00D244E2 /* ActionRow.swift */; };
 		34AA70972F85774F00D244E2 /* WhatsNewProviderTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C572F85774F00D244E2 /* WhatsNewProviderTestKey.swift */; };
-		34AA70982F85774F00D244E2 /* WalletStatusPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D992F85774F00D244E2 /* WalletStatusPanel.swift */; };
 		34AA70992F85774F00D244E2 /* SwapAndPayInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C2D2F85774F00D244E2 /* SwapAndPayInterface.swift */; };
 		34AA709A2F85774F00D244E2 /* AddressDetailsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C6C2F85774F00D244E2 /* AddressDetailsStore.swift */; };
 		34AA709B2F85774F00D244E2 /* WalletStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C502F85774F00D244E2 /* WalletStorage.swift */; };
@@ -1126,7 +1124,6 @@
 		34AA722B2F85774F00D244E2 /* SendFormSheets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CE02F85774F00D244E2 /* SendFormSheets.swift */; };
 		34AA722C2F85774F00D244E2 /* ActionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D692F85774F00D244E2 /* ActionRow.swift */; };
 		34AA722D2F85774F00D244E2 /* WhatsNewProviderTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C572F85774F00D244E2 /* WhatsNewProviderTestKey.swift */; };
-		34AA722E2F85774F00D244E2 /* WalletStatusPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D992F85774F00D244E2 /* WalletStatusPanel.swift */; };
 		34AA722F2F85774F00D244E2 /* SwapAndPayInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C2D2F85774F00D244E2 /* SwapAndPayInterface.swift */; };
 		34AA72302F85774F00D244E2 /* AddressDetailsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C6C2F85774F00D244E2 /* AddressDetailsStore.swift */; };
 		34AA72312F85774F00D244E2 /* WalletStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C502F85774F00D244E2 /* WalletStorage.swift */; };
@@ -1584,7 +1581,6 @@
 		34AA73F92F85774F00D244E2 /* SendFormSheets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CE02F85774F00D244E2 /* SendFormSheets.swift */; };
 		34AA73FA2F85774F00D244E2 /* ActionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D692F85774F00D244E2 /* ActionRow.swift */; };
 		34AA73FB2F85774F00D244E2 /* WhatsNewProviderTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C572F85774F00D244E2 /* WhatsNewProviderTestKey.swift */; };
-		34AA73FC2F85774F00D244E2 /* WalletStatusPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D992F85774F00D244E2 /* WalletStatusPanel.swift */; };
 		34AA73FD2F85774F00D244E2 /* SwapAndPayInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C2D2F85774F00D244E2 /* SwapAndPayInterface.swift */; };
 		34AA73FE2F85774F00D244E2 /* AddressDetailsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C6C2F85774F00D244E2 /* AddressDetailsStore.swift */; };
 		34AA73FF2F85774F00D244E2 /* WalletStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C502F85774F00D244E2 /* WalletStorage.swift */; };
@@ -1990,7 +1986,6 @@
 		34AA758F2F85774F00D244E2 /* SendFormSheets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CE02F85774F00D244E2 /* SendFormSheets.swift */; };
 		34AA75902F85774F00D244E2 /* ActionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D692F85774F00D244E2 /* ActionRow.swift */; };
 		34AA75912F85774F00D244E2 /* WhatsNewProviderTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C572F85774F00D244E2 /* WhatsNewProviderTestKey.swift */; };
-		34AA75922F85774F00D244E2 /* WalletStatusPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D992F85774F00D244E2 /* WalletStatusPanel.swift */; };
 		34AA75932F85774F00D244E2 /* SwapAndPayInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C2D2F85774F00D244E2 /* SwapAndPayInterface.swift */; };
 		34AA75942F85774F00D244E2 /* AddressDetailsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C6C2F85774F00D244E2 /* AddressDetailsStore.swift */; };
 		34AA75952F85774F00D244E2 /* WalletStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C502F85774F00D244E2 /* WalletStorage.swift */; };
@@ -2256,6 +2251,11 @@
 		9E1FAFBA2AF2C7F20084CA3D /* PrivateDataConsentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1FAFB92AF2C7F20084CA3D /* PrivateDataConsentTests.swift */; };
 		9E2706672AFF99F5000DA6EC /* ReadTransactionsStorageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9E2706652AFF99F5000DA6EC /* ReadTransactionsStorageModel.xcdatamodeld */; };
 		9E2706682AFF99F5000DA6EC /* ReadTransactionsStorageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9E2706652AFF99F5000DA6EC /* ReadTransactionsStorageModel.xcdatamodeld */; };
+		9E27153F2F88FB2000046B74 /* WalletStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E27153E2F88FB1E00046B74 /* WalletStatus.swift */; };
+		9E2715402F88FB2000046B74 /* WalletStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E27153E2F88FB1E00046B74 /* WalletStatus.swift */; };
+		9E2715412F88FB2000046B74 /* WalletStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E27153E2F88FB1E00046B74 /* WalletStatus.swift */; };
+		9E2715422F88FB2000046B74 /* WalletStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E27153E2F88FB1E00046B74 /* WalletStatus.swift */; };
+		9E2715432F88FB2000046B74 /* WalletStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E27153E2F88FB1E00046B74 /* WalletStatus.swift */; };
 		9E2F1C8C280ED6A7004E65FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E2F1C8B280ED6A7004E65FE /* LaunchScreen.storyboard */; };
 		9E34519529C4A4BF00177D16 /* ReceiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E207C382966EF87003E2C9B /* ReceiveTests.swift */; };
 		9E34519629C4A4D800177D16 /* secantUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4E7A2526B364180058B01E /* secantUITests.swift */; };
@@ -2302,6 +2302,16 @@
 		9E41FFB62CB2814500783CFD /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E5AAEBF2A67CEC4003F283D /* Colors.xcassets */; };
 		9E46919A2AD5735E0082D7DF /* TabsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4691992AD5735E0082D7DF /* TabsTests.swift */; };
 		9E4841532F869F5F00D0649B /* ZcashLightClientKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9E4841522F869F5F00D0649B /* ZcashLightClientKit */; };
+		9E48423E2F87C40400D0649B /* ResyncWalletStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E48423D2F87C40400D0649B /* ResyncWalletStore.swift */; };
+		9E48423F2F87C40400D0649B /* ResyncWalletStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E48423D2F87C40400D0649B /* ResyncWalletStore.swift */; };
+		9E4842402F87C40400D0649B /* ResyncWalletStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E48423D2F87C40400D0649B /* ResyncWalletStore.swift */; };
+		9E4842412F87C40400D0649B /* ResyncWalletStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E48423D2F87C40400D0649B /* ResyncWalletStore.swift */; };
+		9E4842422F87C40400D0649B /* ResyncWalletStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E48423D2F87C40400D0649B /* ResyncWalletStore.swift */; };
+		9E48424A2F87C41200D0649B /* ResyncWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4842492F87C41200D0649B /* ResyncWalletView.swift */; };
+		9E48424B2F87C41200D0649B /* ResyncWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4842492F87C41200D0649B /* ResyncWalletView.swift */; };
+		9E48424C2F87C41200D0649B /* ResyncWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4842492F87C41200D0649B /* ResyncWalletView.swift */; };
+		9E48424D2F87C41200D0649B /* ResyncWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4842492F87C41200D0649B /* ResyncWalletView.swift */; };
+		9E48424E2F87C41200D0649B /* ResyncWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4842492F87C41200D0649B /* ResyncWalletView.swift */; };
 		9E4938D82ACE8E8F003C4C1D /* SecurityWarningSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4938D72ACE8E8F003C4C1D /* SecurityWarningSnapshotTests.swift */; };
 		9E4AB2A42BA1BEE900F5D6DB /* ReadTransactionsStorageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9E2706652AFF99F5000DA6EC /* ReadTransactionsStorageModel.xcdatamodeld */; };
 		9E4AB2AF2BA1BEE900F5D6DB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D4E7A0F26B364180058B01E /* Preview Assets.xcassets */; };
@@ -2771,7 +2781,6 @@
 		34AA6D952F85774F00D244E2 /* SwapFromToView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapFromToView.swift; sourceTree = "<group>"; };
 		34AA6D972F85774F00D244E2 /* ConditionalFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionalFont.swift; sourceTree = "<group>"; };
 		34AA6D982F85774F00D244E2 /* ConditionalStrikethrough.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionalStrikethrough.swift; sourceTree = "<group>"; };
-		34AA6D992F85774F00D244E2 /* WalletStatusPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletStatusPanel.swift; sourceTree = "<group>"; };
 		34AA6D9A2F85774F00D244E2 /* ZashiFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZashiFont.swift; sourceTree = "<group>"; };
 		34AA6D9B2F85774F00D244E2 /* ZashiText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZashiText.swift; sourceTree = "<group>"; };
 		34AA6D9D2F85774F00D244E2 /* MessageEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEditor.swift; sourceTree = "<group>"; };
@@ -2831,6 +2840,7 @@
 		9E207C352966EC77003E2C9B /* ReceiveSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiveSnapshotTests.swift; sourceTree = "<group>"; };
 		9E207C382966EF87003E2C9B /* ReceiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiveTests.swift; sourceTree = "<group>"; };
 		9E2706662AFF99F5000DA6EC /* TransactionReadUnreadM.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TransactionReadUnreadM.xcdatamodel; sourceTree = "<group>"; };
+		9E27153E2F88FB1E00046B74 /* WalletStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletStatus.swift; sourceTree = "<group>"; };
 		9E2F1C8B280ED6A7004E65FE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9E391123283E4CAC0073DD9A /* ImportWalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportWalletTests.swift; sourceTree = "<group>"; };
 		9E39112D283F91600073DD9A /* ZatoshiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZatoshiTests.swift; sourceTree = "<group>"; };
@@ -2839,6 +2849,8 @@
 		9E41FFBB2CB2814500783CFD /* zashi-testnet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "zashi-testnet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E41FFBC2CB2814600783CFD /* zashi-testnet-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zashi-testnet-Info.plist"; path = "/Users/lukaskorba/Dev/Xcode/GitHub/LukasKorba/secant-ios-wallet/secant/zashi-testnet-Info.plist"; sourceTree = "<absolute>"; };
 		9E4691992AD5735E0082D7DF /* TabsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsTests.swift; sourceTree = "<group>"; };
+		9E48423D2F87C40400D0649B /* ResyncWalletStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResyncWalletStore.swift; sourceTree = "<group>"; };
+		9E4842492F87C41200D0649B /* ResyncWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResyncWalletView.swift; sourceTree = "<group>"; };
 		9E4938D72ACE8E8F003C4C1D /* SecurityWarningSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityWarningSnapshotTests.swift; sourceTree = "<group>"; };
 		9E4A01762B0C9ABD005AFC7E /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		9E4AB2B72BA1BEE900F5D6DB /* secant-distrib.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "secant-distrib.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4073,6 +4085,7 @@
 				34AA6CB42F85774F00D244E2 /* RecoveryPhraseDisplay */,
 				34AA6CB82F85774F00D244E2 /* RequestZec */,
 				34AA6CBB2F85774F00D244E2 /* RestoreInfo */,
+				9E4842362F87C3F900D0649B /* ResyncWallet */,
 				34AA6CC92F85774F00D244E2 /* Root */,
 				34AA6CD12F85774F00D244E2 /* Scan */,
 				34AA6CDC2F85774F00D244E2 /* SendConfirmation */,
@@ -4184,6 +4197,7 @@
 				34AA6D542F85774F00D244E2 /* ValidationWord.swift */,
 				34AA6D552F85774F00D244E2 /* WalletAccount.swift */,
 				34AA6D562F85774F00D244E2 /* WalletConfig.swift */,
+				9E27153E2F88FB1E00046B74 /* WalletStatus.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -4383,7 +4397,6 @@
 			children = (
 				34AA6D972F85774F00D244E2 /* ConditionalFont.swift */,
 				34AA6D982F85774F00D244E2 /* ConditionalStrikethrough.swift */,
-				34AA6D992F85774F00D244E2 /* WalletStatusPanel.swift */,
 				34AA6D9A2F85774F00D244E2 /* ZashiFont.swift */,
 				34AA6D9B2F85774F00D244E2 /* ZashiText.swift */,
 			);
@@ -4717,6 +4730,15 @@
 				9E4691992AD5735E0082D7DF /* TabsTests.swift */,
 			);
 			path = TabsTests;
+			sourceTree = "<group>";
+		};
+		9E4842362F87C3F900D0649B /* ResyncWallet */ = {
+			isa = PBXGroup;
+			children = (
+				9E48423D2F87C40400D0649B /* ResyncWalletStore.swift */,
+				9E4842492F87C41200D0649B /* ResyncWalletView.swift */,
+			);
+			path = ResyncWallet;
 			sourceTree = "<group>";
 		};
 		9E4938D62ACE8E6C003C4C1D /* SecurityWarningSnapshotTests */ = {
@@ -5776,6 +5798,7 @@
 				34AA73292F85774F00D244E2 /* UserMetadataProviderInterface.swift in Sources */,
 				34AA732A2F85774F00D244E2 /* UserDefaultsInterface.swift in Sources */,
 				34AA732B2F85774F00D244E2 /* RestoreInfoView.swift in Sources */,
+				9E48424A2F87C41200D0649B /* ResyncWalletView.swift in Sources */,
 				34AA732C2F85774F00D244E2 /* SupportDataGeneratorLiveKey.swift in Sources */,
 				34AA732D2F85774F00D244E2 /* AddressDetailsView.swift in Sources */,
 				34AA732E2F85774F00D244E2 /* QRImageDetectorTestKey.swift in Sources */,
@@ -5891,6 +5914,7 @@
 				34AA739C2F85774F00D244E2 /* AddHWWalletStore.swift in Sources */,
 				34AA739D2F85774F00D244E2 /* LogsHandlerTest.swift in Sources */,
 				34AA739E2F85774F00D244E2 /* WhatsNewStore.swift in Sources */,
+				9E2715422F88FB2000046B74 /* WalletStatus.swift in Sources */,
 				34AA739F2F85774F00D244E2 /* AddressBookInterface.swift in Sources */,
 				34AA73A02F85774F00D244E2 /* WalletBalancesView.swift in Sources */,
 				34AA73A12F85774F00D244E2 /* ZashiBack.swift in Sources */,
@@ -5986,7 +6010,6 @@
 				34AA73F92F85774F00D244E2 /* SendFormSheets.swift in Sources */,
 				34AA73FA2F85774F00D244E2 /* ActionRow.swift in Sources */,
 				34AA73FB2F85774F00D244E2 /* WhatsNewProviderTestKey.swift in Sources */,
-				34AA73FC2F85774F00D244E2 /* WalletStatusPanel.swift in Sources */,
 				34AA73FD2F85774F00D244E2 /* SwapAndPayInterface.swift in Sources */,
 				34AA73FE2F85774F00D244E2 /* AddressDetailsStore.swift in Sources */,
 				34AA73FF2F85774F00D244E2 /* WalletStorage.swift in Sources */,
@@ -6040,6 +6063,7 @@
 				34AA742F2F85774F00D244E2 /* LocalAuthenticationLiveKey.swift in Sources */,
 				34AA74302F85774F00D244E2 /* SendFormView.swift in Sources */,
 				34AA74312F85774F00D244E2 /* ZcashSymbol.swift in Sources */,
+				9E4842422F87C40400D0649B /* ResyncWalletStore.swift in Sources */,
 				34AA74322F85774F00D244E2 /* SensitiveData.swift in Sources */,
 				34AA74332F85774F00D244E2 /* ZashiButton.swift in Sources */,
 				34AA74342F85774F00D244E2 /* KeystoneHandlerLiveKey.swift in Sources */,
@@ -6192,6 +6216,7 @@
 				34AA6FC52F85774F00D244E2 /* UserMetadataProviderInterface.swift in Sources */,
 				34AA6FC62F85774F00D244E2 /* UserDefaultsInterface.swift in Sources */,
 				34AA6FC72F85774F00D244E2 /* RestoreInfoView.swift in Sources */,
+				9E48424E2F87C41200D0649B /* ResyncWalletView.swift in Sources */,
 				34AA6FC82F85774F00D244E2 /* SupportDataGeneratorLiveKey.swift in Sources */,
 				34AA6FC92F85774F00D244E2 /* AddressDetailsView.swift in Sources */,
 				34AA6FCA2F85774F00D244E2 /* QRImageDetectorTestKey.swift in Sources */,
@@ -6307,6 +6332,7 @@
 				34AA70382F85774F00D244E2 /* AddHWWalletStore.swift in Sources */,
 				34AA70392F85774F00D244E2 /* LogsHandlerTest.swift in Sources */,
 				34AA703A2F85774F00D244E2 /* WhatsNewStore.swift in Sources */,
+				9E2715412F88FB2000046B74 /* WalletStatus.swift in Sources */,
 				34AA703B2F85774F00D244E2 /* AddressBookInterface.swift in Sources */,
 				34AA703C2F85774F00D244E2 /* WalletBalancesView.swift in Sources */,
 				34AA703D2F85774F00D244E2 /* ZashiBack.swift in Sources */,
@@ -6402,7 +6428,6 @@
 				34AA70952F85774F00D244E2 /* SendFormSheets.swift in Sources */,
 				34AA70962F85774F00D244E2 /* ActionRow.swift in Sources */,
 				34AA70972F85774F00D244E2 /* WhatsNewProviderTestKey.swift in Sources */,
-				34AA70982F85774F00D244E2 /* WalletStatusPanel.swift in Sources */,
 				34AA70992F85774F00D244E2 /* SwapAndPayInterface.swift in Sources */,
 				34AA709A2F85774F00D244E2 /* AddressDetailsStore.swift in Sources */,
 				34AA709B2F85774F00D244E2 /* WalletStorage.swift in Sources */,
@@ -6456,6 +6481,7 @@
 				34AA70CB2F85774F00D244E2 /* LocalAuthenticationLiveKey.swift in Sources */,
 				34AA70CC2F85774F00D244E2 /* SendFormView.swift in Sources */,
 				34AA70CD2F85774F00D244E2 /* ZcashSymbol.swift in Sources */,
+				9E48423F2F87C40400D0649B /* ResyncWalletStore.swift in Sources */,
 				34AA70CE2F85774F00D244E2 /* SensitiveData.swift in Sources */,
 				34AA70CF2F85774F00D244E2 /* ZashiButton.swift in Sources */,
 				34AA70D02F85774F00D244E2 /* KeystoneHandlerLiveKey.swift in Sources */,
@@ -6668,6 +6694,7 @@
 				34AA74BF2F85774F00D244E2 /* UserMetadataProviderInterface.swift in Sources */,
 				34AA74C02F85774F00D244E2 /* UserDefaultsInterface.swift in Sources */,
 				34AA74C12F85774F00D244E2 /* RestoreInfoView.swift in Sources */,
+				9E48424B2F87C41200D0649B /* ResyncWalletView.swift in Sources */,
 				34AA74C22F85774F00D244E2 /* SupportDataGeneratorLiveKey.swift in Sources */,
 				34AA74C32F85774F00D244E2 /* AddressDetailsView.swift in Sources */,
 				34AA74C42F85774F00D244E2 /* QRImageDetectorTestKey.swift in Sources */,
@@ -6783,6 +6810,7 @@
 				34AA75322F85774F00D244E2 /* AddHWWalletStore.swift in Sources */,
 				34AA75332F85774F00D244E2 /* LogsHandlerTest.swift in Sources */,
 				34AA75342F85774F00D244E2 /* WhatsNewStore.swift in Sources */,
+				9E2715402F88FB2000046B74 /* WalletStatus.swift in Sources */,
 				34AA75352F85774F00D244E2 /* AddressBookInterface.swift in Sources */,
 				34AA75362F85774F00D244E2 /* WalletBalancesView.swift in Sources */,
 				34AA75372F85774F00D244E2 /* ZashiBack.swift in Sources */,
@@ -6878,7 +6906,6 @@
 				34AA758F2F85774F00D244E2 /* SendFormSheets.swift in Sources */,
 				34AA75902F85774F00D244E2 /* ActionRow.swift in Sources */,
 				34AA75912F85774F00D244E2 /* WhatsNewProviderTestKey.swift in Sources */,
-				34AA75922F85774F00D244E2 /* WalletStatusPanel.swift in Sources */,
 				34AA75932F85774F00D244E2 /* SwapAndPayInterface.swift in Sources */,
 				34AA75942F85774F00D244E2 /* AddressDetailsStore.swift in Sources */,
 				34AA75952F85774F00D244E2 /* WalletStorage.swift in Sources */,
@@ -6932,6 +6959,7 @@
 				34AA75C52F85774F00D244E2 /* LocalAuthenticationLiveKey.swift in Sources */,
 				34AA75C62F85774F00D244E2 /* SendFormView.swift in Sources */,
 				34AA75C72F85774F00D244E2 /* ZcashSymbol.swift in Sources */,
+				9E4842402F87C40400D0649B /* ResyncWalletStore.swift in Sources */,
 				34AA75C82F85774F00D244E2 /* SensitiveData.swift in Sources */,
 				34AA75C92F85774F00D244E2 /* ZashiButton.swift in Sources */,
 				34AA75CA2F85774F00D244E2 /* KeystoneHandlerLiveKey.swift in Sources */,
@@ -7084,6 +7112,7 @@
 				34AA715B2F85774F00D244E2 /* UserMetadataProviderInterface.swift in Sources */,
 				34AA715C2F85774F00D244E2 /* UserDefaultsInterface.swift in Sources */,
 				34AA715D2F85774F00D244E2 /* RestoreInfoView.swift in Sources */,
+				9E48424C2F87C41200D0649B /* ResyncWalletView.swift in Sources */,
 				34AA715E2F85774F00D244E2 /* SupportDataGeneratorLiveKey.swift in Sources */,
 				34AA715F2F85774F00D244E2 /* AddressDetailsView.swift in Sources */,
 				34AA71602F85774F00D244E2 /* QRImageDetectorTestKey.swift in Sources */,
@@ -7199,6 +7228,7 @@
 				34AA71CE2F85774F00D244E2 /* AddHWWalletStore.swift in Sources */,
 				34AA71CF2F85774F00D244E2 /* LogsHandlerTest.swift in Sources */,
 				34AA71D02F85774F00D244E2 /* WhatsNewStore.swift in Sources */,
+				9E27153F2F88FB2000046B74 /* WalletStatus.swift in Sources */,
 				34AA71D12F85774F00D244E2 /* AddressBookInterface.swift in Sources */,
 				34AA71D22F85774F00D244E2 /* WalletBalancesView.swift in Sources */,
 				34AA71D32F85774F00D244E2 /* ZashiBack.swift in Sources */,
@@ -7294,7 +7324,6 @@
 				34AA722B2F85774F00D244E2 /* SendFormSheets.swift in Sources */,
 				34AA722C2F85774F00D244E2 /* ActionRow.swift in Sources */,
 				34AA722D2F85774F00D244E2 /* WhatsNewProviderTestKey.swift in Sources */,
-				34AA722E2F85774F00D244E2 /* WalletStatusPanel.swift in Sources */,
 				34AA722F2F85774F00D244E2 /* SwapAndPayInterface.swift in Sources */,
 				34AA72302F85774F00D244E2 /* AddressDetailsStore.swift in Sources */,
 				34AA72312F85774F00D244E2 /* WalletStorage.swift in Sources */,
@@ -7348,6 +7377,7 @@
 				34AA72612F85774F00D244E2 /* LocalAuthenticationLiveKey.swift in Sources */,
 				34AA72622F85774F00D244E2 /* SendFormView.swift in Sources */,
 				34AA72632F85774F00D244E2 /* ZcashSymbol.swift in Sources */,
+				9E48423E2F87C40400D0649B /* ResyncWalletStore.swift in Sources */,
 				34AA72642F85774F00D244E2 /* SensitiveData.swift in Sources */,
 				34AA72652F85774F00D244E2 /* ZashiButton.swift in Sources */,
 				34AA72662F85774F00D244E2 /* KeystoneHandlerLiveKey.swift in Sources */,
@@ -7500,6 +7530,7 @@
 				34AA6DF72F85774F00D244E2 /* UserMetadataProviderInterface.swift in Sources */,
 				34AA6DF82F85774F00D244E2 /* UserDefaultsInterface.swift in Sources */,
 				34AA6DF92F85774F00D244E2 /* RestoreInfoView.swift in Sources */,
+				9E48424D2F87C41200D0649B /* ResyncWalletView.swift in Sources */,
 				34AA6DFA2F85774F00D244E2 /* SupportDataGeneratorLiveKey.swift in Sources */,
 				34AA6DFB2F85774F00D244E2 /* AddressDetailsView.swift in Sources */,
 				34AA6DFC2F85774F00D244E2 /* QRImageDetectorTestKey.swift in Sources */,
@@ -7615,6 +7646,7 @@
 				34AA6E6A2F85774F00D244E2 /* AddHWWalletStore.swift in Sources */,
 				34AA6E6B2F85774F00D244E2 /* LogsHandlerTest.swift in Sources */,
 				34AA6E6C2F85774F00D244E2 /* WhatsNewStore.swift in Sources */,
+				9E2715432F88FB2000046B74 /* WalletStatus.swift in Sources */,
 				34AA6E6D2F85774F00D244E2 /* AddressBookInterface.swift in Sources */,
 				34AA6E6E2F85774F00D244E2 /* WalletBalancesView.swift in Sources */,
 				34AA6E6F2F85774F00D244E2 /* ZashiBack.swift in Sources */,
@@ -7710,7 +7742,6 @@
 				34AA6EC72F85774F00D244E2 /* SendFormSheets.swift in Sources */,
 				34AA6EC82F85774F00D244E2 /* ActionRow.swift in Sources */,
 				34AA6EC92F85774F00D244E2 /* WhatsNewProviderTestKey.swift in Sources */,
-				34AA6ECA2F85774F00D244E2 /* WalletStatusPanel.swift in Sources */,
 				34AA6ECB2F85774F00D244E2 /* SwapAndPayInterface.swift in Sources */,
 				34AA6ECC2F85774F00D244E2 /* AddressDetailsStore.swift in Sources */,
 				34AA6ECD2F85774F00D244E2 /* WalletStorage.swift in Sources */,
@@ -7764,6 +7795,7 @@
 				34AA6EFD2F85774F00D244E2 /* LocalAuthenticationLiveKey.swift in Sources */,
 				34AA6EFE2F85774F00D244E2 /* SendFormView.swift in Sources */,
 				34AA6EFF2F85774F00D244E2 /* ZcashSymbol.swift in Sources */,
+				9E4842412F87C40400D0649B /* ResyncWalletStore.swift in Sources */,
 				34AA6F002F85774F00D244E2 /* SensitiveData.swift in Sources */,
 				34AA6F012F85774F00D244E2 /* ZashiButton.swift in Sources */,
 				34AA6F022F85774F00D244E2 /* KeystoneHandlerLiveKey.swift in Sources */,
@@ -8629,7 +8661,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "zashi-internal.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"secant/Preview Content\"";
 				DEVELOPMENT_TEAM = RLPRR8CPQG;
@@ -8660,7 +8692,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "zashi-internal.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"secant/Preview Content\"";
 				DEVELOPMENT_TEAM = RLPRR8CPQG;
 				ENABLE_BITCODE = NO;
@@ -8690,7 +8722,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "zashi-internal.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"secant/Preview Content\"";
 				DEVELOPMENT_TEAM = RLPRR8CPQG;
 				ENABLE_BITCODE = NO;

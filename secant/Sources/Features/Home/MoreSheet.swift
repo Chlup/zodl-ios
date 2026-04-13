@@ -13,7 +13,7 @@ extension HomeView {
         VStack(alignment: .leading, spacing: 0) {
             if !store.isKeystoneAccountActive {
                 ActionRow(
-                    icon: walletStatus == .restoring
+                    icon: walletStatus.isNotReadyForFullySyncedOperation
                     ? Asset.Assets.Partners.flexaDisabled.image
                     : Asset.Assets.Partners.flexa.image,
                     title: String(localizable: .settingsFlexa),
@@ -23,7 +23,7 @@ extension HomeView {
                 ) {
                     store.send(.flexaTapped)
                 }
-                .disabled(walletStatus == .restoring)
+                .disabled(walletStatus.isNotReadyForFullySyncedOperation)
                 .padding(.top, 32)
                 .padding(.bottom, store.isKeystoneAccountActive ? 24 : 0)
             }
@@ -69,7 +69,7 @@ extension HomeView {
     @ViewBuilder func payRequestContent() -> some View {
         VStack(alignment: .leading, spacing: 0) {
             ActionRow(
-                icon: walletStatus == .restoring
+                icon: walletStatus.isNotReadyForFullySyncedOperation
                 ? Asset.Assets.Partners.payWithNearDisabled.image
                 : Asset.Assets.Partners.payWithNear.image,
                 title: String(localizable: .sendSelectPayWithNear),
@@ -79,13 +79,13 @@ extension HomeView {
             ) {
                 store.send(.payWithNearTapped)
             }
-            .disabled(walletStatus == .restoring)
+            .disabled(walletStatus.isNotReadyForFullySyncedOperation)
             .padding(.top, 32)
             .padding(.bottom, 8)
 
             if !store.isKeystoneAccountActive {
                 ActionRow(
-                    icon: walletStatus == .restoring
+                    icon: walletStatus.isNotReadyForFullySyncedOperation
                     ? Asset.Assets.Partners.flexaDisabled.image
                     : Asset.Assets.Partners.flexa.image,
                     title: String(localizable: .settingsFlexa),
@@ -95,7 +95,7 @@ extension HomeView {
                 ) {
                     store.send(.flexaTapped)
                 }
-                .disabled(walletStatus == .restoring)
+                .disabled(walletStatus.isNotReadyForFullySyncedOperation)
                 .padding(.bottom, 24)
             }
 

@@ -14,6 +14,7 @@ import ZcashLightClientKit
 extension Root {
     enum Constants {
         static let udIsRestoringWallet = "udIsRestoringWallet"
+        static let udIsResyncingWallet = "udIsResyncingWallet"
         static let udLeavesScreenOpen = "udLeaves_screen_open"
         static let noAuthenticationWithinXMinutes = 15
     }
@@ -77,8 +78,11 @@ extension Root {
                 state.bgTask = nil
                 state.appStartState = .didEnterBackground
                 state.isLockedInKeychainUnavailableState = false
-                return .cancel(id: state.CancelStateId)
-                
+                return .merge(
+                    .cancel(id: state.CancelStateId),
+                    .cancel(id: state.CancelTransactionsStateId)
+                )
+
             case .initialization(.appDelegate(.backgroundTask(let task))):
                 let keysPresent: Bool = (try? walletStorage.areKeysPresent()) ?? false
                 if state.appStartState == .didFinishLaunching {
@@ -137,6 +141,12 @@ extension Root {
                 case .upToDate:
                     successOfBGTask = true
                     finishBGTask = true
+                    if state.isRestoringWallet {
+                        userDefaults.remove(Constants.udIsRestoringWallet)
+                        userDefaults.remove(Constants.udIsResyncingWallet)
+                        state.$walletStatus.withLock { $0 = .none }
+                    }
+                    state.isRestoringWallet = false
                 case .stopped, .error:
                     successOfBGTask = false
                     finishBGTask = true
@@ -147,15 +157,19 @@ extension Root {
                     LoggerProxy.event("BGTask setTaskCompleted(success: \(successOfBGTask)) from TCA")
                     state.bgTask?.setTaskCompleted(success: successOfBGTask)
                     state.bgTask = nil
-                    return .cancel(id: state.CancelStateId)
+                    return .merge(
+                        .cancel(id: state.CancelStateId),
+                        .cancel(id: state.CancelTransactionsStateId)
+                    )
                 }
-                
+
                 return .send(.initialization(.checkRestoreWalletFlag(snapshot.syncStatus)))
                 
             case .initialization(.checkRestoreWalletFlag(let syncStatus)):
                 if state.isRestoringWallet && syncStatus == .upToDate {
                     state.isRestoringWallet = false
                     userDefaults.remove(Constants.udIsRestoringWallet)
+                    userDefaults.remove(Constants.udIsResyncingWallet)
                     state.$walletStatus.withLock { $0 = .none }
                 }
                 return .none
@@ -276,6 +290,13 @@ extension Root {
                     if let isRestoringWallet = userDefaults.objectForKey(Constants.udIsRestoringWallet) as? Bool, isRestoringWallet {
                         state.isRestoringWallet = true
                         state.$walletStatus.withLock { $0 = .restoring }
+                        return .concatenate(
+                            .send(.initialization(.initializeSDK(.restoreWallet))),
+                            .send(.initialization(.checkBackupPhraseValidation))
+                        )
+                    } else if let isResyncingWallet = userDefaults.objectForKey(Constants.udIsResyncingWallet) as? Bool, isResyncingWallet {
+                        state.isRestoringWallet = true
+                        state.$walletStatus.withLock { $0 = .resyncing }
                         return .concatenate(
                             .send(.initialization(.initializeSDK(.restoreWallet))),
                             .send(.initialization(.checkBackupPhraseValidation))
@@ -485,6 +506,7 @@ extension Root {
                 state.splashAppeared = true
                 state.isRestoringWallet = false
                 userDefaults.remove(Constants.udIsRestoringWallet)
+                userDefaults.remove(Constants.udIsResyncingWallet)
                 userDefaults.remove(Constants.udLeavesScreenOpen)
                 flexaHandler.signOut()
                 userStoredPreferences.removeAll()

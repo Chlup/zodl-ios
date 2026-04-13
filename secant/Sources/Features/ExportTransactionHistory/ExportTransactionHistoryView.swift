@@ -10,8 +10,6 @@ import ComposableArchitecture
 
 struct ExportTransactionHistoryView: View {
     @Perception.Bindable var store: StoreOf<ExportTransactionHistory>
-    
-    @Shared(.inMemory(.walletStatus)) var walletStatus: WalletStatus = .none
 
     init(store: StoreOf<ExportTransactionHistory>) {
         self.store = store

@@ -10,8 +10,6 @@ import ComposableArchitecture
 
 struct PrivateDataConsentView: View {
     @Perception.Bindable var store: StoreOf<PrivateDataConsent>
-    
-    @Shared(.inMemory(.walletStatus)) var walletStatus: WalletStatus = .none
 
     init(store: StoreOf<PrivateDataConsent>) {
         self.store = store

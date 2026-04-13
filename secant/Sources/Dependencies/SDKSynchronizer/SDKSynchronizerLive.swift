@@ -86,6 +86,9 @@ extension SDKSynchronizerClient: DependencyKey {
             deleteAccount: { accountUUID in
                 try await synchronizer.deleteAccount(accountUUID)
             },
+            rescanFrom: { blockHeight in
+                try await synchronizer.rescanFrom(height: blockHeight)
+            },
             rewind: { synchronizer.rewind($0) },
             getAllTransactions: { accountUUID in
                 let clearedTransactions = try await synchronizer.allTransactions()
@@ -225,6 +228,9 @@ extension SDKSynchronizerClient: DependencyKey {
             },
             estimateBirthdayHeight: { date in
                 synchronizer.estimateBirthdayHeight(for: date)
+            },
+            estimateTimestamp: { blockHeight in
+                synchronizer.estimateTimestamp(for: blockHeight)
             },
             createPCZTFromProposal: { accountUUID, proposal in
                 try await synchronizer.createPCZTFromProposal(accountUUID: accountUUID, proposal: proposal)

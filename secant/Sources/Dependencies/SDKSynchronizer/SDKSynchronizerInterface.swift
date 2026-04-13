@@ -41,6 +41,8 @@ struct SDKSynchronizerClient {
     let importAccount: (String, [UInt8]?, Zip32AccountIndex?, AccountPurpose, String, String?, BlockHeight?) async throws -> AccountUUID?
     var deleteAccount: (AccountUUID) async throws -> Void
 
+    let rescanFrom: (BlockHeight) async throws -> Void
+
     let rewind: (RewindPolicy) -> AnyPublisher<Void, Error>
     
     var getAllTransactions: (AccountUUID?) async throws -> IdentifiedArrayOf<TransactionState>
@@ -72,7 +74,8 @@ struct SDKSynchronizerClient {
     var walletAccounts: () async throws -> [WalletAccount] = { [] }
     
     var estimateBirthdayHeight: (Date) -> BlockHeight = { _ in BlockHeight(0) }
-    
+    var estimateTimestamp: (BlockHeight) -> TimeInterval? = { _ in nil }
+
     // PCZT
     var createPCZTFromProposal: (AccountUUID, Proposal) async throws -> Pczt
     var addProofsToPCZT: (Pczt) async throws -> Pczt
