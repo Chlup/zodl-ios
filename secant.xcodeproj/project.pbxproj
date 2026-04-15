@@ -115,7 +115,6 @@
 		34AA6E362F85774F00D244E2 /* SendConfirmationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CD62F85774F00D244E2 /* SendConfirmationStore.swift */; };
 		34AA6E372F85774F00D244E2 /* FlexaHandlerTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE72F85774F00D244E2 /* FlexaHandlerTestKey.swift */; };
 		34AA6E382F85774F00D244E2 /* KeystoneHandlerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE92F85774F00D244E2 /* KeystoneHandlerInterface.swift */; };
-		34AA6E392F85774F00D244E2 /* LocalAuthenticationTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BF02F85774F00D244E2 /* LocalAuthenticationTestKey.swift */; };
 		34AA6E3A2F85774F00D244E2 /* ScanChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CCE2F85774F00D244E2 /* ScanChecker.swift */; };
 		34AA6E3B2F85774F00D244E2 /* RootDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CC02F85774F00D244E2 /* RootDestination.swift */; };
 		34AA6E3C2F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C742F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift */; };
@@ -568,7 +567,6 @@
 		34AA70042F85774F00D244E2 /* SendConfirmationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CD62F85774F00D244E2 /* SendConfirmationStore.swift */; };
 		34AA70052F85774F00D244E2 /* FlexaHandlerTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE72F85774F00D244E2 /* FlexaHandlerTestKey.swift */; };
 		34AA70062F85774F00D244E2 /* KeystoneHandlerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE92F85774F00D244E2 /* KeystoneHandlerInterface.swift */; };
-		34AA70072F85774F00D244E2 /* LocalAuthenticationTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BF02F85774F00D244E2 /* LocalAuthenticationTestKey.swift */; };
 		34AA70082F85774F00D244E2 /* ScanChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CCE2F85774F00D244E2 /* ScanChecker.swift */; };
 		34AA70092F85774F00D244E2 /* RootDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CC02F85774F00D244E2 /* RootDestination.swift */; };
 		34AA700A2F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C742F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift */; };
@@ -969,7 +967,6 @@
 		34AA719A2F85774F00D244E2 /* SendConfirmationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CD62F85774F00D244E2 /* SendConfirmationStore.swift */; };
 		34AA719B2F85774F00D244E2 /* FlexaHandlerTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE72F85774F00D244E2 /* FlexaHandlerTestKey.swift */; };
 		34AA719C2F85774F00D244E2 /* KeystoneHandlerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE92F85774F00D244E2 /* KeystoneHandlerInterface.swift */; };
-		34AA719D2F85774F00D244E2 /* LocalAuthenticationTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BF02F85774F00D244E2 /* LocalAuthenticationTestKey.swift */; };
 		34AA719E2F85774F00D244E2 /* ScanChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CCE2F85774F00D244E2 /* ScanChecker.swift */; };
 		34AA719F2F85774F00D244E2 /* RootDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CC02F85774F00D244E2 /* RootDestination.swift */; };
 		34AA71A02F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C742F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift */; };
@@ -1422,7 +1419,6 @@
 		34AA73682F85774F00D244E2 /* SendConfirmationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CD62F85774F00D244E2 /* SendConfirmationStore.swift */; };
 		34AA73692F85774F00D244E2 /* FlexaHandlerTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE72F85774F00D244E2 /* FlexaHandlerTestKey.swift */; };
 		34AA736A2F85774F00D244E2 /* KeystoneHandlerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE92F85774F00D244E2 /* KeystoneHandlerInterface.swift */; };
-		34AA736B2F85774F00D244E2 /* LocalAuthenticationTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BF02F85774F00D244E2 /* LocalAuthenticationTestKey.swift */; };
 		34AA736C2F85774F00D244E2 /* ScanChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CCE2F85774F00D244E2 /* ScanChecker.swift */; };
 		34AA736D2F85774F00D244E2 /* RootDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CC02F85774F00D244E2 /* RootDestination.swift */; };
 		34AA736E2F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C742F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift */; };
@@ -1823,7 +1819,6 @@
 		34AA74FE2F85774F00D244E2 /* SendConfirmationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CD62F85774F00D244E2 /* SendConfirmationStore.swift */; };
 		34AA74FF2F85774F00D244E2 /* FlexaHandlerTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE72F85774F00D244E2 /* FlexaHandlerTestKey.swift */; };
 		34AA75002F85774F00D244E2 /* KeystoneHandlerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE92F85774F00D244E2 /* KeystoneHandlerInterface.swift */; };
-		34AA75012F85774F00D244E2 /* LocalAuthenticationTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BF02F85774F00D244E2 /* LocalAuthenticationTestKey.swift */; };
 		34AA75022F85774F00D244E2 /* ScanChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CCE2F85774F00D244E2 /* ScanChecker.swift */; };
 		34AA75032F85774F00D244E2 /* RootDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CC02F85774F00D244E2 /* RootDestination.swift */; };
 		34AA75042F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C742F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift */; };
@@ -2435,7 +2430,6 @@
 		34AA6BED2F85774F00D244E2 /* LocalAuthenticationInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthenticationInterface.swift; sourceTree = "<group>"; };
 		34AA6BEE2F85774F00D244E2 /* LocalAuthenticationLiveKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthenticationLiveKey.swift; sourceTree = "<group>"; };
 		34AA6BEF2F85774F00D244E2 /* LocalAuthenticationMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthenticationMocks.swift; sourceTree = "<group>"; };
-		34AA6BF02F85774F00D244E2 /* LocalAuthenticationTestKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthenticationTestKey.swift; sourceTree = "<group>"; };
 		34AA6BF22F85774F00D244E2 /* LogsHandlerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsHandlerInterface.swift; sourceTree = "<group>"; };
 		34AA6BF32F85774F00D244E2 /* LogsHandlerLive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsHandlerLive.swift; sourceTree = "<group>"; };
 		34AA6BF42F85774F00D244E2 /* LogsHandlerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsHandlerTest.swift; sourceTree = "<group>"; };
@@ -3299,7 +3293,6 @@
 				34AA6BED2F85774F00D244E2 /* LocalAuthenticationInterface.swift */,
 				34AA6BEE2F85774F00D244E2 /* LocalAuthenticationLiveKey.swift */,
 				34AA6BEF2F85774F00D244E2 /* LocalAuthenticationMocks.swift */,
-				34AA6BF02F85774F00D244E2 /* LocalAuthenticationTestKey.swift */,
 			);
 			path = LocalAuthenticationHandler;
 			sourceTree = "<group>";
@@ -5848,7 +5841,6 @@
 				34AA73682F85774F00D244E2 /* SendConfirmationStore.swift in Sources */,
 				34AA73692F85774F00D244E2 /* FlexaHandlerTestKey.swift in Sources */,
 				34AA736A2F85774F00D244E2 /* KeystoneHandlerInterface.swift in Sources */,
-				34AA736B2F85774F00D244E2 /* LocalAuthenticationTestKey.swift in Sources */,
 				34AA736C2F85774F00D244E2 /* ScanChecker.swift in Sources */,
 				34AA736D2F85774F00D244E2 /* RootDestination.swift in Sources */,
 				34AA736E2F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift in Sources */,
@@ -6262,7 +6254,6 @@
 				34AA70042F85774F00D244E2 /* SendConfirmationStore.swift in Sources */,
 				34AA70052F85774F00D244E2 /* FlexaHandlerTestKey.swift in Sources */,
 				34AA70062F85774F00D244E2 /* KeystoneHandlerInterface.swift in Sources */,
-				34AA70072F85774F00D244E2 /* LocalAuthenticationTestKey.swift in Sources */,
 				34AA70082F85774F00D244E2 /* ScanChecker.swift in Sources */,
 				34AA70092F85774F00D244E2 /* RootDestination.swift in Sources */,
 				34AA700A2F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift in Sources */,
@@ -6736,7 +6727,6 @@
 				34AA74FE2F85774F00D244E2 /* SendConfirmationStore.swift in Sources */,
 				34AA74FF2F85774F00D244E2 /* FlexaHandlerTestKey.swift in Sources */,
 				34AA75002F85774F00D244E2 /* KeystoneHandlerInterface.swift in Sources */,
-				34AA75012F85774F00D244E2 /* LocalAuthenticationTestKey.swift in Sources */,
 				34AA75022F85774F00D244E2 /* ScanChecker.swift in Sources */,
 				34AA75032F85774F00D244E2 /* RootDestination.swift in Sources */,
 				34AA75042F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift in Sources */,
@@ -7150,7 +7140,6 @@
 				34AA719A2F85774F00D244E2 /* SendConfirmationStore.swift in Sources */,
 				34AA719B2F85774F00D244E2 /* FlexaHandlerTestKey.swift in Sources */,
 				34AA719C2F85774F00D244E2 /* KeystoneHandlerInterface.swift in Sources */,
-				34AA719D2F85774F00D244E2 /* LocalAuthenticationTestKey.swift in Sources */,
 				34AA719E2F85774F00D244E2 /* ScanChecker.swift in Sources */,
 				34AA719F2F85774F00D244E2 /* RootDestination.swift in Sources */,
 				34AA71A02F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift in Sources */,
@@ -7564,7 +7553,6 @@
 				34AA6E362F85774F00D244E2 /* SendConfirmationStore.swift in Sources */,
 				34AA6E372F85774F00D244E2 /* FlexaHandlerTestKey.swift in Sources */,
 				34AA6E382F85774F00D244E2 /* KeystoneHandlerInterface.swift in Sources */,
-				34AA6E392F85774F00D244E2 /* LocalAuthenticationTestKey.swift in Sources */,
 				34AA6E3A2F85774F00D244E2 /* ScanChecker.swift in Sources */,
 				34AA6E3B2F85774F00D244E2 /* RootDestination.swift in Sources */,
 				34AA6E3C2F85774F00D244E2 /* AddKeystoneHWWalletCoordFlowView.swift in Sources */,
