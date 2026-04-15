@@ -15,6 +15,7 @@
 		3403E8EF2F898060002B0051 /* Atomics in Frameworks */ = {isa = PBXBuildFile; productRef = 3403E8EE2F898060002B0051 /* Atomics */; };
 		3403E8F22F898065002B0051 /* Atomics in Frameworks */ = {isa = PBXBuildFile; productRef = 3403E8F12F898065002B0051 /* Atomics */; };
 		3403E8F52F89806A002B0051 /* Atomics in Frameworks */ = {isa = PBXBuildFile; productRef = 3403E8F42F89806A002B0051 /* Atomics */; };
+		34094DFF2F8FE0F7006F770C /* Flexa in Frameworks */ = {isa = PBXBuildFile; productRef = 34094DFE2F8FE0F7006F770C /* Flexa */; };
 		34755C632F8647B00093FC84 /* DisconnectHWWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34755C612F8647B00093FC84 /* DisconnectHWWalletView.swift */; };
 		34755C642F8647B00093FC84 /* DisconnectHWWalletStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34755C602F8647B00093FC84 /* DisconnectHWWalletStore.swift */; };
 		34755C652F8647B00093FC84 /* DisconnectHWWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34755C612F8647B00093FC84 /* DisconnectHWWalletView.swift */; };
@@ -2185,11 +2186,6 @@
 		34AA77522F85818000D244E2 /* MnemonicSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 34AA77512F85818000D244E2 /* MnemonicSwift */; };
 		34AA77542F85818500D244E2 /* MnemonicSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 34AA77532F85818500D244E2 /* MnemonicSwift */; };
 		34AA77562F85818900D244E2 /* MnemonicSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 34AA77552F85818900D244E2 /* MnemonicSwift */; };
-		34AA77642F85828000D244E2 /* Flexa in Frameworks */ = {isa = PBXBuildFile; productRef = 34AA77632F85828000D244E2 /* Flexa */; };
-		34AA77722F85829D00D244E2 /* Flexa in Frameworks */ = {isa = PBXBuildFile; productRef = 34AA77712F85829D00D244E2 /* Flexa */; };
-		34AA77742F8582A200D244E2 /* Flexa in Frameworks */ = {isa = PBXBuildFile; productRef = 34AA77732F8582A200D244E2 /* Flexa */; };
-		34AA77762F8582A700D244E2 /* Flexa in Frameworks */ = {isa = PBXBuildFile; productRef = 34AA77752F8582A700D244E2 /* Flexa */; };
-		34AA77782F8582AC00D244E2 /* Flexa in Frameworks */ = {isa = PBXBuildFile; productRef = 34AA77772F8582AC00D244E2 /* Flexa */; };
 		34AA777B2F8582CC00D244E2 /* ZcashPaymentURI in Frameworks */ = {isa = PBXBuildFile; productRef = 34AA777A2F8582CC00D244E2 /* ZcashPaymentURI */; };
 		34AA777D2F8582DD00D244E2 /* ZcashPaymentURI in Frameworks */ = {isa = PBXBuildFile; productRef = 34AA777C2F8582DD00D244E2 /* ZcashPaymentURI */; };
 		34AA777F2F8582E600D244E2 /* ZcashPaymentURI in Frameworks */ = {isa = PBXBuildFile; productRef = 34AA777E2F8582E600D244E2 /* ZcashPaymentURI */; };
@@ -2855,7 +2851,6 @@
 				34AA77342F8580C400D244E2 /* CasePathsCore in Frameworks */,
 				34AA779E2F8583B400D244E2 /* BigDecimal in Frameworks */,
 				34AA77BA2F85861300D244E2 /* UInt128 in Frameworks */,
-				34AA77722F85829D00D244E2 /* Flexa in Frameworks */,
 				34AA77502F85817B00D244E2 /* MnemonicSwift in Frameworks */,
 				34AA77322F8580C400D244E2 /* CasePaths in Frameworks */,
 				34AA77932F85836400D244E2 /* KeystoneSDK in Frameworks */,
@@ -2875,7 +2870,6 @@
 				34AA77302F8580B800D244E2 /* CasePathsCore in Frameworks */,
 				34AA779C2F8583A500D244E2 /* BigDecimal in Frameworks */,
 				34AA77B82F85860300D244E2 /* UInt128 in Frameworks */,
-				34AA77642F85828000D244E2 /* Flexa in Frameworks */,
 				34AA774E2F85817200D244E2 /* MnemonicSwift in Frameworks */,
 				34AA772E2F8580B800D244E2 /* CasePaths in Frameworks */,
 				34AA77912F85835B00D244E2 /* KeystoneSDK in Frameworks */,
@@ -2909,7 +2903,6 @@
 				34AA77402F8580D700D244E2 /* CasePathsCore in Frameworks */,
 				34AA77A42F8583C300D244E2 /* BigDecimal in Frameworks */,
 				34AA77C02F85862200D244E2 /* UInt128 in Frameworks */,
-				34AA77782F8582AC00D244E2 /* Flexa in Frameworks */,
 				34AA77562F85818900D244E2 /* MnemonicSwift in Frameworks */,
 				34AA773E2F8580D700D244E2 /* CasePaths in Frameworks */,
 				34AA77992F85837400D244E2 /* KeystoneSDK in Frameworks */,
@@ -2929,7 +2922,6 @@
 				34AA77382F8580CB00D244E2 /* CasePathsCore in Frameworks */,
 				34AA77A02F8583BA00D244E2 /* BigDecimal in Frameworks */,
 				34AA77BC2F85861800D244E2 /* UInt128 in Frameworks */,
-				34AA77742F8582A200D244E2 /* Flexa in Frameworks */,
 				34AA77522F85818000D244E2 /* MnemonicSwift in Frameworks */,
 				34AA77362F8580CB00D244E2 /* CasePaths in Frameworks */,
 				34AA77952F85836900D244E2 /* KeystoneSDK in Frameworks */,
@@ -2949,9 +2941,9 @@
 				34AA773C2F8580D000D244E2 /* CasePathsCore in Frameworks */,
 				34AA77A22F8583BF00D244E2 /* BigDecimal in Frameworks */,
 				34AA77BE2F85861E00D244E2 /* UInt128 in Frameworks */,
-				34AA77762F8582A700D244E2 /* Flexa in Frameworks */,
 				34AA77542F85818500D244E2 /* MnemonicSwift in Frameworks */,
 				34AA773A2F8580D000D244E2 /* CasePaths in Frameworks */,
+				34094DFF2F8FE0F7006F770C /* Flexa in Frameworks */,
 				34AA77972F85836E00D244E2 /* KeystoneSDK in Frameworks */,
 				3403E8F22F898065002B0051 /* Atomics in Frameworks */,
 			);
@@ -4898,7 +4890,6 @@
 				34AA77332F8580C400D244E2 /* CasePathsCore */,
 				34AA77442F85813300D244E2 /* URLRouting */,
 				34AA774F2F85817B00D244E2 /* MnemonicSwift */,
-				34AA77712F85829D00D244E2 /* Flexa */,
 				34AA777C2F8582DD00D244E2 /* ZcashPaymentURI */,
 				34AA77872F85832500D244E2 /* Lottie */,
 				34AA77922F85836400D244E2 /* KeystoneSDK */,
@@ -4934,7 +4925,6 @@
 				34AA772F2F8580B800D244E2 /* CasePathsCore */,
 				34AA77422F85812500D244E2 /* URLRouting */,
 				34AA774D2F85817200D244E2 /* MnemonicSwift */,
-				34AA77632F85828000D244E2 /* Flexa */,
 				34AA777A2F8582CC00D244E2 /* ZcashPaymentURI */,
 				34AA77852F85830C00D244E2 /* Lottie */,
 				34AA77902F85835B00D244E2 /* KeystoneSDK */,
@@ -5008,7 +4998,6 @@
 				34AA773F2F8580D700D244E2 /* CasePathsCore */,
 				34AA774A2F85815200D244E2 /* URLRouting */,
 				34AA77552F85818900D244E2 /* MnemonicSwift */,
-				34AA77772F8582AC00D244E2 /* Flexa */,
 				34AA77822F8582F100D244E2 /* ZcashPaymentURI */,
 				34AA778D2F85833900D244E2 /* Lottie */,
 				34AA77982F85837400D244E2 /* KeystoneSDK */,
@@ -5044,7 +5033,6 @@
 				34AA77372F8580CB00D244E2 /* CasePathsCore */,
 				34AA77462F85814600D244E2 /* URLRouting */,
 				34AA77512F85818000D244E2 /* MnemonicSwift */,
-				34AA77732F8582A200D244E2 /* Flexa */,
 				34AA777E2F8582E600D244E2 /* ZcashPaymentURI */,
 				34AA77892F85832E00D244E2 /* Lottie */,
 				34AA77942F85836900D244E2 /* KeystoneSDK */,
@@ -5080,7 +5068,6 @@
 				34AA773B2F8580D000D244E2 /* CasePathsCore */,
 				34AA77482F85814C00D244E2 /* URLRouting */,
 				34AA77532F85818500D244E2 /* MnemonicSwift */,
-				34AA77752F8582A700D244E2 /* Flexa */,
 				34AA77802F8582EB00D244E2 /* ZcashPaymentURI */,
 				34AA778B2F85833300D244E2 /* Lottie */,
 				34AA77962F85836E00D244E2 /* KeystoneSDK */,
@@ -5088,6 +5075,7 @@
 				34AA77BD2F85861E00D244E2 /* UInt128 */,
 				9E4841522F869F5F00D0649B /* ZcashLightClientKit */,
 				3403E8F12F898065002B0051 /* Atomics */,
+				34094DFE2F8FE0F7006F770C /* Flexa */,
 			);
 			productName = secant;
 			productReference = 9E5AB4822C94777800065483 /* zashi-internal.app */;
@@ -5132,7 +5120,6 @@
 				34AA772C2F8580B800D244E2 /* XCRemoteSwiftPackageReference "swift-case-paths" */,
 				34AA77412F85812500D244E2 /* XCRemoteSwiftPackageReference "swift-url-routing" */,
 				34AA774C2F85817200D244E2 /* XCRemoteSwiftPackageReference "MnemonicSwift" */,
-				34AA77622F85827F00D244E2 /* XCRemoteSwiftPackageReference "flexa-ios" */,
 				34AA77792F8582CC00D244E2 /* XCRemoteSwiftPackageReference "zcash-swift-payment-uri" */,
 				34AA77842F85830C00D244E2 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 				34AA778F2F85835A00D244E2 /* XCRemoteSwiftPackageReference "keystone-sdk-ios" */,
@@ -5142,6 +5129,7 @@
 				9E4841512F869F5E00D0649B /* XCLocalSwiftPackageReference "../zcash-swift-wallet-sdk" */,
 				3403E8E22F898049002B0051 /* XCRemoteSwiftPackageReference "swift-atomics" */,
 				3403E92B2F898F09002B0051 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
+				34094DFD2F8FE0F7006F770C /* XCLocalSwiftPackageReference "../flexa-ios" */,
 			);
 			productRefGroup = 0D4E7A0626B364170058B01E /* Products */;
 			projectDirPath = "";
@@ -8711,6 +8699,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
+		34094DFD2F8FE0F7006F770C /* XCLocalSwiftPackageReference "../flexa-ios" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../flexa-ios";
+		};
 		9E4841512F869F5E00D0649B /* XCLocalSwiftPackageReference "../zcash-swift-wallet-sdk" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "../zcash-swift-wallet-sdk";
@@ -8774,14 +8766,6 @@
 			requirement = {
 				kind = upToNextMinorVersion;
 				minimumVersion = 2.2.5;
-			};
-		};
-		34AA77622F85827F00D244E2 /* XCRemoteSwiftPackageReference "flexa-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/flexa/flexa-ios.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 1.1.4;
 			};
 		};
 		34AA77792F8582CC00D244E2 /* XCRemoteSwiftPackageReference "zcash-swift-payment-uri" */ = {
@@ -8859,6 +8843,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3403E8E22F898049002B0051 /* XCRemoteSwiftPackageReference "swift-atomics" */;
 			productName = Atomics;
+		};
+		34094DFE2F8FE0F7006F770C /* Flexa */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Flexa;
 		};
 		34AA77132F857DA300D244E2 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -9009,31 +8997,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 34AA774C2F85817200D244E2 /* XCRemoteSwiftPackageReference "MnemonicSwift" */;
 			productName = MnemonicSwift;
-		};
-		34AA77632F85828000D244E2 /* Flexa */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 34AA77622F85827F00D244E2 /* XCRemoteSwiftPackageReference "flexa-ios" */;
-			productName = Flexa;
-		};
-		34AA77712F85829D00D244E2 /* Flexa */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 34AA77622F85827F00D244E2 /* XCRemoteSwiftPackageReference "flexa-ios" */;
-			productName = Flexa;
-		};
-		34AA77732F8582A200D244E2 /* Flexa */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 34AA77622F85827F00D244E2 /* XCRemoteSwiftPackageReference "flexa-ios" */;
-			productName = Flexa;
-		};
-		34AA77752F8582A700D244E2 /* Flexa */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 34AA77622F85827F00D244E2 /* XCRemoteSwiftPackageReference "flexa-ios" */;
-			productName = Flexa;
-		};
-		34AA77772F8582AC00D244E2 /* Flexa */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 34AA77622F85827F00D244E2 /* XCRemoteSwiftPackageReference "flexa-ios" */;
-			productName = Flexa;
 		};
 		34AA777A2F8582CC00D244E2 /* ZcashPaymentURI */ = {
 			isa = XCSwiftPackageProductDependency;

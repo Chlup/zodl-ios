@@ -1,5 +1,5 @@
 {
-  "originHash" : "69d0ecd67d7a939323d927a235bd8aaf6910ea045a711b4b225dd89f70eb397c",
+  "originHash" : "fc3c32e780c32ce1ccb8ad3f624d781fb5d9f1c62fe8def6f412d380d13e6ccb",
   "pins" : [
     {
       "identity" : "base32",
@@ -69,8 +69,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/devicekit/DeviceKit.git",
       "state" : {
-        "revision" : "581df61650bc457ec00373a592a84be3e7468eb1",
-        "version" : "5.7.0"
+        "revision" : "56b997e8a61707218f9af09f32b2a1d1806fd792",
+        "version" : "5.8.0"
       }
     },
     {
@@ -78,17 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hmlongco/Factory.git",
       "state" : {
-        "revision" : "587995f7d5cc667951d635fbf6b4252324ba0439",
-        "version" : "2.3.2"
-      }
-    },
-    {
-      "identity" : "flexa-ios",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/flexa/flexa-ios.git",
-      "state" : {
-        "revision" : "5f1d72dc82ee86c4749d7bb158c86599d4035c22",
-        "version" : "1.1.4"
+        "revision" : "ccc898f21992ebc130bc04cc197460a5ae230bcf",
+        "version" : "2.5.3"
       }
     },
     {
@@ -438,8 +429,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/siteline/swiftui-introspect",
       "state" : {
-        "revision" : "a08b87f96b41055577721a6e397562b21ad52454",
-        "version" : "26.0.0"
+        "revision" : "26986a57e31c813f98262ddb62d4b07d40008535",
+        "version" : "26.0.1"
       }
     },
     {
