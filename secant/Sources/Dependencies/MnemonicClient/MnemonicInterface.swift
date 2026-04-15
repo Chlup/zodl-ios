@@ -17,15 +17,15 @@ extension DependencyValues {
 @DependencyClient
 struct MnemonicClient {
     /// Random 24 words mnemonic phrase
-    var randomMnemonic: () throws -> String
+    var randomMnemonic: @Sendable () throws -> String
     /// Random 24 words mnemonic phrase as array of words
-    var randomMnemonicWords: () throws -> [String]
+    var randomMnemonicWords: @Sendable () throws -> [String]
     /// Generate deterministic seed from mnemonic phrase
-    var toSeed: (String) throws -> [UInt8]
+    var toSeed: @Sendable (String) throws -> [UInt8]
     /// Get this mnemonic phrase as array of words
-    var asWords: (String) -> [String] = { _ in [] }
+    var asWords: @Sendable (String) -> [String] = { _ in [] }
     /// Validates whether the given mnemonic is correct
-    var isValid: (String) throws -> Void
+    var isValid: @Sendable (String) throws -> Void
     /// Suggests mnemonic words for a given prefix
-    var suggestWords: (String) -> [String] = { _ in [] }
+    var suggestWords: @Sendable (String) -> [String] = { _ in [] }
 }

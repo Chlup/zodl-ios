@@ -25,8 +25,8 @@ struct SwapAndPayClient {
         static let zashiFeeBps = 67
     }
     
-    let submitDepositTxId: (String, String) async throws -> Void
-    let swapAssets: () async throws -> IdentifiedArrayOf<SwapAsset>
-    let quote: (Bool, Bool, Bool, Int, SwapAsset, SwapAsset, String, String, String) async throws -> SwapQuote
-    let status: (String, Bool) async throws -> SwapDetails
+    var submitDepositTxId: @Sendable (String, String) async throws -> Void
+    var swapAssets: @Sendable () async throws -> IdentifiedArrayOf<SwapAsset>
+    var quote: @Sendable (Bool, Bool, Bool, Int, SwapAsset, SwapAsset, String, String, String) async throws -> SwapQuote
+    var status: @Sendable (String, Bool) async throws -> SwapDetails
 }

@@ -17,11 +17,11 @@ extension DependencyValues {
 
 @DependencyClient
 struct UserPreferencesStorageClient {
-    var server: () -> UserPreferencesStorage.ServerConfig?
-    var setServer: (UserPreferencesStorage.ServerConfig) throws -> Void
+    var server: @Sendable () -> UserPreferencesStorage.ServerConfig? = { nil }
+    var setServer: @Sendable (UserPreferencesStorage.ServerConfig) throws -> Void
 
-    var exchangeRate: () -> UserPreferencesStorage.ExchangeRate?
-    var setExchangeRate: (UserPreferencesStorage.ExchangeRate) throws -> Void
+    var exchangeRate: @Sendable () -> UserPreferencesStorage.ExchangeRate? = { nil }
+    var setExchangeRate: @Sendable (UserPreferencesStorage.ExchangeRate) throws -> Void
 
-    var removeAll: () -> Void
+    var removeAll: @Sendable () -> Void
 }

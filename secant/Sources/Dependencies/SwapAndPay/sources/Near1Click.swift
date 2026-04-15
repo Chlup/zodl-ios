@@ -63,10 +63,10 @@ struct Near1Click {
         static let nearZecAssetId = "nep141:zec.omft.near"
     }
     
-    let submitDepositTxId: (String, String) async throws -> Void
-    let swapAssets: () async throws -> IdentifiedArrayOf<SwapAsset>
-    let quote: (Bool, Bool, Bool, Int, SwapAsset, SwapAsset, String, String, String) async throws -> SwapQuote
-    let status: (String, Bool) async throws -> SwapDetails
+    let submitDepositTxId: @Sendable (String, String) async throws -> Void
+    let swapAssets: @Sendable () async throws -> IdentifiedArrayOf<SwapAsset>
+    let quote: @Sendable (Bool, Bool, Bool, Int, SwapAsset, SwapAsset, String, String, String) async throws -> SwapQuote
+    let status: @Sendable (String, Bool) async throws -> SwapDetails
 
     static func getCall(urlString: String, includeJwtKey: Bool = false) async throws -> (Data, URLResponse) {
         @Dependency(\.sdkSynchronizer) var sdkSynchronizer

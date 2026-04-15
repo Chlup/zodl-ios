@@ -9,20 +9,8 @@ import Foundation
 import Security
 
 struct SecItemClient {
-    let copyMatching: (CFDictionary, inout CFTypeRef?) -> OSStatus
-    let add: (CFDictionary, inout CFTypeRef?) -> OSStatus
-    let update: (CFDictionary, CFDictionary) -> OSStatus
-    let delete: (CFDictionary) -> OSStatus
-    
-    init(
-        copyMatching: @escaping (CFDictionary, inout CFTypeRef?) -> OSStatus,
-        add: @escaping (CFDictionary, inout CFTypeRef?) -> OSStatus,
-        update: @escaping (CFDictionary, CFDictionary) -> OSStatus,
-        delete: @escaping (CFDictionary) -> OSStatus
-    ) {
-        self.copyMatching = copyMatching
-        self.add = add
-        self.update = update
-        self.delete = delete
-    }
+    var copyMatching: @Sendable (CFDictionary, inout CFTypeRef?) -> OSStatus = { _, _ in 0 }
+    var add: @Sendable (CFDictionary, inout CFTypeRef?) -> OSStatus = { _, _ in 0 }
+    var update: @Sendable (CFDictionary, CFDictionary) -> OSStatus = { _, _ in 0 }
+    var delete: @Sendable (CFDictionary) -> OSStatus = { _ in 0 }
 }

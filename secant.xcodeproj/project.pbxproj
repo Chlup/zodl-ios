@@ -182,7 +182,6 @@
 		34AA6E7B2F85774F00D244E2 /* DatabaseFilesInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BC22F85774F00D244E2 /* DatabaseFilesInterface.swift */; };
 		34AA6E7C2F85774F00D244E2 /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D492F85774F00D244E2 /* FeatureFlags.swift */; };
 		34AA6E7D2F85774F00D244E2 /* SyncStatusSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D512F85774F00D244E2 /* SyncStatusSnapshot.swift */; };
-		34AA6E7E2F85774F00D244E2 /* PasteboardTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C062F85774F00D244E2 /* PasteboardTestKey.swift */; };
 		34AA6E7F2F85774F00D244E2 /* WalletBalancesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D0C2F85774F00D244E2 /* WalletBalancesStore.swift */; };
 		34AA6E802F85774F00D244E2 /* SignWithKeystoneCoordFlowStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C822F85774F00D244E2 /* SignWithKeystoneCoordFlowStore.swift */; };
 		34AA6E812F85774F00D244E2 /* RecoveryPhraseDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CB22F85774F00D244E2 /* RecoveryPhraseDisplayView.swift */; };
@@ -369,7 +368,6 @@
 		34AA6F372F85774F00D244E2 /* FlexaHandlerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE52F85774F00D244E2 /* FlexaHandlerInterface.swift */; };
 		34AA6F382F85774F00D244E2 /* SupportDataGeneratorInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C222F85774F00D244E2 /* SupportDataGeneratorInterface.swift */; };
 		34AA6F392F85774F00D244E2 /* CaptureDeviceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BBD2F85774F00D244E2 /* CaptureDeviceInterface.swift */; };
-		34AA6F3A2F85774F00D244E2 /* URIParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C372F85774F00D244E2 /* URIParserTest.swift */; };
 		34AA6F3B2F85774F00D244E2 /* DateInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BC62F85774F00D244E2 /* DateInterface.swift */; };
 		34AA6F3C2F85774F00D244E2 /* MnemonicTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BF92F85774F00D244E2 /* MnemonicTestKey.swift */; };
 		34AA6F3D2F85774F00D244E2 /* SDKSynchronizerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C192F85774F00D244E2 /* SDKSynchronizerTest.swift */; };
@@ -634,7 +632,6 @@
 		34AA70492F85774F00D244E2 /* DatabaseFilesInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BC22F85774F00D244E2 /* DatabaseFilesInterface.swift */; };
 		34AA704A2F85774F00D244E2 /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D492F85774F00D244E2 /* FeatureFlags.swift */; };
 		34AA704B2F85774F00D244E2 /* SyncStatusSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D512F85774F00D244E2 /* SyncStatusSnapshot.swift */; };
-		34AA704C2F85774F00D244E2 /* PasteboardTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C062F85774F00D244E2 /* PasteboardTestKey.swift */; };
 		34AA704D2F85774F00D244E2 /* WalletBalancesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D0C2F85774F00D244E2 /* WalletBalancesStore.swift */; };
 		34AA704E2F85774F00D244E2 /* SignWithKeystoneCoordFlowStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C822F85774F00D244E2 /* SignWithKeystoneCoordFlowStore.swift */; };
 		34AA704F2F85774F00D244E2 /* RecoveryPhraseDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CB22F85774F00D244E2 /* RecoveryPhraseDisplayView.swift */; };
@@ -821,7 +818,6 @@
 		34AA71052F85774F00D244E2 /* FlexaHandlerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE52F85774F00D244E2 /* FlexaHandlerInterface.swift */; };
 		34AA71062F85774F00D244E2 /* SupportDataGeneratorInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C222F85774F00D244E2 /* SupportDataGeneratorInterface.swift */; };
 		34AA71072F85774F00D244E2 /* CaptureDeviceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BBD2F85774F00D244E2 /* CaptureDeviceInterface.swift */; };
-		34AA71082F85774F00D244E2 /* URIParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C372F85774F00D244E2 /* URIParserTest.swift */; };
 		34AA71092F85774F00D244E2 /* DateInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BC62F85774F00D244E2 /* DateInterface.swift */; };
 		34AA710A2F85774F00D244E2 /* MnemonicTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BF92F85774F00D244E2 /* MnemonicTestKey.swift */; };
 		34AA710B2F85774F00D244E2 /* SDKSynchronizerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C192F85774F00D244E2 /* SDKSynchronizerTest.swift */; };
@@ -1034,7 +1030,6 @@
 		34AA71DF2F85774F00D244E2 /* DatabaseFilesInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BC22F85774F00D244E2 /* DatabaseFilesInterface.swift */; };
 		34AA71E02F85774F00D244E2 /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D492F85774F00D244E2 /* FeatureFlags.swift */; };
 		34AA71E12F85774F00D244E2 /* SyncStatusSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D512F85774F00D244E2 /* SyncStatusSnapshot.swift */; };
-		34AA71E22F85774F00D244E2 /* PasteboardTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C062F85774F00D244E2 /* PasteboardTestKey.swift */; };
 		34AA71E32F85774F00D244E2 /* WalletBalancesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D0C2F85774F00D244E2 /* WalletBalancesStore.swift */; };
 		34AA71E42F85774F00D244E2 /* SignWithKeystoneCoordFlowStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C822F85774F00D244E2 /* SignWithKeystoneCoordFlowStore.swift */; };
 		34AA71E52F85774F00D244E2 /* RecoveryPhraseDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CB22F85774F00D244E2 /* RecoveryPhraseDisplayView.swift */; };
@@ -1221,7 +1216,6 @@
 		34AA729B2F85774F00D244E2 /* FlexaHandlerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE52F85774F00D244E2 /* FlexaHandlerInterface.swift */; };
 		34AA729C2F85774F00D244E2 /* SupportDataGeneratorInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C222F85774F00D244E2 /* SupportDataGeneratorInterface.swift */; };
 		34AA729D2F85774F00D244E2 /* CaptureDeviceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BBD2F85774F00D244E2 /* CaptureDeviceInterface.swift */; };
-		34AA729E2F85774F00D244E2 /* URIParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C372F85774F00D244E2 /* URIParserTest.swift */; };
 		34AA729F2F85774F00D244E2 /* DateInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BC62F85774F00D244E2 /* DateInterface.swift */; };
 		34AA72A02F85774F00D244E2 /* MnemonicTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BF92F85774F00D244E2 /* MnemonicTestKey.swift */; };
 		34AA72A12F85774F00D244E2 /* SDKSynchronizerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C192F85774F00D244E2 /* SDKSynchronizerTest.swift */; };
@@ -1486,7 +1480,6 @@
 		34AA73AD2F85774F00D244E2 /* DatabaseFilesInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BC22F85774F00D244E2 /* DatabaseFilesInterface.swift */; };
 		34AA73AE2F85774F00D244E2 /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D492F85774F00D244E2 /* FeatureFlags.swift */; };
 		34AA73AF2F85774F00D244E2 /* SyncStatusSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D512F85774F00D244E2 /* SyncStatusSnapshot.swift */; };
-		34AA73B02F85774F00D244E2 /* PasteboardTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C062F85774F00D244E2 /* PasteboardTestKey.swift */; };
 		34AA73B12F85774F00D244E2 /* WalletBalancesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D0C2F85774F00D244E2 /* WalletBalancesStore.swift */; };
 		34AA73B22F85774F00D244E2 /* SignWithKeystoneCoordFlowStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C822F85774F00D244E2 /* SignWithKeystoneCoordFlowStore.swift */; };
 		34AA73B32F85774F00D244E2 /* RecoveryPhraseDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CB22F85774F00D244E2 /* RecoveryPhraseDisplayView.swift */; };
@@ -1673,7 +1666,6 @@
 		34AA74692F85774F00D244E2 /* FlexaHandlerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE52F85774F00D244E2 /* FlexaHandlerInterface.swift */; };
 		34AA746A2F85774F00D244E2 /* SupportDataGeneratorInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C222F85774F00D244E2 /* SupportDataGeneratorInterface.swift */; };
 		34AA746B2F85774F00D244E2 /* CaptureDeviceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BBD2F85774F00D244E2 /* CaptureDeviceInterface.swift */; };
-		34AA746C2F85774F00D244E2 /* URIParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C372F85774F00D244E2 /* URIParserTest.swift */; };
 		34AA746D2F85774F00D244E2 /* DateInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BC62F85774F00D244E2 /* DateInterface.swift */; };
 		34AA746E2F85774F00D244E2 /* MnemonicTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BF92F85774F00D244E2 /* MnemonicTestKey.swift */; };
 		34AA746F2F85774F00D244E2 /* SDKSynchronizerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C192F85774F00D244E2 /* SDKSynchronizerTest.swift */; };
@@ -1886,7 +1878,6 @@
 		34AA75432F85774F00D244E2 /* DatabaseFilesInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BC22F85774F00D244E2 /* DatabaseFilesInterface.swift */; };
 		34AA75442F85774F00D244E2 /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D492F85774F00D244E2 /* FeatureFlags.swift */; };
 		34AA75452F85774F00D244E2 /* SyncStatusSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D512F85774F00D244E2 /* SyncStatusSnapshot.swift */; };
-		34AA75462F85774F00D244E2 /* PasteboardTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C062F85774F00D244E2 /* PasteboardTestKey.swift */; };
 		34AA75472F85774F00D244E2 /* WalletBalancesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6D0C2F85774F00D244E2 /* WalletBalancesStore.swift */; };
 		34AA75482F85774F00D244E2 /* SignWithKeystoneCoordFlowStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C822F85774F00D244E2 /* SignWithKeystoneCoordFlowStore.swift */; };
 		34AA75492F85774F00D244E2 /* RecoveryPhraseDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6CB22F85774F00D244E2 /* RecoveryPhraseDisplayView.swift */; };
@@ -2073,7 +2064,6 @@
 		34AA75FF2F85774F00D244E2 /* FlexaHandlerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BE52F85774F00D244E2 /* FlexaHandlerInterface.swift */; };
 		34AA76002F85774F00D244E2 /* SupportDataGeneratorInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C222F85774F00D244E2 /* SupportDataGeneratorInterface.swift */; };
 		34AA76012F85774F00D244E2 /* CaptureDeviceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BBD2F85774F00D244E2 /* CaptureDeviceInterface.swift */; };
-		34AA76022F85774F00D244E2 /* URIParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C372F85774F00D244E2 /* URIParserTest.swift */; };
 		34AA76032F85774F00D244E2 /* DateInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BC62F85774F00D244E2 /* DateInterface.swift */; };
 		34AA76042F85774F00D244E2 /* MnemonicTestKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6BF92F85774F00D244E2 /* MnemonicTestKey.swift */; };
 		34AA76052F85774F00D244E2 /* SDKSynchronizerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA6C192F85774F00D244E2 /* SDKSynchronizerTest.swift */; };
@@ -2445,7 +2435,6 @@
 		34AA6C022F85774F00D244E2 /* PartnerKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnerKeys.swift; sourceTree = "<group>"; };
 		34AA6C042F85774F00D244E2 /* PasteboardInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteboardInterface.swift; sourceTree = "<group>"; };
 		34AA6C052F85774F00D244E2 /* PasteboardLiveKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteboardLiveKey.swift; sourceTree = "<group>"; };
-		34AA6C062F85774F00D244E2 /* PasteboardTestKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteboardTestKey.swift; sourceTree = "<group>"; };
 		34AA6C082F85774F00D244E2 /* QRImageDetectorInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRImageDetectorInterface.swift; sourceTree = "<group>"; };
 		34AA6C092F85774F00D244E2 /* QRImageDetectorLiveKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRImageDetectorLiveKey.swift; sourceTree = "<group>"; };
 		34AA6C0A2F85774F00D244E2 /* QRImageDetectorTestKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRImageDetectorTestKey.swift; sourceTree = "<group>"; };
@@ -2481,7 +2470,6 @@
 		34AA6C342F85774F00D244E2 /* URIParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URIParser.swift; sourceTree = "<group>"; };
 		34AA6C352F85774F00D244E2 /* URIParserInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URIParserInterface.swift; sourceTree = "<group>"; };
 		34AA6C362F85774F00D244E2 /* URIParserLive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URIParserLive.swift; sourceTree = "<group>"; };
-		34AA6C372F85774F00D244E2 /* URIParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URIParserTest.swift; sourceTree = "<group>"; };
 		34AA6C392F85774F00D244E2 /* UserDefaultsInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsInterface.swift; sourceTree = "<group>"; };
 		34AA6C3A2F85774F00D244E2 /* UserDefaultsLiveKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsLiveKey.swift; sourceTree = "<group>"; };
 		34AA6C3B2F85774F00D244E2 /* UserDefaultsTestKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsTestKey.swift; sourceTree = "<group>"; };
@@ -3350,7 +3338,6 @@
 			children = (
 				34AA6C042F85774F00D244E2 /* PasteboardInterface.swift */,
 				34AA6C052F85774F00D244E2 /* PasteboardLiveKey.swift */,
-				34AA6C062F85774F00D244E2 /* PasteboardTestKey.swift */,
 			);
 			path = Pasteboard;
 			sourceTree = "<group>";
@@ -3479,7 +3466,6 @@
 				34AA6C342F85774F00D244E2 /* URIParser.swift */,
 				34AA6C352F85774F00D244E2 /* URIParserInterface.swift */,
 				34AA6C362F85774F00D244E2 /* URIParserLive.swift */,
-				34AA6C372F85774F00D244E2 /* URIParserTest.swift */,
 			);
 			path = URIParser;
 			sourceTree = "<group>";
@@ -5909,7 +5895,6 @@
 				34AA73AD2F85774F00D244E2 /* DatabaseFilesInterface.swift in Sources */,
 				34AA73AE2F85774F00D244E2 /* FeatureFlags.swift in Sources */,
 				34AA73AF2F85774F00D244E2 /* SyncStatusSnapshot.swift in Sources */,
-				34AA73B02F85774F00D244E2 /* PasteboardTestKey.swift in Sources */,
 				34AA73B12F85774F00D244E2 /* WalletBalancesStore.swift in Sources */,
 				34AA73B22F85774F00D244E2 /* SignWithKeystoneCoordFlowStore.swift in Sources */,
 				34AA73B32F85774F00D244E2 /* RecoveryPhraseDisplayView.swift in Sources */,
@@ -6099,7 +6084,6 @@
 				34AA74692F85774F00D244E2 /* FlexaHandlerInterface.swift in Sources */,
 				34AA746A2F85774F00D244E2 /* SupportDataGeneratorInterface.swift in Sources */,
 				34AA746B2F85774F00D244E2 /* CaptureDeviceInterface.swift in Sources */,
-				34AA746C2F85774F00D244E2 /* URIParserTest.swift in Sources */,
 				34AA746D2F85774F00D244E2 /* DateInterface.swift in Sources */,
 				34AA746E2F85774F00D244E2 /* MnemonicTestKey.swift in Sources */,
 				34AA746F2F85774F00D244E2 /* SDKSynchronizerTest.swift in Sources */,
@@ -6322,7 +6306,6 @@
 				34AA70492F85774F00D244E2 /* DatabaseFilesInterface.swift in Sources */,
 				34AA704A2F85774F00D244E2 /* FeatureFlags.swift in Sources */,
 				34AA704B2F85774F00D244E2 /* SyncStatusSnapshot.swift in Sources */,
-				34AA704C2F85774F00D244E2 /* PasteboardTestKey.swift in Sources */,
 				34AA704D2F85774F00D244E2 /* WalletBalancesStore.swift in Sources */,
 				34AA704E2F85774F00D244E2 /* SignWithKeystoneCoordFlowStore.swift in Sources */,
 				34AA704F2F85774F00D244E2 /* RecoveryPhraseDisplayView.swift in Sources */,
@@ -6512,7 +6495,6 @@
 				34AA71052F85774F00D244E2 /* FlexaHandlerInterface.swift in Sources */,
 				34AA71062F85774F00D244E2 /* SupportDataGeneratorInterface.swift in Sources */,
 				34AA71072F85774F00D244E2 /* CaptureDeviceInterface.swift in Sources */,
-				34AA71082F85774F00D244E2 /* URIParserTest.swift in Sources */,
 				34AA71092F85774F00D244E2 /* DateInterface.swift in Sources */,
 				34AA710A2F85774F00D244E2 /* MnemonicTestKey.swift in Sources */,
 				34AA710B2F85774F00D244E2 /* SDKSynchronizerTest.swift in Sources */,
@@ -6795,7 +6777,6 @@
 				34AA75432F85774F00D244E2 /* DatabaseFilesInterface.swift in Sources */,
 				34AA75442F85774F00D244E2 /* FeatureFlags.swift in Sources */,
 				34AA75452F85774F00D244E2 /* SyncStatusSnapshot.swift in Sources */,
-				34AA75462F85774F00D244E2 /* PasteboardTestKey.swift in Sources */,
 				34AA75472F85774F00D244E2 /* WalletBalancesStore.swift in Sources */,
 				34AA75482F85774F00D244E2 /* SignWithKeystoneCoordFlowStore.swift in Sources */,
 				34AA75492F85774F00D244E2 /* RecoveryPhraseDisplayView.swift in Sources */,
@@ -6985,7 +6966,6 @@
 				34AA75FF2F85774F00D244E2 /* FlexaHandlerInterface.swift in Sources */,
 				34AA76002F85774F00D244E2 /* SupportDataGeneratorInterface.swift in Sources */,
 				34AA76012F85774F00D244E2 /* CaptureDeviceInterface.swift in Sources */,
-				34AA76022F85774F00D244E2 /* URIParserTest.swift in Sources */,
 				34AA76032F85774F00D244E2 /* DateInterface.swift in Sources */,
 				34AA76042F85774F00D244E2 /* MnemonicTestKey.swift in Sources */,
 				34AA76052F85774F00D244E2 /* SDKSynchronizerTest.swift in Sources */,
@@ -7208,7 +7188,6 @@
 				34AA71DF2F85774F00D244E2 /* DatabaseFilesInterface.swift in Sources */,
 				34AA71E02F85774F00D244E2 /* FeatureFlags.swift in Sources */,
 				34AA71E12F85774F00D244E2 /* SyncStatusSnapshot.swift in Sources */,
-				34AA71E22F85774F00D244E2 /* PasteboardTestKey.swift in Sources */,
 				34AA71E32F85774F00D244E2 /* WalletBalancesStore.swift in Sources */,
 				34AA71E42F85774F00D244E2 /* SignWithKeystoneCoordFlowStore.swift in Sources */,
 				34AA71E52F85774F00D244E2 /* RecoveryPhraseDisplayView.swift in Sources */,
@@ -7398,7 +7377,6 @@
 				34AA729B2F85774F00D244E2 /* FlexaHandlerInterface.swift in Sources */,
 				34AA729C2F85774F00D244E2 /* SupportDataGeneratorInterface.swift in Sources */,
 				34AA729D2F85774F00D244E2 /* CaptureDeviceInterface.swift in Sources */,
-				34AA729E2F85774F00D244E2 /* URIParserTest.swift in Sources */,
 				34AA729F2F85774F00D244E2 /* DateInterface.swift in Sources */,
 				34AA72A02F85774F00D244E2 /* MnemonicTestKey.swift in Sources */,
 				34AA72A12F85774F00D244E2 /* SDKSynchronizerTest.swift in Sources */,
@@ -7621,7 +7599,6 @@
 				34AA6E7B2F85774F00D244E2 /* DatabaseFilesInterface.swift in Sources */,
 				34AA6E7C2F85774F00D244E2 /* FeatureFlags.swift in Sources */,
 				34AA6E7D2F85774F00D244E2 /* SyncStatusSnapshot.swift in Sources */,
-				34AA6E7E2F85774F00D244E2 /* PasteboardTestKey.swift in Sources */,
 				34AA6E7F2F85774F00D244E2 /* WalletBalancesStore.swift in Sources */,
 				34AA6E802F85774F00D244E2 /* SignWithKeystoneCoordFlowStore.swift in Sources */,
 				34AA6E812F85774F00D244E2 /* RecoveryPhraseDisplayView.swift in Sources */,
@@ -7811,7 +7788,6 @@
 				34AA6F372F85774F00D244E2 /* FlexaHandlerInterface.swift in Sources */,
 				34AA6F382F85774F00D244E2 /* SupportDataGeneratorInterface.swift in Sources */,
 				34AA6F392F85774F00D244E2 /* CaptureDeviceInterface.swift in Sources */,
-				34AA6F3A2F85774F00D244E2 /* URIParserTest.swift in Sources */,
 				34AA6F3B2F85774F00D244E2 /* DateInterface.swift in Sources */,
 				34AA6F3C2F85774F00D244E2 /* MnemonicTestKey.swift in Sources */,
 				34AA6F3D2F85774F00D244E2 /* SDKSynchronizerTest.swift in Sources */,

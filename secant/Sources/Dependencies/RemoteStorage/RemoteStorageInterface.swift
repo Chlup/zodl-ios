@@ -17,7 +17,7 @@ extension DependencyValues {
 
 @DependencyClient
 struct RemoteStorageClient {
-    let loadDataFromFile: (String) throws -> Data
-    let storeDataToFile: (Data, String) throws -> Void
-    let removeFile: (String) throws -> Void
+    var loadDataFromFile: @Sendable (String) throws -> Data
+    var storeDataToFile: @Sendable (Data, String) throws -> Void
+    var removeFile: @Sendable (String) throws -> Void
 }

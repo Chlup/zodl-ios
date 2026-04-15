@@ -8,14 +8,6 @@
 import ComposableArchitecture
 import XCTestDynamicOverlay
 
-extension UserDefaultsClient: TestDependencyKey {
-    static let testValue = Self(
-        objectForKey: unimplemented("\(Self.self).objectForKey", placeholder: nil),
-        remove: unimplemented("\(Self.self).remove", placeholder: {}()),
-        setValue: unimplemented("\(Self.self).setValue", placeholder: {}())
-    )
-}
-
 extension UserDefaultsClient {
     static let noOp = Self(
         objectForKey: { _ in nil },
