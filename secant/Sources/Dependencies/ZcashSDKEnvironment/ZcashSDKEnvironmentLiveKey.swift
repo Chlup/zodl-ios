@@ -8,8 +8,8 @@
 import ComposableArchitecture
 @preconcurrency import ZcashLightClientKit
 
-extension ZcashSDKEnvironment {
-    
+extension ZcashSDKEnvironment: DependencyKey {
+
     static let liveValue: ZcashSDKEnvironment = Self.live(network: TargetConstants.zcashNetwork)
 
     static func live(network: ZcashNetwork) -> Self {
