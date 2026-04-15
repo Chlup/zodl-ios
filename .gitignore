@@ -81,3 +81,5 @@ PartnerKeys.plist
 lib
 *.a
 *.generated.swift
+
+.claude
