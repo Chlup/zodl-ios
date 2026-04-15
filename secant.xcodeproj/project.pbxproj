@@ -5407,7 +5407,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
-			shellScript = "swiftlint_version=0.50.3\n\nif which swiftlint >/dev/null; then\n  if [[ $(swiftlint version) != $swiftlint_version ]]; then\n    echo \"warning: Compatible SwiftLint version not installed, download version $swiftlint_version from https://github.com/realm/SwiftLint. Currently installed version is $(swiftlint version)\"\n  fi\n   \n  echo \"Linting the Secant code\"\n  #swiftlint lint --config .swiftlint.yml\n  echo \"Linting tests\"\n  #swiftlint lint --config .swiftlint_tests.yml\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "SWIFT_PACKAGE_DIR=\"${SWIFT_PACKAGE_DIR:-${BUILD_DIR%Build/*}SourcePackages}\"\nSWIFTLINT_CMD=\"$SWIFT_PACKAGE_DIR/artifacts/swiftlintplugins/SwiftLintBinary/SwiftLintBinary.artifactbundle/macos/swiftlint\"\n\nif [ -f \"$SWIFTLINT_CMD\" ]; then\n    echo \"Linting the Secant code\"\n    \"$SWIFTLINT_CMD\" lint --config \"${SRCROOT}/.swiftlint.yml\"\n    echo \"Linting tests\"\n    \"$SWIFTLINT_CMD\" lint --config \"${SRCROOT}/.swiftlint_tests.yml\"\nelse\n    echo \"warning: SwiftLint not found\"\nfi\n";
 		};
 		34968BED2ABDC6310027F495 /* Swiftgen */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5464,7 +5464,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
-			shellScript = "swiftlint_version=0.50.3\n\nif which swiftlint >/dev/null; then\n  if [[ $(swiftlint version) != $swiftlint_version ]]; then\n    echo \"warning: Compatible SwiftLint version not installed, download version $swiftlint_version from https://github.com/realm/SwiftLint. Currently installed version is $(swiftlint version)\"\n  fi\n   \n  echo \"Linting the Secant code\"\n  #swiftlint lint --config .swiftlint.yml\n  echo \"Linting tests\"\n  #swiftlint lint --config .swiftlint_tests.yml\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "SWIFT_PACKAGE_DIR=\"${SWIFT_PACKAGE_DIR:-${BUILD_DIR%Build/*}SourcePackages}\"\nSWIFTLINT_CMD=\"$SWIFT_PACKAGE_DIR/artifacts/swiftlintplugins/SwiftLintBinary/SwiftLintBinary.artifactbundle/macos/swiftlint\"\n\nif [ -f \"$SWIFTLINT_CMD\" ]; then\n    echo \"Linting the Secant code\"\n    \"$SWIFTLINT_CMD\" lint --config \"${SRCROOT}/.swiftlint.yml\"\n    echo \"Linting tests\"\n    \"$SWIFTLINT_CMD\" lint --config \"${SRCROOT}/.swiftlint_tests.yml\"\nelse\n    echo \"warning: SwiftLint not found\"\nfi\n";
 		};
 		9E41FFA12CB2814500783CFD /* Generate PartnerKeys.plist */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5523,7 +5523,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
-			shellScript = "swiftlint_version=0.50.3\n\nif which swiftlint >/dev/null; then\n  if [[ $(swiftlint version) != $swiftlint_version ]]; then\n    echo \"warning: Compatible SwiftLint version not installed, download version $swiftlint_version from https://github.com/realm/SwiftLint. Currently installed version is $(swiftlint version)\"\n  fi\n   \n  echo \"Linting the Secant code\"\n  #swiftlint lint --config .swiftlint.yml\n  echo \"Linting tests\"\n  #swiftlint lint --config .swiftlint_tests.yml\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "SWIFT_PACKAGE_DIR=\"${SWIFT_PACKAGE_DIR:-${BUILD_DIR%Build/*}SourcePackages}\"\nSWIFTLINT_CMD=\"$SWIFT_PACKAGE_DIR/artifacts/swiftlintplugins/SwiftLintBinary/SwiftLintBinary.artifactbundle/macos/swiftlint\"\n\nif [ -f \"$SWIFTLINT_CMD\" ]; then\n    echo \"Linting the Secant code\"\n    \"$SWIFTLINT_CMD\" lint --config \"${SRCROOT}/.swiftlint.yml\"\n    echo \"Linting tests\"\n    \"$SWIFTLINT_CMD\" lint --config \"${SRCROOT}/.swiftlint_tests.yml\"\nelse\n    echo \"warning: SwiftLint not found\"\nfi\n";
 		};
 		9E4AB29F2BA1BEE900F5D6DB /* Swiftgen */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5561,7 +5561,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
-			shellScript = "swiftlint_version=0.50.3\n\nif which swiftlint >/dev/null; then\n  if [[ $(swiftlint version) != $swiftlint_version ]]; then\n    echo \"warning: Compatible SwiftLint version not installed, download version $swiftlint_version from https://github.com/realm/SwiftLint. Currently installed version is $(swiftlint version)\"\n  fi\n   \n  echo \"Linting the Secant code\"\n  #swiftlint lint --config .swiftlint.yml\n  echo \"Linting tests\"\n  #swiftlint lint --config .swiftlint_tests.yml\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "SWIFT_PACKAGE_DIR=\"${SWIFT_PACKAGE_DIR:-${BUILD_DIR%Build/*}SourcePackages}\"\nSWIFTLINT_CMD=\"$SWIFT_PACKAGE_DIR/artifacts/swiftlintplugins/SwiftLintBinary/SwiftLintBinary.artifactbundle/macos/swiftlint\"\n\nif [ -f \"$SWIFTLINT_CMD\" ]; then\n    echo \"Linting the Secant code\"\n    \"$SWIFTLINT_CMD\" lint --config \"${SRCROOT}/.swiftlint.yml\"\n    echo \"Linting tests\"\n    \"$SWIFTLINT_CMD\" lint --config \"${SRCROOT}/.swiftlint_tests.yml\"\nelse\n    echo \"warning: SwiftLint not found\"\nfi\n";
 		};
 		9E599F2E2C3EEE25000E4997 /* Generate PartnerKeys.plist */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5683,7 +5683,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
-			shellScript = "swiftlint_version=0.50.3\n\nif which swiftlint >/dev/null; then\n  if [[ $(swiftlint version) != $swiftlint_version ]]; then\n    echo \"warning: Compatible SwiftLint version not installed, download version $swiftlint_version from https://github.com/realm/SwiftLint. Currently installed version is $(swiftlint version)\"\n  fi\n   \n  echo \"Linting the Secant code\"\n  #swiftlint lint --config .swiftlint.yml\n  echo \"Linting tests\"\n  #swiftlint lint --config .swiftlint_tests.yml\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "SWIFT_PACKAGE_DIR=\"${SWIFT_PACKAGE_DIR:-${BUILD_DIR%Build/*}SourcePackages}\"\nSWIFTLINT_CMD=\"$SWIFT_PACKAGE_DIR/artifacts/swiftlintplugins/SwiftLintBinary/SwiftLintBinary.artifactbundle/macos/swiftlint\"\n\nif [ -f \"$SWIFTLINT_CMD\" ]; then\n    echo \"Linting the Secant code\"\n    \"$SWIFTLINT_CMD\" lint --config \"${SRCROOT}/.swiftlint.yml\"\n    echo \"Linting tests\"\n    \"$SWIFTLINT_CMD\" lint --config \"${SRCROOT}/.swiftlint_tests.yml\"\nelse\n    echo \"warning: SwiftLint not found\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
