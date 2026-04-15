@@ -5130,6 +5130,7 @@
 				3403E8E22F898049002B0051 /* XCRemoteSwiftPackageReference "swift-atomics" */,
 				3403E92B2F898F09002B0051 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
 				34094DFD2F8FE0F7006F770C /* XCLocalSwiftPackageReference "../flexa-ios" */,
+				34094E0A2F8FE13A006F770C /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 			);
 			productRefGroup = 0D4E7A0626B364170058B01E /* Products */;
 			projectDirPath = "";
@@ -8724,6 +8725,14 @@
 			requirement = {
 				kind = upToNextMinorVersion;
 				minimumVersion = 1.12.0;
+			};
+		};
+		34094E0A2F8FE13A006F770C /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.63.2;
 			};
 		};
 		34AA77122F857DA300D244E2 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
