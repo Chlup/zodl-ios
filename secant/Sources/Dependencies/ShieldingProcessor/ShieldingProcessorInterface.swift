@@ -28,6 +28,6 @@ struct ShieldingProcessorClient {
         case unknown
     }
     
-    let observe: () -> AnyPublisher<ShieldingProcessorClient.State, Never>
-    let shieldFunds: () -> Void
+    var observe: @Sendable () -> AnyPublisher<ShieldingProcessorClient.State, Never> = { Empty().eraseToAnyPublisher() }
+    var shieldFunds: @Sendable () -> Void
 }
