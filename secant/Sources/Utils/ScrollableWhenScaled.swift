@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-// swiftlint:disable:next private_over_fileprivate strict_fileprivate
-fileprivate struct ScrollableWhenScaledUpModifier: ViewModifier {
+private struct ScrollableWhenScaledUpModifier: ViewModifier {
     @ScaledMetric var scale: CGFloat = 1
 
     func body(content: Content) -> some View {

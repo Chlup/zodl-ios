@@ -20,8 +20,10 @@ extension UserMetadata {
     static func encryptUserMetadata(_ umData: UserMetadata, account: Account) throws -> Data {
         @Dependency(\.walletStorage) var walletStorage
         
-        guard let encryptionKeys = try? walletStorage.exportUserMetadataEncryptionKeys(account),
-                let umKey = encryptionKeys.getCached(account: account) else {
+        guard
+            let encryptionKeys = try? walletStorage.exportUserMetadataEncryptionKeys(account),
+            let umKey = encryptionKeys.getCached(account: account)
+        else {
             throw UserMetadataStorage.UMError.missingEncryptionKey
         }
 
@@ -65,8 +67,10 @@ extension UserMetadata {
         @Dependency(\.walletStorage) var walletStorage
         
         // FIXME: refactor
-        guard let encryptionKeys = try? walletStorage.exportUserMetadataEncryptionKeys(account),
-                let umKey = encryptionKeys.getCached(account: account) else {
+        guard
+            let encryptionKeys = try? walletStorage.exportUserMetadataEncryptionKeys(account),
+            let umKey = encryptionKeys.getCached(account: account)
+        else {
             throw UserMetadataStorage.UMError.missingEncryptionKey
         }
         
@@ -99,12 +103,12 @@ extension UserMetadata {
                 offset += UserMetadataStorage.Constants.int64Size
 
                 // Unseal the encrypted user metadata.
-                let sealed = try ChaChaPoly.SealedBox.init(combined: encryptedSubData.suffix(from: 32 +  UserMetadataStorage.Constants.int64Size))
+                let sealed = try ChaChaPoly.SealedBox(combined: encryptedSubData.suffix(from: 32 + UserMetadataStorage.Constants.int64Size))
                 let data = try ChaChaPoly.open(sealed, using: subKey)
                 
                 // Ignore unencrypted version and try to decode data as JSON and take the version from it
-                if let dataJson = try? JSONDecoder().decode([String: AnyDecodable].self, from: data),
-                   let jsonVersion = dataJson[Constants.versionKey]?.value as? Int {
+                if  let dataJson = try? JSONDecoder().decode([String: AnyDecodable].self, from: data),
+                    let jsonVersion = dataJson[Constants.versionKey]?.value as? Int {
                     switch jsonVersion {
                     case 1:
                         let userMetadataV1Data = try JSONDecoder().decode(UserMetadataV1.self, from: data)
@@ -149,7 +153,7 @@ extension UserMetadata {
         }
         
         return bytes.withUnsafeBytes { ptr -> Int? in
-            Int.init(exactly: ptr.loadUnaligned(as: Int64.self).bigEndian)
+            Int(exactly: ptr.loadUnaligned(as: Int64.self).bigEndian)
         }
     }
 }

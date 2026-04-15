@@ -23,12 +23,6 @@ struct UserMetadataV2: Codable {
     let version: Int
     let lastUpdated: Int64
     let accountMetadata: UMAccountV2
-    
-    init(version: Int, lastUpdated: Int64, accountMetadata: UMAccountV2) {
-        self.version = version
-        self.lastUpdated = lastUpdated
-        self.accountMetadata = accountMetadata
-    }
 }
 
 struct UMAccountV2: Codable {
@@ -57,12 +51,6 @@ struct UMSwapsV2: Codable {
     /// Collection of 10 last SwapAssets
     let lastUsedAssetHistory: [String]
     let lastUpdated: Int64
-    
-    init(swapIds: [UMSwapIdV2], lastUsedAssetHistory: [String], lastUpdated: Int64) {
-        self.swapIds = swapIds
-        self.lastUsedAssetHistory = lastUsedAssetHistory
-        self.lastUpdated = lastUpdated
-    }
 }
 struct UMSwapIdV2: Codable, Equatable {
     enum CodingKeys: CodingKey {

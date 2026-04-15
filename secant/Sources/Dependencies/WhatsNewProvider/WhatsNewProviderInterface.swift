@@ -19,11 +19,6 @@ struct WhatNewSection: Codable, Equatable {
     var bulletpoints: [String]
     
     static let zero = WhatNewSection(title: "", bulletpoints: [])
-
-    init(title: String, bulletpoints: [String]) {
-        self.title = title
-        self.bulletpoints = bulletpoints
-    }
 }
 
 struct WhatNewRelease: Codable, Equatable {
@@ -33,23 +28,12 @@ struct WhatNewRelease: Codable, Equatable {
     var sections: [WhatNewSection]
 
     static let zero = WhatNewRelease(version: "", date: "", timestamp: 0, sections: [])
-
-    init(version: String, date: String, timestamp: Int, sections: [WhatNewSection]) {
-        self.version = version
-        self.date = date
-        self.timestamp = timestamp
-        self.sections = sections
-    }
 }
 
 struct WhatNewReleases: Codable, Equatable {
     var releases: [WhatNewRelease]
     
     static let zero = WhatNewReleases(releases: [])
-    
-    init(releases: [WhatNewRelease]) {
-        self.releases = releases
-    }
 }
 
 @DependencyClient

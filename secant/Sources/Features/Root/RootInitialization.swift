@@ -41,7 +41,6 @@ extension Root {
         case walletConfigChanged(WalletConfig)
     }
 
-    // swiftlint:disable:next cyclomatic_complexity function_body_length
     func initializationReduce() -> Reduce<Root.State, Root.Action> {
         Reduce { state, action in
             switch action {
@@ -50,15 +49,15 @@ extension Root {
                 // TODO: [#704], trigger the review request logic when approved by the team,
                 // https://github.com/Electric-Coin-Company/zashi-ios/issues/704
                 return .run { send in
-                        try await mainQueue.sleep(for: .seconds(0.5))
-                        await send(.initialization(.initialSetups))
-                    }
-                    .cancellable(id: state.DidFinishLaunchingId, cancelInFlight: true)
+                    try await mainQueue.sleep(for: .seconds(0.5))
+                    await send(.initialization(.initialSetups))
+                }
+                .cancellable(id: state.DidFinishLaunchingId, cancelInFlight: true)
 
             case .initialization(.appDelegate(.willEnterForeground)):
                 if state.featureFlags.appLaunchBiometric {
                     let now = Date()
-                    let before = Date.init(timeIntervalSince1970: TimeInterval(state.lastAuthenticationTimestamp))
+                    let before = Date(timeIntervalSince1970: TimeInterval(state.lastAuthenticationTimestamp))
                     if let xMinutesAgo = Calendar.current.date(byAdding: .minute, value: -Constants.noAuthenticationWithinXMinutes, to: now),
                        before < xMinutesAgo {
                         state.splashAppeared = false
@@ -146,7 +145,7 @@ extension Root {
                 default: break
                 }
                 
-                if finishBGTask  {
+                if finishBGTask {
                     LoggerProxy.event("BGTask setTaskCompleted(success: \(successOfBGTask)) from TCA")
                     Root.bgTask?.setTaskCompleted(success: successOfBGTask)
                     Root.bgTask = nil
@@ -416,7 +415,6 @@ extension Root {
                     
                     return .run { [walletAccounts = state.walletAccounts] send in
                         do {
-                            
                             for account in walletAccounts {
                                 let userMetadataEncryptionKeys = try? walletStorage.exportUserMetadataEncryptionKeys(account.account)
                                 if userMetadataEncryptionKeys == nil {
@@ -441,7 +439,7 @@ extension Root {
                 
             case .initialization(.checkBackupPhraseValidation):
                 do {
-                    let _ = try walletStorage.exportWallet()
+                    _ = try walletStorage.exportWallet()
                 } catch {
                     return .send(.destination(.updateDestination(.osStatusError)))
                 }

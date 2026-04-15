@@ -95,15 +95,17 @@ extension TransactionDetailsView {
                 .padding(.trailing, 12)
             
             VStack(alignment: .leading, spacing: 4) {
-                Text(failed
-                     ? String(localizable: .swapAndPayFailedTitle)
-                     : String(localizable: .swapAndPayExpiredTitle)
+                Text(
+                    failed
+                        ? String(localizable: .swapAndPayFailedTitle)
+                        : String(localizable: .swapAndPayExpiredTitle)
                 )
                 .zFont(.medium, size: 14, style: Design.Utility.ErrorRed._700)
 
-                Text(failed
-                     ? String(localizable: .swapAndPayFailedMsg)
-                     : String(localizable: .swapAndPayExpiredMsg)
+                Text(
+                    failed
+                        ? String(localizable: .swapAndPayFailedMsg)
+                        : String(localizable: .swapAndPayExpiredMsg)
                 )
                 .zFont(size: 12, style: Design.Utility.ErrorRed._800)
                 .multilineTextAlignment(.leading)
@@ -443,7 +445,8 @@ extension TransactionDetailsView {
     @ViewBuilder func unknownTickerLogo(_ colorScheme: ColorScheme) -> some View {
         Circle()
             .fill(Design.Surfaces.bgTertiary.color(colorScheme))
-            .shimmer(true).clipShape(Circle())
+            .shimmer(true)
+            .clipShape(Circle())
             .frame(width: 24, height: 24)
             .overlay {
                 Circle()
@@ -453,7 +456,8 @@ extension TransactionDetailsView {
                     .overlay {
                         Circle()
                             .fill(Design.Surfaces.bgTertiary.color(colorScheme))
-                            .shimmer(true).clipShape(Circle())
+                            .shimmer(true)
+                            .clipShape(Circle())
                             .frame(width: 14, height: 14)
                             .offset(x: 8, y: 6)
                     }
@@ -464,28 +468,32 @@ extension TransactionDetailsView {
     @ViewBuilder func unknownValue() -> some View {
         RoundedRectangle(cornerRadius: Design.Radius._sm)
             .fill(Design.Surfaces.bgTertiary.color(colorScheme))
-            .shimmer(true).clipShape(RoundedRectangle(cornerRadius: Design.Radius._sm))
+            .shimmer(true)
+            .clipShape(RoundedRectangle(cornerRadius: Design.Radius._sm))
             .frame(width: 44, height: 18)
     }
     
     @ViewBuilder func unknownAmount() -> some View {
         RoundedRectangle(cornerRadius: Design.Radius._xl)
             .fill(Design.Surfaces.bgTertiary.color(colorScheme))
-            .shimmer(true).clipShape(RoundedRectangle(cornerRadius: Design.Radius._xl))
+            .shimmer(true)
+            .clipShape(RoundedRectangle(cornerRadius: Design.Radius._xl))
             .frame(width: 178, height: 44)
     }
     
     @ViewBuilder func unknownAsset() -> some View {
         Circle()
             .fill(Design.Surfaces.bgTertiary.color(colorScheme))
-            .shimmer(true).clipShape(Circle())
+            .shimmer(true)
+            .clipShape(Circle())
             .frame(width: 48, height: 48)
     }
     
     @ViewBuilder func unknownTitle() -> some View {
         RoundedRectangle(cornerRadius: Design.Radius._sm)
             .fill(Design.Surfaces.bgTertiary.color(colorScheme))
-            .shimmer(true).clipShape(RoundedRectangle(cornerRadius: Design.Radius._sm))
+            .shimmer(true)
+            .clipShape(RoundedRectangle(cornerRadius: Design.Radius._sm))
             .frame(width: 120, height: 28)
     }
 }

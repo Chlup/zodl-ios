@@ -23,12 +23,6 @@ struct UserMetadataV1: Codable {
     let version: Int
     let lastUpdated: Int64
     let accountMetadata: UMAccountV1
-    
-    init(version: Int, lastUpdated: Int64, accountMetadata: UMAccountV1) {
-        self.version = version
-        self.lastUpdated = lastUpdated
-        self.accountMetadata = accountMetadata
-    }
 }
 
 struct UMAccountV1: Codable {

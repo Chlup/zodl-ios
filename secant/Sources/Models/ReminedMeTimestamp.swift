@@ -10,9 +10,4 @@ import Foundation
 struct ReminedMeTimestamp: Equatable, Codable {
     var timestamp: TimeInterval
     var occurence: Int
-    
-    init(timestamp: TimeInterval, occurence: Int) {
-        self.timestamp = timestamp
-        self.occurence = occurence
-    }
 }

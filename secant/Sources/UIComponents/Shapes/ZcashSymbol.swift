@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-// swiftlint:disable indentation_width
 /**
       _
     __| |__
@@ -22,8 +21,6 @@ import SwiftUI
  */
 struct ZcashSymbol: Shape {
     static let ratio: CGFloat = 0.56
-    
-    init() {}
     
     func path(in rect: CGRect) -> Path {
         Path { path in

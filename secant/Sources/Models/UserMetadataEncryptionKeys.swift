@@ -24,11 +24,9 @@ struct UserMetadataEncryptionKeys: Codable, Equatable {
         guard let zip32AccountIndex = account.hdAccountIndex else {
             return
         }
-        
-        guard let info = "metadata".data(using: .utf8) else {
-            fatalError("Unable to prepare `info` info")
-        }
-        
+
+        let info = Data("metadata".utf8)
+
         let metadataKey = try AccountMetadataKey(
             from: seed,
             accountIndex: zip32AccountIndex,
@@ -107,10 +105,7 @@ struct UserMetadataKeys: Codable, Equatable, Redactable {
     ) -> SymmetricKey {
         assert(salt.count == 32)
 
-        guard let info = "metadata_key".data(using: .utf8) else {
-            fatalError("Unable to prepare `metadata_key` info")
-        }
-        
+        let info = Data("metadata_key".utf8)
         guard let firstKey = keys.first else {
             fatalError("Unable to process `firstKey`")
         }
@@ -129,10 +124,7 @@ struct UserMetadataKeys: Codable, Equatable, Redactable {
     ) -> [SymmetricKey] {
         assert(salt.count == 32)
 
-        guard let info = "metadata_key".data(using: .utf8) else {
-            fatalError("Unable to prepare `metadata_key` info")
-        }
-
+        let info = Data("metadata_key".utf8)
         var decryptionKeys: [SymmetricKey] = []
 
         keys.forEach {
@@ -146,10 +138,7 @@ struct UserMetadataKeys: Codable, Equatable, Redactable {
      * Derives the filename that this key is able to decrypt.
      */
     func fileIdentifier(account: Account) -> String? {
-        guard let info = "file_identifier".data(using: .utf8) else {
-            fatalError("Unable to prepare `file_identifier` info")
-        }
-
+        let info = Data("file_identifier".utf8)
         guard let firstKey = keys.first else {
             fatalError("Unable to process `firstKey`")
         }

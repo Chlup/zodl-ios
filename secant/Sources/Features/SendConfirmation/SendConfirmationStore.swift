@@ -92,7 +92,6 @@ struct SendConfirmation {
             case 1: return Asset.Assets.Illustrations.success1.image
             default: return Asset.Assets.Illustrations.success2.image
             }
-            
         }
 
         var failureIlustration: Image {
@@ -299,7 +298,12 @@ struct SendConfirmation {
                             await send(.updateFailedData(code, description, ""))
                             await send(.updateTxIdToExpand(txIds.last))
                             let isTxIdPresentInTheDB = try await sdkSynchronizer.txIdExists(txIds.last)
-                            await send(.sendFailed("sdkSynchronizer.createProposedTransactions-failure \(code) \(description)".toZcashError(), isTxIdPresentInTheDB))
+                            await send(
+                                .sendFailed(
+                                    "sdkSynchronizer.createProposedTransactions-failure \(code) \(description)".toZcashError(),
+                                    isTxIdPresentInTheDB
+                                )
+                            )
                         case let .partial(txIds: txIds, statuses: statuses):
                             await send(.updateTxIdToExpand(txIds.last))
                             await send(.sendPartial(txIds, statuses))

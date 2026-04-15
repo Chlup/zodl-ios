@@ -11,9 +11,10 @@ import ComposableArchitecture
 extension TransactionDetailsView {
     @ViewBuilder func annotationContent(_ isEditMode: Bool) -> some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(isEditMode
-                 ? String(localizable: .annotationEdit)
-                 : String(localizable: .annotationAddArticle)
+            Text(
+                isEditMode ?
+                    String(localizable: .annotationEdit) :
+                    String(localizable: .annotationAddArticle)
             )
             .zFont(.semiBold, size: 20, style: Design.Text.primary)
             .padding(.top, 32)
@@ -50,7 +51,11 @@ extension TransactionDetailsView {
                         }
                     }
 
-                Text(localizable: .annotationChars(String(store.annotationToInput.count), String(TransactionDetails.State.Constants.annotationMaxLength)))
+                Text(
+                    localizable: .annotationChars(
+                        String(store.annotationToInput.count), String(TransactionDetails.State.Constants.annotationMaxLength)
+                    )
+                )
                     .zFont(size: 14, style: Design.Inputs.Default.hint)
             }
             .padding(.bottom, 32)

@@ -166,17 +166,14 @@ extension Settings {
                 state.path.append(.sendUsFeedback(SendFeedback.State.initial))
                 return .none
                 
-                // MARK: - Self
-                
+            // MARK: - Self
             case .currencyConversionTapped:
                 var currencyConversionSetupState = CurrencyConversionSetup.State.initial
                 currencyConversionSetupState.isSettingsView = true
                 state.path.append(.currencyConversionSetup(currencyConversionSetupState))
                 return .none
 
-                
-                // MARK: - Tor Setup
-
+            // MARK: - Tor Setup
             case .path(.element(id: _, action: .torSetup(.backToHomeTapped))):
                 let _ = state.path.popLast()
                 return .none

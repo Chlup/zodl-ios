@@ -57,7 +57,7 @@ struct EnlargeQRView<QRContent: View>: ViewModifier {
 extension View {
     func enlargeQR(
         isPresented: Binding<Bool>,
-        content: @escaping () -> some View
+        content: () -> some View
     ) -> some View {
         self.modifier(
             EnlargeQRView(isPresented: isPresented, qrContent: content())

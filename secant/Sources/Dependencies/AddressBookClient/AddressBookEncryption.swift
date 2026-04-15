@@ -46,8 +46,10 @@ extension AddressBookClient {
         
         // TODO: [#1581] - Refactor encryption metadata terminology for keys
         // https://github.com/Electric-Coin-Company/zashi-ios/issues/1581
-        guard let encryptionKeys = try? walletStorage.exportAddressBookEncryptionKeys(),
-              let addressBookKey = encryptionKeys.getCached(account: account) else {
+        guard
+            let encryptionKeys = try? walletStorage.exportAddressBookEncryptionKeys(),
+            let addressBookKey = encryptionKeys.getCached(account: account)
+        else {
             throw AddressBookClient.AddressBookClientError.missingEncryptionKey
         }
         
@@ -85,7 +87,10 @@ extension AddressBookClient {
     static func contactsFrom(encryptedData: Data, account: Account) throws -> (AddressBookContacts, Bool) {
         @Dependency(\.walletStorage) var walletStorage
         
-        guard let encryptionKeys = try? walletStorage.exportAddressBookEncryptionKeys(), let addressBookKey = encryptionKeys.getCached(account: account) else {
+        guard
+            let encryptionKeys = try? walletStorage.exportAddressBookEncryptionKeys(),
+            let addressBookKey = encryptionKeys.getCached(account: account)
+        else {
             throw AddressBookClient.AddressBookClientError.missingEncryptionKey
         }
         
@@ -107,7 +112,7 @@ extension AddressBookClient {
             let subKey = addressBookKey.deriveEncryptionKey(salt: salt)
             
             // Unseal the encrypted address book.
-            let sealed = try ChaChaPoly.SealedBox.init(combined: encryptedSubData.suffix(from: 32))
+            let sealed = try ChaChaPoly.SealedBox(combined: encryptedSubData.suffix(from: 32))
             let data = try ChaChaPoly.open(sealed, using: subKey)
             
             return try contactsFrom(plainData: data)
@@ -249,7 +254,7 @@ extension AddressBookClient {
         }
         
         return bytes.withUnsafeBytes { ptr -> Int? in
-            Int.init(exactly: ptr.loadUnaligned(as: Int64.self).bigEndian)
+            Int(exactly: ptr.loadUnaligned(as: Int64.self).bigEndian)
         }
     }
     

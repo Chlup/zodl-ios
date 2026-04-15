@@ -37,13 +37,13 @@ struct WalletConfigProvider {
     }
 
     // This is used only in debug menu to change configuration for specific flag
-    func update(featureFlag: FeatureFlag, isEnabled: Bool) async {
+    func update(featureFlag: FeatureFlag, isEnabled: Bool) {
         guard let provider = configSourceProvider as? UserDefaultsWalletConfigStorage else {
             LoggerProxy.debug("This is now only support with UserDefaultsWalletConfigStorage as configurationProvider.")
             return
         }
 
-        await provider.store(featureFlag: featureFlag, isEnabled: isEnabled)
+        provider.store(featureFlag: featureFlag, isEnabled: isEnabled)
     }
 
     private func merge(

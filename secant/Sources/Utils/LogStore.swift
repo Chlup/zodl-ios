@@ -14,7 +14,7 @@ enum LogStore {
         level: OSLogEntryLog.Level = .debug,
         hoursToThePast: TimeInterval = 168,
         fileSize: Int = 1_000_000
-    ) async throws -> [String]? {
+    ) throws -> [String]? {
         guard let bundle = Bundle.main.bundleIdentifier else { return nil }
         
         let store = try OSLogStore(scope: .currentProcessIdentifier)

@@ -76,9 +76,10 @@ struct ActionRow<AccessoryContent>: View where AccessoryContent: View {
                         if let accessoryView {
                             HStack(spacing: 0) {
                                 Text(title)
-                                    .zFont(.semiBold, size: 16, style: isEnabled
-                                           ? Design.Text.primary
-                                           : Design.Text.disabled
+                                    .zFont(
+                                        .semiBold, size: 16, style: isEnabled
+                                            ? Design.Text.primary
+                                            : Design.Text.disabled
                                     )
                                     .fixedSize(horizontal: false, vertical: true)
                                     .minimumScaleFactor(0.6)
@@ -128,6 +129,6 @@ struct ActionRow<AccessoryContent>: View where AccessoryContent: View {
             }
         }
         .padding(.top, 12)
-        //.background(Asset.Colors.background.color)
+        // .background(Asset.Colors.background.color)
     }
 }

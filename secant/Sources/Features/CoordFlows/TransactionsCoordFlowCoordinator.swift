@@ -11,7 +11,6 @@ extension TransactionsCoordFlow {
     func coordinatorReduce() -> Reduce<TransactionsCoordFlow.State, TransactionsCoordFlow.Action> {
         Reduce { state, action in
             switch action {
-
                 // MARK: - Address Book Contact
 
             case .path(.element(id: _, action: .addressBookContact(.dismissAddContactRequired))):

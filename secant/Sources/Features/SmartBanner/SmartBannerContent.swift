@@ -81,9 +81,10 @@ extension SmartBannerView {
                 Text(localizable: .smartBannerContentRestoreTitle(String(format: "%0.1f%%", store.lastKnownSyncPercentage * 100)))
                     .zFont(.medium, size: 14, color: titleStyle())
                 
-                Text(store.areFundsSpendable
-                     ? String(localizable: .smartBannerContentRestoreInfoSpendable)
-                     : String(localizable: .smartBannerContentRestoreInfo)
+                Text(
+                    store.areFundsSpendable
+                        ? String(localizable: .smartBannerContentRestoreInfoSpendable)
+                        : String(localizable: .smartBannerContentRestoreInfo)
                 )
                 .zFont(.medium, size: 12, color: infoStyle())
             }

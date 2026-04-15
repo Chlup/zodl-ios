@@ -68,9 +68,7 @@ struct SendForm {
                 }
             }
             set {
-                zecAmountText = newValue.amount == 0 
-                ? .empty
-                : newValue.decimalString().redacted
+                zecAmountText = newValue.amount == 0 ? .empty : newValue.decimalString().redacted
             }
         }
 
@@ -295,7 +293,9 @@ struct SendForm {
                 switch result {
                 case .value(let rate), .refreshEnable(let rate):
                     if let rate {
-                        state.$currencyConversion.withLock { $0 = CurrencyConversion(.usd, ratio: rate.rate.doubleValue, timestamp: rate.date.timeIntervalSince1970) }
+                        state.$currencyConversion.withLock {
+                            $0 = CurrencyConversion(.usd, ratio: rate.rate.doubleValue, timestamp: rate.date.timeIntervalSince1970)
+                        }
                         return .send(.syncAmounts(true))
                     }
                 case .stale:

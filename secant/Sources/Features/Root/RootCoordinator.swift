@@ -12,7 +12,6 @@ extension Root {
     func coordinatorReduce() -> Reduce<Root.State, Root.Action> {
         Reduce { state, action in
             switch action {
-                
                 // MARK: - Returns to Home
 
             case .settings(.backToHomeTapped),

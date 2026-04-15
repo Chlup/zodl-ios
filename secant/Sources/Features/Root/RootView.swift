@@ -122,19 +122,19 @@ private extension RootView {
                         if let path = store.path {
                             if path == .settings {
                                 SettingsView(
-                                    store:
-                                        store.scope(
-                                            state: \.settingsState,
-                                            action: \.settings)
+                                    store: store.scope(
+                                        state: \.settingsState,
+                                        action: \.settings
+                                    )
                                 )
                                 .transition(.move(edge: .trailing))
                                 .zIndex(1)
                             } else if path == .receive {
                                 ReceiveView(
-                                    store:
-                                        store.scope(
-                                            state: \.receiveState,
-                                            action: \.receive),
+                                    store: store.scope(
+                                        state: \.receiveState,
+                                        action: \.receive
+                                    ),
                                     networkType: networkType,
                                     tokenName: tokenName
                                 )
@@ -144,20 +144,20 @@ private extension RootView {
                                 // FIXME: missing back button
                                 // TODO: this is no longer connected in the UI, it was in `get some ZEC` button
                                 RequestZecCoordFlowView(
-                                    store:
-                                        store.scope(
-                                            state: \.requestZecCoordFlowState,
-                                            action: \.requestZecCoordFlow),
+                                    store: store.scope(
+                                        state: \.requestZecCoordFlowState,
+                                        action: \.requestZecCoordFlow
+                                    ),
                                     tokenName: tokenName
                                 )
                                 .transition(.move(edge: .trailing))
                                 .zIndex(1)
                             } else if path == .sendCoordFlow {
                                 SendCoordFlowView(
-                                    store:
-                                        store.scope(
-                                            state: \.sendCoordFlowState,
-                                            action: \.sendCoordFlow),
+                                    store: store.scope(
+                                        state: \.sendCoordFlowState,
+                                        action: \.sendCoordFlow
+                                    ),
                                     tokenName: tokenName
                                 )
                                 .transition(.move(edge: .trailing))
@@ -166,50 +166,50 @@ private extension RootView {
                                 // FIXME: missing back button
                                 // TODO: this is no longer connected in the UI, it was under `scan` button
                                 ScanCoordFlowView(
-                                    store:
-                                        store.scope(
-                                            state: \.scanCoordFlowState,
-                                            action: \.scanCoordFlow),
+                                    store: store.scope(
+                                        state: \.scanCoordFlowState,
+                                        action: \.scanCoordFlow
+                                    ),
                                     tokenName: tokenName
                                 )
                                 .transition(.move(edge: .trailing))
                                 .zIndex(1)
                             } else if path == .addKeystoneHWWalletCoordFlow {
                                 AddKeystoneHWWalletCoordFlowView(
-                                    store:
-                                        store.scope(
-                                            state: \.addKeystoneHWWalletCoordFlowState,
-                                            action: \.addKeystoneHWWalletCoordFlow),
+                                    store: store.scope(
+                                        state: \.addKeystoneHWWalletCoordFlowState,
+                                        action: \.addKeystoneHWWalletCoordFlow
+                                    ),
                                     tokenName: tokenName
                                 )
                                 .transition(.move(edge: .trailing))
                                 .zIndex(1)
                             } else if path == .transactionsCoordFlow {
                                 TransactionsCoordFlowView(
-                                    store:
-                                        store.scope(
-                                            state: \.transactionsCoordFlowState,
-                                            action: \.transactionsCoordFlow),
+                                    store: store.scope(
+                                        state: \.transactionsCoordFlowState,
+                                        action: \.transactionsCoordFlow
+                                    ),
                                     tokenName: tokenName
                                 )
                                 .transition(.move(edge: .trailing))
                                 .zIndex(1)
                             } else if path == .walletBackup {
                                 WalletBackupCoordFlowView(
-                                    store:
-                                        store.scope(
-                                            state: \.walletBackupCoordFlowState,
-                                            action: \.walletBackupCoordFlow)
+                                    store: store.scope(
+                                        state: \.walletBackupCoordFlowState,
+                                        action: \.walletBackupCoordFlow
+                                    )
                                 )
                                 .transition(.move(edge: .trailing))
                                 .zIndex(1)
                             } else if path == .currencyConversionSetup {
                                 NavigationStack {
                                     CurrencyConversionSetupView(
-                                        store:
-                                            store.scope(
-                                                state: \.currencyConversionSetupState,
-                                                action: \.currencyConversionSetup)
+                                        store: store.scope(
+                                            state: \.currencyConversionSetupState,
+                                            action: \.currencyConversionSetup
+                                        )
                                     )
                                 }
                                 .transition(.move(edge: .trailing))
@@ -217,10 +217,10 @@ private extension RootView {
                             } else if path == .torSetup {
                                 NavigationStack {
                                     TorSetupView(
-                                        store:
-                                            store.scope(
-                                                state: \.torSetupState,
-                                                action: \.torSetup)
+                                        store: store.scope(
+                                            state: \.torSetupState,
+                                            action: \.torSetup
+                                        )
                                     )
                                 }
                                 .transition(.move(edge: .trailing))
@@ -228,11 +228,10 @@ private extension RootView {
                             } else if path == .serverSwitch {
                                 NavigationStack {
                                     ServerSetupView(
-                                        store:
-                                            store.scope(
-                                                state: \.serverSetupState,
-                                                action: \.serverSetup
-                                            )
+                                        store: store.scope(
+                                            state: \.serverSetupState,
+                                            action: \.serverSetup
+                                        )
                                     ) {
                                         store.send(.backToHomeFromServerSwitchTapped)
                                     }
@@ -241,10 +240,10 @@ private extension RootView {
                                 .zIndex(1)
                             } else if path == .swapAndPayCoordFlow {
                                 SwapAndPayCoordFlowView(
-                                    store:
-                                        store.scope(
-                                            state: \.swapAndPayCoordFlowState,
-                                            action: \.swapAndPayCoordFlow),
+                                    store: store.scope(
+                                        state: \.swapAndPayCoordFlowState,
+                                        action: \.swapAndPayCoordFlow
+                                    ),
                                     tokenName: tokenName
                                 )
                                 .transition(.move(edge: .trailing))
@@ -255,10 +254,10 @@ private extension RootView {
                     .popover(isPresented: $store.signWithKeystoneCoordFlowBinding) {
                         // FIXME: missing back button?
                         SignWithKeystoneCoordFlowView(
-                            store:
-                                store.scope(
-                                    state: \.signWithKeystoneCoordFlowState,
-                                    action: \.signWithKeystoneCoordFlow),
+                            store: store.scope(
+                                state: \.signWithKeystoneCoordFlowState,
+                                action: \.signWithKeystoneCoordFlow
+                            ),
                             tokenName: tokenName
                         )
                     }
@@ -295,16 +294,17 @@ private extension RootView {
             }
             .onOpenURL(perform: { store.goToDeeplink($0) })
             .alert(
-                store:
-                    store.scope(
-                        state: \.$alert,
-                        action: \.alert
-                    )
+                store: store.scope(
+                    state: \.$alert,
+                    action: \.alert
+                )
             )
-            .alert(store: store.scope(
-                state: \.exportLogsState.$alert,
-                action: \.exportLogs.alert
-            ))
+            .alert(
+                store: store.scope(
+                    state: \.exportLogsState.$alert,
+                    action: \.exportLogs.alert
+                )
+            )
             .fullScreenCover(
                 isPresented:
                     Binding(
@@ -362,13 +362,15 @@ private extension RootView {
     
     @ViewBuilder func shareView() -> some View {
         if let message = store.messageShareBinding {
-            UIShareDialogView(activityItems: [
-                ShareableMessage(
-                    title: String(localizable: .sendFeedbackShareTitle),
-                    message: message,
-                    desc: String(localizable: .sendFeedbackShareDesc)
-                ),
-            ]) {
+            UIShareDialogView(
+                activityItems: [
+                    ShareableMessage(
+                        title: String(localizable: .sendFeedbackShareTitle),
+                        message: message,
+                        desc: String(localizable: .sendFeedbackShareDesc)
+                    )
+                ]
+            ) {
                 store.send(.shareFinished)
             }
             // UIShareDialogView only wraps UIActivityViewController presentation
@@ -460,13 +462,13 @@ extension StoreOf<Root> {
 
 extension Root.State {
     static var initial: Self {
-        .init(
+        Root.State(
             debugState: .initial,
             destinationState: .initial,
             exportLogsState: .initial,
             onboardingState: .initial,
             phraseDisplayState: .initial,
-            //tabsState: .initial,
+            // tabsState: .initial,
             walletConfig: .initial,
             welcomeState: .initial
         )
@@ -479,7 +481,7 @@ extension Root {
             initialState: .initial
         ) {
             Root()
-                //.logging()
+                // .logging()
         }
     }
 }

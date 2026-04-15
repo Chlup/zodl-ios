@@ -323,7 +323,6 @@ struct WalletStorage {
     
     func resetShieldingReminder(accountName: String) {
         try? deleteData(forKey: Constants.zcashStoredShieldingReminder(accountName: accountName))
-
     }
     
     // MARK: - Acknowledged flags

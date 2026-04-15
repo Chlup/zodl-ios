@@ -132,14 +132,16 @@ import ComposableArchitecture
         
         var newMaxHeight: CGFloat = 0.0
         
-        points = points.enumerated().map {
-            let y = $0.element.y - step
-            
-            if y > newMaxHeight {
-                newMaxHeight = y
+        points = points
+            .enumerated()
+            .map { element in
+                let y = element.element.y - step
+
+                if y > newMaxHeight {
+                    newMaxHeight = y
+                }
+                return CGPoint(x: element.element.x, y: y)
             }
-            return CGPoint(x: $0.element.x, y: y)
-        }
         
         currentMaxHeight = newMaxHeight
     }

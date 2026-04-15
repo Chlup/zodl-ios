@@ -14,7 +14,7 @@ extension SendCoordFlow {
             switch action {
                 // MARK: - Address Book
                 
-            case let .path(.element(id: _, action: .addressBook(.editId(address, id)))):
+            case let .path(.element(id: _, action: .addressBook(.editId(address, _)))):
                 state.path.removeAll()
                 audioServices.systemSoundVibrate()
                 return .send(.sendForm(.addressUpdated(address.redacted)))

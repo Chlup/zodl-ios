@@ -16,8 +16,6 @@ struct TransactionList {
         @Shared(.inMemory(.selectedWalletAccount)) var selectedWalletAccount: WalletAccount? = nil
         @Shared(.inMemory(.transactions)) var transactions: IdentifiedArrayOf<TransactionState> = []
         var transactionListHomePage: IdentifiedArrayOf<TransactionState> = []
-
-        init() { }
     }
 
     enum Action: Equatable {

@@ -103,22 +103,25 @@ struct ZatoshiRepresentationView: View {
                         .font(.custom(fontName, size: mostSignificantFontSize))
                 } else {
                     if format == .expanded {
-                        Text(couldBeHidden && isSensitiveContentHidden
-                             ? String(localizable: .generalHideBalancesMost)
-                             : zatoshiStringRepresentation.mostSignificantDigits
+                        Text(
+                            couldBeHidden && isSensitiveContentHidden
+                                ? String(localizable: .generalHideBalancesMost)
+                                : zatoshiStringRepresentation.mostSignificantDigits
                         )
                         .font(.custom(fontName, size: mostSignificantFontSize))
                         .conditionalStrikethrough(strikethrough)
-                        + Text(couldBeHidden && isSensitiveContentHidden
-                               ? String(localizable: .generalHideBalancesLeast)
-                               : zatoshiStringRepresentation.leastSignificantDigits
+                        + Text(
+                            couldBeHidden && isSensitiveContentHidden
+                                ? String(localizable: .generalHideBalancesLeast)
+                                : zatoshiStringRepresentation.leastSignificantDigits
                         )
                         .font(.custom(fontName, size: leastSignificantFontSize))
                         .conditionalStrikethrough(strikethrough)
                     } else {
-                        Text(couldBeHidden && isSensitiveContentHidden
-                             ? String(localizable: .generalHideBalancesMostStandalone)
-                             : zatoshiStringRepresentation.mostSignificantDigits
+                        Text(
+                            couldBeHidden && isSensitiveContentHidden
+                                ? String(localizable: .generalHideBalancesMostStandalone)
+                                : zatoshiStringRepresentation.mostSignificantDigits
                         )
                         .font(.custom(fontName, size: mostSignificantFontSize))
                         .conditionalStrikethrough(strikethrough)

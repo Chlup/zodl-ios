@@ -32,7 +32,8 @@ struct WhatsNewView: View {
     @ViewBuilder func attributedText(_ sectionIndex: Int, index: Int) -> some View {
         if let previewText = try? AttributedString(
             markdown: store.latest.sections[sectionIndex].bulletpoints[index],
-            including: \.zashiApp) {
+            including: \.zashiApp
+        ) {
             HStack {
                 VStack {
                     Circle()

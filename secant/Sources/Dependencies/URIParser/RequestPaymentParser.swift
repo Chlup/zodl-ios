@@ -10,7 +10,7 @@ import ZcashPaymentURI
 @preconcurrency import ZcashLightClientKit
 
 struct RequestPaymentParser {
-    let network: NetworkType 
+    let network: NetworkType
 
     enum URIParserError: Error { }
 
@@ -18,4 +18,3 @@ struct RequestPaymentParser {
         try? ZIP321.request(from: dataStr, context: ParserContext.from(networkType: network))
     }
 }
-

@@ -203,9 +203,9 @@ struct RecoverySeedPhraseEntryView: View {
                             .zFont(.semiBold, size: 24, style: Design.Text.primary)
                             .padding(.top, 20)
                             .onLongPressGesture {
-#if DEBUG
+                                #if DEBUG
                                 store.send(.debugPasteSeed)
-#endif
+                                #endif
                             }
                         
                         Text(localizable: .restoreWalletInfo)
@@ -353,8 +353,8 @@ struct RecoverySeedPhraseEntryView: View {
                         .mask(
                             LinearGradient(
                                 gradient: Gradient(stops: [
-                                    .init(color: Design.Surfaces.bgSecondary.color(colorScheme).opacity(0.7), location: 0.9),
-                                    .init(color: Design.Surfaces.bgSecondary.color(colorScheme).opacity(0), location: 0.98)
+                                    Gradient.Stop(color: Design.Surfaces.bgSecondary.color(colorScheme).opacity(0.7), location: 0.9),
+                                    Gradient.Stop(color: Design.Surfaces.bgSecondary.color(colorScheme).opacity(0), location: 0.98)
                                 ]),
                                 startPoint: .leading,
                                 endPoint: .trailing

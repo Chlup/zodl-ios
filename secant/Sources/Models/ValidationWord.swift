@@ -12,9 +12,4 @@ import Foundation
 struct ValidationWord: Equatable {
     var groupIndex: Int
     var word: RedactableString
-    
-    init(groupIndex: Int, word: RedactableString) {
-        self.groupIndex = groupIndex
-        self.word = word
-    }
 }

@@ -137,7 +137,7 @@ private extension ReadTransactionsStorageClient {
     static let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: ReadTransactionsStorageClient.Constants.modelName)
         
-        container.loadPersistentStores { description, error in
+        container.loadPersistentStores { _, error in
             if let error = error {
                 fatalError("Unable to load persistent stores: \(error)")
             }

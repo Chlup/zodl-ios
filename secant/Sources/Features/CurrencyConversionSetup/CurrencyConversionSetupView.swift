@@ -160,11 +160,8 @@ struct CurrencyConversionSetupView: View {
                     .zImage(size: 16, style: Design.Text.tertiary)
                     .padding(.trailing, 12)
                 
-                Text(store.isTorOn
-                     ? String(localizable: .currencyConversionTorOnInfo)
-                     : String(localizable: .currencyConversionTorOffInfo)
-                )
-                .zFont(size: 12, style: Design.Text.tertiary)
+                Text(store.isTorOn ? String(localizable: .currencyConversionTorOnInfo) : String(localizable: .currencyConversionTorOffInfo))
+                    .zFont(size: 12, style: Design.Text.tertiary)
             }
             .padding(.bottom, 20)
             .screenHorizontalPadding()
@@ -202,10 +199,10 @@ extension CurrencyConversionSetupView {
             action()
         } label: {
             Text(title)
-                .zFont(.semiBold, size: 16,
-                       style: disabled
-                       ? Design.Btns.Primary.fgDisabled
-                       : Design.Btns.Primary.fg
+                .zFont(
+                    .semiBold,
+                    size: 16,
+                    style: disabled ? Design.Btns.Primary.fgDisabled : Design.Btns.Primary.fg
                 )
                 .frame(height: 24)
                 .frame(maxWidth: .infinity)
@@ -321,7 +318,7 @@ extension CurrencyConversionSetupView {
 
 extension CurrencyConversionSetup {
     @MainActor static let initial = StoreOf<CurrencyConversionSetup>(
-        initialState: .init(isSettingsView: false)
+        initialState: CurrencyConversionSetup.State(isSettingsView: false)
     ) {
         CurrencyConversionSetup()
     }

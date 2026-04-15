@@ -248,13 +248,16 @@ struct SwapToZecSummaryView: View {
             color: .black,
             overlayedWithZcashLogo: false
            ) {
-            UIShareDialogView(activityItems: [
-                ShareableImage(
-                    image: UIImage(cgImage: cgImg),
-                    title: String(localizable: .swapToZecShareTitle),
-                    reason: String(localizable: .swapToZecShareMsg(store.swapToZecAmountInQuotePreciseCopy, store.shareAssetName))
-                ), String(localizable: .swapToZecShareMsg(store.swapToZecAmountInQuotePreciseCopy, store.shareAssetName))
-            ]) {
+            UIShareDialogView(
+                activityItems: [
+                    ShareableImage(
+                        image: UIImage(cgImage: cgImg),
+                        title: String(localizable: .swapToZecShareTitle),
+                        reason: String(localizable: .swapToZecShareMsg(store.swapToZecAmountInQuotePreciseCopy, store.shareAssetName))
+                    ),
+                    String(localizable: .swapToZecShareMsg(store.swapToZecAmountInQuotePreciseCopy, store.shareAssetName))
+                ]
+            ) {
                 store.send(.shareFinished)
             }
             // UIShareDialogView only wraps UIActivityViewController presentation

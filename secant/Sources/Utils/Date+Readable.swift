@@ -19,7 +19,7 @@ extension Date {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
         formatter.timeStyle = .short
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"//"d MMM h:mm a"
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss" //"d MMM h:mm a"
         formatter.amSymbol = "am"
         formatter.pmSymbol = "pm"
         return formatter

@@ -25,7 +25,7 @@ struct UserDefaultsWalletConfigStorage {
 
     init() {}
     
-    private func load(key: String) async throws -> WalletConfig {
+    private func load(key: String) throws -> WalletConfig {
         guard let data = userDefaults.data(forKey: key) else { throw InternalError.noValueStored }
         do {
             let rawFlags = try PropertyListDecoder().decode(WalletConfig.RawFlags.self, from: data)
@@ -36,7 +36,7 @@ struct UserDefaultsWalletConfigStorage {
         }
     }
 
-    private func store(flags: WalletConfig.RawFlags, key: String) async {
+    private func store(flags: WalletConfig.RawFlags, key: String) {
         do {
             let data = try PropertyListEncoder().encode(flags)
             userDefaults.set(data, forKey: key)
@@ -46,32 +46,32 @@ struct UserDefaultsWalletConfigStorage {
     }
 
     // This is used only in debug menu to change configuration for specific flag
-    func store(featureFlag: FeatureFlag, isEnabled: Bool) async {
-        let currentConfig = (try? await load(key: Constants.providerKey)) ?? WalletConfig.initial
+    func store(featureFlag: FeatureFlag, isEnabled: Bool) {
+        let currentConfig = (try? load(key: Constants.providerKey)) ?? WalletConfig.initial
         var rawFlags = currentConfig.flags
         rawFlags[featureFlag] = isEnabled
 
-        await store(flags: rawFlags, key: Constants.providerKey)
+        store(flags: rawFlags, key: Constants.providerKey)
     }
 }
 
 extension UserDefaultsWalletConfigStorage: WalletConfigSourceProvider {
-    func load() async throws -> WalletConfig {
-        return try await load(key: Constants.providerKey)
+    func load() throws -> WalletConfig {
+        return try load(key: Constants.providerKey)
     }
 }
 
 extension UserDefaultsWalletConfigStorage: WalletConfigProviderCache {
-    func load() async -> WalletConfig? {
+    func load() -> WalletConfig? {
         do {
-            return try await load(key: Constants.cacheKey)
+            return try load(key: Constants.cacheKey)
         } catch {
             LoggerProxy.debug("Can't load feature flags from cache: \(error)")
             return nil
         }
     }
 
-    func store(_ configuration: WalletConfig) async {
-        await store(flags: configuration.flags, key: Constants.cacheKey)
+    func store(_ configuration: WalletConfig) {
+        store(flags: configuration.flags, key: Constants.cacheKey)
     }
 }

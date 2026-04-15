@@ -27,8 +27,6 @@ struct SignWithKeystoneCoordFlow {
         var path = StackState<Path.State>()
         var sendConfirmationState = SendConfirmation.State.initial
         @Shared(.inMemory(.transactions)) var transactions: IdentifiedArrayOf<TransactionState> = []
-
-        init() { }
     }
 
     enum Action {
@@ -48,7 +46,7 @@ struct SignWithKeystoneCoordFlow {
             SendConfirmation()
         }
         
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
             default: return .none
             }

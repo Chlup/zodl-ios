@@ -92,7 +92,7 @@ struct PrivateDataConsentView: View {
 #endif
             }
             .zashiBack()
-            .onAppear { store.send(.onAppear)}
+            .onAppear { store.send(.onAppear) }
 
             shareLogsView()
         }

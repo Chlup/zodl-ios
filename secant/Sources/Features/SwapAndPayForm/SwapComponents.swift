@@ -48,7 +48,7 @@ extension SwapAndPayForm {
                 .padding(.bottom, 32)
                 .padding(.horizontal, 20)
                 
-                if let _ = store.swapAssetFailedWithRetry {
+                if store.swapAssetFailedWithRetry != nil {
                     assetsFailureComposition(colorScheme)
                 } else if store.swapAssetsToPresent.isEmpty && !store.searchTerm.isEmpty {
                     assetsEmptyComposition(colorScheme)
@@ -167,12 +167,14 @@ extension SwapAndPayForm {
                                 colorScheme: colorScheme
                             )
                             .multilineTextAlignment(.center)
-                            .frame(maxWidth:
-                                    store.customSlippage.isEmpty
-                                   ? .infinity
-                                   : (store.customSlippage.contains(".") || store.customSlippage.contains(","))
-                                   ? CGFloat(store.customSlippage.count - 1) * 13.0 + 2.0
-                                   : CGFloat(store.customSlippage.count) * 13.0
+                            .frame(
+                                maxWidth: store.customSlippage.isEmpty ?
+                                    .infinity :
+                                    (
+                                        (store.customSlippage.contains(".") || store.customSlippage.contains(",")) ?
+                                            CGFloat(store.customSlippage.count - 1) * 13.0 + 2.0 :
+                                            CGFloat(store.customSlippage.count) * 13.0
+                                    )
                             )
                             .keyboardType(.decimalPad)
                             .onAppear {
@@ -234,7 +236,10 @@ extension SwapAndPayForm {
 
                 if store.slippageInSheet < 2.0 {
                     if let attrText = try? AttributedString(
-                        markdown: String(localizable: .swapAndPaySmallSlippageWarn("\(SwapAndPay.Constants.defaultSlippage)", "\(SwapAndPay.Constants.defaultSlippage)")),
+                        markdown: String(
+                            localizable:
+                                .swapAndPaySmallSlippageWarn("\(SwapAndPay.Constants.defaultSlippage)", "\(SwapAndPay.Constants.defaultSlippage)")
+                            ),
                         including: \.zashiApp
                     ) {
                         ZashiText(

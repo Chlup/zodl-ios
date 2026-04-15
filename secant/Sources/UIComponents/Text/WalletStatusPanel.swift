@@ -76,7 +76,7 @@ private struct WalletStatusPanel: View {
 
 #Preview {
     NavigationView {
-        ScrollView{
+        ScrollView {
             Text("Hello, World")
         }
         .padding(.vertical, 1)

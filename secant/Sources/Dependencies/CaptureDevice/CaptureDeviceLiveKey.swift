@@ -29,7 +29,17 @@ extension CaptureDeviceClient: DependencyKey {
                 if #available(iOS 17, *) {
                     device = AVCaptureDevice.userPreferredCamera
                 } else {
-                    let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInTripleCamera, .builtInDualWideCamera, .builtInUltraWideCamera, .builtInWideAngleCamera, .builtInTrueDepthCamera], mediaType: AVMediaType.video, position: .back)
+                    let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(
+                        deviceTypes: [
+                            .builtInTripleCamera,
+                            .builtInDualWideCamera,
+                            .builtInUltraWideCamera,
+                            .builtInWideAngleCamera,
+                            .builtInTrueDepthCamera
+                        ],
+                        mediaType: AVMediaType.video,
+                        position: .back
+                    )
                     device = deviceDiscoverySession.devices.first
                 }
                 guard let device else {
@@ -52,7 +62,6 @@ extension CaptureDeviceClient: DependencyKey {
                     throw CaptureDeviceClientError.torchUnavailable
                 }
             }
-
         )
     }
 }

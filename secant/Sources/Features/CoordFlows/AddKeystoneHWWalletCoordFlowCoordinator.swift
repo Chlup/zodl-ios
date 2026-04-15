@@ -11,7 +11,6 @@ extension AddKeystoneHWWalletCoordFlow {
     func coordinatorReduce() -> Reduce<AddKeystoneHWWalletCoordFlow.State, AddKeystoneHWWalletCoordFlow.Action> {
         Reduce { state, action in
             switch action {
-                
                 // MARK: - Scan
                 
             case .path(.element(id: _, action: .scan(.foundAccounts(let account)))):
@@ -22,7 +21,7 @@ extension AddKeystoneHWWalletCoordFlow {
                 return .none
                 
             case .path(.element(id: _, action: .scan(.cancelTapped))):
-                let _ = state.path.popLast()
+                _ = state.path.popLast()
                 return .none
                 
                 // MARK: - Account HW Wallet Selection

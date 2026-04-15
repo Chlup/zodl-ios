@@ -9,16 +9,14 @@ import ComposableArchitecture
 @preconcurrency import ZcashLightClientKit
 
 extension ZcashSDKEnvironment {
-    
     static let liveValue: ZcashSDKEnvironment = Self.live(network: TargetConstants.zcashNetwork)
 
     static func live(network: ZcashNetwork) -> Self {
         Self(
             latestCheckpoint: { BlockHeight.ofLatestCheckpoint(network: network) },
             endpoint: {
-                ZcashSDKEnvironment.serverConfig(
-                    for: network.networkType
-                ).endpoint(streamingCallTimeoutInMillis: ZcashSDKConstants.streamingCallTimeoutInMillis)
+                ZcashSDKEnvironment.serverConfig(for: network.networkType)
+                    .endpoint(streamingCallTimeoutInMillis: ZcashSDKConstants.streamingCallTimeoutInMillis)
             },
             exchangeRateIPRateLimit: { 120 },
             exchangeRateStaleLimit: { 15 * 60 },
@@ -78,10 +76,9 @@ extension ZcashSDKEnvironment {
             if let customValue = userDefaults.objectForKey(udCustomServerKey) as? String {
                 if let serverConfig = UserPreferencesStorage.ServerConfig.endpoint(
                     for: customValue,
-                    streamingCallTimeoutInMillis: streamingCallTimeoutInMillis)?.serverConfig(
-                        isCustom: true
-                    ) 
-                {
+                    streamingCallTimeoutInMillis: streamingCallTimeoutInMillis
+                )?
+                .serverConfig(isCustom: true) {
                     try? userStoredPreferences.setServer(serverConfig)
                 }
             }

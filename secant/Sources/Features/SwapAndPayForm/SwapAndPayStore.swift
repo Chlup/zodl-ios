@@ -214,7 +214,7 @@ struct SwapAndPay {
         case editPaymentTapped
         case enableSwapExperience
         case eraseSearchTermTapped
-        //case exchangeRateSetupChanged
+        // case exchangeRateSetupChanged
         case getQuote
         case getQuoteTapped
         case helpSheetRequested(Int)
@@ -608,7 +608,7 @@ struct SwapAndPay {
             case .assetSelectRequested:
                 state.searchTerm = ""
                 state.assetSelectBinding = true
-                state.keyboardDismissCounter = state.keyboardDismissCounter + 1
+                state.keyboardDismissCounter += 1
                 return .send(.updateAssetsAccordingToSearchTerm)
                 
             case .slippageChipTapped(let index):
@@ -908,7 +908,7 @@ struct SwapAndPay {
                 }
                 
             case .addressBookTapped:
-                state.keyboardDismissCounter = state.keyboardDismissCounter + 1
+                state.keyboardDismissCounter += 1
                 return .none
 
             case .addressBookContactSelected(let id):

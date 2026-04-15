@@ -32,8 +32,6 @@ struct SendCoordFlow {
         var path = StackState<Path.State>()
         var sendFormState = SendForm.State.initial
         @Shared(.inMemory(.transactions)) var transactions: IdentifiedArrayOf<TransactionState> = []
-
-        init() { }
     }
 
     enum Action {
@@ -56,7 +54,7 @@ struct SendCoordFlow {
             SendForm()
         }
 
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
             default: return .none
             }

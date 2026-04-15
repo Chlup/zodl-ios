@@ -50,15 +50,16 @@ struct TransactionsManagerView: View {
                                         .fill(Design.Btns.Secondary.bg.color(colorScheme))
                                         .overlay {
                                             RoundedRectangle(cornerRadius: Design.Radius._xl)
-                                                .stroke(store.activeFilters.count > 0
+                                                .stroke(
+                                                    !store.activeFilters.isEmpty
                                                         ? Design.Utility.Gray._900.color(colorScheme)
                                                         : Design.Utility.Gray._100.color(colorScheme),
-                                                        style: StrokeStyle(lineWidth: store.activeFilters.count > 0 ? 2.0 : 1.0)
+                                                    style: StrokeStyle(lineWidth: !store.activeFilters.isEmpty ? 2.0 : 1.0)
                                                 )
                                         }
                                 }
                             
-                            if store.activeFilters.count > 0 {
+                            if !store.activeFilters.isEmpty {
                                 Text("\(store.activeFilters.count)")
                                     .zFont(.medium, size: 12, style: Design.Text.opposite)
                                     .background {

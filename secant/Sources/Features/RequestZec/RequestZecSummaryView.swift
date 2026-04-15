@@ -136,13 +136,16 @@ extension RequestZecSummaryView {
             vendor: .zashi,
             color: .black
            ) {
-            UIShareDialogView(activityItems: [
-                ShareableImage(
-                    image: UIImage(cgImage: cgImg),
-                    title: String(localizable: .requestZecSummaryShareTitle),
-                    reason: String(localizable: .requestZecSummaryShareDesc)
-                ), "\(String(localizable: .requestZecSummaryShareDesc)) \(String(localizable: .requestZecSummaryShareMsg))"
-            ]) {
+            UIShareDialogView(
+                activityItems: [
+                    ShareableImage(
+                        image: UIImage(cgImage: cgImg),
+                        title: String(localizable: .requestZecSummaryShareTitle),
+                        reason: String(localizable: .requestZecSummaryShareDesc)
+                    ),
+                    "\(String(localizable: .requestZecSummaryShareDesc)) \(String(localizable: .requestZecSummaryShareMsg))"
+                ]
+            ) {
                 store.send(.shareFinished)
             }
             // UIShareDialogView only wraps UIActivityViewController presentation

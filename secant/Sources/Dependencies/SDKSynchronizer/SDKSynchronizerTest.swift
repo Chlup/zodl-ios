@@ -85,13 +85,21 @@ extension SDKSynchronizerClient {
         eventStream: @escaping @Sendable () -> AnyPublisher<SynchronizerEvent, Never> = { Empty().eraseToAnyPublisher() },
         exchangeRateUSDStream: @escaping @Sendable () -> AnyPublisher<FiatCurrencyResult?, Never> = { Empty().eraseToAnyPublisher() },
         latestState: @escaping @Sendable () -> SynchronizerState = { .zero },
-        latestScannedHeight: @escaping @Sendable () -> BlockHeight = { 0 },
+        latestScannedHeight: @Sendable () -> BlockHeight = { 0 },
         prepareWith: @escaping @Sendable ([UInt8], BlockHeight, WalletInitMode, String, String?) throws -> Void = { _, _, _, _, _ in },
         start: @escaping @Sendable (_ retry: Bool) throws -> Void = { _ in },
         stop: @escaping @Sendable () -> Void = { },
         isSyncing: @escaping @Sendable () -> Bool = { false },
         isInitialized: @escaping @Sendable () -> Bool = { false },
-    importAccount: @escaping @Sendable (String, [UInt8]?, Zip32AccountIndex?, AccountPurpose, String, String?, BlockHeight?) async throws -> AccountUUID? = { _, _, _, _, _, _, _ in nil },
+        importAccount: @escaping @Sendable (
+            String,
+            [UInt8]?,
+            Zip32AccountIndex?,
+            AccountPurpose,
+            String,
+            String?,
+            BlockHeight?
+        ) async throws -> AccountUUID? = { _, _, _, _, _, _, _ in nil },
         deleteAccount: @escaping @Sendable (AccountUUID) async throws -> Void = { _ in },
         rewind: @escaping @Sendable (RewindPolicy) -> AnyPublisher<Void, Error> = { _ in return Empty<Void, Error>().eraseToAnyPublisher() },
         getAllTransactions: @escaping @Sendable (AccountUUID?) -> IdentifiedArrayOf<TransactionState> = { _ in
@@ -149,7 +157,6 @@ extension SDKSynchronizerClient {
         getMemos: @escaping @Sendable (_ rawID: Data) -> [Memo] = { _ in [] },
         txIdExists: @escaping @Sendable (String?) -> Bool = { _ in false },
         getUnifiedAddress: @escaping @Sendable (_ account: AccountUUID) -> UnifiedAddress? = { _ in
-            // swiftlint:disable force_try
             try! UnifiedAddress(
                 encoding: """
                 utest1zkkkjfxkamagznjr6ayemffj2d2gacdwpzcyw669pvg06xevzqslpmm27zjsctlkstl2vsw62xrjktmzqcu4yu9zdhdxqz3kafa4j2q85y6mv74rzjcgjg8c0ytrg7d\
@@ -160,7 +167,6 @@ extension SDKSynchronizerClient {
         },
         getTransparentAddress: @escaping @Sendable (_ account: AccountUUID) -> TransparentAddress? = { _ in return nil },
         getSaplingAddress: @escaping @Sendable (_ account: AccountUUID) async -> SaplingAddress? = { _ in
-            // swiftlint:disable:next force_try
             try! SaplingAddress(
                 encoding: "ztestsapling1edm52k336nk70gxqxedd89slrrf5xwnnp5rt6gqnk0tgw4mynv6fcx42ym6x27yac5amvfvwypz",
                 network: .testnet

@@ -23,7 +23,7 @@ struct ServerSetupView: View {
 
     var body: some View {
         WithPerceptionTracking {
-            ScrollViewReader { value in
+            ScrollViewReader { _ in
                 WithPerceptionTracking {
                     VStack(alignment: .center, spacing: 0) {
                         ScrollView {
@@ -99,8 +99,10 @@ struct ServerSetupView: View {
                                     if store.isUpdatingServer {
                                         HStack(spacing: 8) {
                                             Text(localizable: .serverSetupSave)
-                                                .zFont(.semiBold, size: 16,
-                                                       style: store.selectedServer == nil
+                                                .zFont(
+                                                    .semiBold,
+                                                    size: 16,
+                                                    style: store.selectedServer == nil
                                                        ? Design.Btns.Primary.fgDisabled
                                                        : Design.Btns.Primary.fg
                                                 )
@@ -118,8 +120,10 @@ struct ServerSetupView: View {
                                         .screenHorizontalPadding()
                                     } else {
                                         Text(localizable: .serverSetupSave)
-                                            .zFont(.semiBold, size: 16, 
-                                                   style: store.selectedServer == nil
+                                            .zFont(
+                                                .semiBold,
+                                                size: 16,
+                                                style: store.selectedServer == nil
                                                    ? Design.Btns.Primary.fgDisabled
                                                    : Design.Btns.Primary.fg
                                             )
@@ -315,8 +319,7 @@ struct ServerSetupView: View {
         ProgressView()
             .progressViewStyle(
                 CircularProgressViewStyle(
-                    tint: colorScheme == .dark 
-                    ? (invertTint ? .black : .white) : (invertTint ? .white : .black)
+                    tint: colorScheme == .dark ? (invertTint ? .black : .white) : (invertTint ? .white : .black)
                 )
             )
     }

@@ -47,7 +47,11 @@ struct RestoreInfoView: View {
                         markdown: String(localizable: .restoreKSWarn),
                         including: \.zashiApp
                     ) {
-                        ZashiText(withAttributedString: attrText, colorScheme: colorScheme, textColor: Design.Utility.WarningYellow._900.color(colorScheme))
+                        ZashiText(
+                            withAttributedString: attrText,
+                            colorScheme: colorScheme,
+                            textColor: Design.Utility.WarningYellow._900.color(colorScheme)
+                        )
                             .zFont(size: 14, style: Design.Utility.WarningYellow._900)
                             .padding(.vertical, Design.Spacing._xl)
                             .padding(.horizontal, Design.Spacing._2xl)
@@ -55,7 +59,6 @@ struct RestoreInfoView: View {
                             .background {
                                 RoundedRectangle(cornerRadius: Design.Radius._3xl)
                                     .fill(Design.Utility.WarningYellow._50.color(colorScheme))
-
                             }
                     }
                 }

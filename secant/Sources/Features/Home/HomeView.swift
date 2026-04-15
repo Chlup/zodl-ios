@@ -321,11 +321,11 @@ struct HomeView_Previews: PreviewProvider {
                 store:
                     StoreOf<Home>(
                         initialState:
-                                .init(
-                                    transactionListState: .initial,
-                                    walletBalancesState: .initial,
-                                    walletConfig: .initial
-                                )
+                            Home.State(
+                                transactionListState: .initial,
+                                walletBalancesState: .initial,
+                                walletConfig: .initial
+                            )
                     ) {
                         Home()
                     },
@@ -344,7 +344,7 @@ struct HomeView_Previews: PreviewProvider {
 
 extension Home.State {
     static var initial: Self {
-        .init(
+        Home.State(
             transactionListState: .initial,
             walletBalancesState: .initial,
             walletConfig: .initial
@@ -363,7 +363,7 @@ extension Home {
 
     @MainActor static var error: StoreOf<Home> {
         StoreOf<Home>(
-            initialState: .init(
+            initialState: Home.State(
                 transactionListState: .initial,
                 walletBalancesState: .initial,
                 walletConfig: .initial

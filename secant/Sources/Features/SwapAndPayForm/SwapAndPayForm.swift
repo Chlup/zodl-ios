@@ -54,9 +54,10 @@ struct SwapAndPayForm: View {
                 store.send(.refundAddressTapped)
             } label: {
                 HStack(spacing: 0) {
-                    Text(store.isSwapToZecExperienceEnabled
-                         ? String(localizable: .swapToZecRefundAddress)
-                         : store.isSwapExperienceEnabled ? String(localizable: .swapAndPayAddress) : ""
+                    Text(
+                        store.isSwapToZecExperienceEnabled ?
+                            String(localizable: .swapToZecRefundAddress) :
+                            (store.isSwapExperienceEnabled ? String(localizable: .swapAndPayAddress) : "")
                     )
                     .lineLimit(1)
                     .truncationMode(.middle)
@@ -126,7 +127,6 @@ struct SwapAndPayForm: View {
                             .overlay {
                                 RoundedRectangle(cornerRadius: Design.Radius._sm)
                                     .stroke(Design.Tags.surfaceStroke.color(colorScheme))
-                                
                             }
                     }
                 : nil
@@ -305,14 +305,16 @@ extension View {
                 }
             } else {
                 Circle()
-                    .shimmer(true).clipShape(Circle())
+                    .shimmer(true)
+                    .clipShape(Circle())
                     .frame(width: 24, height: 24)
                     .zForegroundColor(Design.Surfaces.bgSecondary)
                     .padding(.trailing, 4)
 
                 RoundedRectangle(cornerRadius: Design.Radius._sm)
                     .fill(Design.Surfaces.bgSecondary.color(colorScheme))
-                    .shimmer(true).clipShape(RoundedRectangle(cornerRadius: 6))
+                    .shimmer(true)
+                    .clipShape(RoundedRectangle(cornerRadius: 6))
                     .frame(width: 50, height: 18)
                     .padding(.trailing, 4)
             }
@@ -396,7 +398,7 @@ extension View {
 
 extension SwapAndPay.State {
     static var initial: Self {
-        .init(
+        SwapAndPay.State(
             walletBalancesState: .initial
         )
     }

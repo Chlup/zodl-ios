@@ -27,7 +27,6 @@ extension Root {
         case walletConfigLoaded(WalletConfig)
     }
 
-    // swiftlint:disable:next cyclomatic_complexity
     func debugReduce() -> Reduce<Root.State, Root.Action> {
         Reduce { state, action in
             switch action {
@@ -118,7 +117,5 @@ extension Root {
 // MARK: Placeholders
 
 extension Root.DebugState {
-    static var initial: Self {
-        .init()
-    }
+    static var initial: Root.DebugState { Root.DebugState() }
 }

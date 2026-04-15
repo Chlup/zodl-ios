@@ -18,21 +18,24 @@ struct NoChainPlaceholder: View {
     var body: some View {
         HStack(spacing: 0) {
             Circle()
-                .shimmer(isShimmerOn).clipShape(Circle())
+                .shimmer(isShimmerOn)
+                .clipShape(Circle())
                 .frame(width: 40, height: 40)
                 .zForegroundColor(Design.Surfaces.bgSecondary)
                 .padding(.trailing, 16)
             
             RoundedRectangle(cornerRadius: Design.Radius._md)
                 .fill(Design.Surfaces.bgSecondary.color(colorScheme))
-                .shimmer(isShimmerOn).clipShape(RoundedRectangle(cornerRadius: 7))
+                .shimmer(isShimmerOn)
+                .clipShape(RoundedRectangle(cornerRadius: 7))
                 .frame(width: 86, height: 14)
             
             Spacer()
             
             RoundedRectangle(cornerRadius: Design.Radius._md)
                 .fill(Design.Surfaces.bgSecondary.color(colorScheme))
-                .shimmer(isShimmerOn).clipShape(RoundedRectangle(cornerRadius: 7))
+                .shimmer(isShimmerOn)
+                .clipShape(RoundedRectangle(cornerRadius: 7))
                 .frame(width: 32, height: 14)
         }
         .screenHorizontalPadding()

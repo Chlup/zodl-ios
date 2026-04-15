@@ -79,7 +79,9 @@ struct TransactionDetailsView: View {
                         }
                     } else {
                         if store.areMessagesResolved {
-                            if !store.transaction.isTransparentRecipient && !store.transaction.isShieldingTransaction && !store.transaction.hasTransparentOutputs {
+                            if !store.transaction.isTransparentRecipient &&
+                               !store.transaction.isShieldingTransaction &&
+                               !store.transaction.hasTransparentOutputs {
                                 if store.memos.isEmpty {
                                     noMessageView()
                                         .padding(.bottom, 20)
@@ -151,16 +153,18 @@ struct TransactionDetailsView: View {
                         .padding(.bottom, 8)
                         .padding(.top, 32)
                     
-                    Text(retryFailure
-                         ? String(localizable: .swapAndPayFailureRetryTitle)
-                         : String(localizable: .swapAndPayFailureLaterTitle)
+                    Text(
+                        retryFailure
+                            ? String(localizable: .swapAndPayFailureRetryTitle)
+                            : String(localizable: .swapAndPayFailureLaterTitle)
                     )
                     .zFont(.medium, size: 14, style: Design.Text.error)
                     .padding(.bottom, 8)
                     
-                    Text(retryFailure
-                         ? String(localizable: .swapAndPayFailureRetryDesc)
-                         : String(localizable: .swapAndPayFailureLaterDesc)
+                    Text(
+                        retryFailure
+                            ? String(localizable: .swapAndPayFailureRetryDesc)
+                            : String(localizable: .swapAndPayFailureLaterDesc)
                     )
                     .zFont(size: 14, style: Design.Text.error)
                     .padding(.bottom, 24)
@@ -269,13 +273,15 @@ extension TransactionDetailsView {
     
     @ViewBuilder func shareView() -> some View {
         if let message = store.messageToBeShared {
-            UIShareDialogView(activityItems: [
-                ShareableMessage(
-                    title: String(localizable: .sendFeedbackShareTitle),
-                    message: message,
-                    desc: String(localizable: .sendFeedbackShareDesc)
-                ),
-            ]) {
+            UIShareDialogView(
+                activityItems: [
+                    ShareableMessage(
+                        title: String(localizable: .sendFeedbackShareTitle),
+                        message: message,
+                        desc: String(localizable: .sendFeedbackShareDesc)
+                    )
+                ]
+            ) {
                 store.send(.shareFinished)
             }
             // UIShareDialogView only wraps UIActivityViewController presentation
@@ -393,7 +399,7 @@ extension TransactionDetailsView {
                     .compositingGroup()
                     .overlay {
                         store.transaction.transationIcon
-                        //Asset.Assets.Icons.swapTransaction.image
+                        // Asset.Assets.Icons.swapTransaction.image
                             .zImage(size: 24, style: Design.Text.primary)
                     }
                     .offset(x: -4)
@@ -510,7 +516,8 @@ extension TransactionDetailsView {
                         } else {
                             RoundedRectangle(cornerRadius: Design.Radius._sm)
                                 .fill(Design.Surfaces.bgTertiary.color(colorScheme))
-                                .shimmer(true).clipShape(RoundedRectangle(cornerRadius: Design.Radius._sm))
+                                .shimmer(true)
+                                .clipShape(RoundedRectangle(cornerRadius: Design.Radius._sm))
                                 .frame(width: 72, height: 20)
                         }
                     }
@@ -585,7 +592,8 @@ extension TransactionDetailsView {
                                     } else {
                                         RoundedRectangle(cornerRadius: Design.Radius._sm)
                                             .fill(Design.Surfaces.bgTertiary.color(colorScheme))
-                                            .shimmer(true).clipShape(RoundedRectangle(cornerRadius: Design.Radius._sm))
+                                            .shimmer(true)
+                                            .clipShape(RoundedRectangle(cornerRadius: Design.Radius._sm))
                                             .frame(width: 86, height: 20)
                                     }
                                 }
@@ -618,8 +626,8 @@ extension TransactionDetailsView {
                     if store.isSwap {
                         detailAnyView(
                             title: store.swapStatus == .success
-                            ? String(localizable: .swapAndPayExecutedSlippage)
-                            : String(localizable: .swapAndPayMaxSlippageTitle),
+                                ? String(localizable: .swapAndPayExecutedSlippage)
+                                : String(localizable: .swapAndPayMaxSlippageTitle),
                             rowAppereance: .middle
                         ) {
                             if let slippage = store.swapSlippage {
@@ -629,7 +637,8 @@ extension TransactionDetailsView {
                             } else {
                                 RoundedRectangle(cornerRadius: Design.Radius._sm)
                                     .fill(Design.Surfaces.bgTertiary.color(colorScheme))
-                                    .shimmer(true).clipShape(RoundedRectangle(cornerRadius: Design.Radius._sm))
+                                    .shimmer(true)
+                                    .clipShape(RoundedRectangle(cornerRadius: Design.Radius._sm))
                                     .frame(width: 86, height: 20)
                             }
                         }
@@ -646,7 +655,8 @@ extension TransactionDetailsView {
                                 } else {
                                     RoundedRectangle(cornerRadius: Design.Radius._sm)
                                         .fill(Design.Surfaces.bgTertiary.color(colorScheme))
-                                        .shimmer(true).clipShape(RoundedRectangle(cornerRadius: Design.Radius._sm))
+                                        .shimmer(true)
+                                        .clipShape(RoundedRectangle(cornerRadius: Design.Radius._sm))
                                         .frame(width: 86, height: 20)
                                 }
                             }
@@ -762,12 +772,12 @@ extension TransactionDetailsView {
 
                         if index < store.messageStates.count && store.messageStates[index] != .short {
                             HStack(spacing: 6) {
-                                Text(index < store.messageStates.count && store.messageStates[index] == .longExpanded
-                                     ? String(localizable: .transactionHistoryViewMore)
-                                     : String(localizable: .transactionHistoryViewLess)
+                                Text(
+                                    index < store.messageStates.count && store.messageStates[index] == .longExpanded
+                                        ? String(localizable: .transactionHistoryViewMore)
+                                        : String(localizable: .transactionHistoryViewLess)
                                 )
                                 .zFont(.medium, size: 14, style: Design.Text.primary)
-                                
                                 
                                 if index < store.messageStates.count && store.messageStates[index] == .longExpanded {
                                     Asset.Assets.chevronUp.image

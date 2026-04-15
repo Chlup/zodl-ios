@@ -61,12 +61,14 @@ struct ExportTransactionHistoryView: View {
 private extension ExportTransactionHistoryView {
     @ViewBuilder func shareLogsView() -> some View {
         if store.exportBinding {
-            UIShareDialogView(activityItems:
-                [ShareableURL(
-                    url: store.dataURL,
-                    title: String(localizable: .taxExportTaxFile),
-                    desc: String(localizable: .taxExportShareDesc(store.accountName))
-                )]
+            UIShareDialogView(
+                activityItems: [
+                    ShareableURL(
+                        url: store.dataURL,
+                        title: String(localizable: .taxExportTaxFile),
+                        desc: String(localizable: .taxExportShareDesc(store.accountName))
+                    )
+                ]
             ) {
                 store.send(.shareFinished)
             }

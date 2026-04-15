@@ -71,9 +71,10 @@ struct TransactionRowView: View {
 
                     VStack(alignment: .leading, spacing: 0) {
                         HStack(spacing: 0) {
-                            Text(transaction.isPending
-                                 ? String(localizable: .transactionHistoryThreeDots(transaction.title()))
-                                 : transaction.title()
+                            Text(
+                                transaction.isPending
+                                    ? String(localizable: .transactionHistoryThreeDots(transaction.title()))
+                                    : transaction.title()
                             )
                             .zFont(.semiBold, size: 14, style: Design.Text.primary)
                             
@@ -164,4 +165,3 @@ struct TransactionRowView: View {
     }
     .listStyle(.plain)
 }
-

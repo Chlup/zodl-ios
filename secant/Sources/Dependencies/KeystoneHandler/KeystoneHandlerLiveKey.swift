@@ -35,7 +35,7 @@ extension KeystoneHandlerClient: DependencyKey {
     static func live() -> Self {
         let wrapper = KeystoneSDKWrapper()
 
-        return .init(
+        return KeystoneHandlerClient(
             decodeQR: { wrapper.decodeQR($0) },
             resetQRDecoder: { wrapper.resetQRDecoder() }
         )

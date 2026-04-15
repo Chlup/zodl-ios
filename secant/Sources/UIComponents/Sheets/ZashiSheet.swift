@@ -19,8 +19,10 @@ extension View {
         background(
             GeometryReader { proxy in
                 Color.clear
-                    .preference(key: SheetHeightKey.self,
-                                value: proxy.size.height)
+                    .preference(
+                        key: SheetHeightKey.self,
+                        value: proxy.size.height
+                    )
             }
         )
         .onPreferenceChange(SheetHeightKey.self, perform: onChange)
@@ -126,7 +128,7 @@ extension View {
     func zashiSheet(
         isPresented: Binding<Bool>,
         horizontalPadding: CGFloat = Design.Spacing._3xl,
-        content: @escaping () -> some View
+        content: () -> some View
     ) -> some View {
         modifier(
             ZashiSheetModifier(isPresented: isPresented, horizontalPadding: horizontalPadding, sheetContent: content())

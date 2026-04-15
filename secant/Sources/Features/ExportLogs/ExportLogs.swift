@@ -24,7 +24,5 @@ extension AlertState where Action == ExportLogs.Action {
 // MARK: Placeholders
 
 extension ExportLogs.State {
-    static var initial: Self {
-        .init()
-    }
+    static var initial: ExportLogs.State { ExportLogs.State() }
 }

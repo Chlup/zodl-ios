@@ -133,7 +133,7 @@ struct CurrencyConversionSetup {
                 return .none
                 
             case .enableTapped:
-                try? userStoredPreferences.setExchangeRate(.init(manual: true, automatic: true))
+                try? userStoredPreferences.setExchangeRate(UserPreferencesStorage.ExchangeRate(manual: true, automatic: true))
                 return .run { send in
                     do {
                         try await sdkSynchronizer.exchangeRateEnabled(true)
@@ -154,7 +154,9 @@ struct CurrencyConversionSetup {
                 return .none
                 
             case .saveChangesTapped:
-                try? userStoredPreferences.setExchangeRate(UserPreferencesStorage.ExchangeRate(manual: true, automatic: state.currentSettingsOption == .optIn))
+                try? userStoredPreferences.setExchangeRate(
+                    UserPreferencesStorage.ExchangeRate(manual: true, automatic: state.currentSettingsOption == .optIn)
+                )
                 state.activeSettingsOption = state.currentSettingsOption
                 let option = state.currentSettingsOption
                 let enabled = state.currentSettingsOption == .optIn
@@ -174,7 +176,7 @@ struct CurrencyConversionSetup {
                 }
 
             case .skipTapped:
-                try? userStoredPreferences.setExchangeRate(.init(manual: false, automatic: false))
+                try? userStoredPreferences.setExchangeRate(UserPreferencesStorage.ExchangeRate(manual: false, automatic: false))
                 return .none
                 
             case .enableTorTapped:
@@ -182,13 +184,8 @@ struct CurrencyConversionSetup {
                 try? walletStorage.importTorSetupFlag(true)
                 return .run { send in
                     await send(.saveChangesTapped)
-                    do {
-                        //try await sdkSynchronizer.torEnabled(true)
-                        try? await mainQueue.sleep(for: .seconds(0.2))
-                        await send(.delayedDismisalRequested)
-                    } catch {
-                        await send(.torInitFailed)
-                    }
+                    try? await mainQueue.sleep(for: .seconds(0.2))
+                    await send(.delayedDismisalRequested)
                 }
 
             case .delayedDismisalRequested:

@@ -162,7 +162,7 @@ final class UserMetadataStorage: Sendable {
     func resolveReadTimestamp() {
         @Dependency(\.userDefaults) var userDefaults
 
-        guard let _ = userDefaults.objectForKey(Constants.udUmRTimestamp) as? TimeInterval else {
+        guard (userDefaults.objectForKey(Constants.udUmRTimestamp) as? TimeInterval) != nil else {
             userDefaults.setValue(Date().timeIntervalSince1970, Constants.udUmRTimestamp)
             return
         }

@@ -106,8 +106,6 @@ struct AddressBook {
             : nil
         }
         
-        
-
         init() { }
     }
 
@@ -352,7 +350,7 @@ struct AddressBook {
                 if requestToSync {
                     return .run { send in
                         do {
-                            let result = try await addressBook.syncContacts(account.account, abContacts)
+                            let result = try addressBook.syncContacts(account.account, abContacts)
                             let syncedContacts = result.contacts
                             if result.remoteStoreResult == .failure {
                                 // TODO: [#1408] error handling https://github.com/Electric-Coin-Company/zashi-ios/issues/1408

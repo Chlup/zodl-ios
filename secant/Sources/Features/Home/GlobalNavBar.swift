@@ -68,21 +68,25 @@ extension HomeView {
                         .padding(.leading, 6)
                         .padding(.top, 4)
                 }
-                .padding(.leading, {
-                    if #available(iOS 26, *) {
-                        return 2
-                    } else {
-                        return 12
-                    }
-                }()
+                .padding(
+                    .leading,
+                    {
+                        if #available(iOS 26, *) {
+                            return 2
+                        } else {
+                            return 12
+                        }
+                    }()
                 )
-                .padding(.trailing, {
-                    if #available(iOS 26, *) {
-                        return 0
-                    } else {
-                        return 4
-                    }
-                }()
+                .padding(
+                    .trailing,
+                    {
+                        if #available(iOS 26, *) {
+                            return 0
+                        } else {
+                            return 4
+                        }
+                    }()
                 )
             }
         }

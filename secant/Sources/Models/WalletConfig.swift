@@ -39,8 +39,4 @@ struct WalletConfig: Equatable {
 
         return WalletConfig(flags: Dictionary(uniqueKeysWithValues: defaultSettings))
     }
-    
-    init(flags: RawFlags) {
-        self.flags = flags
-    }
 }

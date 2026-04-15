@@ -14,7 +14,6 @@ extension ScanCoordFlow {
     func coordinatorReduce() -> Reduce<ScanCoordFlow.State, ScanCoordFlow.Action> {
         Reduce { state, action in
             switch action {
-
                 // MARK: - Address Book
                 
             case let .path(.element(id: _, action: .addressBook(.editId(address, _)))):

@@ -285,7 +285,6 @@ extension SmartBannerView {
             }
             .padding(.bottom, 24)
 
-            
             ZashiToggle(
                 isOn: $store.isShieldingAcknowledged,
                 label: String(localizable: .smartBannerHelpShieldDoNotShowAgain)

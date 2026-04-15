@@ -36,7 +36,7 @@ struct SmartBanner {
             case priority9 // auto-shielding
 
             func next() -> PriorityContent {
-                PriorityContent.init(rawValue: self.rawValue - 1) ?? .priority9
+                PriorityContent(rawValue: self.rawValue - 1) ?? .priority9
             }
         }
         
@@ -384,7 +384,8 @@ struct SmartBanner {
                                     .send(.closeSheetTapped)
                                 )
                             }
-                        } else if state.transparentBalance < zcashSDKEnvironment.shieldingThreshold() && accountBalance.unshielded > zcashSDKEnvironment.shieldingThreshold() {
+                        } else if state.transparentBalance < zcashSDKEnvironment.shieldingThreshold() &&
+                                  accountBalance.unshielded > zcashSDKEnvironment.shieldingThreshold() {
                             return .merge(
                                 .send(.transparentBalanceUpdated(accountBalance.unshielded)),
                                 .send(.triggerPriority(.priority7))
@@ -421,7 +422,9 @@ struct SmartBanner {
 
                 // syncing
             case .evaluatePriority4:
-                if state.walletStatus != .restoring && state.lastKnownSyncPercentage >= 0 && state.lastKnownSyncPercentage < Constants.smartBannerSyncingThreshold {
+                if state.walletStatus != .restoring &&
+                   state.lastKnownSyncPercentage >= 0 &&
+                   state.lastKnownSyncPercentage < Constants.smartBannerSyncingThreshold {
                     return .send(.triggerPriority(.priority4))
                 }
                 return .send(.evaluatePriority5)

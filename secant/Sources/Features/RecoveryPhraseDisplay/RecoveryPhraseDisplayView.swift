@@ -26,7 +26,7 @@ struct RecoveryPhraseDisplayView: View {
     var body: some View {
         WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
-                if let _ = store.phrase?.words {
+                if store.phrase?.words != nil {
                     Text(localizable: .recoveryPhraseDisplayTitle)
 
                     Text(localizable: .recoveryPhraseDisplayDescription)

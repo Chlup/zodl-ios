@@ -25,7 +25,7 @@ struct RestoreInfo {
     var body: some Reducer<State, Action> {
         BindingReducer()
         
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
             case .binding:
                 return .none

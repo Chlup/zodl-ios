@@ -44,7 +44,6 @@ struct DerivationToolClient {
     /// Checks if given address is a valid zcash address.
     var isZcashAddress: @Sendable (String, NetworkType) -> Bool = { _, _ in false }
 
-    
     /// Derives and returns a UnifiedAddress from a UnifiedFullViewingKey
     /// - Parameter ufvk: UTF-8 encoded String to validate
     /// - Returns: true `UnifiedAddress`

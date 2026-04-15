@@ -455,7 +455,7 @@ extension TransactionState {
         timestamp: TimeInterval = 0.0,
         uuid: String = UUID().debugDescription
     ) -> TransactionState {
-        .init(
+        TransactionState(
             expiryHeight: -1,
             minedHeight: -1,
             shielded: shielded,
@@ -470,7 +470,10 @@ extension TransactionState {
     
     static let mockedSent = TransactionState(
         minedHeight: BlockHeight(1),
-        zAddress: "utest1vergg5jkp4xy8sqfasw6s5zkdpnxvfxlxh35uuc3me7dp596y2r05t6dv9htwe3pf8ksrfr8ksca2lskzjanqtl8uqp5vln3zyy246ejtx86vqftp73j7jg9099jxafyjhfm6u956j3",
+        zAddress: """
+        utest1vergg5jkp4xy8sqfasw6s5zkdpnxvfxlxh35uuc3me7dp596y2r05t6dv9htwe3pf8ksrfr8ksca2lskzjanqtl8uqp5vln3zyy246ejtx86vqftp73j7jg9099jxafyjhfm\
+        6u956j3
+        """,
         fee: Zatoshi(10_000),
         id: "t1vergg5jkp4wy8sqfasw6s5zkdpnxvfxlxh35uuc3me7dp596y2r05t6dv9htwe3pf8ksrfr8ksca2lskzja",
         status: .paid,
@@ -489,7 +492,10 @@ extension TransactionState {
     
     static let mockedFailed = TransactionState(
         minedHeight: nil,
-        zAddress: "utest1vergg5jkp4xy8sqfasw6s5zkdpnxvfxlxh35uuc3me7dp596y2r05t6dv9htwe3pf8ksrfr8ksca2lskzjanqtl8uqp5vln3zyy246ejtx86vqftp73j7jg9099jxafyjhfm6u956j3",
+        zAddress: """
+        utest1vergg5jkp4xy8sqfasw6s5zkdpnxvfxlxh35uuc3me7dp596y2r05t6dv9htwe3pf8ksrfr8ksca2lskzjanqtl8uqp5vln3zyy246ejtx86vqftp73j7jg9099jxafyjhfm6u\
+        956j3
+        """,
         fee: Zatoshi(10_000),
         id: "t1vergg5jkp4wy8sqfasw6s5zkdpnxvfxlxh35uuc3me7dp596y2r05t6dv9htwe3pf8ksrfr8ksca2lskzja",
         status: .failed,
@@ -510,7 +516,10 @@ extension TransactionState {
     
     static let mockedSending = TransactionState(
         minedHeight: nil,
-        zAddress: "utest1vergg5jkp4xy8sqfasw6s5zkdpnxvfxlxh35uuc3me7dp596y2r05t6dv9htwe3pf8ksrfr8ksca2lskzjanqtl8uqp5vln3zyy246ejtx86vqftp73j7jg9099jxafyjhfm6u956j3",
+        zAddress: """
+        utest1vergg5jkp4xy8sqfasw6s5zkdpnxvfxlxh35uuc3me7dp596y2r05t6dv9htwe3pf8ksrfr8ksca2lskzjanqtl8uqp5vln3zyy246ejtx86vqftp73j7jg9099jxafyjhfm6u\
+        956j3
+        """,
         fee: Zatoshi(10_000),
         id: "t1vergg5jkp4wy8sqfasw6s5zkdpnxvfxlxh35uuc3me7dp596y2r05t6dv9htwe3pf8ksrfr8ksca2lskzja",
         status: .sending,
@@ -531,7 +540,10 @@ extension TransactionState {
     
     static let mockedShielded = TransactionState(
         minedHeight: BlockHeight(1),
-        zAddress: "utest1vergg5jkp4xy8sqfasw6s5zkdpnxvfxlxh35uuc3me7dp596y2r05t6dv9htwe3pf8ksrfr8ksca2lskzjanqtl8uqp5vln3zyy246ejtx86vqftp73j7jg9099jxafyjhfm6u956j3",
+        zAddress: """
+        utest1vergg5jkp4xy8sqfasw6s5zkdpnxvfxlxh35uuc3me7dp596y2r05t6dv9htwe3pf8ksrfr8ksca2lskzjanqtl8uqp5vln3zyy246ejtx86vqftp73j7jg9099jxafyjhfm6u\
+        956j3
+        """,
         fee: Zatoshi(10_000),
         id: "t1vergg5jkp4wy8sqfasw6s5zkdpnxvfxlxh35uuc3me7dp596y2r05t6dv9htwe3pf8ksrfr8ksca2lskzja",
         status: .shielded,
@@ -542,7 +554,10 @@ extension TransactionState {
     
     static let mockedShieldedExpanded = TransactionState(
         minedHeight: BlockHeight(1),
-        zAddress: "utest1vergg5jkp4xy8sqfasw6s5zkdpnxvfxlxh35uuc3me7dp596y2r05t6dv9htwe3pf8ksrfr8ksca2lskzjanqtl8uqp5vln3zyy246ejtx86vqftp73j7jg9099jxafyjhfm6u956j3",
+        zAddress: """
+        utest1vergg5jkp4xy8sqfasw6s5zkdpnxvfxlxh35uuc3me7dp596y2r05t6dv9htwe3pf8ksrfr8ksca2lskzjanqtl8uqp5vln3zyy246ejtx86vqftp73j7jg9099jxafyjhfm6u9\
+        56j3
+        """,
         fee: Zatoshi(10_000),
         id: "t1vergg5jkp4wy8sqfasw6s5zkdpnxvfxlxh35uuc3me7dp596y2r05t6dv9htwe3pf8ksrfr8ksca2lskzja",
         status: .shielded,
@@ -558,18 +573,4 @@ struct TransactionStateMockHelper {
     var shielded = true
     var status: TransactionState.Status = .received
     var uuid = ""
-    
-    init(
-        date: TimeInterval,
-        amount: Zatoshi,
-        shielded: Bool = true,
-        status: TransactionState.Status = .received,
-        uuid: String = ""
-    ) {
-        self.date = date
-        self.amount = amount
-        self.shielded = shielded
-        self.status = status
-        self.uuid = uuid
-    }
 }

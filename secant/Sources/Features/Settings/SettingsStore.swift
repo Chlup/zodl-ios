@@ -154,7 +154,7 @@ struct Settings {
 
             case .fetchDataForTxid(let txId):
                 state.isInEnhanceTransactionMode = false
-                return .run { send in
+                return .run { _ in
                     try? await sdkSynchronizer.enhanceTransactionBy(txId)
                 }
             }

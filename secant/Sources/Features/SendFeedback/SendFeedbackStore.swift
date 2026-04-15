@@ -61,7 +61,10 @@ struct SendFeedback {
                     return .none
                 }
                 
-                var prefixMessage = "\(String(localizable: .sendFeedbackRatingQuestion))\n\(state.ratings[selectedRating]) \(selectedRating + 1)/\(state.ratings.count)\n\n"
+                var prefixMessage = """
+                \(String(localizable: .sendFeedbackRatingQuestion))\n\(state.ratings[selectedRating]) \
+                \(selectedRating + 1)/\(state.ratings.count)\n\n
+                """
                 prefixMessage += "\(String(localizable: .sendFeedbackHowCanWeHelp))\n\(state.memoState.text)\n\n"
                 
                 if state.canSendMail {

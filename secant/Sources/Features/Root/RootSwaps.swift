@@ -109,14 +109,14 @@ extension Root {
                 var needsUpdate = false
                 
                 // from asset
-                if let fromAsset = state.swapAssets.filter({ $0.assetId == swapDetails.fromAsset }).first {
+                if let fromAsset = state.swapAssets.first(where: { $0.assetId == swapDetails.fromAsset }) {
                     if umSwapId.fromAsset != fromAsset.id {
                         needsUpdate = true
                         umSwapId.fromAsset = fromAsset.id
                     }
                 }
                 // to asset
-                if let toAsset = state.swapAssets.filter({ $0.assetId == swapDetails.toAsset }).first {
+                if let toAsset = state.swapAssets.first(where: { $0.assetId == swapDetails.toAsset }) {
                     if umSwapId.toAsset != toAsset.id {
                         needsUpdate = true
                         umSwapId.toAsset = toAsset.id

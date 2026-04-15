@@ -99,7 +99,7 @@ struct ZecKeyboard {
                 // backspace
                 if index == 11 {
                     let newValue = String(state.input.dropLast())
-                    state.input =  newValue.isEmpty ? Constants.initialValue : newValue
+                    state.input = newValue.isEmpty ? Constants.initialValue : newValue
                 } else if index == 9 {
                     // decimal separator
                     if !state.input.contains(state.decimalSeparator) {
@@ -147,8 +147,9 @@ struct ZecKeyboard {
                         amount = Zatoshi(
                             NSDecimalNumber(
                                 decimal: inputToNumber.decimalValue * Decimal(Zatoshi.Constants.oneZecInZatoshi)
-                            ).roundedZec.int64Value)
-                        
+                            ).roundedZec.int64Value
+                        )
+
                         // valid range
                         if amount.amount < Zatoshi.Constants.maxZatoshi {
                             state.amount = amount
@@ -193,8 +194,9 @@ struct ZecKeyboard {
                         amount = Zatoshi(
                             NSDecimalNumber(
                                 decimal: number.decimalValue * Decimal(Zatoshi.Constants.oneZecInZatoshi)
-                        ).roundedZec.int64Value)
-                        
+                            ).roundedZec.int64Value
+                        )
+
                         // valid range
                         if amount.amount < Zatoshi.Constants.maxZatoshi {
                             state.amount = amount
@@ -223,13 +225,14 @@ struct ZecKeyboard {
                 // ZEC
                 if state.isInputInZec {
                     let newValue = String(state.input.dropLast())
-                    state.input =  newValue.isEmpty ? Constants.initialValue : newValue
-                    
+                    state.input = newValue.isEmpty ? Constants.initialValue : newValue
+
                     if let number = numberFormatter.number(from: state.input) {
                         let amount = Zatoshi(
                             NSDecimalNumber(
                                 decimal: number.decimalValue * Decimal(Zatoshi.Constants.oneZecInZatoshi)
-                            ).roundedZec.int64Value)
+                            ).roundedZec.int64Value
+                        )
                         state.amount = amount
                         if let currencyConversion = state.currencyConversion {
                             state.currencyValue = currencyConversion.convert(amount)
@@ -243,7 +246,7 @@ struct ZecKeyboard {
                     }
 
                     let newValue = String(state.input.dropLast())
-                    state.input =  newValue.isEmpty ? Constants.initialValue : newValue
+                    state.input = newValue.isEmpty ? Constants.initialValue : newValue
                     if let number = numberFormatter.number(from: state.input) {
                         if let currencyValue = Double(exactly: number) {
                             state.currencyValue = currencyValue

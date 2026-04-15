@@ -21,22 +21,24 @@ extension TaxExporterClient: DependencyKey {
                 let prevYear = thisYear - 1
 
                 // export previous year
-                let transactionsToExport = $0.compactMap { transaction -> TransactionState? in
-                    guard let timestamp = transaction.timestamp else {
-                        return nil
+                let transactionsToExport = $0
+                    .compactMap { transaction -> TransactionState? in
+                        guard let timestamp = transaction.timestamp else {
+                            return nil
+                        }
+
+                        let date = Date(timeIntervalSince1970: timestamp)
+
+                        let year = calendar.component(.year, from: date)
+                        return year == prevYear ? transaction : nil
                     }
+                    .sorted { lhs, rhs in
+                        guard let lhsTimeStamp = lhs.timestamp, let rhsTimeStamp = rhs.timestamp else {
+                            return false
+                        }
 
-                    let date = Date(timeIntervalSince1970: timestamp)
-
-                    let year = calendar.component(.year, from: date)
-                    return year == prevYear ? transaction : nil
-                }.sorted { lhs, rhs in
-                    guard let lhsTimeStamp = lhs.timestamp, let rhsTimeStamp = rhs.timestamp else {
-                        return false
+                        return lhsTimeStamp < rhsTimeStamp
                     }
-
-                    return lhsTimeStamp < rhsTimeStamp
-                }
 
                 var csvString = "Date,Received Quantity,Received Currency,Sent Quantity,Sent Currency,Fee Amount,Fee Currency,Tag\n"
 

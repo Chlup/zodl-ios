@@ -33,9 +33,10 @@ struct PrivacyBadge: View {
                     .padding(.trailing, 4)
             }
             
-            Text(privacy == .max
-                 ? String(localizable: .componentMaxPrivacy)
-                 : String(localizable: .componentLowPrivacy)
+            Text(
+                privacy == .max
+                    ? String(localizable: .componentMaxPrivacy)
+                    : String(localizable: .componentLowPrivacy)
             )
             .zFont(
                 .medium,
@@ -49,13 +50,15 @@ struct PrivacyBadge: View {
         .padding(.horizontal, 10)
         .background {
             RoundedRectangle(cornerRadius: Design.Radius._2xl)
-                .fill(privacy == .max
-                      ? Design.Utility.Purple._50.color(colorScheme)
-                      : Design.Utility.WarningYellow._50.color(colorScheme)
+                .fill(
+                    privacy == .max
+                        ? Design.Utility.Purple._50.color(colorScheme)
+                        : Design.Utility.WarningYellow._50.color(colorScheme)
                 )
                 .background {
                     RoundedRectangle(cornerRadius: Design.Radius._2xl)
-                        .stroke(privacy == .max
+                        .stroke(
+                            privacy == .max
                                 ? Design.Utility.Purple._200.color(colorScheme)
                                 : Design.Utility.WarningYellow._200.color(colorScheme)
                         )

@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct ZashiSyncingProgressStyle: ProgressViewStyle {
-    init() {}
-    
     func makeBody(configuration: Configuration) -> some View {
         let fractionCompleted = CGFloat(configuration.fractionCompleted ?? 0)
 

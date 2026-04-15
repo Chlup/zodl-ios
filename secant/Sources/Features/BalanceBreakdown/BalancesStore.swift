@@ -175,15 +175,23 @@ struct Balances {
                     (accountBalance?.orchardBalance.changePendingConfirmation ?? .zero)
                 state.pendingTransactions = (accountBalance?.saplingBalance.valuePendingSpendability ?? .zero) +
                     (accountBalance?.orchardBalance.valuePendingSpendability ?? .zero)
-                state.shieldedBalance = (accountBalance?.saplingBalance.spendableValue ?? .zero) + (accountBalance?.orchardBalance.spendableValue ?? .zero)
+                state.shieldedBalance =
+                    (accountBalance?.saplingBalance.spendableValue ?? .zero) + (accountBalance?.orchardBalance.spendableValue ?? .zero)
                 state.transparentBalance = accountBalance?.unshielded ?? .zero
 
-                state.shieldedWithPendingBalance = (accountBalance?.saplingBalance.total() ?? .zero) + (accountBalance?.orchardBalance.total() ?? .zero)
+                state.shieldedWithPendingBalance =
+                    (accountBalance?.saplingBalance.total() ?? .zero) + (accountBalance?.orchardBalance.total() ?? .zero)
                 state.totalBalance = state.shieldedWithPendingBalance + state.transparentBalance + (accountBalance?.awaitingResolution ?? .zero)
 
-                let everythingCondition = state.shieldedBalance.amount > 0 && ((state.shieldedBalance == state.totalBalance)
-                || (state.transparentBalance < zcashSDKEnvironment.shieldingThreshold() && state.shieldedBalance == state.totalBalance - state.transparentBalance))
-                || state.totalBalance == .zero
+                let everythingCondition = state.shieldedBalance.amount > 0 &&
+                (
+                    (state.shieldedBalance == state.totalBalance) ||
+                    (
+                        state.transparentBalance < zcashSDKEnvironment.shieldingThreshold() &&
+                        state.shieldedBalance == state.totalBalance - state.transparentBalance
+                    )
+                ) ||
+                state.totalBalance == .zero
                 
                 // spendability
                 if state.isProcessingZeroAvailableBalance {

@@ -194,7 +194,7 @@ extension SDKSynchronizerClient: DependencyKey {
             refreshExchangeRateUSD: {
                 synchronizer.refreshExchangeRateUSD()
             },
-            evaluateBestOf: { endpoints, latencyThreshold, fetchThreshold, nBlocks, kServers, network in
+            evaluateBestOf: { endpoints, _, fetchThreshold, nBlocks, kServers, network in
                 await synchronizer.evaluateBestOf(
                     endpoints: endpoints,
                     fetchThresholdSeconds: fetchThreshold,
@@ -356,7 +356,7 @@ extension SDKSynchronizerClient {
                 }
             }
 
-            var transaction = TransactionState.init(
+            var transaction = TransactionState(
                 transaction: clearedTransaction,
                 memos: nil,
                 hasTransparentOutputs: hasTransparentOutputs
@@ -373,8 +373,7 @@ extension SDKSynchronizerClient {
             
             transaction.rawID = clearedTransaction.rawID
             transaction.zAddress = addresses.first?.stringEncoded
-            if let someAddress = addresses.first,
-               case .transparent = someAddress {
+            if let someAddress = addresses.first, case .transparent = someAddress {
                 transaction.isTransparentRecipient = true
             }
             

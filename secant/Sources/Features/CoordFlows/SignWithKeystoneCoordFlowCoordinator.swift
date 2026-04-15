@@ -11,7 +11,6 @@ extension SignWithKeystoneCoordFlow {
     func coordinatorReduce() -> Reduce<SignWithKeystoneCoordFlow.State, SignWithKeystoneCoordFlow.Action> {
         Reduce { state, action in
             switch action {
-                
                 // MARK: - Scan
                 
             case .path(.element(id: _, action: .scan(.foundPCZT(let pcztWithSigs)))):
@@ -34,10 +33,8 @@ extension SignWithKeystoneCoordFlow {
                 switch result {
                 case .failure:
                     state.path.append(.sendResultFailure(state.sendConfirmationState))
-                    break
                 case .pending:
                     state.path.append(.sendResultPending(state.sendConfirmationState))
-                    break
                 case .success:
                     if state.sendConfirmationState.isShielding {
                         walletStorage.resetShieldingReminder(WalletAccount.Vendor.keystone.name())

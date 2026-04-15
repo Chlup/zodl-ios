@@ -151,7 +151,7 @@ struct TorSetup {
                 state.activeSettingsOption = state.currentSettingsOption
                 let currentSettingsOption = state.currentSettingsOption
                 if state.currentSettingsOption == .optOut {
-                    try? userStoredPreferences.setExchangeRate(.init(manual: false, automatic: false))
+                    try? userStoredPreferences.setExchangeRate(UserPreferencesStorage.ExchangeRate(manual: false, automatic: false))
                 }
                 return .run { send in
                     await send(.settingsOptionChanged(currentSettingsOption))

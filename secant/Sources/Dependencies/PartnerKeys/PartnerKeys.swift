@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PartnerKeys {
+enum PartnerKeys {
     private enum Constants {
         static let cbProjectId = "cbProjectId"
         static let flexaPublishableKey = "flexaPublishableKey"

@@ -16,12 +16,6 @@ struct AddressBookContacts: Equatable, Codable {
     let lastUpdated: Date
     let version: Int
     var contacts: IdentifiedArrayOf<Contact>
-    
-    init(lastUpdated: Date, version: Int, contacts: IdentifiedArrayOf<Contact>) {
-        self.lastUpdated = lastUpdated
-        self.version = version
-        self.contacts = contacts
-    }
 }
 
 extension AddressBookContacts {

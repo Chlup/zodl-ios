@@ -47,7 +47,7 @@ struct TransactionsCoordFlow {
             TransactionsManager()
         }
         
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
             default: return .none
             }

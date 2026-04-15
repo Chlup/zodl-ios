@@ -102,9 +102,7 @@ struct AddressBookView: View {
                             .renderingMode(.template)
                             .resizable()
                             .frame(width: 20, height: 20)
-                ) {
-                    
-                }
+                ) { }
                 .screenHorizontalPadding()
                 .padding(.bottom, 24)
                 .padding(.top, 8)

@@ -54,7 +54,7 @@ struct BalancesView: View {
                 
                 balancesBlock()
                     .padding(.top, 32)
-                    .padding(.bottom, store.isShieldableBalanceAvailable ? 0: 32)
+                    .padding(.bottom, store.isShieldableBalanceAvailable ? 0 : 32)
                 
                 if store.isShieldableBalanceAvailable {
                     transparentBlock()

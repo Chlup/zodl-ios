@@ -53,7 +53,10 @@ extension AddressBookClient: DependencyKey {
     static func filenameForEncryptedFile(account: Account) throws -> String {
         @Dependency(\.walletStorage) var walletStorage
 
-        guard let encryptionKeys = try? walletStorage.exportAddressBookEncryptionKeys(), let addressBookKey = encryptionKeys.getCached(account: account) else {
+        guard
+            let encryptionKeys = try? walletStorage.exportAddressBookEncryptionKeys(),
+            let addressBookKey = encryptionKeys.getCached(account: account)
+        else {
             throw AddressBookClientError.missingEncryptionKey
         }
 

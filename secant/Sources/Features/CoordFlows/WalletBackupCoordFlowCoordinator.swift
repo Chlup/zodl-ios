@@ -11,7 +11,6 @@ extension WalletBackupCoordFlow {
     func coordinatorReduce() -> Reduce<WalletBackupCoordFlow.State, WalletBackupCoordFlow.Action> {
         Reduce { state, action in
             switch action {
-
                 // MARK: - Self
 
             case .recoveryPhraseDisplay(.securityWarningNextTapped):

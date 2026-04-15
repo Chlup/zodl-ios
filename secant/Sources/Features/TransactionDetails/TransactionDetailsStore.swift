@@ -118,7 +118,7 @@ struct TransactionDetails {
         
         var footerState: FooterState {
             // Highest priority is a provider failed, no other footer is allowed to appear
-            if let _ = swapAssetFailedWithRetry, transaction.isNonZcashActivity {
+            if swapAssetFailedWithRetry != nil, transaction.isNonZcashActivity {
                 return .providerFailure
             }
 
@@ -340,7 +340,7 @@ struct TransactionDetails {
                 return .send(.checkSwapStatus)
                 
             case .checkSwapStatus:
-                //return .none
+                // return .none
                 guard state.isSwap else {
                     return .none
                 }
@@ -486,14 +486,14 @@ struct TransactionDetails {
                 var needsUpdate = false
                 
                 // from asset
-                if let fromAsset = state.swapAssets.filter({ $0.assetId == swapDetails.fromAsset }).first {
+                if let fromAsset = state.swapAssets.first(where: { $0.assetId == swapDetails.fromAsset }) {
                     if umSwapId.fromAsset != fromAsset.id {
                         needsUpdate = true
                         state.umSwapId?.fromAsset = fromAsset.id
                     }
                 }
                 // to asset
-                if let toAsset = state.swapAssets.filter({ $0.assetId == swapDetails.toAsset }).first {
+                if let toAsset = state.swapAssets.first(where: { $0.assetId == swapDetails.toAsset }) {
                     if umSwapId.toAsset != toAsset.id {
                         needsUpdate = true
                         state.umSwapId?.toAsset = toAsset.id
@@ -714,7 +714,7 @@ extension TransactionDetails.State {
         }
         
         let asset = swapAssets.first { $0.assetId == toAssetId }
-        return asset?.token ?? nil
+        return asset?.token
     }
     
     var swapToZecFeeInProgress: Bool {

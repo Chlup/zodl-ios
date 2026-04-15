@@ -79,7 +79,7 @@ enum QRCodeGenerator {
                 baseImage,
                 context: context,
                 maxPrivacy: maxPrivacy,
-                vendor : vendor,
+                vendor: vendor,
                 export: false,
                 overlayedWithZcashLogo: overlayedWithZcashLogo
             )
@@ -111,7 +111,10 @@ enum QRCodeGenerator {
         let size = baseImage.extent.width * ratio
         let halfSize = size * 0.5
         let iconRect = CGRect(x: baseImage.extent.width * 0.5 - halfSize, y: baseImage.extent.height * 0.5 - halfSize, width: size, height: size)
-        let scaleTransform = CGAffineTransform(scaleX: iconRect.size.width / iconCIImage.extent.width, y: iconRect.size.height / iconCIImage.extent.height)
+        let scaleTransform = CGAffineTransform(
+            scaleX: iconRect.size.width / iconCIImage.extent.width,
+            y: iconRect.size.height / iconCIImage.extent.height
+        )
         let translationTransform = CGAffineTransform(translationX: iconRect.origin.x, y: iconRect.origin.y)
         let transformedIconCIImage = iconCIImage.transformed(by: scaleTransform.concatenating(translationTransform))
         
@@ -143,8 +146,7 @@ extension CIImage {
         return blackTransparentFilter.outputImage
     }
 
-    func tinted(using color: UIColor) -> CIImage?
-    {
+    func tinted(using color: UIColor) -> CIImage? {
         guard
             let transparentQRImage = transparent,
             let filter = CIFilter(name: "CIMultiplyCompositing"),
@@ -157,6 +159,7 @@ extension CIImage {
         filter.setValue(colorImage, forKey: kCIInputImageKey)
         filter.setValue(transparentQRImage, forKey: kCIInputBackgroundImageKey)
 
+        // swiftlint:disable:next force_unwrapping
         return filter.outputImage!
     }
 }

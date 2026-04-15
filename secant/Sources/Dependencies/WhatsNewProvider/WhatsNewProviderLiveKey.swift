@@ -46,7 +46,8 @@ extension WhatsNewProviderClient: DependencyKey {
         // check the file if this localization exists
         if let potentialCountryCode, WhatsNewProviderClient.checkCountryCodeEligibility(potentialCountryCode) {
             let localizedWhatsNewFileName = "\(fileName)_\(potentialCountryCode)"
-            if let whatsNewFile = Bundle.main.url(forResource: localizedWhatsNewFileName, withExtension: ".json"), FileManager.default.fileExists(atPath: whatsNewFile.path) {
+            if  let whatsNewFile = Bundle.main.url(forResource: localizedWhatsNewFileName, withExtension: ".json"),
+                FileManager.default.fileExists(atPath: whatsNewFile.path) {
                 fileName = localizedWhatsNewFileName
             }
         }
@@ -65,6 +66,5 @@ extension WhatsNewProviderClient: DependencyKey {
         } catch {
             return .zero
         }
-
     }
 }

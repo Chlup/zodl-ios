@@ -42,7 +42,7 @@ struct AdvancedSettings {
     init() { }
 
     var body: some Reducer<State, Action> {
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
             case .operationAccessCheck(let operation):
                 switch operation {

@@ -121,7 +121,9 @@ struct ZcashSDKEnvironment {
     var network: @Sendable () -> ZcashNetwork = { ZcashNetworkBuilder.network(for: .testnet) }
     var requiredTransactionConfirmations: @Sendable () -> Int = { 0 }
     var sdkVersion: @Sendable () -> String = { "" }
-    var serverConfig: @Sendable () -> UserPreferencesStorage.ServerConfig = { UserPreferencesStorage.ServerConfig(host: "", port: 0, isCustom: false) }
+    var serverConfig: @Sendable () -> UserPreferencesStorage.ServerConfig = {
+        UserPreferencesStorage.ServerConfig(host: "", port: 0, isCustom: false)
+    }
     var servers: @Sendable () -> [Server] = { [] }
     var shieldingThreshold: @Sendable () -> Zatoshi = { Zatoshi(0) }
     var tokenName: @Sendable () -> String = { "" }

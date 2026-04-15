@@ -144,19 +144,20 @@ struct SendFeedbackView: View {
         .applyScreenBackground()
         .screenTitle(String(localizable: .sendFeedbackScreenTitle).uppercased())
     }
-    
 }
 
 extension SendFeedbackView {
     @ViewBuilder func shareView() -> some View {
         if let message = store.messageToBeShared {
-            UIShareDialogView(activityItems: [
-                ShareableMessage(
-                    title: String(localizable: .sendFeedbackShareTitle),
-                    message: message,
-                    desc: String(localizable: .sendFeedbackShareDesc)
-                ),
-            ]) {
+            UIShareDialogView(
+                activityItems: [
+                    ShareableMessage(
+                        title: String(localizable: .sendFeedbackShareTitle),
+                        message: message,
+                        desc: String(localizable: .sendFeedbackShareDesc)
+                    )
+                ]
+            ) {
                 store.send(.shareFinished)
             }
             // UIShareDialogView only wraps UIActivityViewController presentation

@@ -56,7 +56,6 @@ struct AddKeystoneHWWallet {
             case 1: return Asset.Assets.Illustrations.success1.image
             default: return Asset.Assets.Illustrations.success2.image
             }
-            
         }
         
         init() { }
@@ -184,7 +183,7 @@ extension AddKeystoneHWWallet {
         guard hex.count % 2 == 0 else { return nil }
 
         // Map pairs of hex characters to UInt8
-        var byteArray = [UInt8]()
+        var byteArray: [UInt8] = Array()
         var index = hex.startIndex
         while index < hex.endIndex {
             let nextIndex = hex.index(index, offsetBy: 2)

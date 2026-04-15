@@ -34,7 +34,7 @@ extension Root {
                     state.signWithKeystoneCoordFlowState = .initial
                     state.signWithKeystoneCoordFlowState.sendConfirmationState.proposal = proposal
                     state.signWithKeystoneCoordFlowState.sendConfirmationState.isShielding = true
-                    //state.homeState.balancesBinding = false
+                    // state.homeState.balancesBinding = false
                     return .run { send in
                         try? await mainQueue.sleep(for: .seconds(0.8))
                         await send(.signWithKeystoneRequested)

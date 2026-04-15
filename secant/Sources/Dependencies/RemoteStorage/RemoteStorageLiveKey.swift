@@ -57,7 +57,8 @@ extension RemoteStorageClient: DependencyKey {
     }
     
     private static func path(_ fileManager: FileManager, filename: String) -> URL? {
-        fileManager.url(
-            forUbiquityContainerIdentifier: Constants.ubiquityContainerIdentifier)?.appendingPathComponent("Documents").appendingPathComponent(filename)
+        fileManager.url(forUbiquityContainerIdentifier: Constants.ubiquityContainerIdentifier)?
+            .appendingPathComponent("Documents")
+            .appendingPathComponent(filename)
     }
 }

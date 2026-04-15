@@ -6,7 +6,7 @@ extension Binding {
     func isPresent<Wrapped>() -> Binding<Bool>
     where Value == Wrapped? {
         nonisolated(unsafe) let selfRef = self
-        return .init(
+        return Binding<Bool>(
             get: { selfRef.wrappedValue != nil },
             set: { isPresented in
                 if !isPresented {
@@ -60,7 +60,7 @@ extension Binding {
     func didSet(_ callback: @escaping (Value) -> Void) -> Self {
         nonisolated(unsafe) let selfRef = self
         nonisolated(unsafe) let callback = callback
-        return .init(
+        return Self(
             get: { selfRef.wrappedValue },
             set: {
                 selfRef.wrappedValue = $0

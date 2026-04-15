@@ -10,14 +10,13 @@ import ComposableArchitecture
 @preconcurrency import ZcashLightClientKit
 
 extension SwapAndPayCoordFlow {
-    func coordinatorReduce() -> Reduce< SwapAndPayCoordFlow.State,  SwapAndPayCoordFlow.Action> {
+    func coordinatorReduce() -> Reduce<SwapAndPayCoordFlow.State, SwapAndPayCoordFlow.Action> {
         Reduce { state, action in
             switch action {
-
                 // MARK: - Address Book
 
             case let .path(.element(id: _, action: .addressBook(.editId(_, id)))):
-                let _ = state.path.popLast()
+                _ = state.path.popLast()
                 audioServices.systemSoundVibrate()
                 return .send(.swapAndPay(.addressBookContactSelected(id)))
 
@@ -39,11 +38,11 @@ extension SwapAndPayCoordFlow {
             case .path(.element(id: _, action: .addressBookContact(.dismissAddContactRequired))):
                 for element in state.path {
                     if element.is(\.scan) {
-                        let _ = state.path.popLast()
+                        _ = state.path.popLast()
                         break
                     }
                 }
-                let _ = state.path.popLast()
+                _ = state.path.popLast()
                 if state.path.ids.isEmpty {
                     return .send(.swapAndPay(.checkSelectedContact))
                 } else if let last = state.path.ids.last {
@@ -58,13 +57,13 @@ extension SwapAndPayCoordFlow {
                 return .none
                 
             case .path(.element(id: _, action: .crossPayConfirmation(.backFromConfirmationTapped))):
-                let _ = state.path.popLast()
+                _ = state.path.popLast()
                 return .send(.swapAndPay(.backFromConfirmationTapped))
 
                 // MARK: - Keystone
                 
             case .swapAndPay(.confirmWithKeystoneTapped),
-                    .path(.element(id: _, action: .crossPayConfirmation(.confirmWithKeystoneTapped))):
+                 .path(.element(id: _, action: .crossPayConfirmation(.confirmWithKeystoneTapped))):
                 var sendConfirmationState = SendConfirmation.State.initial
                 sendConfirmationState.proposal = state.swapAndPayState.proposal
                 sendConfirmationState.type = state.swapAndPayState.isSwapExperienceEnabled ? .swap : .pay
@@ -161,7 +160,7 @@ extension SwapAndPayCoordFlow {
             case .path(.element(id: _, action: .scan(.foundString(let address)))):
                 // handle direct scan from the form
                 if state.path.count == 1 {
-                    let _ = state.path.removeLast()
+                    _ = state.path.removeLast()
                     audioServices.systemSoundVibrate()
                     state.swapAndPayState.address = address
                 } else {
@@ -176,7 +175,7 @@ extension SwapAndPayCoordFlow {
                 return .none
 
             case .path(.element(id: _, action: .scan(.cancelTapped))):
-                let _ = state.path.popLast()
+                _ = state.path.popLast()
                 return .none
                 
                 // MARK: - Send Confirmation
@@ -186,8 +185,8 @@ extension SwapAndPayCoordFlow {
                 return .none
 
             case .path(.element(id: _, action: .sendResultSuccess(.checkStatusTapped))),
-                    .path(.element(id: _, action: .sendResultFailure(.checkStatusTapped))),
-                    .path(.element(id: _, action: .sendResultPending(.checkStatusTapped))):
+                 .path(.element(id: _, action: .sendResultFailure(.checkStatusTapped))),
+                 .path(.element(id: _, action: .sendResultPending(.checkStatusTapped))):
                 if let txid = state.txIdToExpand {
                     if let index = state.transactions.index(id: txid) {
                         var transactionDetailsState = TransactionDetails.State.initial
@@ -230,7 +229,7 @@ extension SwapAndPayCoordFlow {
                 return .none
 
             case .swapAndPay(.addressBookTapped),
-                    .path(.element(id: _, action: .swapAndPayForm(.addressBookTapped))):
+                 .path(.element(id: _, action: .swapAndPayForm(.addressBookTapped))):
                 var addressBookState = AddressBook.State.initial
                 addressBookState.context = .swap
                 addressBookState.isInSelectMode = true
@@ -238,7 +237,7 @@ extension SwapAndPayCoordFlow {
                 return .none
 
             case .swapAndPay(.notInAddressBookButtonTapped(let address)),
-                    .path(.element(id: _, action: .swapAndPayForm(.notInAddressBookButtonTapped(let address)))):
+                 .path(.element(id: _, action: .swapAndPayForm(.notInAddressBookButtonTapped(let address)))):
                 var addressBookState = AddressBook.State.initial
                 addressBookState.context = .swap
                 addressBookState.address = address
@@ -250,7 +249,7 @@ extension SwapAndPayCoordFlow {
                 return .send(.swapAndPay(.backButtonTapped(state.isSwapInFlight)))
                 
             case .swapAndPay(.scanTapped),
-                    .path(.element(id: _, action: .swapAndPayForm(.scanTapped))):
+                 .path(.element(id: _, action: .swapAndPayForm(.scanTapped))):
                 var scanState = Scan.State.initial
                 scanState.checkers = [.swapStringScanChecker]
                 state.path.append(.scan(scanState))
@@ -261,8 +260,8 @@ extension SwapAndPayCoordFlow {
                 return .none
 
             case .swapAndPay(.confirmButtonTapped),
-                    .path(.element(id: _, action: .crossPayConfirmation(.confirmButtonTapped))),
-                    .path(.element(id: _, action: .swapAndPayForm(.confirmButtonTapped))):
+                 .path(.element(id: _, action: .crossPayConfirmation(.confirmButtonTapped))),
+                 .path(.element(id: _, action: .swapAndPayForm(.confirmButtonTapped))):
                 return .run { send in
                     guard await localAuthentication.authenticate() else {
                         await send(.stopSending)
@@ -326,7 +325,12 @@ extension SwapAndPayCoordFlow {
                             await send(.updateFailedData(code, description, ""))
                             await send(.updateTxIdToExpand(txIds.last))
                             let isTxIdPresentInTheDB = try await sdkSynchronizer.txIdExists(txIds.last)
-                            await send(.sendFailed("sdkSynchronizer.createProposedTransactions-failure \(code) \(description)".toZcashError(), isTxIdPresentInTheDB))
+                            await send(
+                                .sendFailed(
+                                    "sdkSynchronizer.createProposedTransactions-failure \(code) \(description)".toZcashError(),
+                                    isTxIdPresentInTheDB
+                                )
+                            )
                         case let .partial(txIds: txIds, _):
                             await send(.updateTxIdToExpand(txIds.last))
                         case .success(let txIds):
@@ -392,7 +396,7 @@ extension SwapAndPayCoordFlow {
                 return .send(.swapAndPay(.refreshSwapAssets))
 
             case .path(.element(id: _, action: .swapAndPayOptInForced(.goBackForcedOptInTapped))):
-                let _ = state.path.popLast()
+                _ = state.path.popLast()
                 return .none
 
             case .path(.element(id: _, action: .swapAndPayForm(.internalBackButtonTapped))):
@@ -404,7 +408,7 @@ extension SwapAndPayCoordFlow {
                 return .send(.storeLastUsedAsset)
 
             case .path(.element(id: _, action: .swapToZecSummary(.customBackRequired))):
-                let _ = state.path.popLast()
+                _ = state.path.popLast()
                 return .send(.storeLastUsedAsset)
 
             default: return .none

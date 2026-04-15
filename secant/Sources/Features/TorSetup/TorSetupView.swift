@@ -232,7 +232,7 @@ extension TorSetupView {
 
 extension TorSetup {
     @MainActor static let initial = StoreOf<TorSetup>(
-        initialState: .init(isSettingsView: false)
+        initialState: TorSetup.State(isSettingsView: false)
     ) {
         TorSetup()
     }

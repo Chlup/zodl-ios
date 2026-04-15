@@ -72,13 +72,17 @@ extension TransactionsManagerView {
             VStack(alignment: .leading, spacing: 8) {
                 HStack(spacing: 8) {
                     FilterView(title: String(localizable: .filterSent), active: store.isSentFilterActive) { store.send(.toggleFilter(.sent)) }
-                    FilterView(title: String(localizable: .filterReceived), active: store.isReceivedFilterActive) { store.send(.toggleFilter(.received)) }
+                    FilterView(
+                        title: String(localizable: .filterReceived), active: store.isReceivedFilterActive
+                    ) { store.send(.toggleFilter(.received)) }
                     FilterView(title: String(localizable: .filterMemos), active: store.isMemosFilterActive) { store.send(.toggleFilter(.memos)) }
                 }
                 
                 HStack(spacing: 8) {
                     FilterView(title: String(localizable: .filterNotes), active: store.isNotesFilterActive) { store.send(.toggleFilter(.notes)) }
-                    FilterView(title: String(localizable: .filterBookmarked), active: store.isBookmarkedFilterActive) { store.send(.toggleFilter(.bookmarked)) }
+                    FilterView(
+                        title: String(localizable: .filterBookmarked), active: store.isBookmarkedFilterActive
+                    ) { store.send(.toggleFilter(.bookmarked)) }
                     FilterView(title: String(localizable: .filterSwap), active: store.isSwapFilterActive) { store.send(.toggleFilter(.swap)) }
                 }
             }

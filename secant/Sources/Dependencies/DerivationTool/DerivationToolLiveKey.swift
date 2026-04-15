@@ -25,8 +25,7 @@ extension DerivationToolClient: DependencyKey {
                         return false
                     } else if case .tex = try Recipient(address, network: networkType) {
                         return false
-                    }
-                    else {
+                    } else {
                         return true
                     }
                 } catch {

@@ -24,8 +24,6 @@ struct RequestZecCoordFlow {
         var requestZecState = RequestZec.State.initial
         @Shared(.inMemory(.selectedWalletAccount)) var selectedWalletAccount: WalletAccount? = nil
         var zecKeyboardState = ZecKeyboard.State.initial
-
-        init() { }
     }
 
     enum Action {
@@ -42,7 +40,7 @@ struct RequestZecCoordFlow {
             ZecKeyboard()
         }
 
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
             default: return .none
             }

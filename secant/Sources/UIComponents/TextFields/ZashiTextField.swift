@@ -7,7 +7,11 @@
 
 import SwiftUI
 
-struct ZashiTextField<PrefixContent, InputReplacementContent, AccessoryContent>: View where PrefixContent: View, InputReplacementContent: View, AccessoryContent: View {
+struct ZashiTextField<
+    PrefixContent,
+    InputReplacementContent,
+    AccessoryContent
+>: View where PrefixContent: View, InputReplacementContent: View, AccessoryContent: View {
     @Environment(\.colorScheme) private var colorScheme
 
     let addressFont: Bool
@@ -73,11 +77,13 @@ struct ZashiTextField<PrefixContent, InputReplacementContent, AccessoryContent>:
                     )
                     .autocapitalization(.none)
                     .autocorrectionDisabled()
-                    .font(.custom(
-                        addressFont
-                        ? FontFamily.RobotoMono.regular.name
-                        : FontFamily.Inter.regular.name,
-                        size: 14)
+                    .font(
+                        .custom(
+                            addressFont
+                                ? FontFamily.RobotoMono.regular.name
+                                : FontFamily.Inter.regular.name,
+                            size: 14
+                        )
                     )
                     .lineLimit(1)
                     .truncationMode(.middle)

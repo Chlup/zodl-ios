@@ -64,7 +64,9 @@ struct WalletBirthdayEstimatedHeightView: View {
                     .padding(.bottom, 12)
                 }
 
-                ZashiButton(store.isKeystoneFlow ? String(localizable: .keystoneAddHWWalletConnect) : String(localizable: .importWalletButtonRestoreWallet)) {
+                ZashiButton(
+                    store.isKeystoneFlow ? String(localizable: .keystoneAddHWWalletConnect) : String(localizable: .importWalletButtonRestoreWallet)
+                ) {
                     store.send(.restoreTapped)
                 }
                 .padding(.bottom, 24)

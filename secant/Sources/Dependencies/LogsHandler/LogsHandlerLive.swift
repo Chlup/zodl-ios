@@ -79,8 +79,8 @@ private extension LogsHandlerClient {
         key: String,
         atURL: URL,
         level: OSLogEntryLog.Level = .debug
-    ) async throws -> (result: String, dir: URL) {
-        let logsStr = try await LogStore.exportCategory(
+    ) throws -> (result: String, dir: URL) {
+        let logsStr = try LogStore.exportCategory(
             key,
             level: level,
             fileSize: 2_000_000 // ~ 2MB of data

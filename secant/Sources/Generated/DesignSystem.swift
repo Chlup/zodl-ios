@@ -13,7 +13,7 @@ public protocol Colorable {
 }
 
 public enum Design: Colorable {
-    
+
     case screenBackground
     
     // MARK: Color Variables

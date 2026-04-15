@@ -86,7 +86,6 @@ struct Scan {
     
     init() { }
 
-    // swiftlint:disable:next cyclomatic_complexity
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
@@ -156,7 +155,7 @@ struct Scan {
                 let partInt = part ?? -1
                 if partInt != -1 && partInt != state.reportedPart {
                     state.reportedPart = partInt
-                    state.reportedParts = state.reportedParts + 1
+                    state.reportedParts += 1
                 }
                 state.expectedParts = Int(Float(expectedParts ?? 0) * 1.75)
                 state.progress = progress

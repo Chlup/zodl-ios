@@ -290,7 +290,7 @@ extension TransactionsManager {
         let normalizedText = text.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: .current)
         let normalizedSearchTerm = searchTerm.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: .current)
         
-        return normalizedText.range(of: normalizedSearchTerm) != nil
+        return normalizedText.contains(normalizedSearchTerm)
     }
     
     func checkSearchTerm(_ searchTerm: String, transaction: TransactionState, addressBookContacts: AddressBookContacts) -> Bool {
@@ -317,7 +317,7 @@ extension TransactionsManager {
         
         if let regex = try? NSRegularExpression(pattern: pattern),
            let match = regex.firstMatch(in: searchTerm, range: NSRange(searchTerm.startIndex..., in: searchTerm)) {
-            
+
             if let operatorRange = Range(match.range(at: 1), in: searchTerm),
                let numberRange = Range(match.range(at: 2), in: searchTerm),
                let threshold = numberFormatter.number(String(searchTerm[numberRange])) {
@@ -345,7 +345,6 @@ extension TransactionsManager {
 
         return false
     }
-    
 }
 
 extension TransactionsManager.Filter {

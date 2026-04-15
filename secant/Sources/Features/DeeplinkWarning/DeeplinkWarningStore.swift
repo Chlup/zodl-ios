@@ -10,9 +10,7 @@ import ComposableArchitecture
 @Reducer
 struct DeeplinkWarning {
     @ObservableState
-    struct State: Equatable {
-        init() { }
-    }
+    struct State: Equatable { }
 
     enum Action: Equatable {
         case rescanInZashi
@@ -21,7 +19,7 @@ struct DeeplinkWarning {
     init() { }
 
     var body: some Reducer<State, Action> {
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
             case .rescanInZashi:
                 return .none

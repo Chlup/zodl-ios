@@ -34,12 +34,6 @@ struct UserMetadata: Codable {
     let version: Int
     let lastUpdated: Int64
     let accountMetadata: UMAccount
-    
-    init(version: Int, lastUpdated: Int64, accountMetadata: UMAccount) {
-        self.version = version
-        self.lastUpdated = lastUpdated
-        self.accountMetadata = accountMetadata
-    }
 }
 
 struct UMAccount: Codable {
@@ -54,13 +48,6 @@ struct UMAccount: Codable {
     let annotations: [UMAnnotation]
     let read: [String]
     let swaps: UMSwaps
-    
-    init(bookmarked: [UMBookmark], annotations: [UMAnnotation], read: [String], swaps: UMSwaps) {
-        self.bookmarked = bookmarked
-        self.annotations = annotations
-        self.read = read
-        self.swaps = swaps
-    }
 }
 
 struct UMBookmark: Codable {
@@ -73,12 +60,6 @@ struct UMBookmark: Codable {
     let txId: String
     let lastUpdated: Int64
     var isBookmarked: Bool
-    
-    init(txId: String, lastUpdated: Int64, isBookmarked: Bool) {
-        self.txId = txId
-        self.lastUpdated = lastUpdated
-        self.isBookmarked = isBookmarked
-    }
 }
 
 struct UMAnnotation: Codable {
@@ -91,12 +72,6 @@ struct UMAnnotation: Codable {
     let txId: String
     let content: String?
     let lastUpdated: Int64
-    
-    init(txId: String, content: String?, lastUpdated: Int64) {
-        self.txId = txId
-        self.content = content
-        self.lastUpdated = lastUpdated
-    }
 }
 
 struct UMSwaps: Codable {
@@ -111,12 +86,6 @@ struct UMSwaps: Codable {
     /// Collection of 10 last SwapAssets
     let lastUsedAssetHistory: [String]
     let lastUpdated: Int64
-    
-    init(swapIds: [UMSwapId], lastUsedAssetHistory: [String], lastUpdated: Int64) {
-        self.swapIds = swapIds
-        self.lastUsedAssetHistory = lastUsedAssetHistory
-        self.lastUpdated = lastUpdated
-    }
 }
 
 struct UMSwapId: Codable, Equatable {

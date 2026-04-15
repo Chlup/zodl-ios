@@ -174,331 +174,330 @@ extension Near1Click {
     static func live() -> Self {
         Self(
             submitDepositTxId: { txId, depositAddress in
-            let requestData = SwapSubmitHash(
-                txHash: txId,
-                depositAddress: depositAddress
-            )
-            
-            guard let jsonData = try? JSONEncoder().encode(requestData) else {
-                fatalError("Failed to encode JSON")
-            }
-            
-            let (data, response) = try await Near1Click.postCall(urlString: Constants.submitUrl, jsonData: jsonData)
-            
-            guard let _ = response as? HTTPURLResponse else {
-                throw SwapAndPayClient.EndpointError.message("Submit deposit id: Invalid response")
-            }
-            
-            guard let _ = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-                throw SwapAndPayClient.EndpointError.message("Submit deposit id: Cannot parse response")
-            }
-        },
-        swapAssets: {
-            let (data, _) = try await Near1Click.getCall(urlString: Constants.tokensUrl)
-            
-            guard let jsonObject = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
-                throw URLError(.cannotParseResponse)
-            }
-            
-            let formatter = NumberFormatter()
-            formatter.locale = Locale(identifier: "en_US")
-            formatter.numberStyle = .decimal
-            
-            let chainAssets = jsonObject.compactMap { dict -> SwapAsset? in
-                guard let chain = dict[Constants.blockchain] as? String,
-                      let symbol = dict[Constants.symbol] as? String,
-                      let assetId = dict[Constants.assetId] as? String,
-                      let usdPrice = dict[Constants.price] as? Double,
-                      let decimals = dict[Constants.decimals] as? Int else {
-                    return nil
+                let requestData = SwapSubmitHash(
+                    txHash: txId,
+                    depositAddress: depositAddress
+                )
+
+                guard let jsonData = try? JSONEncoder().encode(requestData) else {
+                    fatalError("Failed to encode JSON")
                 }
 
-                return SwapAsset(
-                    provider: String(localizable: .swapNearProvider),
-                    chain: chain,
-                    token: symbol,
-                    assetId: assetId,
-                    usdPrice: Decimal(usdPrice),
-                    decimals: decimals
-                )
-            }
-            
-            return IdentifiedArrayOf(uniqueElements: chainAssets)
-        },
-        quote: { dry, isSwapToZec, exactInput, slippageTolerance, zecAsset, toAsset, refundTo, destination, amount in
-            // Deadline in ISO 8601 UTC format
-            let now = Date()
-            let twoHoursLater = now.addingTimeInterval(120 * 60)
-            let isoFormatter = ISO8601DateFormatter()
-            isoFormatter.formatOptions = [.withInternetDateTime, .withDashSeparatorInDate, .withColonSeparatorInTime]
-            isoFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-            
-            let deadline = isoFormatter.string(from: twoHoursLater)
-            
-            guard let nearFeeDepositAddress = PartnerKeys.nearFeeDepositAddress else {
-                throw "nearFeeDepositAddress missing"
-            }
-            
-            let requestData = SwapQuoteRequest(
-                dry: dry,
-                swapType: isSwapToZec ? Constants.flexInput : exactInput ? Constants.exactInput : Constants.exactOutput,
-                slippageTolerance: slippageTolerance,
-                originAsset: isSwapToZec ? toAsset.assetId : zecAsset.assetId,
-                depositType: Constants.originChain,
-                destinationAsset: isSwapToZec ? zecAsset.assetId : toAsset.assetId,
-                amount: amount,
-                refundTo: isSwapToZec ? destination : refundTo,
-                refundType: Constants.originChain,
-                recipient: isSwapToZec ? refundTo : destination,
-                recipientType: Constants.destinationChain,
-                deadline: deadline,
-                referral: Constants.referral,
-                quoteWaitingTimeMs: 3000,
-                appFees: [
-                    AppFee(
-                        recipient: nearFeeDepositAddress,
-                        fee: SwapAndPayClient.Constants.zashiFeeBps
+                let (data, response) = try await Near1Click.postCall(urlString: Constants.submitUrl, jsonData: jsonData)
+
+                guard (response as? HTTPURLResponse) != nil else {
+                    throw SwapAndPayClient.EndpointError.message("Submit deposit id: Invalid response")
+                }
+
+                guard (try JSONSerialization.jsonObject(with: data) as? [String: Any]) != nil else {
+                    throw SwapAndPayClient.EndpointError.message("Submit deposit id: Cannot parse response")
+                }
+            },
+            swapAssets: {
+                let (data, _) = try await Near1Click.getCall(urlString: Constants.tokensUrl)
+
+                guard let jsonObject = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
+                    throw URLError(.cannotParseResponse)
+                }
+
+                let formatter = NumberFormatter()
+                formatter.locale = Locale(identifier: "en_US")
+                formatter.numberStyle = .decimal
+
+                let chainAssets = jsonObject.compactMap { dict -> SwapAsset? in
+                    guard let chain = dict[Constants.blockchain] as? String,
+                          let symbol = dict[Constants.symbol] as? String,
+                          let assetId = dict[Constants.assetId] as? String,
+                          let usdPrice = dict[Constants.price] as? Double,
+                          let decimals = dict[Constants.decimals] as? Int else {
+                        return nil
+                    }
+
+                    return SwapAsset(
+                        provider: String(localizable: .swapNearProvider),
+                        chain: chain,
+                        token: symbol,
+                        assetId: assetId,
+                        usdPrice: Decimal(usdPrice),
+                        decimals: decimals
                     )
-                ]
-            )
-            
-            guard let jsonData = try? JSONEncoder().encode(requestData) else {
-                fatalError("Failed to encode JSON")
-            }
-            
-            let (data, response) = try await Near1Click.postCall(urlString: Constants.quoteUrl, jsonData: jsonData)
-            
-            guard let httpResponse = response as? HTTPURLResponse else {
-                throw SwapAndPayClient.EndpointError.message("Quote: Invalid response")
-            }
-            
-            guard let jsonObject = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-                throw SwapAndPayClient.EndpointError.message("Quote: Cannot parse response")
-            }
-            
-            if httpResponse.statusCode >= 400 {
-                try amountMessageResolution(
-                    exactInput: exactInput,
-                    isSwapToZec: isSwapToZec,
-                    toAsset: toAsset,
-                    jsonObject: jsonObject
+                }
+
+                return IdentifiedArrayOf(uniqueElements: chainAssets)
+            },
+            quote: { dry, isSwapToZec, exactInput, slippageTolerance, zecAsset, toAsset, refundTo, destination, amount in
+                // Deadline in ISO 8601 UTC format
+                let now = Date()
+                let twoHoursLater = now.addingTimeInterval(120 * 60)
+                let isoFormatter = ISO8601DateFormatter()
+                isoFormatter.formatOptions = [.withInternetDateTime, .withDashSeparatorInDate, .withColonSeparatorInTime]
+                isoFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+
+                let deadline = isoFormatter.string(from: twoHoursLater)
+
+                guard let nearFeeDepositAddress = PartnerKeys.nearFeeDepositAddress else {
+                    throw "nearFeeDepositAddress missing"
+                }
+
+                let requestData = SwapQuoteRequest(
+                    dry: dry,
+                    swapType: isSwapToZec ? Constants.flexInput : exactInput ? Constants.exactInput : Constants.exactOutput,
+                    slippageTolerance: slippageTolerance,
+                    originAsset: isSwapToZec ? toAsset.assetId : zecAsset.assetId,
+                    depositType: Constants.originChain,
+                    destinationAsset: isSwapToZec ? zecAsset.assetId : toAsset.assetId,
+                    amount: amount,
+                    refundTo: isSwapToZec ? destination : refundTo,
+                    refundType: Constants.originChain,
+                    recipient: isSwapToZec ? refundTo : destination,
+                    recipientType: Constants.destinationChain,
+                    deadline: deadline,
+                    referral: Constants.referral,
+                    quoteWaitingTimeMs: 3000,
+                    appFees: [
+                        AppFee(
+                            recipient: nearFeeDepositAddress,
+                            fee: SwapAndPayClient.Constants.zashiFeeBps
+                        )
+                    ]
                 )
-            }
-            
-            guard let quote = jsonObject[Constants.quote] as? [String: Any],
-                  let depositAddress = quote[Constants.depositAddress] as? String,
-                  let amountInString = quote[Constants.amountIn] as? String,
-                  let amountInUsdString = quote[Constants.amountInUsd] as? String,
-                  let minAmountInString = quote[Constants.minAmountIn] as? String,
-                  let amountOutString = quote[Constants.amountOut] as? String,
-                  let amountOutUsdString = quote[Constants.amountOutUsd] as? String,
-                  let timeEstimate = quote[Constants.timeEstimate] as? Int else {
-                throw SwapAndPayClient.EndpointError.message("Parse of the quote failed.")
-            }
-            
-            let amountIn = NSDecimalNumber(string: amountInString).decimalValue
-            let minAmountIn = NSDecimalNumber(string: minAmountInString).decimalValue
-            let amountOut = NSDecimalNumber(string: amountOutString).decimalValue
-            
-            if isSwapToZec {
+
+                guard let jsonData = try? JSONEncoder().encode(requestData) else {
+                    fatalError("Failed to encode JSON")
+                }
+
+                let (data, response) = try await Near1Click.postCall(urlString: Constants.quoteUrl, jsonData: jsonData)
+
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    throw SwapAndPayClient.EndpointError.message("Quote: Invalid response")
+                }
+
+                guard let jsonObject = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+                    throw SwapAndPayClient.EndpointError.message("Quote: Cannot parse response")
+                }
+
+                if httpResponse.statusCode >= 400 {
+                    try amountMessageResolution(
+                        exactInput: exactInput,
+                        isSwapToZec: isSwapToZec,
+                        toAsset: toAsset,
+                        jsonObject: jsonObject
+                    )
+                }
+
+                guard let quote = jsonObject[Constants.quote] as? [String: Any],
+                      let depositAddress = quote[Constants.depositAddress] as? String,
+                      let amountInString = quote[Constants.amountIn] as? String,
+                      let amountInUsdString = quote[Constants.amountInUsd] as? String,
+                      let minAmountInString = quote[Constants.minAmountIn] as? String,
+                      let amountOutString = quote[Constants.amountOut] as? String,
+                      let amountOutUsdString = quote[Constants.amountOutUsd] as? String,
+                      let timeEstimate = quote[Constants.timeEstimate] as? Int else {
+                    throw SwapAndPayClient.EndpointError.message("Parse of the quote failed.")
+                }
+
+                let amountIn = NSDecimalNumber(string: amountInString).decimalValue
+                let minAmountIn = NSDecimalNumber(string: minAmountInString).decimalValue
+                let amountOut = NSDecimalNumber(string: amountOutString).decimalValue
+
+                if isSwapToZec {
+                    return SwapQuote(
+                        depositAddress: depositAddress,
+                        amountIn: amountIn / Decimal(pow(10.0, Double(toAsset.decimals))),
+                        amountInUsd: amountInUsdString,
+                        minAmountIn: minAmountIn / Decimal(pow(10.0, Double(toAsset.decimals))),
+                        amountOut: amountOut / Decimal(pow(10.0, Double(zecAsset.decimals))),
+                        amountOutUsd: amountOutUsdString,
+                        timeEstimate: TimeInterval(timeEstimate)
+                    )
+                }
+
                 return SwapQuote(
                     depositAddress: depositAddress,
-                    amountIn: amountIn / Decimal(pow(10.0, Double(toAsset.decimals))),
+                    amountIn: amountIn,
                     amountInUsd: amountInUsdString,
-                    minAmountIn: minAmountIn / Decimal(pow(10.0, Double(toAsset.decimals))),
-                    amountOut: amountOut / Decimal(pow(10.0, Double(zecAsset.decimals))),
+                    minAmountIn: minAmountIn,
+                    amountOut: amountOut / Decimal(pow(10.0, Double(toAsset.decimals))),
                     amountOutUsd: amountOutUsdString,
                     timeEstimate: TimeInterval(timeEstimate)
                 )
-            }
-            
-            return SwapQuote(
-                depositAddress: depositAddress,
-                amountIn: amountIn,
-                amountInUsd: amountInUsdString,
-                minAmountIn: minAmountIn,
-                amountOut: amountOut / Decimal(pow(10.0, Double(toAsset.decimals))),
-                amountOutUsd: amountOutUsdString,
-                timeEstimate: TimeInterval(timeEstimate)
-            )
-        },
-        status: { depositAddress, isSwapToZec in
-            let (data, _) = try await Near1Click.getCall(urlString: "\(Constants.statusUrl)\(depositAddress)", includeJwtKey: true)
+            },
+            status: { depositAddress, isSwapToZec in
+                let (data, _) = try await Near1Click.getCall(urlString: "\(Constants.statusUrl)\(depositAddress)", includeJwtKey: true)
 
-            guard let jsonObject = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-                throw SwapAndPayClient.EndpointError.message("Check status: Cannot parse response")
-            }
-            
-            guard let statusStr = jsonObject[Constants.status] as? String else {
-                throw SwapAndPayClient.EndpointError.message("Check status: Missing `status` parameter.")
-            }
-            
-            var status: SwapDetails.Status
-            
-            if isSwapToZec {
-                status = switch statusStr {
-                case SwapConstants.pendingDeposit: .pendingDeposit
-                case SwapConstants.refunded: .refunded
-                case SwapConstants.success: .success
-                case SwapConstants.failed: .failed
-                case SwapConstants.incompleteDeposit: .incompleteDeposit
-                case SwapConstants.processing: .processing
-                default: .pending
+                guard let jsonObject = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+                    throw SwapAndPayClient.EndpointError.message("Check status: Cannot parse response")
                 }
-            } else {
-                status = switch statusStr {
-                case SwapConstants.incompleteDeposit: .incompleteDeposit
-                case SwapConstants.pendingDeposit: .pending
-                case SwapConstants.refunded: .refunded
-                case SwapConstants.success: .success
-                default: .pending
+
+                guard let statusStr = jsonObject[Constants.status] as? String else {
+                    throw SwapAndPayClient.EndpointError.message("Check status: Missing `status` parameter.")
                 }
-            }
-            
-            guard let quoteResponseDict = jsonObject[Constants.quoteResponse] as? [String: Any],
-                  let quoteRequestDict = quoteResponseDict[Constants.quoteRequest] as? [String: Any] else {
-                throw SwapAndPayClient.EndpointError.message("Check status: Missing `quoteRequest` parameter.")
-            }
-            
-            guard let swapType = quoteRequestDict[Constants.swapType] as? String else {
-                throw SwapAndPayClient.EndpointError.message("Check status: Missing `swapType` parameter.")
-            }
 
-            guard var fromAsset = quoteRequestDict[Constants.originAsset] as? String else {
-                throw SwapAndPayClient.EndpointError.message("Check status: Missing `originAsset` parameter.")
-            }
+                var status: SwapDetails.Status
 
-            guard var toAsset = quoteRequestDict[Constants.destinationAsset] as? String else {
-                throw SwapAndPayClient.EndpointError.message("Check status: Missing `destinationAsset` parameter.")
-            }
-            
-            // swap to zec exchange
-//            if destinationAsset == Constants.nearZecAssetId {
-//                guard let originAsset = quoteRequestDict[Constants.originAsset] as? String else {
-//                    throw SwapAndPayClient.EndpointError.message("Check status: Missing `originAsset` parameter.")
-//                }
-//
-//                destinationAsset = originAsset
-//            }
-            
-            guard let swapDetailsDict = jsonObject[Constants.swapDetails] as? [String: Any] else {
-                throw SwapAndPayClient.EndpointError.message("Check status: Missing `swapDetails` parameter.")
-            }
-            
-            var slippage: Decimal?
-            if let slippageInt = swapDetailsDict[Constants.slippage] as? Int {
-                slippage = Decimal(slippageInt) * 0.01
-            } else if status != .success {
-                if let slippageInt = quoteRequestDict[Constants.slippageTolerance] as? Int {
+                if isSwapToZec {
+                    status = switch statusStr {
+                    case SwapConstants.pendingDeposit: .pendingDeposit
+                    case SwapConstants.refunded: .refunded
+                    case SwapConstants.success: .success
+                    case SwapConstants.failed: .failed
+                    case SwapConstants.incompleteDeposit: .incompleteDeposit
+                    case SwapConstants.processing: .processing
+                    default: .pending
+                    }
+                } else {
+                    status = switch statusStr {
+                    case SwapConstants.incompleteDeposit: .incompleteDeposit
+                    case SwapConstants.pendingDeposit: .pending
+                    case SwapConstants.refunded: .refunded
+                    case SwapConstants.success: .success
+                    default: .pending
+                    }
+                }
+
+                guard let quoteResponseDict = jsonObject[Constants.quoteResponse] as? [String: Any],
+                      let quoteRequestDict = quoteResponseDict[Constants.quoteRequest] as? [String: Any] else {
+                    throw SwapAndPayClient.EndpointError.message("Check status: Missing `quoteRequest` parameter.")
+                }
+
+                guard let swapType = quoteRequestDict[Constants.swapType] as? String else {
+                    throw SwapAndPayClient.EndpointError.message("Check status: Missing `swapType` parameter.")
+                }
+
+                guard let fromAsset = quoteRequestDict[Constants.originAsset] as? String else {
+                    throw SwapAndPayClient.EndpointError.message("Check status: Missing `originAsset` parameter.")
+                }
+
+                guard let toAsset = quoteRequestDict[Constants.destinationAsset] as? String else {
+                    throw SwapAndPayClient.EndpointError.message("Check status: Missing `destinationAsset` parameter.")
+                }
+
+                // swap to zec exchange
+    //            if destinationAsset == Constants.nearZecAssetId {
+    //                guard let originAsset = quoteRequestDict[Constants.originAsset] as? String else {
+    //                    throw SwapAndPayClient.EndpointError.message("Check status: Missing `originAsset` parameter.")
+    //                }
+    //
+    //                destinationAsset = originAsset
+    //            }
+
+                guard let swapDetailsDict = jsonObject[Constants.swapDetails] as? [String: Any] else {
+                    throw SwapAndPayClient.EndpointError.message("Check status: Missing `swapDetails` parameter.")
+                }
+
+                var slippage: Decimal?
+                if let slippageInt = swapDetailsDict[Constants.slippage] as? Int {
                     slippage = Decimal(slippageInt) * 0.01
-                }
-            }
-
-            var depositedAmountFormattedDecimal: Decimal?
-            if let depositedAmountFormatted = swapDetailsDict[Constants.depositedAmountFormatted] as? String, status == .incompleteDeposit {
-                depositedAmountFormattedDecimal = depositedAmountFormatted.usDecimal
-            }
-
-            var refundedAmountFormattedDecimal: Decimal?
-            if let refundedAmountFormatted = swapDetailsDict[Constants.refundedAmountFormatted] as? String, status == .refunded {
-                refundedAmountFormattedDecimal = refundedAmountFormatted.usDecimal
-            }
-            
-            var amountInFormattedDecimal: Decimal?
-            if let amountInFormatted = swapDetailsDict[Constants.amountInFormatted] as? String {
-                amountInFormattedDecimal = amountInFormatted.usDecimal
-            }
-            
-            var amountInUsd = swapDetailsDict[Constants.amountInUsd] as? String
-            
-            var amountOutFormattedDecimal: Decimal?
-            if let amountOutFormatted = swapDetailsDict[Constants.amountOutFormatted] as? String {
-                amountOutFormattedDecimal = amountOutFormatted.usDecimal
-            }
-            
-            var amountOutUsd = swapDetailsDict[Constants.amountOutUsd] as? String
-            
-            var swapRecipient: String?
-            if let recipient = quoteRequestDict[Constants.recipient] as? String {
-                swapRecipient = recipient
-            }
-
-            var refundTo: String?
-            if let refundToAddress = quoteRequestDict[Constants.refundTo] as? String {
-                refundTo = refundToAddress
-            }
-
-            if status == .pending
-                || status == .refunded
-                || status == .pendingDeposit
-                || status == .failed
-                || status == .processing
-                || status == .incompleteDeposit
-            {
-                if let quoteDict = quoteResponseDict[Constants.quote] as? [String: Any] {
-                    if let amountInFormatted = quoteDict[Constants.amountInFormatted] as? String {
-                        amountInFormattedDecimal = amountInFormatted.usDecimal
+                } else if status != .success {
+                    if let slippageInt = quoteRequestDict[Constants.slippageTolerance] as? Int {
+                        slippage = Decimal(slippageInt) * 0.01
                     }
-                    
-                    if let amountOutFormatted = quoteDict[Constants.amountOutFormatted] as? String {
-                        amountOutFormattedDecimal = amountOutFormatted.usDecimal
+                }
+
+                var depositedAmountFormattedDecimal: Decimal?
+                if let depositedAmountFormatted = swapDetailsDict[Constants.depositedAmountFormatted] as? String, status == .incompleteDeposit {
+                    depositedAmountFormattedDecimal = depositedAmountFormatted.usDecimal
+                }
+
+                var refundedAmountFormattedDecimal: Decimal?
+                if let refundedAmountFormatted = swapDetailsDict[Constants.refundedAmountFormatted] as? String, status == .refunded {
+                    refundedAmountFormattedDecimal = refundedAmountFormatted.usDecimal
+                }
+
+                var amountInFormattedDecimal: Decimal?
+                if let amountInFormatted = swapDetailsDict[Constants.amountInFormatted] as? String {
+                    amountInFormattedDecimal = amountInFormatted.usDecimal
+                }
+
+                var amountInUsd = swapDetailsDict[Constants.amountInUsd] as? String
+
+                var amountOutFormattedDecimal: Decimal?
+                if let amountOutFormatted = swapDetailsDict[Constants.amountOutFormatted] as? String {
+                    amountOutFormattedDecimal = amountOutFormatted.usDecimal
+                }
+
+                var amountOutUsd = swapDetailsDict[Constants.amountOutUsd] as? String
+
+                var swapRecipient: String?
+                if let recipient = quoteRequestDict[Constants.recipient] as? String {
+                    swapRecipient = recipient
+                }
+
+                var refundTo: String?
+                if let refundToAddress = quoteRequestDict[Constants.refundTo] as? String {
+                    refundTo = refundToAddress
+                }
+
+                if status == .pending ||
+                   status == .refunded ||
+                   status == .pendingDeposit ||
+                   status == .failed ||
+                   status == .processing ||
+                   status == .incompleteDeposit {
+                    if let quoteDict = quoteResponseDict[Constants.quote] as? [String: Any] {
+                        if let amountInFormatted = quoteDict[Constants.amountInFormatted] as? String {
+                            amountInFormattedDecimal = amountInFormatted.usDecimal
+                        }
+
+                        if let amountOutFormatted = quoteDict[Constants.amountOutFormatted] as? String {
+                            amountOutFormattedDecimal = amountOutFormatted.usDecimal
+                        }
+
+                        amountInUsd = quoteDict[Constants.amountInUsd] as? String
+                        amountOutUsd = quoteDict[Constants.amountOutUsd] as? String
                     }
-                    
-                    amountInUsd = quoteDict[Constants.amountInUsd] as? String
-                    amountOutUsd = quoteDict[Constants.amountOutUsd] as? String
                 }
-            }
-            
-            // dates
-            var deadline = ""
-            
-            if let quoteDict = quoteResponseDict[Constants.quote] as? [String: Any] {
-                if let deadlineStr = quoteDict[Constants.deadline] as? String {
-                    deadline = deadlineStr
-                }
-            }
 
-            var whenInitiated = ""
-            if let whenInitiatedStr = quoteResponseDict[Constants.timestamp] as? String {
-                whenInitiated = whenInitiatedStr
-            }
+                // dates
+                var deadline = ""
 
-            // expired?
-            if statusStr == SwapConstants.pendingDeposit {
                 if let quoteDict = quoteResponseDict[Constants.quote] as? [String: Any] {
-                    if let deadline = quoteDict[Constants.deadline] as? String {
-                        let formatter = ISO8601DateFormatter()
-                        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-                        
-                        if let date = formatter.date(from: deadline) {
-                            // 5 minutes earlier than the deadline
-                            let adjustedDeadline = date.addingTimeInterval(-5 * 60)
-                            if Date() > adjustedDeadline {
-                                status = .expired
+                    if let deadlineStr = quoteDict[Constants.deadline] as? String {
+                        deadline = deadlineStr
+                    }
+                }
+
+                var whenInitiated = ""
+                if let whenInitiatedStr = quoteResponseDict[Constants.timestamp] as? String {
+                    whenInitiated = whenInitiatedStr
+                }
+
+                // expired?
+                if statusStr == SwapConstants.pendingDeposit {
+                    if let quoteDict = quoteResponseDict[Constants.quote] as? [String: Any] {
+                        if let deadline = quoteDict[Constants.deadline] as? String {
+                            let formatter = ISO8601DateFormatter()
+                            formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+
+                            if let date = formatter.date(from: deadline) {
+                                // 5 minutes earlier than the deadline
+                                let adjustedDeadline = date.addingTimeInterval(-5 * 60)
+                                if Date() > adjustedDeadline {
+                                    status = .expired
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            return SwapDetails(
-                amountInFormatted: amountInFormattedDecimal,
-                amountInUsd: amountInUsd,
-                amountOutFormatted: amountOutFormattedDecimal,
-                amountOutUsd: amountOutUsd,
-                fromAsset: fromAsset,
-                toAsset: toAsset,
-                isSwap: swapType == Constants.exactInput || swapType == Constants.flexInput,
-                slippage: slippage,
-                status: status,
-                refundedAmountFormatted: refundedAmountFormattedDecimal,
-                swapRecipient: swapRecipient,
-                addressToCheckShield: (isSwapToZec ? swapRecipient : refundTo) ?? "",
-                whenInitiated: whenInitiated,
-                deadline: deadline,
-                depositedAmountFormatted: depositedAmountFormattedDecimal
-            )
-        }
+                return SwapDetails(
+                    amountInFormatted: amountInFormattedDecimal,
+                    amountInUsd: amountInUsd,
+                    amountOutFormatted: amountOutFormattedDecimal,
+                    amountOutUsd: amountOutUsd,
+                    fromAsset: fromAsset,
+                    toAsset: toAsset,
+                    isSwap: swapType == Constants.exactInput || swapType == Constants.flexInput,
+                    slippage: slippage,
+                    status: status,
+                    refundedAmountFormatted: refundedAmountFormattedDecimal,
+                    swapRecipient: swapRecipient,
+                    addressToCheckShield: (isSwapToZec ? swapRecipient : refundTo) ?? "",
+                    whenInitiated: whenInitiated,
+                    deadline: deadline,
+                    depositedAmountFormatted: depositedAmountFormattedDecimal
+                )
+            }
         )
     }
 }

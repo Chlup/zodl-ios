@@ -655,5 +655,4 @@ extension ConfirmationDialogState where Action == Root.Action.ConfirmationDialog
             TextState(String(localizable: .rootDebugDialogRescanMessage))
         }
     }
-
 }

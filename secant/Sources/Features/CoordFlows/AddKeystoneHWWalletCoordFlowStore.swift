@@ -29,8 +29,6 @@ struct AddKeystoneHWWalletCoordFlow {
         var birthday: BlockHeight? = nil
         var isHelpSheetPresented = false
         var path = StackState<Path.State>()
-
-        init() { }
     }
 
     enum Action: BindableAction {

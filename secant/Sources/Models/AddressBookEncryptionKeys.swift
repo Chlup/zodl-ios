@@ -20,7 +20,7 @@ struct AddressBookEncryptionKeys: Codable, Equatable {
     // FIXME: Don't hold keys in the memory when not necessary
     var keys: [Int: AddressBookKey]
 
-    mutating func cacheFor(seed: [UInt8], account: Account, network: NetworkType) throws{
+    mutating func cacheFor(seed: [UInt8], account: Account, network: NetworkType) throws {
         guard let zip32AccountIndex = account.hdAccountIndex else {
             return
         }
@@ -96,10 +96,7 @@ struct AddressBookKey: Codable, Equatable, Redactable {
     ) -> SymmetricKey {
         assert(salt.count == 32)
 
-        guard let info = "encryption_key".data(using: .utf8) else {
-            fatalError("Unable to prepare `encryption_key` info")
-        }
-        
+        let info = Data("encryption_key".utf8)
         return HKDF<SHA256>.deriveKey(inputKeyMaterial: key, info: salt + info, outputByteCount: 32)
     }
 
@@ -107,10 +104,8 @@ struct AddressBookKey: Codable, Equatable, Redactable {
      * Derives the filename that this key is able to decrypt.
      */
     func fileIdentifier() -> String? {
-        guard let info = "file_identifier".data(using: .utf8) else {
-            fatalError("Unable to prepare `file_identifier` info")
-        }
-
+        let info = Data("file_identifier".utf8)
+        
         // Perform HKDF with SHA-256
         let hkdfKey = HKDF<SHA256>.deriveKey(inputKeyMaterial: key, info: info, outputByteCount: 32)
         

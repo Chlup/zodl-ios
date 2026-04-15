@@ -48,8 +48,9 @@ struct ZashiBackModifier: ViewModifier {
     @ViewBuilder private func backIcon() -> some View {
         HStack {
             Asset.Assets.Icons.arrowNarrowLeft.image
-                .zImage(size: 24,
-                        color: invertedColors ? Asset.Colors.secondary.color : Asset.Colors.primary.color
+                .zImage(
+                    size: 24,
+                    color: invertedColors ? Asset.Colors.secondary.color : Asset.Colors.primary.color
                 )
         }
     }

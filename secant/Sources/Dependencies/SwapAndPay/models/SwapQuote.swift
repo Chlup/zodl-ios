@@ -23,22 +23,4 @@ struct SwapQuote: Codable, Equatable, Hashable {
     let amountOutUsd: String
     /// Number of seconds it takes to process this quote
     let timeEstimate: TimeInterval
-    
-    init(
-        depositAddress: String,
-        amountIn: Decimal,
-        amountInUsd: String,
-        minAmountIn: Decimal,
-        amountOut: Decimal,
-        amountOutUsd: String,
-        timeEstimate: TimeInterval
-    ) {
-        self.depositAddress = depositAddress
-        self.amountIn = amountIn
-        self.amountInUsd = amountInUsd
-        self.minAmountIn = minAmountIn
-        self.amountOut = amountOut
-        self.amountOutUsd = amountOutUsd
-        self.timeEstimate = timeEstimate
-    }
 }

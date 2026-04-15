@@ -109,7 +109,6 @@ struct RequestZecView: View {
             )
         }
     }
-    
 }
 
 #Preview {

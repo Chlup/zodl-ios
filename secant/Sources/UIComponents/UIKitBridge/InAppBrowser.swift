@@ -12,10 +12,6 @@ import SafariServices
 struct InAppBrowserView: UIViewControllerRepresentable {
     let url: URL
 
-    init(url: URL) {
-        self.url = url
-    }
-
     func makeUIViewController(context: UIViewControllerRepresentableContext<InAppBrowserView>) -> SFSafariViewController {
         return SFSafariViewController(url: url)
     }

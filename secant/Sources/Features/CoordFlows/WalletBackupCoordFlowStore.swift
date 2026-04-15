@@ -21,8 +21,6 @@ struct WalletBackupCoordFlow {
         var isHelpSheetPresented = false
         var path = StackState<Path.State>()
         var recoveryPhraseDisplayState = RecoveryPhraseDisplay.State.initial
-
-        init() { }
     }
 
     enum Action: BindableAction {

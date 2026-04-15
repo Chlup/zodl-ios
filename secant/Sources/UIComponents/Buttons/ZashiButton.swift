@@ -219,7 +219,7 @@ struct ZashiButton<PrefixContent, AccessoryContent>: View where PrefixContent: V
     VStack(spacing: 15) {
         ZashiButton(
             "Button",
-            prefixView: 
+            prefixView:
                 Asset.Assets.Icons.key.image
                     .zImage(size: 20, style: Design.Text.primary),
             accessoryView:

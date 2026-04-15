@@ -49,7 +49,8 @@ extension SwapAndPayForm {
                         } else {
                             RoundedRectangle(cornerRadius: Design.Radius._sm)
                                 .fill(Design.Surfaces.bgSecondary.color(colorScheme))
-                                .shimmer(true).clipShape(RoundedRectangle(cornerRadius: 6))
+                                .shimmer(true)
+                                .clipShape(RoundedRectangle(cornerRadius: 6))
                                 .frame(width: 120, height: 18)
                         }
                     }
@@ -63,16 +64,18 @@ extension SwapAndPayForm {
                                 .padding(.bottom, 8)
                                 .padding(.top, 32)
                             
-                            Text(retryFailure
-                                 ? String(localizable: .swapAndPayFailureRetryTitle)
-                                 : String(localizable: .swapAndPayFailureLaterTitle)
+                            Text(
+                                retryFailure
+                                    ? String(localizable: .swapAndPayFailureRetryTitle)
+                                    : String(localizable: .swapAndPayFailureLaterTitle)
                             )
                             .zFont(.medium, size: 14, style: Design.Text.error)
                             .padding(.bottom, 8)
                             
-                            Text(retryFailure
-                                 ? String(localizable: .swapAndPayFailureRetryDesc)
-                                 : String(localizable: .swapAndPayFailureLaterDesc)
+                            Text(
+                                retryFailure
+                                    ? String(localizable: .swapAndPayFailureRetryDesc)
+                                    : String(localizable: .swapAndPayFailureLaterDesc)
                             )
                             .zFont(size: 14, style: Design.Text.error)
                             .padding(.bottom, retryFailure ? 32 : 56)
@@ -198,8 +201,12 @@ extension SwapAndPayForm {
                                 Spacer()
                                 
                                 Button {
-                                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
-                                                                    to: nil, from: nil, for: nil)
+                                    UIApplication.shared.sendAction(
+                                        #selector(UIResponder.resignFirstResponder),
+                                        to: nil,
+                                        from: nil,
+                                        for: nil
+                                    )
                                 } label: {
                                     Text(String(localizable: .generalDone).uppercased())
                                         .zFont(.regular, size: 14, style: Design.Text.primary)

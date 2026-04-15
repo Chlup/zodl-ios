@@ -47,20 +47,20 @@ extension Root {
         case serverSwitch
     }
 
-    // swiftlint:disable:next cyclomatic_complexity
     func destinationReduce() -> Reduce<Root.State, Root.Action> {
         Reduce { state, action in
             switch action {
             case let .destination(.updateDestination(destination)):
-                guard (state.destinationState.destination != .deeplinkWarning)
-                        || (state.destinationState.destination == .deeplinkWarning && destination == .home) else {
-                    return .none
-                }
+                guard
+                    (state.destinationState.destination != .deeplinkWarning) ||
+                    (state.destinationState.destination == .deeplinkWarning && destination == .home)
+                else { return .none }
+
                 state.destinationState.destination = destination
                 return .none
 
             case .destination(.deeplink(let url)):
-                if let _ = uriParser.checkRP(url.absoluteString, zcashSDKEnvironment.network().networkType) {
+                if uriParser.checkRP(url.absoluteString, zcashSDKEnvironment.network().networkType) != nil {
                     // The deeplink is some zip321, we ignore it and let users know in a warning screen
                     return .send(.destination(.updateDestination(.deeplinkWarning)))
                 }
@@ -146,7 +146,7 @@ private extension Root {
         url: URL,
         deeplink: DeeplinkClient,
         derivationTool: DerivationToolClient
-    ) async throws -> Root.Action {
+    ) throws -> Root.Action {
         @Dependency(\.zcashSDKEnvironment) var zcashSDKEnvironment
         let deeplink = try deeplink.resolveDeeplinkURL(url, zcashSDKEnvironment.network().networkType, derivationTool)
         
@@ -172,7 +172,5 @@ extension StoreOf<Root> {
 // MARK: Placeholders
 
 extension Root.DestinationState {
-    static var initial: Self {
-        .init()
-    }
+    static var initial: Root.DestinationState { Root.DestinationState() }
 }

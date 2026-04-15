@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ZashiPicker<Data, Content> : View where Data: Hashable, Content: View {
+struct ZashiPicker<Data, Content>: View where Data: Hashable, Content: View {
     let sources: [Data]
     let selection: Data?
     private let itemBuilder: (Data) -> Content

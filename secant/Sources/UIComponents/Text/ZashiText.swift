@@ -24,7 +24,9 @@ struct ZashiText: View {
         self.attributedString = AttributedString("")
         
         self.attributedString = ZashiText.annotateStyle(
-            from: AttributedString(localized: localizedKey, including: \.zashiApp), colorScheme: colorScheme)
+            from: AttributedString(localized: localizedKey, including: \.zashiApp),
+            colorScheme: colorScheme
+        )
     }
 
     private static func annotateStyle(from source: AttributedString, colorScheme: ColorScheme, textColor: Color? = nil, textSize: CGFloat? = nil) -> AttributedString {

@@ -7,7 +7,6 @@
 
 import SwiftUI
 import ComposableArchitecture
-//import Scan
 
 struct SendFormView: View {
     @Environment(\.colorScheme) private var colorScheme
@@ -209,10 +208,12 @@ struct SendFormView: View {
                 helpSheetContent()
             }
             .insufficientFundsSheet(isPresented: $store.isInsufficientBalance)
-            .alert(store: store.scope(
-                state: \.$alert,
-                action: \.alert
-            ))
+            .alert(
+                store: store.scope(
+                    state: \.$alert,
+                    action: \.alert
+                )
+            )
             .zashiSheet(isPresented: $store.balancesBinding) {
                 balancesContent()
             }
@@ -359,7 +360,7 @@ struct SendFormView: View {
                             LinearGradient(
                                 stops: [
                                     Gradient.Stop(color: Design.Utility.Gray._950.color(colorScheme), location: 0.00),
-                                    Gradient.Stop(color: Design.Surfaces.bgQuaternary.color(colorScheme), location: 1.00),
+                                    Gradient.Stop(color: Design.Surfaces.bgQuaternary.color(colorScheme), location: 1.00)
                                 ],
                                 startPoint: UnitPoint(x: 0.5, y: 0),
                                 endPoint: UnitPoint(x: 0.5, y: 1)
@@ -403,8 +404,8 @@ struct SendFormView: View {
 #Preview {
     NavigationView {
         SendFormView(
-            store: .init(
-                initialState: .init(
+            store: StoreOf<SendForm>(
+                initialState: SendForm.State(
                     addMemoState: true,
                     memoState: .initial,
                     walletBalancesState: .initial
@@ -458,7 +459,7 @@ extension StoreOf<SendForm> {
 
 extension SendForm.State {
     static var initial: Self {
-        .init(
+        SendForm.State(
             addMemoState: true,
             memoState: .initial,
             walletBalancesState: .initial

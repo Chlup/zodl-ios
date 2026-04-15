@@ -9,10 +9,6 @@ import UIKit
 import SwiftUI
 
 struct VisualEffectBlur: UIViewRepresentable {
-    init() {
-        
-    }
-    
     func makeUIView(context: Context) -> UIVisualEffectView {
         UIVisualEffectView(effect: UIBlurEffect(style: .systemThinMaterialDark))
     }

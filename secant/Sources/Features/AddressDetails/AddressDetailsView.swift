@@ -138,20 +138,23 @@ extension AddressDetailsView {
     }
     
     @ViewBuilder func shareView() -> some View {
-        if let addressToShare = store.addressToShare,
-           let cgImg = QRCodeGenerator.generateCode(
-            from: addressToShare.data,
-            maxPrivacy: store.maxPrivacy,
-            vendor: .zashi,
-            color: .black
-           ) {
-            UIShareDialogView(activityItems: [
-                ShareableImage(
-                    image: UIImage(cgImage: cgImg),
-                    title: String(localizable: .addressDetailsShareTitle),
-                    reason: String(localizable: .addressDetailsShareDesc)
-                ), String(localizable: .addressDetailsShareDesc)
-            ]) {
+        if  let addressToShare = store.addressToShare,
+            let cgImg = QRCodeGenerator.generateCode(
+                from: addressToShare.data,
+                maxPrivacy: store.maxPrivacy,
+                vendor: .zashi,
+                color: .black
+            ) {
+            UIShareDialogView(
+                activityItems: [
+                    ShareableImage(
+                        image: UIImage(cgImage: cgImg),
+                        title: String(localizable: .addressDetailsShareTitle),
+                        reason: String(localizable: .addressDetailsShareDesc)
+                    ),
+                    String(localizable: .addressDetailsShareDesc)
+                ]
+            ) {
                 store.send(.shareFinished)
             }
             // UIShareDialogView only wraps UIActivityViewController presentation
@@ -167,7 +170,12 @@ extension AddressDetailsView {
     NavigationView {
         AddressDetailsView(
             store: StoreOf<AddressDetails>(
-                initialState: AddressDetails.State(address: "u1steuf7460a4m3svyyzlg3m6xlc6xd0q5qq7n0da8m29x0vcqdeuvjyw4h82a69vg8zn43cszudgfva45d2ju46227vc0dy0f73mzdv5dsz4wfmfrkaw3ycmd4qkg9hxh3arcrh2f9fdj02d42shg7fl5elvnqed4cq4t3sxu4spcx7cd4l8ye3e5ym9njj0hhs82gf7tjre4umqa2q6".redacted)
+                initialState: AddressDetails.State(
+                    address: """
+                    u1steuf7460a4m3svyyzlg3m6xlc6xd0q5qq7n0da8m29x0vcqdeuvjyw4h82a69vg8zn43cszudgfva45d2ju46227vc0dy0f73mzdv5dsz4wfmfrkaw3ycmd4qkg9h\
+                    xh3arcrh2f9fdj02d42shg7fl5elvnqed4cq4t3sxu4spcx7cd4l8ye3e5ym9njj0hhs82gf7tjre4umqa2q6
+                    """.redacted
+                )
             ) {
                 AddressDetails()
             }

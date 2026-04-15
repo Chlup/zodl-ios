@@ -11,7 +11,6 @@ extension RestoreWalletCoordFlow {
     func coordinatorReduce() -> Reduce<RestoreWalletCoordFlow.State, RestoreWalletCoordFlow.Action> {
         Reduce { state, action in
             switch action {
-                
                 // MARK: - Self
 
             case .dismissDestination:

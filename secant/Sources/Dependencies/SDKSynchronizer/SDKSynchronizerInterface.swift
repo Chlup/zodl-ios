@@ -44,7 +44,11 @@ struct SDKSynchronizerClient {
     var rewind: @Sendable (RewindPolicy) -> AnyPublisher<Void, Error> = { _ in Empty().eraseToAnyPublisher() }
 
     var getAllTransactions: @Sendable (AccountUUID?) async throws -> IdentifiedArrayOf<TransactionState>
-    var transactionStatesFromZcashTransactions: @Sendable (AccountUUID?, [ZcashTransaction.Overview]) async throws -> IdentifiedArrayOf<TransactionState>
+    var transactionStatesFromZcashTransactions: @Sendable (
+        AccountUUID?,
+        [ZcashTransaction.Overview]
+    ) async throws -> IdentifiedArrayOf<TransactionState>
+
     var getMemos: @Sendable (Data) async throws -> [Memo]
     var txIdExists: @Sendable (String?) async throws -> Bool
 
@@ -67,7 +71,14 @@ struct SDKSynchronizerClient {
 
     var refreshExchangeRateUSD: @Sendable () -> Void
 
-    var evaluateBestOf: @Sendable ([LightWalletEndpoint], Double, Double, UInt64, Int, NetworkType) async -> [LightWalletEndpoint] = { _,_,_,_,_,_ in [] }
+    var evaluateBestOf: @Sendable (
+        [LightWalletEndpoint],
+        Double,
+        Double,
+        UInt64,
+        Int,
+        NetworkType
+    ) async -> [LightWalletEndpoint] = { _, _, _, _, _, _ in [] }
 
     var walletAccounts: @Sendable () async throws -> [WalletAccount] = { [] }
 
@@ -102,4 +113,3 @@ struct SDKSynchronizerClient {
     var fetchUTXOsByAddress: @Sendable (String, AccountUUID) async throws -> TransparentAddressCheckResult = { _, _ in .notFound }
     var enhanceTransactionBy: @Sendable (String) async throws -> Void
 }
-

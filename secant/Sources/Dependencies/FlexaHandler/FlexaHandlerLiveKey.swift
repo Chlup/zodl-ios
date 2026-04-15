@@ -34,12 +34,6 @@ struct FlexaTransaction: Equatable {
     let amount: Zatoshi
     let address: String
     let commerceSessionId: String
-    
-    init(amount: Zatoshi, address: String, commerceSessionId: String) {
-        self.amount = amount
-        self.address = address
-        self.commerceSessionId = commerceSessionId
-    }
 }
 
 extension FlexaHandlerClient: DependencyKey {
@@ -51,7 +45,7 @@ extension FlexaHandlerClient: DependencyKey {
         let latestSpendableAvailableBalance = CurrentValueSubject<Decimal?, Never>(nil)
         let isPrepared = CurrentValueSubject<Bool, Never>(false)
 
-        return .init(
+        return FlexaHandlerClient(
             prepare: {
                 FlexaHandlerClient.prepare()
                 isPrepared.value = true

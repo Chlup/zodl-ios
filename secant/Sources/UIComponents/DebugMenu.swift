@@ -9,7 +9,6 @@ import SwiftUI
 
 // TODO: [#273] Make sure this code will never be in the production (app store) build (https://github.com/Electric-Coin-Company/zashi-ios/issues/273)
 
-// swiftlint:disable:next private_over_fileprivate strict_fileprivate
 struct DebugMenuModifier: ViewModifier {
     enum DragState {
         case inactive

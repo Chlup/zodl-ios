@@ -86,7 +86,7 @@ struct TransactionListView: View {
 
 extension TransactionList.State {
     static var initial: Self {
-        .init()
+        TransactionList.State()
     }
 }
 
