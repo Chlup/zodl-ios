@@ -10,8 +10,8 @@ import ComposableArchitecture
 
 extension FeedbackGeneratorClient: DependencyKey {
     static let liveValue = Self(
-        generateSuccessFeedback: { UINotificationFeedbackGenerator().notificationOccurred(.success) },
-        generateWarningFeedback: { UINotificationFeedbackGenerator().notificationOccurred(.warning) },
-        generateErrorFeedback: { UINotificationFeedbackGenerator().notificationOccurred(.error) }
+        generateSuccessFeedback: { @MainActor in UINotificationFeedbackGenerator().notificationOccurred(.success) },
+        generateWarningFeedback: { @MainActor in UINotificationFeedbackGenerator().notificationOccurred(.warning) },
+        generateErrorFeedback: { @MainActor in UINotificationFeedbackGenerator().notificationOccurred(.error) }
     )
 }

@@ -16,7 +16,7 @@ extension DependencyValues {
 
 @DependencyClient
 struct FeedbackGeneratorClient {
-    let generateSuccessFeedback: () -> Void
-    let generateWarningFeedback: () -> Void
-    let generateErrorFeedback: () -> Void
+    var generateSuccessFeedback: @Sendable () async -> Void = { }
+    var generateWarningFeedback: @Sendable () async -> Void = { }
+    var generateErrorFeedback: @Sendable () async -> Void = { }
 }
