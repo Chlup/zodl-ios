@@ -495,7 +495,7 @@ extension VotingAPIClient: DependencyKey {
                         for server in targets {
                             group.addTask {
                                 do {
-                                    _ = try await postServerJSON(server, "/api/v1/shares", body: body)
+                                    _ = try await postServerJSON(server, "/shielded-vote/v1/shares", body: body)
                                     await tracker.recordSuccess(for: server)
                                     return (server, true)
                                 } catch {
@@ -520,7 +520,7 @@ extension VotingAPIClient: DependencyKey {
                         let fallbacks = await tracker.healthyServers().filter { !targetSet.contains($0) }.shuffled()
                         for fallback in fallbacks {
                             do {
-                                _ = try await postServerJSON(fallback, "/api/v1/shares", body: body)
+                                _ = try await postServerJSON(fallback, "/shielded-vote/v1/shares", body: body)
                                 await tracker.recordSuccess(for: fallback)
                                 accepted = true
                                 acceptedServers.append(fallback)
@@ -551,7 +551,7 @@ extension VotingAPIClient: DependencyKey {
                 return results
             },
             fetchShareStatus: { helperBaseURL, roundIdHex, nullifierHex in
-                let path = "/api/v1/share-status/\(roundIdHex)/\(nullifierHex)"
+                let path = "/shielded-vote/v1/share-status/\(roundIdHex)/\(nullifierHex)"
                 guard let url = URL(string: "\(helperBaseURL)\(path)") else {
                     throw SvAPIError.invalidResponse("invalid URL: \(helperBaseURL)\(path)")
                 }
@@ -616,7 +616,7 @@ extension VotingAPIClient: DependencyKey {
                             "submit_at": 0  // immediate for resubmission
                         ]
                         do {
-                            _ = try await postServerJSON(server, "/api/v1/shares", body: body)
+                            _ = try await postServerJSON(server, "/shielded-vote/v1/shares", body: body)
                             await tracker.recordSuccess(for: server)
                             accepted.append(server)
                             break  // one acceptance is enough
@@ -660,7 +660,7 @@ extension VotingAPIClient: DependencyKey {
                     for server in targets {
                         group.addTask {
                             do {
-                                _ = try await postServerJSON(server, "/api/v1/shares", body: body)
+                                _ = try await postServerJSON(server, "/shielded-vote/v1/shares", body: body)
                                 await tracker.recordSuccess(for: server)
                                 return (server, true)
                             } catch {

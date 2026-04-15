@@ -125,7 +125,7 @@ actor ServerHealthTracker {
 
     // MARK: - Health Probing
 
-    /// Probe all servers in parallel with GET /api/v1/status.
+    /// Probe all servers in parallel with GET /shielded-vote/v1/status.
     func probeAll() async {
         let urls = Array(servers.keys)
         guard !urls.isEmpty else { return }
@@ -149,7 +149,7 @@ actor ServerHealthTracker {
 
     /// Single server probe. Returns true if the server responds 200 within the timeout.
     private static func probe(url: String, session: URLSession) async -> Bool {
-        guard let endpoint = URL(string: "\(url)/api/v1/status") else { return false }
+        guard let endpoint = URL(string: "\(url)/shielded-vote/v1/status") else { return false }
         do {
             let (_, response) = try await session.data(from: endpoint)
             guard let http = response as? HTTPURLResponse else { return false }
