@@ -19,32 +19,32 @@ extension DependencyValues {
 @DependencyClient
 struct UserMetadataProviderClient {
     // General
-    let store: (Account) throws -> Void
-    let load: (Account) throws -> Void
-    let resetAccount: (Account) throws -> Void
-    let reset: () throws -> Void
+    var store: @Sendable (Account) throws -> Void
+    var load: @Sendable (Account) throws -> Void
+    var resetAccount: @Sendable (Account) throws -> Void
+    var reset: @Sendable () throws -> Void
 
     // Bookmarking
-    let isBookmarked: (String) -> Bool
-    let toggleBookmarkFor: (String) -> Void
-    
+    var isBookmarked: @Sendable (String) -> Bool = { _ in false }
+    var toggleBookmarkFor: @Sendable (String) -> Void
+
     // Annotations
-    let annotationFor: (String) -> String?
-    let addAnnotationFor: (String, String) -> Void
-    let deleteAnnotationFor: (String) -> Void
+    var annotationFor: @Sendable (String) -> String? = { _ in nil }
+    var addAnnotationFor: @Sendable (String, String) -> Void
+    var deleteAnnotationFor: @Sendable (String) -> Void
 
     // Read
-    let isRead: (String, TimeInterval?) -> Bool
-    let readTx: (String) -> Void
-    
+    var isRead: @Sendable (String, TimeInterval?) -> Bool = { _, _ in false }
+    var readTx: @Sendable (String) -> Void
+
     // Swap Id
-    let allSwaps: () -> [UMSwapId]
-    let isSwapTransaction: (String) -> Bool
-    let swapDetailsForTransaction: (String) -> UMSwapId?
-    let markTransactionAsSwapFor: (String, String, Int64, String, String, String, Bool, String, String) -> Void
-    let update: (UMSwapId) -> Void
-    
+    var allSwaps: @Sendable () -> [UMSwapId] = { [] }
+    var isSwapTransaction: @Sendable (String) -> Bool = { _ in false }
+    var swapDetailsForTransaction: @Sendable (String) -> UMSwapId? = { _ in nil }
+    var markTransactionAsSwapFor: @Sendable (String, String, Int64, String, String, String, Bool, String, String) -> Void
+    var update: @Sendable (UMSwapId) -> Void
+
     // Last User SwapAssets
-    let lastUsedAssetHistory: () -> [String]
-    let addLastUsedSwapAsset: (String) -> Void
+    var lastUsedAssetHistory: @Sendable () -> [String] = { [] }
+    var addLastUsedSwapAsset: @Sendable (String) -> Void
 }
