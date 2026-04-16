@@ -282,23 +282,6 @@
         }
       }
     },
-    "addKeystoneWalletHelpBirthday" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "^[The Wallet Birthday Height](style: 'boldPrimary') is the block height (block # in the blockchain) at which your wallet was created. It is important to provide the correct height because that determines the range of blocks we will scan to display your transaction history and wallet balance. If you have recovered a seed from a different hardware device, make sure to enter the block height of your original hardware device."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "^[La Altura de Cumpleaños de la Billetera](style: 'boldPrimary') es la altura de bloque (número de bloque en la cadena de bloques) en la que se creó tu billetera. Es importante proporcionar la altura correcta porque determina el rango de bloques que se escanearán para mostrar tu historial de transacciones y saldo. Si recuperaste una semilla de un dispositivo de hardware diferente, asegúrate de ingresar la altura de bloque de tu dispositivo de hardware original."
-          }
-        }
-      }
-    },
     "addressBook.addNewContact" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2585,7 +2568,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Decide hasta dónde debe resincronizarse Zodl. Ingresa una fecha anterior a tu primera transacción recibida."
+            "value" : "Decide hasta dónde debe escanear Zodl. Ingresa una fecha anterior a tu primera transacción recibida. Si no estás seguro/a, elige una fecha anterior."
           }
         }
       }
@@ -2602,7 +2585,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Decide hasta dónde debe resincronizarse Zodl. Ingresa una fecha anterior a tu primera transacción recibida."
+            "value" : "Decide hasta dónde debe resincronizarse Zodl. Ingresa una fecha anterior a tu primera transacción recibida. Si no estás seguro/a, elige una fecha anterior."
           }
         }
       }
@@ -3420,7 +3403,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "^[Advertencia:](style: 'boldPrimary') Mantén la app abierta hasta que tu billetera Keystone esté sincronizada."
+            "value" : "^[Advertencia:](style: 'boldPrimary') No podrás usar tus fondos de Zodl hasta que tu billetera Keystone esté sincronizada."
           }
         }
       }
@@ -3437,7 +3420,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "^[Advertencia:](style: 'boldPrimary') Mantén la app abierta hasta que tu billetera esté completamente restaurada."
+            "value" : "^[Advertencia:](style: 'boldPrimary') No podrás usar tus fondos hasta que tu billetera esté completamente restaurada."
           }
         }
       }
@@ -3454,7 +3437,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "^[Advertencia:](style: 'boldPrimary') Mantén la app abierta hasta que tu billetera se haya resincronizado."
+            "value" : "^[Advertencia:](style: 'boldPrimary') No podrás usar tus fondos hasta que tu billetera se haya resincronizado."
           }
         }
       }
@@ -3760,7 +3743,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Confirma tu Cuenta para Acceder"
+            "value" : "Confirmar Cuenta para Acceder"
           }
         }
       }
@@ -5817,23 +5800,6 @@
         }
       }
     },
-    "restoreWallet.help.birthday" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "^[The Wallet Birthday Height](style: 'boldPrimary') is the block height (block # in the blockchain) at which your wallet was created. If you ever lose access to your Zodl app and need to recover your funds, providing the block height along with your recovery phrase can significantly speed up the process."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "^[La Altura de Cumpleaños de la Billetera](style: 'boldPrimary') es la altura del bloque (número de bloque en la blockchain) en el que tu billetera fue creada. Si alguna vez pierdes acceso a tu aplicación Zodl y necesitas recuperar tus fondos, proporcionar la altura del bloque junto con tu frase de recuperación puede acelerar significativamente el proceso."
-          }
-        }
-      }
-    },
     "restoreWallet.help.phrase" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -5994,13 +5960,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "We tried but couldn’t trigger the Resync. Please try again or report an issue."
+            "value" : "Resync of the wallet couldn’t be finalized. Please try again or report an issue."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intentamos resincronizar, pero no lo conseguimos. Vuelve a intentarlo o informa del problema."
+            "value" : "No se pudo completar la resincronización de la billetera. Inténtalo de nuevo o informa del problema."
           }
         }
       }
@@ -13309,7 +13275,24 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Al introducir la fecha de nacimiento y la altura de tu monedero, nos aseguramos de poder mostrar correctamente todos tus fondos y el historial de transacciones."
+            "value" : "Al introducir la Altura de Creación de tu Billetera, nos aseguramos de poder mostrar correctamente todos tus fondos y el historial de transacciones."
+          }
+        }
+      }
+    },
+    "walletBirthdayHelpDesc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "^[The Wallet Birthday Height](style: 'boldPrimary') is the block height (block # in the blockchain) at which your wallet was created. It is important to provide the correct height because that determines the range of blocks we will scan to display your transaction history and wallet balance. If you have recovered a seed from a different hardware device, make sure to enter the block height of your original hardware device."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "^[La Altura de Creación de la Billetera (Wallet Birthday Height)](style: 'boldPrimary') corresponde a la altura del bloque (número de bloque en la cadena de bloques) en la que se creó tu billetera. Es importante proporcionar la altura correcta, ya que determina el rango de bloques que analizaremos para mostrar tu historial de transacciones y el saldo de tu billetera. Si recuperaste una semilla de otro dispositivo, asegúrate de ingresar la altura del bloque de tu dispositivo original."
           }
         }
       }

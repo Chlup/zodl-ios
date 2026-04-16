@@ -209,7 +209,7 @@ struct SettingsView: View {
                     .zImage(size: 20, style: Design.Text.primary)
 
                 if let attrText = try? AttributedString(
-                    markdown: String(localizable: .addKeystoneWalletHelpBirthday),
+                    markdown: String(localizable: .walletBirthdayHelpDesc),
                     including: \.zashiApp
                 ) {
                     ZashiText(withAttributedString: attrText, colorScheme: colorScheme)

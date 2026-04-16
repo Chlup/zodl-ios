@@ -88,7 +88,7 @@ struct RestoreWalletCoordFlowView: View {
             infoContent(text: String(localizable: .restoreWalletHelpPhrase))
                 .padding(.bottom, 12)
             
-            infoContent(text: String(localizable: .restoreWalletHelpBirthday))
+            infoContent(text: String(localizable: .walletBirthdayHelpDesc))
                 .padding(.bottom, 32)
             
             ZashiButton(String(localizable: .restoreInfoGotIt)) {
