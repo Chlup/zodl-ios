@@ -2,7 +2,7 @@ import Foundation
 
 // MARK: - Ballot Constants
 
-/// Ballot divisor in zatoshi (0.125 ZEC). Must match `librustvoting::governance::BALLOT_DIVISOR`.
+/// Ballot divisor in zatoshi (0.125 ZEC). Must match `zcash_voting::governance::BALLOT_DIVISOR`.
 /// One ballot = this many zatoshi. Used for quantizing note bundle weights and tally display.
 let ballotDivisor: UInt64 = 12_500_000
 
