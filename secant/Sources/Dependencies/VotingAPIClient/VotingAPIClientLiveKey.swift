@@ -324,7 +324,7 @@ extension VotingAPIClient: DependencyKey {
                     let (data, response) = try await httpSession.data(from: configURL)
                     if let http = response as? HTTPURLResponse, http.statusCode == 200 {
                         let config = try JSONDecoder().decode(VotingServiceConfig.self, from: data)
-                        print("[VotingAPI] Loaded config (\(VotingServiceConfig.environment)): \(config.voteServers.count) vote servers")
+                        print("[VotingAPI] Loaded config from CDN: \(config.voteServers.count) vote servers")
                         return config
                     }
                 } catch {

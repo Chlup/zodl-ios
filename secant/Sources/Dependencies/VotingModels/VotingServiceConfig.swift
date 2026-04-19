@@ -31,21 +31,8 @@ struct VotingServiceConfig: Codable, Equatable, Sendable {
         case pirServers = "pir_servers"
     }
 
-    public enum Environment: String, Sendable {
-        case staging
-        case production
-
-        var configURL: URL {
-            let base = "https://valargroup.github.io/token-holder-voting-config"
-            return URL(string: "\(base)/\(rawValue)/voting-config.json")!
-        }
-    }
-
-    /// Active environment. Change at launch before first config fetch.
-    public static var environment: Environment = .staging
-
-    /// Config URL for the active environment (served via GitHub Pages CDN).
-    public static var configURL: URL { environment.configURL }
+    /// Config URL served via GitHub Pages CDN.
+    public static let configURL = URL(string: "https://valargroup.github.io/token-holder-voting-config/voting-config.json")!
 
     /// Filename for a local override bundled in the app (takes priority over CDN).
     static let localOverrideFilename = "voting-config-local.json"
