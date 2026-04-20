@@ -82,4 +82,6 @@ lib
 *.a
 *.generated.swift
 
-.claude
+# Claude
+.claude/settings.local.json
+.remember/
