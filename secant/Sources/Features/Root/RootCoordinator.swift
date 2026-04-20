@@ -140,7 +140,7 @@ extension Root {
                             .receive(on: mainQueue)
                     }
                     .cancellable(id: state.CancelResyncStateId, cancelInFlight: true),
-                    .send(.batteryStateChanged(nil))
+                    .send(.batteryStateChanged)
                 )
                 
             case .rewindDone(let zcashError):
