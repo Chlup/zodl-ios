@@ -48,11 +48,11 @@ extension Root {
                 // MARK: - Add Keystone HW Wallet Coord Flow
 
             case .addKeystoneHWWalletCoordFlow(.path(.element(id: _, action: .restoreInfo(.gotItTapped)))):
-                var leavesScreenOpen = false
-                for element in state.addKeystoneHWWalletCoordFlowState.path {
+                let leavesScreenOpen = state.addKeystoneHWWalletCoordFlowState.path.reduce(false) { result, element in
                     if case .restoreInfo(let restoreInfoState) = element {
-                        leavesScreenOpen = restoreInfoState.isAcknowledged
+                        return restoreInfoState.isAcknowledged
                     }
+                    return result
                 }
                 userDefaults.setValue(leavesScreenOpen, Constants.udLeavesScreenOpen)
                 return .run { _ in await autolockHandler.value(leavesScreenOpen) }

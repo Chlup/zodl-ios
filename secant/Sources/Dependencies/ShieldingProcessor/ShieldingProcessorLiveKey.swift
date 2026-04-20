@@ -24,14 +24,6 @@ extension ShieldingProcessorClient: DependencyKey {
 }
 
 private final class ShieldingProcessorImpl: Sendable {
-    @Dependency(\.derivationTool) var derivationTool
-    @Dependency(\.mnemonic) var mnemonic
-    @Dependency(\.sdkSynchronizer) var sdkSynchronizer
-    @Dependency(\.walletStorage) var walletStorage
-    @Dependency(\.zcashSDKEnvironment) var zcashSDKEnvironment
-
-    @Shared(.inMemory(.selectedWalletAccount)) var selectedWalletAccount: WalletAccount? = nil
-
     let subject = CurrentValueSubject<ShieldingProcessorClient.State, Never>(.unknown)
 
     func observe() -> AnyPublisher<ShieldingProcessorClient.State, Never> {
@@ -39,6 +31,14 @@ private final class ShieldingProcessorImpl: Sendable {
     }
 
     func shieldFunds() {
+        @Dependency(\.derivationTool) var derivationTool
+        @Dependency(\.mnemonic) var mnemonic
+        @Dependency(\.sdkSynchronizer) var sdkSynchronizer
+        @Dependency(\.walletStorage) var walletStorage
+        @Dependency(\.zcashSDKEnvironment) var zcashSDKEnvironment
+
+        @Shared(.inMemory(.selectedWalletAccount)) var selectedWalletAccount: WalletAccount? = nil
+
         subject.send(.requested)
 
         guard let account = selectedWalletAccount, let zip32AccountIndex = account.zip32AccountIndex else {

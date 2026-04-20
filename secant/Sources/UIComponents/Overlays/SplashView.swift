@@ -8,6 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 
+@MainActor
 final class SplashManager: ObservableObject {
     struct SplashShape: Shape {
         var points: [CGPoint]
@@ -74,11 +75,11 @@ final class SplashManager: ObservableObject {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 1.0 / 60.0, repeats: true) { timer in
             if self.isOn {
-                Task {
-                    await self.tick()
-                    
+                Task { @MainActor in
+                    self.tick()
+
                     if self.currentMaxHeight <= 0.0 {
-                        await self.finished()
+                        self.finished()
                     }
                 }
             }

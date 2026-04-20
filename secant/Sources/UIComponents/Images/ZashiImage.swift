@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@MainActor
 extension Image {
     func zImage(
         width: CGFloat,

@@ -15,7 +15,16 @@ enum LoggerConstants {
     static let walletLogs = "walletLogs"
 }
 
-var walletLogger: ZcashLightClientKit.Logger?
+/// Thread-safe storage for the global wallet logger, guarded by an `OSAllocatedUnfairLock`.
+///
+/// `ZcashLightClientKit.Logger` is imported via `@preconcurrency` and isn't annotated
+/// `Sendable`, but all access goes through the lock so the holder is thread-safe on its own.
+private let walletLoggerStorage = OSAllocatedUnfairLock<ZcashLightClientKit.Logger?>(initialState: nil)
+
+var walletLogger: ZcashLightClientKit.Logger? {
+    get { walletLoggerStorage.withLock { $0 } }
+    set { walletLoggerStorage.withLock { $0 = newValue } }
+}
 
 enum LoggerProxy {
     static func debug(_ message: String, file: StaticString = #file, function: StaticString = #function, line: Int = #line) {

@@ -18,13 +18,13 @@ extension Reducer {
 
 struct ReducerLogger<State, Action> {
     private let _logChange: (_ receivedAction: Action, _ oldState: State, _ newState: State) -> Void
-    
+
     init(
         logChange: @escaping (_ receivedAction: Action, _ oldState: State, _ newState: State) -> Void
     ) {
         self._logChange = logChange
     }
-    
+
     func logChange(receivedAction: Action, oldState: State, newState: State) {
         self._logChange(receivedAction, oldState, newState)
     }
@@ -45,15 +45,15 @@ extension ReducerLogger {
 
 struct LogChangesReducer<Base: Reducer>: Reducer {
     @usableFromInline let base: Base
-    
+
     @usableFromInline let logger: ReducerLogger<Base.State, Base.Action>?
-    
+
     @usableFromInline
     init(base: Base, logger: ReducerLogger<Base.State, Base.Action>?) {
         self.base = base
         self.logger = logger
     }
-    
+
     @inlinable
     func reduce(
         into state: inout Base.State, action: Base.Action
@@ -61,13 +61,10 @@ struct LogChangesReducer<Base: Reducer>: Reducer {
         guard let logger else {
             return self.base.reduce(into: &state, action: action)
         }
-        
+
         let oldState = state
         let effects = self.base.reduce(into: &state, action: action)
-        return effects.merge(
-            with: .run { [newState = state] _ in
-                logger.logChange(receivedAction: action, oldState: oldState, newState: newState)
-            }
-        )
+        logger.logChange(receivedAction: action, oldState: oldState, newState: state)
+        return effects
     }
 }
