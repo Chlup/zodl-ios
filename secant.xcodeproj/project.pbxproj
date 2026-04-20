@@ -4903,6 +4903,7 @@
 				9E599F2F2C3EEE5A000E4997 /* Generate PartnerKeys.plist */,
 				34968BEE2ABDC6FA0027F495 /* Swiftgen */,
 				0D26AE99299E8196005260EE /* SwiftLint */,
+				9FEED00000000000000000A1 /* Update SDK Ref */,
 				0D26AE9A299E8196005260EE /* Sources */,
 				0D26AF70299E8196005260EE /* Frameworks */,
 				0D26AF78299E8196005260EE /* Resources */,
@@ -4939,6 +4940,7 @@
 				9E599F2E2C3EEE25000E4997 /* Generate PartnerKeys.plist */,
 				34968BED2ABDC6310027F495 /* Swiftgen */,
 				6696BA8726F0B1D200D5C875 /* SwiftLint */,
+				9FEED00000000000000000A2 /* Update SDK Ref */,
 				0D4E7A0126B364170058B01E /* Sources */,
 				0D4E7A0226B364170058B01E /* Frameworks */,
 				0D4E7A0326B364170058B01E /* Resources */,
@@ -5013,6 +5015,7 @@
 				9E41FFA12CB2814500783CFD /* Generate PartnerKeys.plist */,
 				9E41FFA32CB2814500783CFD /* Swiftgen */,
 				9E41FFA42CB2814500783CFD /* SwiftLint */,
+				9FEED00000000000000000A3 /* Update SDK Ref */,
 				9E41FFA52CB2814500783CFD /* Sources */,
 				9E41FFA92CB2814500783CFD /* Frameworks */,
 				9E41FFAE2CB2814500783CFD /* Resources */,
@@ -5085,6 +5088,7 @@
 				9E5AB4682C94777800065483 /* Generate PartnerKeys.plist */,
 				9E5AB46A2C94777800065483 /* Swiftgen */,
 				9E5AB46B2C94777800065483 /* SwiftLint */,
+				9FEED00000000000000000A4 /* Update SDK Ref */,
 				9E5AB46C2C94777800065483 /* Sources */,
 				9E5AB4702C94777800065483 /* Frameworks */,
 				9E5AB4752C94777800065483 /* Resources */,
@@ -5716,6 +5720,82 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
 			shellScript = "swiftlint_version=0.50.3\n\nif which swiftlint >/dev/null; then\n  if [[ $(swiftlint version) != $swiftlint_version ]]; then\n    echo \"warning: Compatible SwiftLint version not installed, download version $swiftlint_version from https://github.com/realm/SwiftLint. Currently installed version is $(swiftlint version)\"\n  fi\n   \n  echo \"Linting the Secant code\"\n  #swiftlint lint --config .swiftlint.yml\n  echo \"Linting tests\"\n  #swiftlint lint --config .swiftlint_tests.yml\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		9FEED00000000000000000A1 /* Update SDK Ref */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Update SDK Ref";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/zsh;
+			shellScript = "\"${PROJECT_DIR}/Scripts/update-sdk-ref.sh\"\n";
+		};
+		9FEED00000000000000000A2 /* Update SDK Ref */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Update SDK Ref";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/zsh;
+			shellScript = "\"${PROJECT_DIR}/Scripts/update-sdk-ref.sh\"\n";
+		};
+		9FEED00000000000000000A3 /* Update SDK Ref */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Update SDK Ref";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/zsh;
+			shellScript = "\"${PROJECT_DIR}/Scripts/update-sdk-ref.sh\"\n";
+		};
+		9FEED00000000000000000A4 /* Update SDK Ref */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Update SDK Ref";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/zsh;
+			shellScript = "\"${PROJECT_DIR}/Scripts/update-sdk-ref.sh\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

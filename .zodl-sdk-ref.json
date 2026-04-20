@@ -1,0 +1,4 @@
+{
+  "repoURL": "https://github.com/zcash/zcash-swift-wallet-sdk.git",
+  "branch": "MOB-1011-Synchronizer-rescanFromHeight"
+}
