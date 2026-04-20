@@ -2,6 +2,7 @@ import SwiftUI
 import CasePaths
 
 /// taken largely from: https://github.com/pointfreeco/episode-code-samples/blob/main/0167-navigation-pt8/SwiftUINavigation/SwiftUINavigation/SwiftUIHelpers.swift
+@MainActor
 extension Binding {
     func isPresent<Wrapped>() -> Binding<Bool>
     where Value == Wrapped? {

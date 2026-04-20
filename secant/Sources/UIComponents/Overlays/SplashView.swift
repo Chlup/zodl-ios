@@ -46,8 +46,8 @@ final class SplashManager: ObservableObject {
             if featureFlags.appLaunchBiometric {
                 authenticate()
             } else {
-                Task {
-                    await self.spinTheWheel()
+                Task { @MainActor in
+                    self.spinTheWheel()
                 }
             }
         }
@@ -57,12 +57,12 @@ final class SplashManager: ObservableObject {
         @Dependency(\.localAuthentication) var localAuthentication
 
         authenticationDidntSucceed = false
-        
-        Task {
+
+        Task { @MainActor in
             if await !localAuthentication.authenticate() {
-                await self.authenticationFailed()
+                self.authenticationFailed()
             } else {
-                await self.spinTheWheel()
+                self.spinTheWheel()
             }
         }
     }
@@ -73,14 +73,12 @@ final class SplashManager: ObservableObject {
     
     @MainActor func spinTheWheel() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0 / 60.0, repeats: true) { timer in
-            if self.isOn {
-                Task { @MainActor in
-                    self.tick()
-
-                    if self.currentMaxHeight <= 0.0 {
-                        self.finished()
-                    }
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0 / 60.0, repeats: true) { [weak self] _ in
+            MainActor.assumeIsolated {
+                guard let self, self.isOn else { return }
+                self.tick()
+                if self.currentMaxHeight <= 0.0 {
+                    self.finished()
                 }
             }
         }

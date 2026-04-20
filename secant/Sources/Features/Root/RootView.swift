@@ -473,6 +473,7 @@ extension Root.State {
     }
 }
 
+@MainActor
 extension Root {
     static var placeholder: StoreOf<Root> {
         StoreOf<Root>(

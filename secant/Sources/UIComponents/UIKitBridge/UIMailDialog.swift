@@ -10,6 +10,15 @@ import MessageUI
 import UIKit
 import SwiftUI
 
+extension MFMailComposeViewController {
+    /// Nonisolated wrapper around `canSendMail()`, which became `@MainActor`-isolated
+    /// in Swift 6. TCA reducers always run inside `Store.send(_:)` (itself `@MainActor`),
+    /// so asserting `MainActor` isolation from a reducer case is safe.
+    nonisolated static func canSendMailFromReducer() -> Bool {
+        MainActor.assumeIsolated { canSendMail() }
+    }
+}
+
 class UIMailDialog: UIView {
     var completion: (() -> Void)?
 

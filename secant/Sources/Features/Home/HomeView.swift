@@ -352,6 +352,7 @@ extension Home.State {
     }
 }
 
+@MainActor
 extension Home {
     static var placeholder: StoreOf<Home> {
         StoreOf<Home>(

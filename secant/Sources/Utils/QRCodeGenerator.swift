@@ -28,6 +28,11 @@ enum QRCodeGenerator {
         overlayedWithZcashLogo: Bool = true
     ) -> Future<CGImage?, Never> {
         Future<CGImage?, Never> { promise in
+            // `promise` comes from Combine's `Future` (imported `@preconcurrency`) and
+            // is not annotated `Sendable`, so it can't be captured by the `@Sendable`
+            // `DispatchQueue.global().async` closure directly. Wrap it: the closure
+            // is called exactly once, so hopping it across queues is safe.
+            let promiseBox = SendableBox(promise)
             DispatchQueue.global().async {
                 let image = generateCode(
                     from: string,
@@ -36,10 +41,14 @@ enum QRCodeGenerator {
                     color: color,
                     overlayedWithZcashLogo: overlayedWithZcashLogo
                 )
-                
-                return promise(.success(image))
+                promiseBox.value(.success(image))
             }
         }
+    }
+
+    private struct SendableBox<Value>: @unchecked Sendable {
+        let value: Value
+        init(_ value: Value) { self.value = value }
     }
 
     static func generateCode(

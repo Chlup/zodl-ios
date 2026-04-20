@@ -258,7 +258,7 @@ struct SmartBanner {
                 
                 \(supportData.message)
                 """
-                if MFMailComposeViewController.canSendMail() {
+                if MFMailComposeViewController.canSendMailFromReducer() {
                     state.supportData = supportData
                 } else {
                     state.messageToBeShared = supportData.message

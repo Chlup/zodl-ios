@@ -91,8 +91,10 @@ struct ZecKeyboard {
                     return .none
                 }
 
-                let impactFeedback = UIImpactFeedbackGenerator(style: .light)
-                impactFeedback.impactOccurred()
+                MainActor.assumeIsolated {
+                    let impactFeedback = UIImpactFeedbackGenerator(style: .light)
+                    impactFeedback.impactOccurred()
+                }
 
                 // backspace
                 if index == 11 {
