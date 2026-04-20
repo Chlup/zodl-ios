@@ -271,7 +271,7 @@ extension DisconnectHWWallet.State {
 }
 
 extension StoreOf<DisconnectHWWallet> {
-    @MAinActor static let initial = StoreOf<DisconnectHWWallet>(
+    @MainActor static let initial = StoreOf<DisconnectHWWallet>(
         initialState: .initial
     ) {
         DisconnectHWWallet()
