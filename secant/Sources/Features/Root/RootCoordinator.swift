@@ -132,7 +132,7 @@ extension Root {
                             // TODO: error handling
                         }
                     },
-                    .send(.batteryStateChanged(nil))
+                    .send(.batteryStateChanged)
                 )
 
                 // MARK: - Flexa
