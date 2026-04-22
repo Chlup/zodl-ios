@@ -112,17 +112,18 @@ struct WalletBirthday {
                 let currentMonth = Calendar.current.component(.month, from: Date())
                 let formatter = DateFormatter()
                 formatter.locale = Locale.current
+                let capitalizedMonths = formatter.monthSymbols.map { $0.prefix(1).uppercased() + $0.dropFirst() }
                 if state.selectedYear > Constants.startYear && state.selectedYear < currentYear {
-                    state.months = formatter.monthSymbols
+                    state.months = capitalizedMonths
                 } else if state.selectedYear == Constants.startYear {
-                    state.months = formatter.monthSymbols.suffix(13 - Constants.startMonth)
+                    state.months = Array(capitalizedMonths.suffix(13 - Constants.startMonth))
                     if !state.months.contains(state.selectedMonth) {
                         if let first = state.months.first {
                             state.selectedMonth = first
                         }
                     }
                 } else if state.selectedYear == currentYear {
-                    state.months = Array(formatter.monthSymbols.prefix(currentMonth))
+                    state.months = Array(capitalizedMonths.prefix(currentMonth))
                     if !state.months.contains(state.selectedMonth) {
                         if let last = state.months.last {
                             state.selectedMonth = last
@@ -138,7 +139,7 @@ struct WalletBirthday {
                 // compute date based on the picker state
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "MMMM yyyy"
-                dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                dateFormatter.locale = Locale.current
                 if let date = dateFormatter.date(from: "\(state.selectedMonth) \(state.selectedYear)") {
                     state.estimatedHeight = sdkSynchronizer.estimateBirthdayHeight(date)
                     state.isValidBirthday = true

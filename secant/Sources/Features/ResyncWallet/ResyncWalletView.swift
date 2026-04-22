@@ -136,12 +136,12 @@ struct ResyncWalletView: View {
                 String(localizable: .disconnectHWWalletTryAgain),
                 type: .secondary
             ) {
-                store.send(.contactSupport)
+                store.send(.tryAgain)
             }
             .padding(.bottom, 12)
 
             ZashiButton(String(localizable: .disconnectHWWalletContactSupport)) {
-                store.send(.tryAgain)
+                store.send(.contactSupport)
             }
             .padding(.bottom, Design.Spacing.sheetBottomSpace)
         }
