@@ -30,7 +30,49 @@ struct ConfirmSubmissionView: View {
             .zashiBack {
                 if !isInFlight { store.send(.backToList) }
             }
+            .votingSheet(
+                isPresented: authorizationFailedBinding,
+                title: "Authorization Failed",
+                message: "The voting transaction couldn't be authorized. Check your connection and try again.",
+                primary: .init(title: "Try again", style: .primary) {
+                    store.send(.retryBatchSubmission)
+                },
+                secondary: .init(title: "Cancel", style: .secondary) {
+                    store.send(.dismissBatchResults)
+                }
+            )
+            .votingSheet(
+                isPresented: submissionFailedBinding,
+                title: "Submission Failed",
+                message: "The vote submission failed. Check your connection and try again.",
+                primary: .init(title: "Try again", style: .primary) {
+                    store.send(.retryBatchSubmission)
+                },
+                secondary: .init(title: "Cancel", style: .secondary) {
+                    store.send(.dismissBatchResults)
+                }
+            )
         }
+    }
+
+    // MARK: - Sheet bindings
+
+    private var authorizationFailedBinding: Binding<Bool> {
+        Binding(
+            get: { if case .authorizationFailed = status { return true } else { return false } },
+            set: { newValue in
+                if !newValue { store.send(.dismissBatchResults) }
+            }
+        )
+    }
+
+    private var submissionFailedBinding: Binding<Bool> {
+        Binding(
+            get: { if case .submissionFailed = status { return true } else { return false } },
+            set: { newValue in
+                if !newValue { store.send(.dismissBatchResults) }
+            }
+        )
     }
 
     // MARK: - Computed
@@ -76,12 +118,12 @@ struct ConfirmSubmissionView: View {
         switch status {
         case .idle:
             return "Confirm & Submit"
-        case .authorizing, .submitting:
+        case .authorizing, .submitting, .authorizationFailed, .submissionFailed:
+            // Failure overlays (.authorizationFailed / .submissionFailed) keep
+            // the in-progress appearance underneath while the sheet drives UX.
             return "Submitting vote..."
         case .completed:
             return "Submission Confirmed!"
-        case .failed:
-            return "Submission Failed"
         }
     }
 
@@ -93,12 +135,10 @@ struct ConfirmSubmissionView: View {
                 return "Review before signing the voting authorization with your Keystone. This is final. Your vote will be published and cannot be changed."
             }
             return "Review before confirming the voting authorization. This is final. Your vote will be published and cannot be changed."
-        case .authorizing, .submitting:
+        case .authorizing, .submitting, .authorizationFailed, .submissionFailed:
             return "Vote submission is in progress, please don\u{2019}t leave this screen until it is finished."
         case .completed:
             return "Your vote was successfully published and cannot be changed."
-        case .failed(let error, _, _):
-            return error
         }
     }
 
@@ -193,6 +233,14 @@ struct ConfirmSubmissionView: View {
             let overall = min(1.0, offset + fraction * (1.0 - offset))
             return (overall, "Submitting your votes...")
 
+        case .authorizationFailed:
+            return (0, "Authorizing...")
+
+        case let .submissionFailed(_, submittedCount, totalCount):
+            let fraction = Double(submittedCount) / Double(max(totalCount, 1))
+            let overall = min(1.0, delegationWeight + fraction * (1.0 - delegationWeight))
+            return (overall, "Submitting your votes...")
+
         default:
             return (0, "")
         }
@@ -208,7 +256,10 @@ struct ConfirmSubmissionView: View {
                 store.send(.submitAllDrafts)
             }
 
-        case .authorizing, .submitting:
+        case .authorizing, .submitting, .authorizationFailed, .submissionFailed:
+            // Progress card stays on screen underneath the error sheet, which
+            // is driven by the authorizationFailed / submissionFailed bindings
+            // and owns the retry/cancel affordance.
             let (progress, title) = submissionProgress
             VStack(spacing: Design.Spacing._lg) {
                 VStack(alignment: .leading, spacing: Design.Spacing._lg) {
@@ -238,11 +289,6 @@ struct ConfirmSubmissionView: View {
         case .completed:
             ZashiButton("Done") {
                 store.send(.doneTapped)
-            }
-
-        case .failed:
-            ZashiButton("Dismiss") {
-                store.send(.dismissBatchResults)
             }
         }
     }

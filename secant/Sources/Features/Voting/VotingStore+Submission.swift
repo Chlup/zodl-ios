@@ -119,22 +119,32 @@ extension Voting {
                 let hotkeySeed = try mnemonic.toSeed(hotkeyPhrase)
 
                 // --- Delegation (ZKP #1) — run inline if not already done ---
+                // Failures here are surfaced as authorization errors so the UI
+                // can show the dedicated "Authorization Failed" sheet and
+                // distinguish them from per-proposal submission failures below.
                 if !delegationDone {
-                    let senderPhrase = try walletStorage.exportWallet().seedPhrase.value()
-                    let senderSeed = try mnemonic.toSeed(senderPhrase)
-                    try await Self.runDelegationPipeline(
-                        roundId: roundId,
-                        cachedNotes: cachedNotes,
-                        senderSeed: senderSeed,
-                        hotkeySeed: hotkeySeed,
-                        networkId: networkId,
-                        accountIndex: 0,
-                        roundName: roundName,
-                        pirServerUrl: pirServerUrl,
-                        votingCrypto: votingCrypto,
-                        votingAPI: votingAPI,
-                        send: send
-                    )
+                    do {
+                        let senderPhrase = try walletStorage.exportWallet().seedPhrase.value()
+                        let senderSeed = try mnemonic.toSeed(senderPhrase)
+                        try await Self.runDelegationPipeline(
+                            roundId: roundId,
+                            cachedNotes: cachedNotes,
+                            senderSeed: senderSeed,
+                            hotkeySeed: hotkeySeed,
+                            networkId: networkId,
+                            accountIndex: 0,
+                            roundName: roundName,
+                            pirServerUrl: pirServerUrl,
+                            votingCrypto: votingCrypto,
+                            votingAPI: votingAPI,
+                            send: send
+                        )
+                    } catch {
+                        await send(.batchAuthorizationFailed(
+                            error: VotingErrorMapper.userFriendlyMessage(from: error.localizedDescription)
+                        ))
+                        return
+                    }
                 }
 
                 // Transition from .authorizing to .submitting now that delegation is done.
@@ -373,11 +383,28 @@ extension Voting {
             state.submittingProposalId = nil
             state.voteSubmissionStep = nil
             state.currentVoteBundleIndex = nil
-            state.batchSubmissionStatus = .completed(successCount: successCount, failCount: failCount)
-            // Clean up persisted drafts when all votes succeeded
-            if failCount == 0 {
+            if failCount > 0 {
+                // Keep persisted drafts: failed proposals are still in draftVotes
+                // (only successful ones were removed on .batchVoteSubmitted) so
+                // retrying the batch naturally resubmits only what failed.
+                let error = state.batchVoteErrors.values.first ?? "Some votes could not be submitted."
+                state.batchSubmissionStatus = .submissionFailed(
+                    error: error,
+                    submittedCount: successCount,
+                    totalCount: successCount + failCount
+                )
+            } else {
+                state.batchSubmissionStatus = .completed(successCount: successCount)
                 Self.clearPersistedDrafts(walletId: state.walletId, roundId: state.roundId)
             }
+            return .none
+
+        case let .batchAuthorizationFailed(error):
+            state.isSubmittingVote = false
+            state.submittingProposalId = nil
+            state.voteSubmissionStep = nil
+            state.currentVoteBundleIndex = nil
+            state.batchSubmissionStatus = .authorizationFailed(error: error)
             return .none
 
         case let .batchSubmissionFailed(error, submittedCount, totalCount):
@@ -385,12 +412,21 @@ extension Voting {
             state.submittingProposalId = nil
             state.voteSubmissionStep = nil
             state.currentVoteBundleIndex = nil
-            state.batchSubmissionStatus = .failed(
-                lastError: error,
+            state.batchSubmissionStatus = .submissionFailed(
+                error: error,
                 submittedCount: submittedCount,
                 totalCount: totalCount
             )
             return .none
+
+        case .retryBatchSubmission:
+            // Reset transient status and per-proposal errors, then re-run the
+            // submission pipeline. Successful proposals were already cleared
+            // from draftVotes on .batchVoteSubmitted, so this resumes with
+            // only the proposals that are still outstanding.
+            state.batchSubmissionStatus = .idle
+            state.batchVoteErrors = [:]
+            return .send(.submitAllDrafts)
 
         case .dismissBatchResults:
             state.batchSubmissionStatus = .idle

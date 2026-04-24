@@ -290,8 +290,16 @@ struct Voting {
             case idle
             case authorizing
             case submitting(currentIndex: Int, totalCount: Int, currentProposalId: UInt32)
-            case completed(successCount: Int, failCount: Int)
-            case failed(lastError: String, submittedCount: Int, totalCount: Int)
+            case completed(successCount: Int)
+            /// Delegation (ZKP #1) failed before any vote was submitted.
+            /// Successful drafts are still in `draftVotes` because the auth
+            /// phase runs before the per-proposal submission loop.
+            case authorizationFailed(error: String)
+            /// One or more proposal submissions failed after delegation
+            /// succeeded. Successful proposals have already been removed from
+            /// `draftVotes`, so a retry naturally resumes with only the
+            /// remaining unsent proposals.
+            case submissionFailed(error: String, submittedCount: Int, totalCount: Int)
         }
 
         var batchSubmissionStatus: BatchSubmissionStatus = .idle
@@ -701,7 +709,9 @@ struct Voting {
         case batchVoteSubmitted(proposalId: UInt32, choice: VoteChoice)
         case batchVoteFailed(proposalId: UInt32, error: String)
         case batchSubmissionCompleted(successCount: Int, failCount: Int)
+        case batchAuthorizationFailed(error: String)
         case batchSubmissionFailed(error: String, submittedCount: Int, totalCount: Int)
+        case retryBatchSubmission
         case dismissBatchResults
 
         // Complete
@@ -838,7 +848,9 @@ struct Voting {
                 .batchVoteSubmitted,
                 .batchVoteFailed,
                 .batchSubmissionCompleted,
+                .batchAuthorizationFailed,
                 .batchSubmissionFailed,
+                .retryBatchSubmission,
                 .dismissBatchResults:
                 return reduceSubmission(&state, action)
             }
