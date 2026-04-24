@@ -165,14 +165,22 @@ struct ResultsView: View {
         }
         let entries = (rawEntries + backfilled).sorted(by: { $0.decision < $1.decision })
         let totalAmount = entries.reduce(UInt64(0)) { $0 + $1.amount }
-        let winningEntry = totalAmount > 0 ? entries.max(by: { $0.amount < $1.amount }) : nil
+        // Two or more entries sharing the top amount render as a tie: the
+        // Winner badge says "Tie" (neutral) and every bar stays neutral,
+        // because calling one of them the winner would be visually misleading.
+        let maxAmount = entries.map(\.amount).max() ?? 0
+        let topCount = entries.filter { $0.amount == maxAmount }.count
+        let isTie = totalAmount > 0 && topCount > 1
+        let winningEntry = (totalAmount > 0 && !isTie)
+            ? entries.first { $0.amount == maxAmount }
+            : nil
 
         VStack(alignment: .leading, spacing: 12) {
             // Top row: ZIP pill + Winner pill
             HStack(spacing: 0) {
                 ZIPBadge(zipNumber: proposal.zipNumber ?? "ZIP-TBD")
                 Spacer()
-                winnerBadge(winningEntry: winningEntry, proposal: proposal)
+                winnerBadge(winningEntry: winningEntry, isTie: isTie, proposal: proposal)
             }
 
             // Title
@@ -229,17 +237,24 @@ struct ResultsView: View {
     // MARK: - Winner Badge
 
     @ViewBuilder
-    private func winnerBadge(winningEntry: TallyResult.Entry?, proposal: VotingProposal) -> some View {
+    private func winnerBadge(winningEntry: TallyResult.Entry?, isTie: Bool, proposal: VotingProposal) -> some View {
         HStack(spacing: 6) {
-            Image(systemName: "checkmark.seal")
-                .font(.system(size: 14, weight: .regular))
-                .foregroundStyle(Design.Text.primary.color(colorScheme))
+            // Seal only renders when there's a decisive winner — a tie gets
+            // neutral framing, per the Figma.
+            if !isTie, winningEntry != nil {
+                Image(systemName: "checkmark.seal")
+                    .font(.system(size: 14, weight: .regular))
+                    .foregroundStyle(Design.Text.primary.color(colorScheme))
+            }
 
             HStack(spacing: 4) {
                 Text("Winner:")
                     .zFont(.medium, size: 13, style: Design.Text.primary)
 
-                if let winner = winningEntry {
+                if isTie {
+                    Text("Tie")
+                        .zFont(.semiBold, size: 13, style: Design.Text.primary)
+                } else if let winner = winningEntry {
                     let label = optionLabel(for: winner.decision, proposal: proposal)
                     let color = tallyEntryColor(
                         decision: winner.decision,
