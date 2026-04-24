@@ -106,7 +106,10 @@ struct BundleResult {
 extension Array where Element == NoteInfo {
     /// Value-aware bundling using greedy min-total assignment.
     ///
-    /// Algorithm mirrors the Rust `chunk_notes` for client-side use:
+    /// Mirrors the Rust peer `chunk_notes` (see
+    /// `zcash_voting/zcash_voting/src/types.rs` — function `chunk_notes`) for
+    /// client-side use. The numbered steps in the body track that function
+    /// one-to-one:
     /// 1. Sort notes by value DESC, then position ASC as tiebreaker
     /// 2. Fill bundles sequentially to capacity (5 notes each)
     /// 3. Drop bundles with total < ballotDivisor
