@@ -11,11 +11,18 @@ struct PollsListView: View {
         WithPerceptionTracking {
             ScrollView {
                 VStack(spacing: 16) {
-                    // Newest polls first. allRounds is stored ascending so the
-                    // assigned round numbers stay sane (round 1 = oldest), but
-                    // the list shows the latest at the top.
-                    ForEach(Array(store.allRounds.reversed()), id: \.id) { item in
-                        pollCard(for: item)
+                    if store.pollsLoadError {
+                        // Skeleton placeholder behind the "Couldn't load polls"
+                        // sheet, per the Figma. Single card with gray bars so
+                        // the surface doesn't read as empty.
+                        pollsSkeletonCard
+                    } else {
+                        // Newest polls first. allRounds is stored ascending so the
+                        // assigned round numbers stay sane (round 1 = oldest), but
+                        // the list shows the latest at the top.
+                        ForEach(Array(store.allRounds.reversed()), id: \.id) { item in
+                            pollCard(for: item)
+                        }
                     }
                 }
                 .padding(.horizontal, 24)
@@ -25,7 +32,49 @@ struct PollsListView: View {
             .applyScreenBackground()
             .screenTitle("Coinholder Polling")
             .zashiBack { store.send(.dismissFlow) }
+            .votingSheet(
+                isPresented: loadErrorBinding,
+                title: "Couldn't load polls",
+                message: "Check your connection and try again. If the problem persists, come back later.",
+                primary: .init(title: "Try again", style: .primary) {
+                    store.send(.retryLoadRounds)
+                },
+                secondary: .init(title: "Go back", style: .secondary) {
+                    store.send(.dismissFlow)
+                }
+            )
         }
+    }
+
+    // MARK: - Skeleton Placeholder
+
+    private var pollsSkeletonCard: some View {
+        let barFill = Design.Surfaces.bgTertiary.color(colorScheme)
+        return VStack(alignment: .leading, spacing: 14) {
+            RoundedRectangle(cornerRadius: 4).fill(barFill).frame(width: 80, height: 12)
+            VStack(alignment: .leading, spacing: 10) {
+                RoundedRectangle(cornerRadius: 4).fill(barFill).frame(height: 12)
+                RoundedRectangle(cornerRadius: 4).fill(barFill).frame(height: 12)
+                RoundedRectangle(cornerRadius: 4).fill(barFill).frame(width: 240, height: 12)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            RoundedRectangle(cornerRadius: 4).fill(barFill).frame(width: 60, height: 12)
+        }
+        .padding(Design.Spacing._xl)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Design.Surfaces.bgPrimary.color(colorScheme))
+        .clipShape(RoundedRectangle(cornerRadius: Design.Radius._2xl))
+    }
+
+    private var loadErrorBinding: Binding<Bool> {
+        Binding(
+            get: { store.pollsLoadError },
+            // Drag-dismiss mirrors Go back: exit the voting flow rather than
+            // leave the user on a stale/empty list with no action to take.
+            set: { newValue in
+                if !newValue { store.send(.dismissFlow) }
+            }
+        )
     }
 
     // MARK: - Card

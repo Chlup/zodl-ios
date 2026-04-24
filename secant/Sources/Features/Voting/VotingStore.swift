@@ -313,6 +313,16 @@ struct Voting {
         /// either `.dismissPollClosedSheet` or `.viewPollClosedResults`.
         var showPollClosedSheet: Bool = false
 
+        /// True while the "Couldn't load polls" bottom sheet is visible —
+        /// driven by a failed `fetchAllRounds` call. Cleared by
+        /// `.retryLoadRounds` (on success) or by dismissing the flow.
+        var pollsLoadError: Bool = false
+
+        /// True while the "Couldn't load results" bottom sheet is visible —
+        /// driven by a failed `fetchTallyResults` call. Cleared by
+        /// `.retryLoadTallyResults` (on success) or by dismissing the flow.
+        var resultsLoadError: Bool = false
+
         /// Signals that batch submission should resume after delegation completes (Keystone path).
         var pendingBatchSubmission: Bool = false
 
@@ -628,6 +638,8 @@ struct Voting {
         case allRoundsLoaded([VotingSession])
         case roundTapped(String)
         case startNewRoundPolling
+        case roundsLoadFailed
+        case retryLoadRounds
 
         // Initialization (DB, wallet notes, hotkey)
         case initialize
@@ -709,6 +721,8 @@ struct Voting {
         // Tally results
         case fetchTallyResults
         case tallyResultsLoaded([UInt32: TallyResult])
+        case tallyResultsLoadFailed
+        case retryLoadTallyResults
 
         // Share info sheet
         case showShareInfo(UInt32)
@@ -760,7 +774,9 @@ struct Voting {
             // MARK: - Rounds List
             case .allRoundsLoaded,
                 .roundTapped,
-                .startNewRoundPolling:
+                .startNewRoundPolling,
+                .roundsLoadFailed,
+                .retryLoadRounds:
                 return reduceSession(&state, action)
 
             // MARK: - Initialization
@@ -786,7 +802,9 @@ struct Voting {
 
             // MARK: - Tally Results
             case .fetchTallyResults,
-                .tallyResultsLoaded:
+                .tallyResultsLoaded,
+                .tallyResultsLoadFailed,
+                .retryLoadTallyResults:
                 return reduceSession(&state, action)
 
             // MARK: - DB State Stream

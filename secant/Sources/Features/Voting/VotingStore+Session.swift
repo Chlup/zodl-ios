@@ -12,7 +12,28 @@ extension Voting {
 
         // MARK: - Rounds List
 
+        case .roundsLoadFailed:
+            state.pollsLoadError = true
+            // Land the user on the polls list so the sheet has the right
+            // backdrop. Any previously loaded allRounds stay visible behind
+            // the sheet; an empty list just shows blank chrome underneath.
+            if state.currentScreen != .pollsList {
+                state.screenStack = [.pollsList]
+            }
+            return .none
+
+        case .retryLoadRounds:
+            state.pollsLoadError = false
+            return .run { [votingAPI] send in
+                let allRounds = try await votingAPI.fetchAllRounds()
+                await send(.allRoundsLoaded(allRounds))
+            } catch: { error, send in
+                votingLogger.error("Retry rounds fetch failed: \(error)")
+                await send(.roundsLoadFailed)
+            }
+
         case .allRoundsLoaded(let sessions):
+            state.pollsLoadError = false
             // Bind the CDN config to its chain round and verify proposals match.
             // Per ZIP 1244, the config is published per-round and must pin exactly
             // one on-chain round via `vote_round_id`; the `proposals_hash` commits
@@ -182,16 +203,24 @@ extension Voting {
                 try await votingCrypto.openDatabase(dbPath)
                 try await votingCrypto.setWalletId(walletId)
 
-                // 4. Fetch all rounds and populate the list
-                let allRounds = try await votingAPI.fetchAllRounds()
-                votingLogger.info("Fetched \(allRounds.count) rounds")
-                for round in allRounds {
-                    votingLogger.debug(
-                        "round=\(round.voteRoundId.hexString.prefix(16))... status=\(round.status.rawValue) snapshot=\(round.snapshotHeight)"
-                    )
+                // 4. Fetch all rounds and populate the list. Kept in its own
+                //    do/catch so transient network failures surface as the
+                //    recoverable "Couldn't load polls" sheet on top of the
+                //    polls list, rather than bricking init with the generic
+                //    error screen (which belongs to DB/wallet/config failures).
+                do {
+                    let allRounds = try await votingAPI.fetchAllRounds()
+                    votingLogger.info("Fetched \(allRounds.count) rounds")
+                    for round in allRounds {
+                        votingLogger.debug(
+                            "round=\(round.voteRoundId.hexString.prefix(16))... status=\(round.status.rawValue) snapshot=\(round.snapshotHeight)"
+                        )
+                    }
+                    await send(.allRoundsLoaded(allRounds))
+                } catch {
+                    votingLogger.error("Failed to fetch rounds: \(error)")
+                    await send(.roundsLoadFailed)
                 }
-
-                await send(.allRoundsLoaded(allRounds))
             } catch: { error, send in
                 votingLogger.error("Initialization failed: \(error)")
                 await send(.initializeFailed(error.localizedDescription))
@@ -486,19 +515,30 @@ extension Voting {
         case .fetchTallyResults:
             guard let session = state.activeSession else { return .none }
             state.isLoadingTallyResults = true
+            state.resultsLoadError = false
             let roundIdHex = session.voteRoundId.hexString
             return .run { [votingAPI] send in
                 let results = try await votingAPI.fetchTallyResults(roundIdHex)
                 await send(.tallyResultsLoaded(results))
             } catch: { error, send in
                 votingLogger.error("Failed to fetch tally results: \(error)")
-                await send(.tallyResultsLoaded([:]))
+                await send(.tallyResultsLoadFailed)
             }
 
         case .tallyResultsLoaded(let results):
             state.tallyResults = results
             state.isLoadingTallyResults = false
+            state.resultsLoadError = false
             return .none
+
+        case .tallyResultsLoadFailed:
+            state.isLoadingTallyResults = false
+            state.resultsLoadError = true
+            return .none
+
+        case .retryLoadTallyResults:
+            state.resultsLoadError = false
+            return .send(.fetchTallyResults)
 
         // MARK: - DB State Stream
 
