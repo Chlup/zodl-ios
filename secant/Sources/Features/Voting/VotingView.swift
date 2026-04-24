@@ -25,6 +25,26 @@ struct VotingView: View {
         ) { scanStore in
             ScanView(store: scanStore, popoverRatio: 1.075)
         }
+        .votingSheet(
+            isPresented: pollClosedBinding,
+            title: "Poll Closed",
+            message: "The voting period closed. Your responses cannot be saved.",
+            primary: .init(title: "View results", style: .primary) {
+                store.send(.viewPollClosedResults)
+            },
+            secondary: .init(title: "Close", style: .secondary) {
+                store.send(.dismissPollClosedSheet)
+            }
+        )
+    }
+
+    private var pollClosedBinding: Binding<Bool> {
+        Binding(
+            get: { store.showPollClosedSheet },
+            set: { newValue in
+                if !newValue { store.send(.dismissPollClosedSheet) }
+            }
+        )
     }
 
     // swiftlint:disable:next cyclomatic_complexity

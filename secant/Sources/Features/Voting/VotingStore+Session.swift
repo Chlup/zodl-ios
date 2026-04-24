@@ -417,18 +417,54 @@ extension Voting {
 
             switch newStatus {
             case .tallying:
+                if state.isInActiveVotingFlow {
+                    // Don't yank the user out of voting/review/confirm — show
+                    // the Poll Closed sheet and let them choose Close or View
+                    // results. Status polling stops either way; it's work done.
+                    state.showPollClosedSheet = true
+                    return .cancel(id: cancelStatusPollingId)
+                }
                 state.screenStack = [.tallying]
                 return .none
             case .finalized:
-                state.screenStack = [.results]
-                return .merge(
+                // Fetch tally results + start new-round polling regardless of
+                // where the user is, so the data is ready whether they get
+                // routed to Results immediately or via the Poll Closed sheet.
+                let sideEffects: Effect<Action> = .merge(
                     .cancel(id: cancelStatusPollingId),
                     .send(.fetchTallyResults),
                     .send(.startNewRoundPolling)
                 )
+                if state.isInActiveVotingFlow {
+                    state.showPollClosedSheet = true
+                    return sideEffects
+                }
+                state.screenStack = [.results]
+                return sideEffects
             default:
                 return .none
             }
+
+        // MARK: - Poll Closed Sheet
+
+        case .dismissPollClosedSheet:
+            state.showPollClosedSheet = false
+            return .send(.backToRoundsList)
+
+        case .viewPollClosedResults:
+            state.showPollClosedSheet = false
+            guard let session = state.activeSession else {
+                return .send(.backToRoundsList)
+            }
+            switch session.status {
+            case .finalized:
+                state.screenStack = [.results]
+            case .tallying:
+                state.screenStack = [.tallying]
+            default:
+                return .send(.backToRoundsList)
+            }
+            return .none
 
         // MARK: - New Round Polling (after finalization)
 

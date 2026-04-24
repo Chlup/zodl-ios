@@ -306,6 +306,13 @@ struct Voting {
         /// Per-proposal error messages from the last batch submission run.
         var batchVoteErrors: [UInt32: String] = [:]
 
+        /// True while the "Poll Closed" bottom sheet is visible. Set when the
+        /// active round transitions to tallying/finalized while the user is
+        /// in an in-flow screen (voting/review/confirm/delegation) so we do
+        /// not yank them out of context without explanation. Cleared by
+        /// either `.dismissPollClosedSheet` or `.viewPollClosedResults`.
+        var showPollClosedSheet: Bool = false
+
         /// Signals that batch submission should resume after delegation completes (Keystone path).
         var pendingBatchSubmission: Bool = false
 
@@ -374,6 +381,20 @@ struct Voting {
 
         var currentScreen: Screen {
             screenStack.last ?? .pollsList
+        }
+
+        /// True when the current screen is part of the active voting flow — the
+        /// screens where a mid-flow round close would disrupt work in progress.
+        /// Consumed by `.roundStatusUpdated` to decide between showing the
+        /// "Poll Closed" sheet and silently force-navigating to the terminal
+        /// screen.
+        var isInActiveVotingFlow: Bool {
+            switch currentScreen {
+            case .delegationSigning, .proposalList, .proposalDetail, .reviewVotes, .confirmSubmission:
+                return true
+            default:
+                return false
+            }
         }
 
         var votingWeightZECString: String {
@@ -681,6 +702,10 @@ struct Voting {
         case startRoundStatusPolling
         case roundStatusUpdated(roundId: Data, SessionStatus)
 
+        // Poll Closed mid-flow sheet
+        case dismissPollClosedSheet
+        case viewPollClosedResults
+
         // Tally results
         case fetchTallyResults
         case tallyResultsLoaded([UInt32: TallyResult])
@@ -754,7 +779,9 @@ struct Voting {
 
             // MARK: - Round Status Polling
             case .startRoundStatusPolling,
-                .roundStatusUpdated:
+                .roundStatusUpdated,
+                .dismissPollClosedSheet,
+                .viewPollClosedResults:
                 return reduceSession(&state, action)
 
             // MARK: - Tally Results
