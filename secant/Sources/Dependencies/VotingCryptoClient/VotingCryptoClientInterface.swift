@@ -165,11 +165,12 @@ struct VotingCryptoClient {
         _ bundleIndex: UInt32,
         _ txHash: String
     ) async throws -> Void
-    /// Load a previously stored delegation TX hash for a bundle (nil if never stored).
+    /// Load a previously stored delegation TX hash for a bundle.
+    /// Returns `.notFound` when the DB has no row; `throws` reserved for FFI failures.
     var getDelegationTxHash: @Sendable (
         _ roundId: String,
         _ bundleIndex: UInt32
-    ) async throws -> String?
+    ) async throws -> VotingTxHashLookup
     /// Persist a vote TX hash for a bundle + proposal immediately after submission.
     var storeVoteTxHash: @Sendable (
         _ roundId: String,
@@ -177,12 +178,13 @@ struct VotingCryptoClient {
         _ proposalId: UInt32,
         _ txHash: String
     ) async throws -> Void
-    /// Load a previously stored vote TX hash (nil if never stored).
+    /// Load a previously stored vote TX hash.
+    /// Returns `.notFound` when the DB has no row; `throws` reserved for FFI failures.
     var getVoteTxHash: @Sendable (
         _ roundId: String,
         _ bundleIndex: UInt32,
         _ proposalId: UInt32
-    ) async throws -> String?
+    ) async throws -> VotingTxHashLookup
     /// Persist a Keystone bundle signature so it survives app restarts.
     var storeKeystoneBundleSignature: @Sendable (
         _ roundId: String,

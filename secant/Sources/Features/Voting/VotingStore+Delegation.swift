@@ -38,7 +38,7 @@ extension Voting {
 
                 var recoveredDelegationHashes: [(UInt32, String)] = []
                 for bundleIndex: UInt32 in 0..<existingBundleCount {
-                    if let txHash = try? await votingCrypto.getDelegationTxHash(roundId, bundleIndex) {
+                    if case let .present(txHash)? = try? await votingCrypto.getDelegationTxHash(roundId, bundleIndex) {
                         recoveredDelegationHashes.append((bundleIndex, txHash))
                     }
                 }
@@ -242,7 +242,7 @@ extension Voting {
                 // Add the vote to draftVotes and let submitAllDrafts handle recovery.
                 let unsubmitted = votes.filter { !$0.submitted }
                 for vote in unsubmitted {
-                    if let _ = try? await votingCrypto.getVoteTxHash(roundId, vote.bundleIndex, vote.proposalId) {
+                    if case .present? = try? await votingCrypto.getVoteTxHash(roundId, vote.bundleIndex, vote.proposalId) {
                         votingLogger.info("Vote resume: found in-flight vote for proposal \(vote.proposalId), auto-resuming via batch path")
                         await send(.setDraftVote(proposalId: vote.proposalId, choice: vote.choice))
                         await send(.submitAllDrafts)
@@ -586,7 +586,7 @@ extension Voting {
                     let noteChunks = cachedNotes.smartBundles().bundles
                     var completedBundles = Set<UInt32>()
                     for idx: UInt32 in 0..<UInt32(signedCount) {
-                        if let _ = try? await votingCrypto.getDelegationTxHash(roundId, idx) {
+                        if case .present? = try? await votingCrypto.getDelegationTxHash(roundId, idx) {
                             completedBundles.insert(idx)
                         }
                     }
@@ -835,7 +835,7 @@ extension Voting {
         let bundleCount = UInt32(noteChunks.count)
         var completedBundles = Set<UInt32>()
         for idx: UInt32 in 0..<bundleCount {
-            if let _ = try? await votingCrypto.getDelegationTxHash(roundId, idx) {
+            if case .present? = try? await votingCrypto.getDelegationTxHash(roundId, idx) {
                 completedBundles.insert(idx)
             }
         }

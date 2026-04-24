@@ -184,7 +184,7 @@ extension Voting {
                             await send(.voteSubmissionStepUpdated(.preparingProof))
 
                             // Crash recovery: check if TX landed on-chain but wasn't marked
-                            if let cachedTxHash = try? await votingCrypto.getVoteTxHash(roundId, bundleIndex, proposalId) {
+                            if case let .present(cachedTxHash)? = try? await votingCrypto.getVoteTxHash(roundId, bundleIndex, proposalId) {
                                 if let confirmation = try? await votingAPI.fetchTxConfirmation(cachedTxHash),
                                    confirmation.code == 0,
                                    let leafPair = confirmation.event(ofType: "cast_vote")?.attribute(forKey: "leaf_index") {
