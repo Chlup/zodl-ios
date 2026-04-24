@@ -13,8 +13,8 @@ enum VotingFlowError: LocalizedError {
     case missingPendingUnsignedPczt
     case invalidDelegationSignature
     case missingVoteCommitmentBundle
-    case delegationTxFailed(code: UInt32)
-    case voteCommitmentTxFailed(code: UInt32)
+    case delegationTxFailed(code: UInt32, log: String)
+    case voteCommitmentTxFailed(code: UInt32, log: String)
 
     var errorDescription: String? {
         switch self {
@@ -30,10 +30,12 @@ enum VotingFlowError: LocalizedError {
             return "Keystone delegation signature tuple (rk, sighash, sig) is inconsistent with the payload being submitted."
         case .missingVoteCommitmentBundle:
             return "vote commitment build completed without a commitment bundle"
-        case .delegationTxFailed(let code):
-            return "delegation TX failed on-chain (code \(code)) or missing delegate_vote event"
-        case .voteCommitmentTxFailed(code: let code):
-            return "vote commitment TX failed on-chain (code \(code))"
+        case .delegationTxFailed(let code, let log):
+            let suffix = log.isEmpty ? "" : ": \(log)"
+            return "delegation TX failed on-chain (code \(code)) or missing delegate_vote event\(suffix)"
+        case .voteCommitmentTxFailed(let code, let log):
+            let suffix = log.isEmpty ? "" : ": \(log)"
+            return "vote commitment TX failed on-chain (code \(code))\(suffix)"
         }
     }
 }

@@ -658,7 +658,8 @@ extension Voting {
                               let vanPosition = UInt32(leafValue)
                         else {
                             throw VotingFlowError.delegationTxFailed(
-                                code: delegConfirmation?.code ?? 0
+                                code: delegConfirmation?.code ?? 0,
+                                log: delegConfirmation?.log ?? ""
                             )
                         }
                         try await votingCrypto.storeVanPosition(roundId, bundleIdx, vanPosition)
@@ -889,7 +890,8 @@ extension Voting {
                   let vanPosition = UInt32(leafValue)
             else {
                 throw VotingFlowError.delegationTxFailed(
-                    code: delegConfirmation?.code ?? 0
+                    code: delegConfirmation?.code ?? 0,
+                    log: delegConfirmation?.log ?? ""
                 )
             }
             try await votingCrypto.storeVanPosition(roundId, bundleIndex, vanPosition)

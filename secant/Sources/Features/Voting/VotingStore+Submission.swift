@@ -270,14 +270,20 @@ extension Voting {
                             guard let voteConfirmation, voteConfirmation.code == 0,
                                   let leafPair = voteConfirmation.event(ofType: "cast_vote")?.attribute(forKey: "leaf_index")
                             else {
-                                throw VotingFlowError.voteCommitmentTxFailed(code: voteConfirmation?.code ?? 0)
+                                throw VotingFlowError.voteCommitmentTxFailed(
+                                    code: voteConfirmation?.code ?? 0,
+                                    log: voteConfirmation?.log ?? ""
+                                )
                             }
                             let leafParts = leafPair.split(separator: ",")
                             guard leafParts.count == 2,
                                   let vanIdx = UInt32(leafParts[0]),
                                   let vcIdx = UInt64(leafParts[1])
                             else {
-                                throw VotingFlowError.voteCommitmentTxFailed(code: 0)
+                                throw VotingFlowError.voteCommitmentTxFailed(
+                                    code: 0,
+                                    log: "malformed cast_vote leaf_index: \(leafPair)"
+                                )
                             }
 
                             try await votingCrypto.storeVanPosition(roundId, bundleIndex, vanIdx)
