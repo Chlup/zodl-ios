@@ -235,11 +235,17 @@ struct ProposalDetailView: View {
     @ViewBuilder
     private func navigationButtons() -> some View {
         HStack(spacing: 12) {
-            ZashiButton("Back", type: .secondary) {
-                store.send(.backToList)
-            }
-
-            if !store.isEditingFromReview {
+            if store.isEditingFromReview {
+                ZashiButton("Cancel", type: .secondary) {
+                    store.send(.cancelEdit)
+                }
+                ZashiButton("Save") {
+                    store.send(.saveEdit)
+                }
+            } else {
+                ZashiButton("Back", type: .secondary) {
+                    store.send(.backToList)
+                }
                 ZashiButton("Next") {
                     let isLast = store.detailProposalIndex == store.totalProposals - 1
                     if isLast && !store.allDrafted {

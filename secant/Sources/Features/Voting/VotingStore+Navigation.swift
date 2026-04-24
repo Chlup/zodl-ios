@@ -312,6 +312,15 @@ extension Voting {
 
         case .proposalTapped(let id):
             state.selectedProposalId = id
+            // Entering the detail from Review starts an edit session. Snapshot
+            // the current draft so Cancel can discard any changes; Save is a
+            // no-op on draftVotes since castVote already persists each tap.
+            if case .reviewVotes = state.currentScreen {
+                state.editingFromReview = State.EditingFromReviewSnapshot(
+                    proposalId: id,
+                    priorDraft: state.draftVotes[id]
+                )
+            }
             state.screenStack.append(.proposalDetail(id: id))
             return .none
 
@@ -360,7 +369,38 @@ extension Voting {
             }
             return .none
 
+        case .cancelEdit:
+            // Revert the edited proposal's draft to the snapshot captured when
+            // the session started. `nil` prior draft means "not drafted before
+            // edit", so we remove whatever was set during the session.
+            if let snapshot = state.editingFromReview {
+                if let prior = snapshot.priorDraft {
+                    state.draftVotes[snapshot.proposalId] = prior
+                } else {
+                    state.draftVotes.removeValue(forKey: snapshot.proposalId)
+                }
+                Self.persistDrafts(state.draftVotes, walletId: state.walletId, roundId: state.roundId)
+                state.editingFromReview = nil
+            }
+            if case .proposalDetail = state.currentScreen {
+                state.screenStack.removeLast()
+            }
+            return .none
+
+        case .saveEdit:
+            // Draft already reflects the user's choices via .castVote — just
+            // close the edit session and return to Review.
+            state.editingFromReview = nil
+            if case .proposalDetail = state.currentScreen {
+                state.screenStack.removeLast()
+            }
+            return .none
+
         case .backToList:
+            // Any exit path other than Cancel leaves the draft as-is; clearing
+            // the snapshot so a subsequent tap into detail (from the list
+            // proper, not Review) doesn't inherit stale edit-session state.
+            state.editingFromReview = nil
             if case .proposalDetail = state.currentScreen {
                 state.screenStack.removeLast()
             } else if case .confirmSubmission = state.currentScreen {

@@ -286,6 +286,20 @@ struct Voting {
         /// until the user explicitly triggers batch submission.
         var draftVotes: [UInt32: VoteChoice] = [:]
 
+        /// Snapshot of the edited proposal's draft at the moment the user
+        /// opened it from the Review screen. `.cancelEdit` writes this back
+        /// to `draftVotes` so any option taps made during the session are
+        /// discarded. `nil` whenever the user isn't in an edit-from-review
+        /// session.
+        struct EditingFromReviewSnapshot: Equatable {
+            let proposalId: UInt32
+            /// The draft value at entry. `nil` means the proposal had no prior
+            /// draft — Cancel should remove whatever was drafted.
+            let priorDraft: VoteChoice?
+        }
+
+        var editingFromReview: EditingFromReviewSnapshot?
+
         enum BatchSubmissionStatus: Equatable {
             case idle
             case authorizing
@@ -709,6 +723,8 @@ struct Voting {
         case confirmUnanswered
         case dismissUnanswered
         case navigateToConfirmation
+        case cancelEdit
+        case saveEdit
 
         // Round status polling
         case startRoundStatusPolling
@@ -881,7 +897,9 @@ struct Voting {
                 .navigateToReview,
                 .confirmUnanswered,
                 .dismissUnanswered,
-                .navigateToConfirmation:
+                .navigateToConfirmation,
+                .cancelEdit,
+                .saveEdit:
                 return reduceNavigation(&state, action)
 
             // MARK: - Batch Voting
