@@ -104,17 +104,22 @@ extension VotingCryptoClient: DependencyKey {
                     networkId: networkId,
                     accountUUID: accountUUID
                 )
-                return notes.map {
-                    NoteInfo(
-                        commitment: Data($0.commitment),
-                        nullifier: Data($0.nullifier),
-                        value: $0.value,
-                        position: $0.position,
-                        diversifier: Data($0.diversifier),
-                        rho: Data($0.rho),
-                        rseed: Data($0.rseed),
-                        scope: $0.scope,
-                        ufvkStr: $0.ufvkStr
+                return notes.map { (note: VotingNoteInfo) -> NoteInfo in
+                    let commitment: Data = Data(note.commitment)
+                    let nullifier: Data = Data(note.nullifier)
+                    let diversifier: Data = Data(note.diversifier)
+                    let rho: Data = Data(note.rho)
+                    let rseed: Data = Data(note.rseed)
+                    return NoteInfo(
+                        commitment: commitment,
+                        nullifier: nullifier,
+                        value: note.value,
+                        position: note.position,
+                        diversifier: diversifier,
+                        rho: rho,
+                        rseed: rseed,
+                        scope: note.scope,
+                        ufvkStr: note.ufvkStr
                     )
                 }
             },
@@ -140,21 +145,27 @@ extension VotingCryptoClient: DependencyKey {
                     walletDbPath: walletDbPath,
                     notes: sdkNotes
                 )
-                return witnesses.map {
-                    WitnessData(
-                        noteCommitment: Data($0.noteCommitment),
-                        position: $0.position,
-                        root: Data($0.root),
-                        authPath: $0.authPath.map { Data($0) }
+                return witnesses.map { witness -> WitnessData in
+                    let noteCommitment: Data = Data(witness.noteCommitment)
+                    let root: Data = Data(witness.root)
+                    let authPath: [Data] = witness.authPath.map { Data($0) }
+                    return WitnessData(
+                        noteCommitment: noteCommitment,
+                        position: witness.position,
+                        root: root,
+                        authPath: authPath
                     )
                 }
             },
             verifyWitness: { witness in
+                let noteCommitment: [UInt8] = [UInt8](witness.noteCommitment)
+                let root: [UInt8] = [UInt8](witness.root)
+                let authPath: [[UInt8]] = witness.authPath.map { [UInt8]($0) }
                 let sdkWitness = VotingWitnessData(
-                    noteCommitment: [UInt8](witness.noteCommitment),
+                    noteCommitment: noteCommitment,
                     position: witness.position,
-                    root: [UInt8](witness.root),
-                    authPath: witness.authPath.map { [UInt8]($0) }
+                    root: root,
+                    authPath: authPath
                 )
                 return try VotingRustBackend.verifyWitness(sdkWitness)
             },
@@ -212,21 +223,35 @@ extension VotingCryptoClient: DependencyKey {
                     addressIndex: 0
                 )
                 publishState(backend: backend, roundId: roundId)
+                let pcztBytes: Data = Data(result.pcztBytes)
+                let rk: Data = Data(result.rk)
+                let alpha: Data = Data(result.alpha)
+                let nfSigned: Data = Data(result.nfSigned)
+                let cmxNew: Data = Data(result.cmxNew)
+                let govNullifiers: [Data] = result.govNullifiers.map { Data($0) }
+                let van: Data = Data(result.van)
+                let vanCommRand: Data = Data(result.vanCommRand)
+                let dummyNullifiers: [Data] = result.dummyNullifiers.map { Data($0) }
+                let rhoSigned: Data = Data(result.rhoSigned)
+                let paddedCmx: [Data] = result.paddedCmx.map { Data($0) }
+                let rseedSigned: Data = Data(result.rseedSigned)
+                let rseedOutput: Data = Data(result.rseedOutput)
+                let actionBytes: Data = Data(result.actionBytes)
                 return VotingPcztResult(
-                    pcztBytes: Data(result.pcztBytes),
-                    rk: Data(result.rk),
-                    alpha: Data(result.alpha),
-                    nfSigned: Data(result.nfSigned),
-                    cmxNew: Data(result.cmxNew),
-                    govNullifiers: result.govNullifiers.map { Data($0) },
-                    van: Data(result.van),
-                    vanCommRand: Data(result.vanCommRand),
-                    dummyNullifiers: result.dummyNullifiers.map { Data($0) },
-                    rhoSigned: Data(result.rhoSigned),
-                    paddedCmx: result.paddedCmx.map { Data($0) },
-                    rseedSigned: Data(result.rseedSigned),
-                    rseedOutput: Data(result.rseedOutput),
-                    actionBytes: Data(result.actionBytes),
+                    pcztBytes: pcztBytes,
+                    rk: rk,
+                    alpha: alpha,
+                    nfSigned: nfSigned,
+                    cmxNew: cmxNew,
+                    govNullifiers: govNullifiers,
+                    van: van,
+                    vanCommRand: vanCommRand,
+                    dummyNullifiers: dummyNullifiers,
+                    rhoSigned: rhoSigned,
+                    paddedCmx: paddedCmx,
+                    rseedSigned: rseedSigned,
+                    rseedOutput: rseedOutput,
+                    actionBytes: actionBytes,
                     actionIndex: result.actionIndex
                 )
             },
@@ -288,11 +313,11 @@ extension VotingCryptoClient: DependencyKey {
             encryptShares: { roundId, shares in
                 let backend = try await dbActor.backend()
                 let encrypted = try backend.encryptShares(roundId: roundId, shares: shares)
-                return encrypted.map {
+                return encrypted.map { share in
                     EncryptedShare(
-                        c1: Data($0.c1),
-                        c2: Data($0.c2),
-                        shareIndex: $0.shareIndex
+                        c1: Data(share.c1),
+                        c2: Data(share.c2),
+                        shareIndex: share.shareIndex
                     )
                 }
             },
@@ -319,26 +344,36 @@ extension VotingCryptoClient: DependencyKey {
                                 }
                             )
                             publishState(backend: backend, roundId: roundId)
+                            let vanNullifier: Data = Data(result.vanNullifier)
+                            let voteAuthorityNoteNew: Data = Data(result.voteAuthorityNoteNew)
+                            let voteCommitment: Data = Data(result.voteCommitment)
+                            let proof: Data = Data(result.proof)
+                            let sharesHash: Data = Data(result.sharesHash)
+                            let rVpkBytes: Data = Data(result.rVpkBytes)
+                            let alphaV: Data = Data(result.alphaV)
+                            let encShares: [EncryptedShare] = result.encShares.map { share in
+                                EncryptedShare(
+                                    c1: Data(share.c1),
+                                    c2: Data(share.c2),
+                                    shareIndex: share.shareIndex
+                                )
+                            }
+                            let shareBlindFactors: [Data] = result.shareBlinds.map { Data($0) }
+                            let shareComms: [Data] = result.shareComms.map { Data($0) }
                             let bundle = VoteCommitmentBundle(
-                                vanNullifier: Data(result.vanNullifier),
-                                voteAuthorityNoteNew: Data(result.voteAuthorityNoteNew),
-                                voteCommitment: Data(result.voteCommitment),
+                                vanNullifier: vanNullifier,
+                                voteAuthorityNoteNew: voteAuthorityNoteNew,
+                                voteCommitment: voteCommitment,
                                 proposalId: proposalId,
-                                proof: Data(result.proof),
-                                encShares: result.encShares.map {
-                                    EncryptedShare(
-                                        c1: Data($0.c1),
-                                        c2: Data($0.c2),
-                                        shareIndex: $0.shareIndex
-                                    )
-                                },
+                                proof: proof,
+                                encShares: encShares,
                                 anchorHeight: result.anchorHeight,
                                 voteRoundId: result.voteRoundId,
-                                sharesHash: Data(result.sharesHash),
-                                shareBlindFactors: result.shareBlinds.map { Data($0) },
-                                shareComms: result.shareComms.map { Data($0) },
-                                rVpkBytes: Data(result.rVpkBytes),
-                                alphaV: Data(result.alphaV)
+                                sharesHash: sharesHash,
+                                shareBlindFactors: shareBlindFactors,
+                                shareComms: shareComms,
+                                rVpkBytes: rVpkBytes,
+                                alphaV: alphaV
                             )
                             continuation.yield(.completed(bundle))
                             continuation.finish()
@@ -357,20 +392,29 @@ extension VotingCryptoClient: DependencyKey {
                         shareIndex: $0.shareIndex
                     )
                 }
+                let vanNullifier: [UInt8] = [UInt8](commitment.vanNullifier)
+                let voteAuthorityNoteNew: [UInt8] = [UInt8](commitment.voteAuthorityNoteNew)
+                let voteCommitment: [UInt8] = [UInt8](commitment.voteCommitment)
+                let proof: [UInt8] = [UInt8](commitment.proof)
+                let sharesHash: [UInt8] = [UInt8](commitment.sharesHash)
+                let shareBlinds: [[UInt8]] = commitment.shareBlindFactors.map { [UInt8]($0) }
+                let shareComms: [[UInt8]] = commitment.shareComms.map { [UInt8]($0) }
+                let rVpkBytes: [UInt8] = [UInt8](commitment.rVpkBytes)
+                let alphaV: [UInt8] = [UInt8](commitment.alphaV)
                 let sdkCommitment = VotingVoteCommitmentBundle(
-                    vanNullifier: [UInt8](commitment.vanNullifier),
-                    voteAuthorityNoteNew: [UInt8](commitment.voteAuthorityNoteNew),
-                    voteCommitment: [UInt8](commitment.voteCommitment),
+                    vanNullifier: vanNullifier,
+                    voteAuthorityNoteNew: voteAuthorityNoteNew,
+                    voteCommitment: voteCommitment,
                     proposalId: commitment.proposalId,
-                    proof: [UInt8](commitment.proof),
+                    proof: proof,
                     encShares: sdkShares,
                     anchorHeight: commitment.anchorHeight,
                     voteRoundId: commitment.voteRoundId,
-                    sharesHash: [UInt8](commitment.sharesHash),
-                    shareBlinds: commitment.shareBlindFactors.map { [UInt8]($0) },
-                    shareComms: commitment.shareComms.map { [UInt8]($0) },
-                    rVpkBytes: [UInt8](commitment.rVpkBytes),
-                    alphaV: [UInt8](commitment.alphaV)
+                    sharesHash: sharesHash,
+                    shareBlinds: shareBlinds,
+                    shareComms: shareComms,
+                    rVpkBytes: rVpkBytes,
+                    alphaV: alphaV
                 )
                 let payloads = try backend.buildSharePayloads(
                     encShares: sdkShares,
@@ -380,26 +424,29 @@ extension VotingCryptoClient: DependencyKey {
                     vcTreePosition: vcTreePosition,
                     singleShare: singleShare ? 1 : 0
                 )
-                return payloads.map {
-                    SharePayload(
-                        sharesHash: Data($0.sharesHash),
-                        proposalId: $0.proposalId,
-                        voteDecision: $0.voteDecision,
-                        encShare: EncryptedShare(
-                            c1: Data($0.encShare.c1),
-                            c2: Data($0.encShare.c2),
-                            shareIndex: $0.encShare.shareIndex
-                        ),
-                        treePosition: $0.treePosition,
-                        allEncShares: $0.allEncShares.map {
-                            EncryptedShare(
-                                c1: Data($0.c1),
-                                c2: Data($0.c2),
-                                shareIndex: $0.shareIndex
-                            )
-                        },
-                        shareComms: $0.shareComms.map { Data($0) },
-                        primaryBlind: Data($0.primaryBlind)
+                return payloads.map { payload in
+                    let encShare = EncryptedShare(
+                        c1: Data(payload.encShare.c1),
+                        c2: Data(payload.encShare.c2),
+                        shareIndex: payload.encShare.shareIndex
+                    )
+                    let allEncShares = payload.allEncShares.map { wire in
+                        EncryptedShare(
+                            c1: Data(wire.c1),
+                            c2: Data(wire.c2),
+                            shareIndex: wire.shareIndex
+                        )
+                    }
+                    let shareComms = payload.shareComms.map { Data($0) }
+                    return SharePayload(
+                        sharesHash: Data(payload.sharesHash),
+                        proposalId: payload.proposalId,
+                        voteDecision: payload.voteDecision,
+                        encShare: encShare,
+                        treePosition: payload.treePosition,
+                        allEncShares: allEncShares,
+                        shareComms: shareComms,
+                        primaryBlind: Data(payload.primaryBlind)
                     )
                 }
             },
@@ -413,16 +460,24 @@ extension VotingCryptoClient: DependencyKey {
                     accountIndex: accountIndex
                 )
                 let voteRoundIdBytes = Data(hexString: sub.voteRoundId)
+                let rk: Data = Data(sub.rk)
+                let spendAuthSig: Data = Data(sub.spendAuthSig)
+                let signedNoteNullifier: Data = Data(sub.nfSigned)
+                let cmxNew: Data = Data(sub.cmxNew)
+                let vanCmx: Data = Data(sub.govComm)
+                let govNullifiers: [Data] = sub.govNullifiers.map { Data($0) }
+                let proof: Data = Data(sub.proof)
+                let sighash: Data = Data(sub.sighash)
                 return DelegationRegistration(
-                    rk: Data(sub.rk),
-                    spendAuthSig: Data(sub.spendAuthSig),
-                    signedNoteNullifier: Data(sub.nfSigned),
-                    cmxNew: Data(sub.cmxNew),
-                    vanCmx: Data(sub.govComm),
-                    govNullifiers: sub.govNullifiers.map { Data($0) },
-                    proof: Data(sub.proof),
+                    rk: rk,
+                    spendAuthSig: spendAuthSig,
+                    signedNoteNullifier: signedNoteNullifier,
+                    cmxNew: cmxNew,
+                    vanCmx: vanCmx,
+                    govNullifiers: govNullifiers,
+                    proof: proof,
                     voteRoundId: voteRoundIdBytes,
-                    sighash: Data(sub.sighash)
+                    sighash: sighash
                 )
             },
             getDelegationSubmissionWithKeystoneSig: { roundId, bundleIndex, keystoneSig, keystoneSighash in
@@ -434,16 +489,24 @@ extension VotingCryptoClient: DependencyKey {
                     sighash: [UInt8](keystoneSighash)
                 )
                 let voteRoundIdBytes = Data(hexString: sub.voteRoundId)
+                let rk: Data = Data(sub.rk)
+                let spendAuthSig: Data = Data(sub.spendAuthSig)
+                let signedNoteNullifier: Data = Data(sub.nfSigned)
+                let cmxNew: Data = Data(sub.cmxNew)
+                let vanCmx: Data = Data(sub.govComm)
+                let govNullifiers: [Data] = sub.govNullifiers.map { Data($0) }
+                let proof: Data = Data(sub.proof)
+                let sighash: Data = Data(sub.sighash)
                 return DelegationRegistration(
-                    rk: Data(sub.rk),
-                    spendAuthSig: Data(sub.spendAuthSig),
-                    signedNoteNullifier: Data(sub.nfSigned),
-                    cmxNew: Data(sub.cmxNew),
-                    vanCmx: Data(sub.govComm),
-                    govNullifiers: sub.govNullifiers.map { Data($0) },
-                    proof: Data(sub.proof),
+                    rk: rk,
+                    spendAuthSig: spendAuthSig,
+                    signedNoteNullifier: signedNoteNullifier,
+                    cmxNew: cmxNew,
+                    vanCmx: vanCmx,
+                    govNullifiers: govNullifiers,
+                    proof: proof,
                     voteRoundId: voteRoundIdBytes,
-                    sighash: Data(sub.sighash)
+                    sighash: sighash
                 )
             },
             storeVanPosition: { roundId, bundleIndex, position in
@@ -473,17 +536,22 @@ extension VotingCryptoClient: DependencyKey {
                 try backend.resetTreeClient()
             },
             signCastVote: { hotkeySeed, networkId, bundle in
+                let rVpkBytes: [UInt8] = [UInt8](bundle.rVpkBytes)
+                let vanNullifier: [UInt8] = [UInt8](bundle.vanNullifier)
+                let voteAuthorityNoteNew: [UInt8] = [UInt8](bundle.voteAuthorityNoteNew)
+                let voteCommitment: [UInt8] = [UInt8](bundle.voteCommitment)
+                let alphaV: [UInt8] = [UInt8](bundle.alphaV)
                 let sig = try VotingRustBackend.signCastVote(
                     hotkeySeed: hotkeySeed,
                     networkId: networkId,
                     voteRoundIdHex: bundle.voteRoundId,
-                    rVpkBytes: [UInt8](bundle.rVpkBytes),
-                    vanNullifier: [UInt8](bundle.vanNullifier),
-                    voteAuthorityNoteNew: [UInt8](bundle.voteAuthorityNoteNew),
-                    voteCommitment: [UInt8](bundle.voteCommitment),
+                    rVpkBytes: rVpkBytes,
+                    vanNullifier: vanNullifier,
+                    voteAuthorityNoteNew: voteAuthorityNoteNew,
+                    voteCommitment: voteCommitment,
                     proposalId: bundle.proposalId,
                     anchorHeight: bundle.anchorHeight,
-                    alphaV: [UInt8](bundle.alphaV)
+                    alphaV: alphaV
                 )
                 return CastVoteSignature(
                     voteAuthSig: Data(sig.voteAuthSig)
@@ -514,12 +582,15 @@ extension VotingCryptoClient: DependencyKey {
             },
             loadKeystoneBundleSignatures: { roundId in
                 let backend = try await dbActor.backend()
-                return try backend.getKeystoneSignatures(roundId: roundId).map {
-                    KeystoneBundleSignatureInfo(
-                        bundleIndex: $0.bundleIndex,
-                        sig: Data($0.sig),
-                        sighash: Data($0.sighash),
-                        rk: Data($0.rk)
+                return try backend.getKeystoneSignatures(roundId: roundId).map { sigInfo -> KeystoneBundleSignatureInfo in
+                    let sig: Data = Data(sigInfo.sig)
+                    let sighash: Data = Data(sigInfo.sighash)
+                    let rk: Data = Data(sigInfo.rk)
+                    return KeystoneBundleSignatureInfo(
+                        bundleIndex: sigInfo.bundleIndex,
+                        sig: sig,
+                        sighash: sighash,
+                        rk: rk
                     )
                 }
             },
@@ -672,14 +743,19 @@ extension Data {
 
 private extension NoteInfo {
     func toSDK() -> VotingNoteInfo {
-        VotingNoteInfo(
-            commitment: [UInt8](commitment),
-            nullifier: [UInt8](nullifier),
+        let commitmentBytes: [UInt8] = [UInt8](commitment)
+        let nullifierBytes: [UInt8] = [UInt8](nullifier)
+        let diversifierBytes: [UInt8] = [UInt8](diversifier)
+        let rhoBytes: [UInt8] = [UInt8](rho)
+        let rseedBytes: [UInt8] = [UInt8](rseed)
+        return VotingNoteInfo(
+            commitment: commitmentBytes,
+            nullifier: nullifierBytes,
             value: value,
             position: position,
-            diversifier: [UInt8](diversifier),
-            rho: [UInt8](rho),
-            rseed: [UInt8](rseed),
+            diversifier: diversifierBytes,
+            rho: rhoBytes,
+            rseed: rseedBytes,
             scope: scope,
             ufvkStr: ufvkStr
         )
