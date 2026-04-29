@@ -24,11 +24,11 @@ struct TallyingView: View {
                     }
 
                     // Title
-                    Text("Votes Closed")
+                    Text(localizable: .coinVoteTallyingTitle)
                         .zFont(.semiBold, size: 22, style: Design.Text.primary)
 
                     // Description
-                    Text("Results are being tallied. The election authority is decrypting the aggregate vote totals.")
+                    Text(localizable: .coinVoteTallyingSubtitle)
                         .zFont(.regular, size: 15, style: Design.Text.secondary)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 32)
@@ -36,7 +36,7 @@ struct TallyingView: View {
                     // Spinner
                     HStack(spacing: 8) {
                         ProgressView()
-                        Text("Tallying")
+                        Text(localizable: .coinVoteTallyingStatus)
                             .zFont(.medium, size: 14, style: Design.Text.tertiary)
                     }
 
@@ -47,7 +47,7 @@ struct TallyingView: View {
 
                 Spacer()
             }
-            .navigationTitle("Governance")
+            .navigationTitle(String(localizable: .coinVoteCommonGovernanceTitle))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -64,12 +64,15 @@ struct TallyingView: View {
     @ViewBuilder
     private func roundInfoCard() -> some View {
         VStack(spacing: 10) {
-            detailRow(label: "Round", value: store.votingRound.title)
+            detailRow(label: String(localizable: .coinVoteTallyingDetailRound), value: store.votingRound.title)
             detailRow(
-                label: "Ended",
+                label: String(localizable: .coinVoteTallyingDetailEnded),
                 value: store.votingRound.votingEnd.formatted(date: .abbreviated, time: .omitted)
             )
-            detailRow(label: "Proposals", value: "\(store.votingRound.proposals.count)")
+            detailRow(
+                label: String(localizable: .coinVoteTallyingDetailProposals),
+                value: String(store.votingRound.proposals.count)
+            )
         }
         .padding(16)
         .background(Design.Surfaces.bgPrimary.color(colorScheme))

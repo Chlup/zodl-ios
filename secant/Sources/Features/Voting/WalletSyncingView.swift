@@ -24,11 +24,11 @@ struct WalletSyncingView: View {
                     }
 
                     // Title
-                    Text("Wallet Still Syncing")
+                    Text(localizable: .coinVoteWalletSyncingTitle)
                         .zFont(.semiBold, size: 22, style: Design.Text.primary)
 
                     // Description
-                    Text("Your wallet needs to sync past the snapshot block before you can participate in governance voting.")
+                    Text(localizable: .coinVoteWalletSyncingSubtitle)
                         .zFont(.regular, size: 15, style: Design.Text.secondary)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 32)
@@ -43,7 +43,7 @@ struct WalletSyncingView: View {
                             .font(.system(size: 14))
                             .foregroundStyle(Design.Text.tertiary.color(colorScheme))
 
-                        Text("Please wait for your wallet to finish syncing, then come back to vote.")
+                        Text(localizable: .coinVoteWalletSyncingInfo)
                             .zFont(.regular, size: 14, style: Design.Text.secondary)
                     }
                     .padding(14)
@@ -54,13 +54,13 @@ struct WalletSyncingView: View {
 
                 Spacer()
 
-                ZashiButton("Close", type: .ghost) {
+                ZashiButton(String(localizable: .coinVoteCommonClose), type: .ghost) {
                     store.send(.dismissFlow)
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, 24)
             }
-            .navigationTitle("Governance")
+            .navigationTitle(String(localizable: .coinVoteCommonGovernanceTitle))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -82,14 +82,23 @@ struct WalletSyncingView: View {
         let scannedHeight = store.walletScannedHeight
 
         VStack(alignment: .leading, spacing: 12) {
-            detailRow(label: "Wallet synced to", value: "Block #\(formatted(scannedHeight))")
-            detailRow(label: "Snapshot block", value: "Block #\(formatted(snapshotHeight))")
+            detailRow(
+                label: String(localizable: .coinVoteWalletSyncingDetailSyncedTo),
+                value: String(localizable: .coinVoteCommonBlockNumber(formatted(scannedHeight)))
+            )
+            detailRow(
+                label: String(localizable: .coinVoteWalletSyncingDetailSnapshotBlock),
+                value: String(localizable: .coinVoteCommonBlockNumber(formatted(snapshotHeight)))
+            )
 
             if snapshotHeight > 0 {
                 Divider()
 
                 let remaining = snapshotHeight > scannedHeight ? snapshotHeight - scannedHeight : 0
-                detailRow(label: "Blocks remaining", value: formatted(remaining))
+                detailRow(
+                    label: String(localizable: .coinVoteWalletSyncingDetailBlocksRemaining),
+                    value: formatted(remaining)
+                )
             }
         }
         .padding(16)

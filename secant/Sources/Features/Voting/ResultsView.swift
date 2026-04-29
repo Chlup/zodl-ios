@@ -1,10 +1,10 @@
 import SwiftUI
 import ComposableArchitecture
 
-private func tallyToZEC(_ value: UInt64) -> String {
+private func tallyToZECNumber(_ value: UInt64) -> String {
     let zatoshi = value * ballotDivisor
     let zec = Double(zatoshi) / 100_000_000.0
-    return String(format: "%.2f ZEC", zec)
+    return String(format: "%.2f", zec)
 }
 
 private func formatWeightZEC(_ weight: UInt64) -> String {
@@ -49,13 +49,13 @@ struct ResultsView: View {
                     VStack(alignment: .leading, spacing: 24) {
                         roundHeader()
 
-                        Text("Results")
+                        Text(localizable: .coinVoteResultsTitle)
                             .zFont(.semiBold, size: 18, style: Design.Text.primary)
 
                         if store.isLoadingTallyResults {
                             HStack(spacing: 8) {
                                 ProgressView()
-                                Text("Loading results...")
+                                Text(localizable: .coinVoteResultsLoading)
                                     .zFont(size: 14, style: Design.Text.secondary)
                             }
                         } else {
@@ -72,16 +72,16 @@ struct ResultsView: View {
                 }
             }
             .applyScreenBackground()
-            .screenTitle("Coinholder Polling")
+            .screenTitle(String(localizable: .coinVoteCommonScreenTitle))
             .zashiBack { store.send(.backToRoundsList) }
             .votingSheet(
                 isPresented: loadErrorBinding,
-                title: "Couldn't load results",
-                message: "Check your connection and try again. If the problem persists, come back later.",
-                primary: .init(title: "Try again", style: .primary) {
+                title: String(localizable: .coinVoteResultsLoadErrorTitle),
+                message: String(localizable: .coinVoteResultsLoadErrorMessage),
+                primary: .init(title: String(localizable: .coinVoteCommonTryAgain), style: .primary) {
                     store.send(.retryLoadTallyResults)
                 },
-                secondary: .init(title: "Go back", style: .secondary) {
+                secondary: .init(title: String(localizable: .coinVoteCommonGoBack), style: .secondary) {
                     store.send(.dismissFlow)
                 }
             )
@@ -123,7 +123,12 @@ struct ResultsView: View {
 
     private func metaLine(for record: Voting.VoteRecord) -> String {
         let dateString = record.votedAt.formatted(.dateTime.month(.abbreviated).day())
-        return "Voted \(dateString)  ·  Voting Power \(formatWeightZEC(record.votingWeight)) ZEC"
+        return String(
+            localizable: .coinVoteResultsMetaLine(
+                dateString,
+                formatWeightZEC(record.votingWeight)
+            )
+        )
     }
 
     // MARK: - Skeleton Placeholder
@@ -178,7 +183,7 @@ struct ResultsView: View {
         VStack(alignment: .leading, spacing: 12) {
             // Top row: ZIP pill + Winner pill
             HStack(spacing: 0) {
-                ZIPBadge(zipNumber: proposal.zipNumber ?? "ZIP-TBD")
+                ZIPBadge(zipNumber: proposal.zipNumber ?? String(localizable: .coinVoteCommonZipPlaceholder))
                 Spacer()
                 winnerBadge(winningEntry: winningEntry, isTie: isTie, proposal: proposal)
             }
@@ -219,12 +224,16 @@ struct ResultsView: View {
             .padding(.top, 4)
 
             if entries.isEmpty {
-                Text("No votes recorded")
+                Text(localizable: .coinVoteResultsNoVotesRecorded)
                     .zFont(.medium, size: 13, style: Design.Text.tertiary)
             }
 
             if totalAmount > 0 {
-                Text("Total: \(tallyToZEC(totalAmount))")
+                Text(
+                    localizable: .coinVoteResultsTotal(
+                        String(localizable: .coinVoteCommonZecValue(tallyToZECNumber(totalAmount)))
+                    )
+                )
                     .zFont(size: 12, style: Design.Text.tertiary)
                     .padding(.top, 4)
             }
@@ -248,11 +257,11 @@ struct ResultsView: View {
             }
 
             HStack(spacing: 4) {
-                Text("Winner:")
+                Text(localizable: .coinVoteResultsWinnerLabel)
                     .zFont(.medium, size: 13, style: Design.Text.primary)
 
                 if isTie {
-                    Text("Tie")
+                    Text(localizable: .coinVoteResultsTie)
                         .zFont(.semiBold, size: 13, style: Design.Text.primary)
                 } else if let winner = winningEntry {
                     let label = optionLabel(for: winner.decision, proposal: proposal)
@@ -285,7 +294,7 @@ struct ResultsView: View {
                 Text(label)
                     .zFont(.medium, size: 14, color: labelColor)
                 Spacer()
-                Text(tallyToZEC(amount))
+                Text(localizable: .coinVoteCommonZecValue(tallyToZECNumber(amount)))
                     .zFont(.medium, size: 14, color: labelColor)
             }
 
@@ -310,9 +319,9 @@ struct ResultsView: View {
         }
         // Fallback for proposals without explicit options
         switch decision {
-        case 0: return "Support"
-        case 1: return "Oppose"
-        default: return "Option \(decision)"
+        case 0: return String(localizable: .coinVoteCommonSupport)
+        case 1: return String(localizable: .coinVoteCommonOppose)
+        default: return String(localizable: .coinVoteResultsOption(String(decision)))
         }
     }
 }

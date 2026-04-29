@@ -189,16 +189,16 @@ func votingDataFromHex(_ hex: String) -> Data {
 extension AlertState where Action == Voting.Action {
     static func confirmSkip(lockedIn: String, givingUp: String) -> AlertState {
         AlertState {
-            TextState("Skip Remaining Bundles?")
+            TextState(String(localizable: .coinVoteDelegationSigningSkipAlertTitle))
         } actions: {
             ButtonState(role: .destructive, action: .skipRemainingKeystoneBundlesConfirmed) {
-                TextState("Skip")
+                TextState(String(localizable: .coinVoteDelegationSigningSkipAlertPrimary))
             }
             ButtonState(role: .cancel, action: .skipBundlesAlert(.dismiss)) {
-                TextState("Cancel")
+                TextState(String(localizable: .coinVoteCommonCancel))
             }
         } message: {
-            TextState("You will vote with \(lockedIn) ZEC from your signed bundles. The remaining \(givingUp) ZEC in unsigned bundles will not be included. This cannot be changed for this round.")
+            TextState(String(localizable: .coinVoteDelegationSigningSkipAlertMessage(lockedIn, givingUp)))
         }
     }
 }

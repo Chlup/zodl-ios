@@ -25,7 +25,7 @@ struct VotingErrorView: View {
                     }
 
                     // Title
-                    Text("Something Went Wrong")
+                    Text(localizable: .coinVoteErrorTitle)
                         .zFont(.semiBold, size: 22, style: Design.Text.primary)
 
                     // Description (already mapped to a user-friendly message by VotingErrorMapper)
@@ -39,18 +39,18 @@ struct VotingErrorView: View {
 
                 // Retry + Dismiss buttons
                 VStack(spacing: 12) {
-                    ZashiButton("Retry") {
+                    ZashiButton(String(localizable: .coinVoteCommonRetry)) {
                         store.send(.initialize)
                     }
 
-                    ZashiButton("Dismiss", type: .ghost) {
+                    ZashiButton(String(localizable: .coinVoteCommonDismiss), type: .ghost) {
                         store.send(.dismissFlow)
                     }
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, 24)
             }
-            .navigationTitle("Governance")
+            .navigationTitle(String(localizable: .coinVoteCommonGovernanceTitle))
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Design.screenBackground.color(colorScheme))
             .navigationBarTitleDisplayMode(.inline)
@@ -89,7 +89,7 @@ struct VotingConfigErrorView: View {
                             .foregroundStyle(Design.Utility.ErrorRed._500.color(colorScheme))
                     }
 
-                    Text("Wallet Update Required")
+                    Text(localizable: .coinVoteConfigErrorTitle)
                         .zFont(.semiBold, size: 22, style: Design.Text.primary)
 
                     Text(errorMessage)
@@ -108,14 +108,14 @@ struct VotingConfigErrorView: View {
                 // config). Retry can't fix those; cold-reentry handles residual transient
                 // cases just as well.
                 VStack(spacing: 12) {
-                    ZashiButton("Dismiss", type: .ghost) {
+                    ZashiButton(String(localizable: .coinVoteCommonDismiss), type: .ghost) {
                         store.send(.dismissFlow)
                     }
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, 24)
             }
-            .navigationTitle("Governance")
+            .navigationTitle(String(localizable: .coinVoteCommonGovernanceTitle))
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Design.screenBackground.color(colorScheme))
             .navigationBarTitleDisplayMode(.inline)

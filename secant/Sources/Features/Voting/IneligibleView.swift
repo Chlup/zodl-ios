@@ -25,7 +25,7 @@ struct IneligibleView: View {
                         }
 
                         // Title
-                        Text("Not Eligible for This Round")
+                        Text(localizable: .coinVoteIneligibleTitle)
                             .zFont(.semiBold, size: 22, style: Design.Text.primary)
 
                         // Explanation card
@@ -39,13 +39,13 @@ struct IneligibleView: View {
                     .padding(.horizontal, 24)
                 }
 
-                ZashiButton("Close", type: .ghost) {
+                ZashiButton(String(localizable: .coinVoteCommonClose), type: .ghost) {
                     store.send(.dismissFlow)
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, 24)
             }
-            .navigationTitle("Governance")
+            .navigationTitle(String(localizable: .coinVoteCommonGovernanceTitle))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -69,27 +69,35 @@ struct IneligibleView: View {
             // Description text
             switch reason {
             case .noNotes:
-                // swiftlint:disable:next line_length
-                Text("Your wallet has no shielded notes from before the snapshot block. Only funds that existed at block #\(snapshotHeightFormatted) are eligible for this voting round.")
+                Text(localizable: .coinVoteIneligibleNoNotesMessage(snapshotHeightFormatted))
                     .zFont(.regular, size: 15, style: Design.Text.secondary)
 
             case .balanceTooLow:
-                Text("Your shielded balance at the snapshot block was \(balanceFormatted), which is below the 0.125 ZEC minimum required to vote.")
+                Text(localizable: .coinVoteIneligibleBalanceTooLowMessage(balanceFormatted))
                     .zFont(.regular, size: 15, style: Design.Text.secondary)
             }
 
             Divider()
 
             // Detail rows
-            detailRow(label: "Snapshot", value: "Block #\(snapshotHeightFormatted)")
+            detailRow(
+                label: String(localizable: .coinVoteIneligibleDetailSnapshot),
+                value: String(localizable: .coinVoteCommonBlockNumber(snapshotHeightFormatted))
+            )
 
             switch reason {
             case .noNotes:
-                detailRow(label: "Notes found", value: "0")
+                detailRow(label: String(localizable: .coinVoteIneligibleDetailNotesFound), value: "0")
             case .balanceTooLow:
-                detailRow(label: "Your balance", value: "\(balanceFormatted) ZEC")
-                detailRow(label: "Minimum", value: "0.125 ZEC")
-                detailRow(label: "Ballots", value: "0")
+                detailRow(
+                    label: String(localizable: .coinVoteIneligibleDetailYourBalance),
+                    value: String(localizable: .coinVoteCommonZecValue(balanceFormatted))
+                )
+                detailRow(
+                    label: String(localizable: .coinVoteIneligibleDetailMinimum),
+                    value: String(localizable: .coinVoteIneligibleDetailMinimumValue)
+                )
+                detailRow(label: String(localizable: .coinVoteIneligibleDetailBallots), value: "0")
             }
         }
         .padding(16)
@@ -110,7 +118,7 @@ struct IneligibleView: View {
                 .font(.system(size: 14))
                 .foregroundStyle(Design.Text.tertiary.color(colorScheme))
 
-            Text("To participate in future voting rounds, ensure you have at least 0.125 ZEC in shielded funds before the snapshot block.")
+            Text(localizable: .coinVoteIneligibleInfo)
                 .zFont(.regular, size: 14, style: Design.Text.secondary)
         }
         .padding(14)

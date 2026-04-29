@@ -19,23 +19,23 @@ enum VotingFlowError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .missingActiveSession:
-            return "missing active voting session"
+            return String(localizable: .coinVoteStoreErrorMissingActiveSession)
         case .missingSigningAccount:
-            return "missing signing account for delegation PCZT"
+            return String(localizable: .coinVoteStoreErrorMissingSigningAccount)
         case .missingHotkeyAddress:
-            return "missing hotkey address for delegation PCZT"
+            return String(localizable: .coinVoteStoreErrorMissingHotkeyAddress)
         case .missingPendingUnsignedPczt:
-            return "missing pending unsigned delegation PCZT"
+            return String(localizable: .coinVoteStoreErrorMissingPendingUnsignedPczt)
         case .invalidDelegationSignature:
-            return "Keystone delegation signature tuple (rk, sighash, sig) is inconsistent with the payload being submitted."
+            return String(localizable: .coinVoteStoreErrorInvalidDelegationSignature)
         case .missingVoteCommitmentBundle:
-            return "vote commitment build completed without a commitment bundle"
+            return String(localizable: .coinVoteStoreErrorMissingVoteCommitmentBundle)
         case .delegationTxFailed(let code, let log):
             let suffix = log.isEmpty ? "" : ": \(log)"
-            return "delegation TX failed on-chain (code \(code)) or missing delegate_vote event\(suffix)"
+            return String(localizable: .coinVoteStoreErrorDelegationTxFailed(String(code), suffix))
         case .voteCommitmentTxFailed(let code, let log):
             let suffix = log.isEmpty ? "" : ": \(log)"
-            return "vote commitment TX failed on-chain (code \(code))\(suffix)"
+            return String(localizable: .coinVoteStoreErrorVoteCommitmentTxFailed(String(code), suffix))
         }
     }
 }
@@ -43,18 +43,16 @@ enum VotingFlowError: LocalizedError {
 enum VotingErrorMapper {
     static func userFriendlyMessage(from rawError: String) -> String {
         if rawError.contains("nullifier already spent") {
-            return "This wallet has already been registered for this voting round. "
-                + "If you have this wallet on multiple devices, please use the device "
-                + "where you originally started the voting process."
+            return String(localizable: .coinVoteStoreUserErrorNullifierAlreadySpent)
         }
         if rawError.contains("vote round is not active") {
-            return "This voting round is no longer accepting votes. It may have ended or is not yet open."
+            return String(localizable: .coinVoteStoreUserErrorRoundNotActive)
         }
         if rawError.contains("vote round not found") {
-            return "This voting round could not be found on the network."
+            return String(localizable: .coinVoteStoreUserErrorRoundNotFound)
         }
         if rawError.contains("PIR server connect failed") || rawError.contains("PIR parallel fetch failed") {
-            return "Unable to reach the nullifier service. Please check your internet connection and try again."
+            return String(localizable: .coinVoteStoreUserErrorPirUnavailable)
         }
         // PirSnapshotResolverError.noMatchingEndpoint — no configured PIR
         // endpoint is serving the round's exact snapshot height (some are
@@ -62,37 +60,34 @@ enum VotingErrorMapper {
         // SDK refuses to delegate against a mismatched tree. There's nothing
         // the user can do besides wait.
         if rawError.contains("No PIR server matches") {
-            return "The nullifier service is out of sync with the round's snapshot. " +
-                "Voting cannot proceed until a PIR server reports the matching snapshot. " +
-                "Please try again in a few minutes."
+            return String(localizable: .coinVoteStoreUserErrorPirSnapshotMismatch)
         }
         // PirSnapshotResolverError.noEndpointsConfigured — the voting config
         // shipped without any PIR endpoints; this is a config-side bug, not
         // something the user can fix on-device.
         if rawError.contains("No PIR endpoints are configured") {
-            return "The voting configuration is missing nullifier-service endpoints. " +
-                "Please update the app and try again."
+            return String(localizable: .coinVoteStoreUserErrorPirEndpointsMissing)
         }
         if rawError.contains("Commitment tree did not grow") {
-            return "Your transaction hasn't been confirmed yet. The network may be congested — please wait a moment and try again."
+            return String(localizable: .coinVoteStoreUserErrorCommitmentTreeNotGrown)
         }
         if rawError.contains("invalid commitment tree anchor height") {
-            return "The voting state is out of sync. Please retry to use the latest data."
+            return String(localizable: .coinVoteStoreUserErrorInvalidAnchorHeight)
         }
         if rawError.contains("invalid zero-knowledge proof") {
-            return "Your proof was rejected by the network. Please try again."
+            return String(localizable: .coinVoteStoreUserErrorInvalidProof)
         }
         if rawError.contains("delegation bundle build failed") || rawError.contains("create_proof failed") {
-            return "Proof generation failed. Please try again."
+            return String(localizable: .coinVoteStoreUserErrorProofGenerationFailed)
         }
         if rawError.contains("NoTreeState") || rawError.contains("no tree state") {
-            return "The voting commitment tree is not available yet. The voting round may not have started or the chain has not processed any commitments."
+            return String(localizable: .coinVoteStoreUserErrorNoTreeState)
         }
         if rawError.contains("HTTP 5") {
-            return "The voting server is temporarily unavailable. Please try again shortly."
+            return String(localizable: .coinVoteStoreUserErrorHttp5)
         }
         if rawError.contains("GRPCStatus") || rawError.contains("RPC timed out") || rawError.contains("Transport became inactive") {
-            return "Unable to reach the Zcash lightwalletd server. Please check your internet connection or try switching to a different server in Settings."
+            return String(localizable: .coinVoteStoreUserErrorLightwalletdUnavailable)
         }
         return rawError
     }
@@ -148,7 +143,9 @@ struct Voting {
             let roundNumber: Int
             let session: VotingSession
             var title: String {
-                session.title.isEmpty ? "Round \(roundNumber)" : session.title
+                session.title.isEmpty
+                    ? String(localizable: .coinVoteStoreRoundTitle(String(roundNumber)))
+                    : session.title
             }
         }
 
@@ -194,10 +191,10 @@ struct Voting {
 
             var label: String {
                 switch self {
-                case .authorizingVote: return "Authorizing vote..."
-                case .preparingProof: return "Building vote proof..."
-                case .confirming: return "Waiting for confirmation..."
-                case .sendingShares: return "Sending to vote servers..."
+                case .authorizingVote: return String(localizable: .coinVoteStoreSubmissionAuthorizingVote)
+                case .preparingProof: return String(localizable: .coinVoteStoreSubmissionPreparingProof)
+                case .confirming: return String(localizable: .coinVoteStoreSubmissionWaitingForConfirmation)
+                case .sendingShares: return String(localizable: .coinVoteStoreSubmissionSendingShares)
                 }
             }
 
@@ -406,15 +403,17 @@ struct Voting {
             guard let step = voteSubmissionStep else { return nil }
             // Show delegation proof percentage during authorization step.
             if step == .authorizingVote, case .generating(let progress) = delegationProofStatus {
-                return "Authorizing vote... \(Int(progress * 100))%"
+                return String(localizable: .coinVoteStoreSubmissionAuthorizingVoteProgress(String(Int(progress * 100))))
             }
             if bundleCount > 1, let idx = currentVoteBundleIndex {
-                let bundleLabel = "(\(idx + 1)/\(bundleCount))"
                 switch step {
                 case .authorizingVote: return step.label
-                case .preparingProof: return "Building vote proof \(bundleLabel)..."
-                case .confirming: return "Waiting for confirmation \(bundleLabel)..."
-                case .sendingShares: return "Sending to vote servers \(bundleLabel)..."
+                case .preparingProof:
+                    return String(localizable: .coinVoteStoreSubmissionPreparingProofProgress(String(idx + 1), String(bundleCount)))
+                case .confirming:
+                    return String(localizable: .coinVoteStoreSubmissionWaitingForConfirmationProgress(String(idx + 1), String(bundleCount)))
+                case .sendingShares:
+                    return String(localizable: .coinVoteStoreSubmissionSendingSharesProgress(String(idx + 1), String(bundleCount)))
                 }
             }
             return step.label

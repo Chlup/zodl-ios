@@ -107,8 +107,10 @@ extension Voting {
                 let bgTaskId = await backgroundTask.beginTask("Batch vote submission")
                 let _ = await backgroundTask.beginContinuedProcessing(
                     "co.zodl.voting.*",
-                    "Submitting votes",
-                    "Sending \(totalCount) vote\(totalCount == 1 ? "" : "s") to the network"
+                    String(localizable: .coinVoteSubmissionContinuedProcessingTitle),
+                    totalCount == 1
+                        ? String(localizable: .coinVoteSubmissionContinuedProcessingMessageSingle(String(totalCount)))
+                        : String(localizable: .coinVoteSubmissionContinuedProcessingMessageMultiple(String(totalCount)))
                 )
                 defer {
                     Task {
@@ -390,7 +392,7 @@ extension Voting {
                 // Keep persisted drafts: failed proposals are still in draftVotes
                 // (only successful ones were removed on .batchVoteSubmitted) so
                 // retrying the batch naturally resubmits only what failed.
-                let error = state.batchVoteErrors.values.first ?? "Some votes could not be submitted."
+                let error = state.batchVoteErrors.values.first ?? String(localizable: .coinVoteSubmissionGenericBatchFailure)
                 state.batchSubmissionStatus = .submissionFailed(
                     error: error,
                     submittedCount: successCount,

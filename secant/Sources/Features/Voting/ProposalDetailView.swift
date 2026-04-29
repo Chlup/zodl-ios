@@ -25,13 +25,13 @@ struct ProposalDetailView: View {
             .navigationBarTitleDisplayMode(.inline)
             .votingSheet(
                 isPresented: $showUnansweredSheet,
-                title: "Unanswered Questions",
+                title: String(localizable: .coinVoteProposalDetailUnansweredTitle),
                 message: unansweredMessage,
-                primary: .init(title: "Go back", style: .primary) {
+                primary: .init(title: String(localizable: .coinVoteCommonGoBack), style: .primary) {
                     showUnansweredSheet = false
                     store.send(.dismissUnanswered)
                 },
-                secondary: .init(title: "Confirm", style: .secondary) {
+                secondary: .init(title: String(localizable: .coinVoteCommonConfirm), style: .secondary) {
                     showUnansweredSheet = false
                     store.send(.confirmUnanswered)
                 }
@@ -56,7 +56,12 @@ struct ProposalDetailView: View {
 
     private var positionLabel: String {
         if let index = store.detailProposalIndex {
-            return "\(index + 1) OF \(store.totalProposals)"
+            return String(
+                localizable: .coinVoteProposalDetailPosition(
+                    String(index + 1),
+                    String(store.totalProposals)
+                )
+            )
         }
         return ""
     }
@@ -98,7 +103,7 @@ struct ProposalDetailView: View {
                     .foregroundStyle(Design.Text.primary.color(colorScheme))
             }
 
-            Text("View Forum Discussion")
+            Text(localizable: .coinVoteProposalDetailViewForumDiscussion)
                 .zFont(.medium, size: 16, style: Design.Text.primary)
 
             Spacer()
@@ -154,7 +159,7 @@ struct ProposalDetailView: View {
             return proposal.options
         }
         let nextIndex = (proposal.options.map(\.index).max() ?? 0) + 1
-        return proposal.options + [VoteOption(index: nextIndex, label: "Abstain")]
+        return proposal.options + [VoteOption(index: nextIndex, label: String(localizable: .coinVoteCommonAbstain))]
     }
 
     @ViewBuilder
@@ -236,17 +241,17 @@ struct ProposalDetailView: View {
     private func navigationButtons() -> some View {
         HStack(spacing: 12) {
             if store.isEditingFromReview {
-                ZashiButton("Cancel", type: .secondary) {
+                ZashiButton(String(localizable: .coinVoteCommonCancel), type: .secondary) {
                     store.send(.cancelEdit)
                 }
-                ZashiButton("Save") {
+                ZashiButton(String(localizable: .coinVoteCommonSave)) {
                     store.send(.saveEdit)
                 }
             } else {
-                ZashiButton("Back", type: .secondary) {
+                ZashiButton(String(localizable: .coinVoteCommonBack), type: .secondary) {
                     store.send(.backToList)
                 }
-                ZashiButton("Next") {
+                ZashiButton(String(localizable: .coinVoteCommonNext)) {
                     let isLast = store.detailProposalIndex == store.totalProposals - 1
                     if isLast && !store.allDrafted {
                         showUnansweredSheet = true
@@ -260,8 +265,9 @@ struct ProposalDetailView: View {
 
     private var unansweredMessage: String {
         let count = store.votingRound.proposals.filter { store.draftVotes[$0.id] == nil }.count
-        let questionNoun = count == 1 ? "question" : "questions"
-        let target = count == 1 ? "this question" : "these questions"
-        return "You have not responded to \(count) \(questionNoun). Confirm to abstain from \(target) or go back to respond."
+        if count == 1 {
+            return String(localizable: .coinVoteProposalDetailUnansweredMessageSingle(String(count)))
+        }
+        return String(localizable: .coinVoteProposalDetailUnansweredMessageMultiple(String(count)))
     }
 }

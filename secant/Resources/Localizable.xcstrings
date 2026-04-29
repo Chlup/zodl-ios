@@ -4,6 +4,15 @@
     " %@" : {
 
     },
+    "—" : {
+
+    },
+    "·" : {
+
+    },
+    "#%@" : {
+
+    },
     "%" : {
 
     },
@@ -963,6 +972,2218 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sincronizando"
+          }
+        }
+      }
+    },
+    "coinVote.common.abstain" : {
+      "comment" : "MARK: - Coin Vote",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abstain"
+          }
+        }
+      }
+    },
+    "coinVote.common.back" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Back"
+          }
+        }
+      }
+    },
+    "coinVote.common.blockNumber" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Block #%@"
+          }
+        }
+      }
+    },
+    "coinVote.common.cancel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "coinVote.common.close" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        }
+      }
+    },
+    "coinVote.common.confirm" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm"
+          }
+        }
+      }
+    },
+    "coinVote.common.confirmation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirmation"
+          }
+        }
+      }
+    },
+    "coinVote.common.continue" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue"
+          }
+        }
+      }
+    },
+    "coinVote.common.dismiss" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dismiss"
+          }
+        }
+      }
+    },
+    "coinVote.common.done" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        }
+      }
+    },
+    "coinVote.common.endsDate" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ends %@"
+          }
+        }
+      }
+    },
+    "coinVote.common.goBack" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go back"
+          }
+        }
+      }
+    },
+    "coinVote.common.governanceTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Governance"
+          }
+        }
+      }
+    },
+    "coinVote.common.next" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next"
+          }
+        }
+      }
+    },
+    "coinVote.common.oppose" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oppose"
+          }
+        }
+      }
+    },
+    "coinVote.common.pollDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poll Description"
+          }
+        }
+      }
+    },
+    "coinVote.common.retry" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retry"
+          }
+        }
+      }
+    },
+    "coinVote.common.save" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        }
+      }
+    },
+    "coinVote.common.screenTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coinholder Polling"
+          }
+        }
+      }
+    },
+    "coinVote.common.submission" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Submission"
+          }
+        }
+      }
+    },
+    "coinVote.common.support" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support"
+          }
+        }
+      }
+    },
+    "coinVote.common.tryAgain" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try again"
+          }
+        }
+      }
+    },
+    "coinVote.common.viewResults" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View results"
+          }
+        }
+      }
+    },
+    "coinVote.common.voted" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voted"
+          }
+        }
+      }
+    },
+    "coinVote.common.votedDate" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voted %@"
+          }
+        }
+      }
+    },
+    "coinVote.common.votingPower" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voting Power %@ ZEC"
+          }
+        }
+      }
+    },
+    "coinVote.common.zecValue" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ ZEC"
+          }
+        }
+      }
+    },
+    "coinVote.common.zipPlaceholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ZIP-TBD"
+          }
+        }
+      }
+    },
+    "coinVote.completion.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your %@ ZEC in eligible funds has been applied to %@ proposals."
+          }
+        }
+      }
+    },
+    "coinVote.completion.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votes Submitted!"
+          }
+        }
+      }
+    },
+    "coinVote.components.commitment" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "commitment: %@"
+          }
+        }
+      }
+    },
+    "coinVote.components.expectedBy" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expected by %@"
+          }
+        }
+      }
+    },
+    "coinVote.components.finishingUp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finishing up…"
+          }
+        }
+      }
+    },
+    "coinVote.components.notVoted" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not voted"
+          }
+        }
+      }
+    },
+    "coinVote.components.preparingNoteWitnesses" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preparing note witnesses..."
+          }
+        }
+      }
+    },
+    "coinVote.components.preparingVotingAuthorization" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preparing voting authorization... %@%%"
+          }
+        }
+      }
+    },
+    "coinVote.components.privacyExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Each share is sent at different times across various servers throughout the vote period to further protect your privacy. Each value is encrypted, and only the total amount across all voters will be revealed at the end of the vote period."
+          }
+        }
+      }
+    },
+    "coinVote.components.prototypeBanner" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prototype — some features are mocked"
+          }
+        }
+      }
+    },
+    "coinVote.components.prototypeVcStub" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prototype VC Stub"
+          }
+        }
+      }
+    },
+    "coinVote.components.readyToVote" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ready to vote"
+          }
+        }
+      }
+    },
+    "coinVote.components.shareInfoSubtitleConfirmed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All shares have been confirmed on-chain."
+          }
+        }
+      }
+    },
+    "coinVote.components.shareInfoSubtitleSubmitting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your vote is being submitted in multiple shares to protect your privacy."
+          }
+        }
+      }
+    },
+    "coinVote.components.shareInfoTitleConfirmed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vote Confirmed"
+          }
+        }
+      }
+    },
+    "coinVote.components.shareInfoTitleSubmitting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Submitting Vote"
+          }
+        }
+      }
+    },
+    "coinVote.components.submittingVote" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Submitting vote"
+          }
+        }
+      }
+    },
+    "coinVote.components.transaction" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tx: %@"
+          }
+        }
+      }
+    },
+    "coinVote.components.vanNullifier" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "van nullifier: %@"
+          }
+        }
+      }
+    },
+    "coinVote.components.voteConfirmed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vote confirmed"
+          }
+        }
+      }
+    },
+    "coinVote.configError.decodeFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voting config decode failed: %@"
+          }
+        }
+      }
+    },
+    "coinVote.configError.invalidConfig" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voting config is invalid."
+          }
+        }
+      }
+    },
+    "coinVote.configError.proposalsHashMismatch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voting config proposals don't match the active round. Please update the wallet."
+          }
+        }
+      }
+    },
+    "coinVote.configError.roundIdMismatch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voting config is for round %@… but the active round is %@…. Please update the wallet."
+          }
+        }
+      }
+    },
+    "coinVote.configError.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wallet Update Required"
+          }
+        }
+      }
+    },
+    "coinVote.configError.unsupportedVersion" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wallet does not support %@ version \"%@\". Please update the wallet."
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.authorizationFailedMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The voting transaction couldn't be authorized. Check your connection and try again."
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.authorizationFailedTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Authorization Failed"
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.confirmWithKeystone" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm with Keystone"
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.detailAmount" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amount"
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.detailAmountValue" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "0.00000001 ZEC"
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.detailFee" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fee"
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.detailFeeValue" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "0 ZEC"
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.detailMemo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memo"
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.detailPoll" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poll"
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.detailVotingHotkey" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voting hotkey"
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.detailVotingPower" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voting power"
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.detailVotingPowerValue" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ ZEC"
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.headerSubtitleCompleted" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your vote was successfully published and cannot be changed."
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.headerSubtitleIdle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Review before confirming the voting authorization. This is final. Your vote will be published and cannot be changed."
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.headerSubtitleIdleKeystone" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Review before signing the voting authorization with your Keystone. This is final. Your vote will be published and cannot be changed."
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.headerSubtitleSubmitting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vote submission is in progress, please don’t leave this screen until it is finished."
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.headerTitleCompleted" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Submission Confirmed!"
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.headerTitleIdle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm & Submit"
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.headerTitleSubmitting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Submitting vote..."
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.memoMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I am authorizing this hotkey managed by my wallet to vote on %@ with %@ ZEC."
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.progressAuthorizing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Authorizing..."
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.progressSubmittingVotes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Submitting your votes..."
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.submissionFailedMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The vote submission failed. Check your connection and try again."
+          }
+        }
+      }
+    },
+    "coinVote.confirmSubmission.submissionFailedTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Submission Failed"
+          }
+        }
+      }
+    },
+    "coinVote.delegation.insufficientSnapshotBalance" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your shielded balance at the snapshot (%@ ZEC) is below the minimum required to vote (%@ ZEC)."
+          }
+        }
+      }
+    },
+    "coinVote.delegation.restoreVotingStateFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to restore voting state: %@"
+          }
+        }
+      }
+    },
+    "coinVote.delegationSigning.buildingRequest" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Building delegation request..."
+          }
+        }
+      }
+    },
+    "coinVote.delegationSigning.bundleProgress" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bundle %@ of %@"
+          }
+        }
+      }
+    },
+    "coinVote.delegationSigning.instruction" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "After you have signed with Keystone, tap on the Scan Signature button below."
+          }
+        }
+      }
+    },
+    "coinVote.delegationSigning.processing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Processing..."
+          }
+        }
+      }
+    },
+    "coinVote.delegationSigning.processingSignature" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Processing signature..."
+          }
+        }
+      }
+    },
+    "coinVote.delegationSigning.qrEncodingFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "QR encoding failed. Tap Cancel and try again."
+          }
+        }
+      }
+    },
+    "coinVote.delegationSigning.scanInstructions" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan Keystone QR code\nto sign the transaction"
+          }
+        }
+      }
+    },
+    "coinVote.delegationSigning.scanSignature" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan Signature"
+          }
+        }
+      }
+    },
+    "coinVote.delegationSigning.skipAlertMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You will vote with %@ ZEC from your signed bundles. The remaining %@ ZEC in unsigned bundles will not be included. This cannot be changed for this round."
+          }
+        }
+      }
+    },
+    "coinVote.delegationSigning.skipAlertPrimary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skip"
+          }
+        }
+      }
+    },
+    "coinVote.delegationSigning.skipAlertTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skip Remaining Bundles?"
+          }
+        }
+      }
+    },
+    "coinVote.delegationSigning.skipRemainingBundle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skip Remaining %@ Bundle"
+          }
+        }
+      }
+    },
+    "coinVote.delegationSigning.skipRemainingBundles" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skip Remaining %@ Bundles"
+          }
+        }
+      }
+    },
+    "coinVote.error.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Something Went Wrong"
+          }
+        }
+      }
+    },
+    "coinVote.howToVote.infoCard" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your balance at the snapshot time determines your voting weight. You don't need to move your funds anywhere."
+          }
+        }
+      }
+    },
+    "coinVote.howToVote.stepAuthorizeBody" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When you're ready, you'll confirm a small authorization transaction and submit your vote in one step. After submission, your vote cannot be changed."
+          }
+        }
+      }
+    },
+    "coinVote.howToVote.stepAuthorizeTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Authorize and Submit"
+          }
+        }
+      }
+    },
+    "coinVote.howToVote.stepVotingBody" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vote Support, Oppose, or Abstain on each question. You can skip questions and change your vote before submitting."
+          }
+        }
+      }
+    },
+    "coinVote.howToVote.stepVotingTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voting on Proposals"
+          }
+        }
+      }
+    },
+    "coinVote.howToVote.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your ZEC gives you a voice. Shape the future of the Zcash network by voting on active proposals."
+          }
+        }
+      }
+    },
+    "coinVote.howToVote.titleKeystone" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How to vote with Keystone"
+          }
+        }
+      }
+    },
+    "coinVote.howToVote.titleZodl" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How to vote with Zodl"
+          }
+        }
+      }
+    },
+    "coinVote.ineligible.balanceTooLowMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your shielded balance at the snapshot block was %@, which is below the 0.125 ZEC minimum required to vote."
+          }
+        }
+      }
+    },
+    "coinVote.ineligible.detailBallots" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ballots"
+          }
+        }
+      }
+    },
+    "coinVote.ineligible.detailMinimum" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimum"
+          }
+        }
+      }
+    },
+    "coinVote.ineligible.detailMinimumValue" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "0.125 ZEC"
+          }
+        }
+      }
+    },
+    "coinVote.ineligible.detailNotesFound" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notes found"
+          }
+        }
+      }
+    },
+    "coinVote.ineligible.detailSnapshot" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Snapshot"
+          }
+        }
+      }
+    },
+    "coinVote.ineligible.detailYourBalance" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your balance"
+          }
+        }
+      }
+    },
+    "coinVote.ineligible.info" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To participate in future voting rounds, ensure you have at least 0.125 ZEC in shielded funds before the snapshot block."
+          }
+        }
+      }
+    },
+    "coinVote.ineligible.noNotesMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your wallet has no shielded notes from before the snapshot block. Only funds that existed at block #%@ are eligible for this voting round."
+          }
+        }
+      }
+    },
+    "coinVote.ineligible.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not Eligible for This Round"
+          }
+        }
+      }
+    },
+    "coinVote.pollsList.dateClosed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Closed %@"
+          }
+        }
+      }
+    },
+    "coinVote.pollsList.dateCloses" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Closes %@"
+          }
+        }
+      }
+    },
+    "coinVote.pollsList.enterPoll" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter Poll"
+          }
+        }
+      }
+    },
+    "coinVote.pollsList.loadErrorMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check your connection and try again. If the problem persists, come back later."
+          }
+        }
+      }
+    },
+    "coinVote.pollsList.loadErrorTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couldn't load polls"
+          }
+        }
+      }
+    },
+    "coinVote.pollsList.statusActive" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Active"
+          }
+        }
+      }
+    },
+    "coinVote.pollsList.statusClosed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Closed"
+          }
+        }
+      }
+    },
+    "coinVote.pollsList.viewMyVotes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View My Votes"
+          }
+        }
+      }
+    },
+    "coinVote.pollsList.votedCount" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ of %@ voted"
+          }
+        }
+      }
+    },
+    "coinVote.proposalDetail.position" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ OF %@"
+          }
+        }
+      }
+    },
+    "coinVote.proposalDetail.unansweredMessageMultiple" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You have not responded to %@ questions. Confirm to abstain from these questions or go back to respond."
+          }
+        }
+      }
+    },
+    "coinVote.proposalDetail.unansweredMessageSingle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You have not responded to %@ question. Confirm to abstain from this question or go back to respond."
+          }
+        }
+      }
+    },
+    "coinVote.proposalDetail.unansweredTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unanswered Questions"
+          }
+        }
+      }
+    },
+    "coinVote.proposalDetail.viewForumDiscussion" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View Forum Discussion"
+          }
+        }
+      }
+    },
+    "coinVote.proposalList.ctaConfirmSubmit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm & Submit"
+          }
+        }
+      }
+    },
+    "coinVote.proposalList.ctaContinueVoting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue Voting"
+          }
+        }
+      }
+    },
+    "coinVote.proposalList.ctaReviewSubmit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Review & Submit"
+          }
+        }
+      }
+    },
+    "coinVote.proposalList.ctaStartVoting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Voting"
+          }
+        }
+      }
+    },
+    "coinVote.proposalList.noActiveRoundMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There are no voting rounds in progress. Rounds are created by governance administrators — check back later."
+          }
+        }
+      }
+    },
+    "coinVote.proposalList.noActiveRoundTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Active Voting Round"
+          }
+        }
+      }
+    },
+    "coinVote.proposalList.reviewSubtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap on the question to edit any of your answers. After you review your answers, tap on Confirm & Submit."
+          }
+        }
+      }
+    },
+    "coinVote.proposalList.reviewTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Review and submit vote"
+          }
+        }
+      }
+    },
+    "coinVote.proposalList.timeLeftDay" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ day left"
+          }
+        }
+      }
+    },
+    "coinVote.proposalList.timeLeftDays" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ days left"
+          }
+        }
+      }
+    },
+    "coinVote.proposalList.timeLeftEnded" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ended"
+          }
+        }
+      }
+    },
+    "coinVote.proposalList.timeLeftHours" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@h left"
+          }
+        }
+      }
+    },
+    "coinVote.proposalList.timeLeftMinutes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@m left"
+          }
+        }
+      }
+    },
+    "coinVote.proposalList.viewForumDiscussions" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View Forum Discussions"
+          }
+        }
+      }
+    },
+    "coinVote.proposalList.viewMore" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View more"
+          }
+        }
+      }
+    },
+    "coinVote.results.loadErrorMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check your connection and try again. If the problem persists, come back later."
+          }
+        }
+      }
+    },
+    "coinVote.results.loadErrorTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couldn't load results"
+          }
+        }
+      }
+    },
+    "coinVote.results.loading" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading results..."
+          }
+        }
+      }
+    },
+    "coinVote.results.metaLine" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voted %@  ·  Voting Power %@ ZEC"
+          }
+        }
+      }
+    },
+    "coinVote.results.noVotesRecorded" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No votes recorded"
+          }
+        }
+      }
+    },
+    "coinVote.results.option" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Option %@"
+          }
+        }
+      }
+    },
+    "coinVote.results.tie" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tie"
+          }
+        }
+      }
+    },
+    "coinVote.results.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Results"
+          }
+        }
+      }
+    },
+    "coinVote.results.total" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total: %@"
+          }
+        }
+      }
+    },
+    "coinVote.results.winnerLabel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Winner:"
+          }
+        }
+      }
+    },
+    "coinVote.store.error.delegationTxFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "delegation TX failed on-chain (code %@) or missing delegate_vote event%@"
+          }
+        }
+      }
+    },
+    "coinVote.store.error.invalidDelegationSignature" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keystone delegation signature tuple (rk, sighash, sig) is inconsistent with the payload being submitted."
+          }
+        }
+      }
+    },
+    "coinVote.store.error.missingActiveSession" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "missing active voting session"
+          }
+        }
+      }
+    },
+    "coinVote.store.error.missingHotkeyAddress" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "missing hotkey address for delegation PCZT"
+          }
+        }
+      }
+    },
+    "coinVote.store.error.missingPendingUnsignedPczt" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "missing pending unsigned delegation PCZT"
+          }
+        }
+      }
+    },
+    "coinVote.store.error.missingSigningAccount" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "missing signing account for delegation PCZT"
+          }
+        }
+      }
+    },
+    "coinVote.store.error.missingVoteCommitmentBundle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "vote commitment build completed without a commitment bundle"
+          }
+        }
+      }
+    },
+    "coinVote.store.error.voteCommitmentTxFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "vote commitment TX failed on-chain (code %@)%@"
+          }
+        }
+      }
+    },
+    "coinVote.store.roundTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Round %@"
+          }
+        }
+      }
+    },
+    "coinVote.store.submissionAuthorizingVote" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Authorizing vote..."
+          }
+        }
+      }
+    },
+    "coinVote.store.submissionAuthorizingVoteProgress" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Authorizing vote... %@%%"
+          }
+        }
+      }
+    },
+    "coinVote.store.submissionPreparingProof" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Building vote proof..."
+          }
+        }
+      }
+    },
+    "coinVote.store.submissionPreparingProofProgress" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Building vote proof (%@/%@)..."
+          }
+        }
+      }
+    },
+    "coinVote.store.submissionSendingShares" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sending to vote servers..."
+          }
+        }
+      }
+    },
+    "coinVote.store.submissionSendingSharesProgress" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sending to vote servers (%@/%@)..."
+          }
+        }
+      }
+    },
+    "coinVote.store.submissionWaitingForConfirmation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waiting for confirmation..."
+          }
+        }
+      }
+    },
+    "coinVote.store.submissionWaitingForConfirmationProgress" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waiting for confirmation (%@/%@)..."
+          }
+        }
+      }
+    },
+    "coinVote.store.userError.commitmentTreeNotGrown" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your transaction hasn't been confirmed yet. The network may be congested — please wait a moment and try again."
+          }
+        }
+      }
+    },
+    "coinVote.store.userError.http5" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The voting server is temporarily unavailable. Please try again shortly."
+          }
+        }
+      }
+    },
+    "coinVote.store.userError.invalidAnchorHeight" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The voting state is out of sync. Please retry to use the latest data."
+          }
+        }
+      }
+    },
+    "coinVote.store.userError.invalidProof" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your proof was rejected by the network. Please try again."
+          }
+        }
+      }
+    },
+    "coinVote.store.userError.lightwalletdUnavailable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to reach the Zcash lightwalletd server. Please check your internet connection or try switching to a different server in Settings."
+          }
+        }
+      }
+    },
+    "coinVote.store.userError.noTreeState" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The voting commitment tree is not available yet. The voting round may not have started or the chain has not processed any commitments."
+          }
+        }
+      }
+    },
+    "coinVote.store.userError.nullifierAlreadySpent" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This wallet has already been registered for this voting round. If you have this wallet on multiple devices, please use the device where you originally started the voting process."
+          }
+        }
+      }
+    },
+    "coinVote.store.userError.pirEndpointsMissing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The voting configuration is missing nullifier-service endpoints. Please update the app and try again."
+          }
+        }
+      }
+    },
+    "coinVote.store.userError.pirSnapshotMismatch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The nullifier service is out of sync with the round's snapshot. Voting cannot proceed until a PIR server reports the matching snapshot. Please try again in a few minutes."
+          }
+        }
+      }
+    },
+    "coinVote.store.userError.pirUnavailable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to reach the nullifier service. Please check your internet connection and try again."
+          }
+        }
+      }
+    },
+    "coinVote.store.userError.proofGenerationFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proof generation failed. Please try again."
+          }
+        }
+      }
+    },
+    "coinVote.store.userError.roundNotActive" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This voting round is no longer accepting votes. It may have ended or is not yet open."
+          }
+        }
+      }
+    },
+    "coinVote.store.userError.roundNotFound" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This voting round could not be found on the network."
+          }
+        }
+      }
+    },
+    "coinVote.submission.continuedProcessingMessageMultiple" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sending %@ votes to the network"
+          }
+        }
+      }
+    },
+    "coinVote.submission.continuedProcessingMessageSingle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sending %@ vote to the network"
+          }
+        }
+      }
+    },
+    "coinVote.submission.continuedProcessingTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Submitting votes"
+          }
+        }
+      }
+    },
+    "coinVote.submission.genericBatchFailure" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Some votes could not be submitted."
+          }
+        }
+      }
+    },
+    "coinVote.tallying.detailEnded" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ended"
+          }
+        }
+      }
+    },
+    "coinVote.tallying.detailProposals" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proposals"
+          }
+        }
+      }
+    },
+    "coinVote.tallying.detailRound" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Round"
+          }
+        }
+      }
+    },
+    "coinVote.tallying.status" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tallying"
+          }
+        }
+      }
+    },
+    "coinVote.tallying.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Results are being tallied. The election authority is decrypting the aggregate vote totals."
+          }
+        }
+      }
+    },
+    "coinVote.tallying.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votes Closed"
+          }
+        }
+      }
+    },
+    "coinVote.votingView.noRoundsMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There are no voting rounds available right now."
+          }
+        }
+      }
+    },
+    "coinVote.votingView.noRoundsTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Voting Rounds"
+          }
+        }
+      }
+    },
+    "coinVote.votingView.pollClosedMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The voting period closed. Your responses cannot be saved."
+          }
+        }
+      }
+    },
+    "coinVote.votingView.pollClosedTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poll Closed"
+          }
+        }
+      }
+    },
+    "coinVote.walletSyncing.detailBlocksRemaining" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blocks remaining"
+          }
+        }
+      }
+    },
+    "coinVote.walletSyncing.detailSnapshotBlock" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Snapshot block"
+          }
+        }
+      }
+    },
+    "coinVote.walletSyncing.detailSyncedTo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wallet synced to"
+          }
+        }
+      }
+    },
+    "coinVote.walletSyncing.info" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please wait for your wallet to finish syncing, then come back to vote."
+          }
+        }
+      }
+    },
+    "coinVote.walletSyncing.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your wallet needs to sync past the snapshot block before you can participate in governance voting."
+          }
+        }
+      }
+    },
+    "coinVote.walletSyncing.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wallet Still Syncing"
           }
         }
       }

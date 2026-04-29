@@ -15,15 +15,20 @@ struct VoteCompletionView: View {
                         .font(.system(size: 64))
                         .foregroundStyle(Design.Utility.SuccessGreen._500.color(colorScheme))
 
-                    Text("Votes Submitted!")
+                    Text(localizable: .coinVoteCompletionTitle)
                         .zFont(.semiBold, size: 22, style: Design.Text.primary)
 
-                    Text("Your \(store.votingWeightZECString) ZEC in eligible funds has been applied to \(store.totalProposals) proposals.")
+                    Text(
+                        localizable: .coinVoteCompletionSubtitle(
+                            store.votingWeightZECString,
+                            String(store.totalProposals)
+                        )
+                    )
                         .zFont(.regular, size: 15, style: Design.Text.secondary)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 32)
 
-                    ZashiButton("Done", type: .primary) {
+                    ZashiButton(String(localizable: .coinVoteCommonDone), type: .primary) {
                         store.send(.doneTapped)
                     }
                     .padding(.horizontal, 40)

@@ -80,7 +80,7 @@ extension Voting {
                         configRoundId: configRoundId,
                         chainRoundId: sessions.first?.voteRoundId.hexString ?? ""
                     )
-                    state.screenStack = [.configError(error.errorDescription ?? "Voting config is invalid.")]
+                    state.screenStack = [.configError(error.errorDescription ?? String(localizable: .coinVoteConfigErrorInvalidConfig))]
                     return .none
                 }
                 let computed = VotingServiceConfig.computeProposalsHash(config.proposals)
@@ -90,7 +90,7 @@ extension Voting {
                         expected: matchingSession.proposalsHash,
                         actual: computed
                     )
-                    state.screenStack = [.configError(error.errorDescription ?? "Voting config is invalid.")]
+                    state.screenStack = [.configError(error.errorDescription ?? String(localizable: .coinVoteConfigErrorInvalidConfig))]
                     return .none
                 }
 

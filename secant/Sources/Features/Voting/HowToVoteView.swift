@@ -15,28 +15,28 @@ struct HowToVoteView: View {
                             .padding(.top, 24)
                             .padding(.bottom, 24)
 
-                        Text(store.isKeystoneUser ? "How to vote with Keystone" : "How to vote with Zodl")
+                        Text(localizable: store.isKeystoneUser
+                            ? .coinVoteHowToVoteTitleKeystone
+                            : .coinVoteHowToVoteTitleZodl)
                             .zFont(.semiBold, size: 24, style: Design.Text.primary)
                             .padding(.bottom, 8)
 
-                        Text("Your ZEC gives you a voice. Shape the future of the Zcash network by voting on active proposals.")
+                        Text(localizable: .coinVoteHowToVoteSubtitle)
                             .zFont(size: 15, style: Design.Text.tertiary)
                             .fixedSize(horizontal: false, vertical: true)
                             .padding(.bottom, 32)
 
                         stepRow(
                             number: 1,
-                            title: "Voting on Proposals",
-                            // swiftlint:disable:next line_length
-                            body: "Vote Support, Oppose, or Abstain on each question. You can skip questions and change your vote before submitting."
+                            title: String(localizable: .coinVoteHowToVoteStepVotingTitle),
+                            body: String(localizable: .coinVoteHowToVoteStepVotingBody)
                         )
                         .padding(.bottom, 24)
 
                         stepRow(
                             number: 2,
-                            title: "Authorize and Submit",
-                            // swiftlint:disable:next line_length
-                            body: "When you're ready, you'll confirm a small authorization transaction and submit your vote in one step. After submission, your vote cannot be changed."
+                            title: String(localizable: .coinVoteHowToVoteStepAuthorizeTitle),
+                            body: String(localizable: .coinVoteHowToVoteStepAuthorizeBody)
                         )
                     }
                     .padding(.horizontal, 24)
@@ -46,14 +46,14 @@ struct HowToVoteView: View {
                     .padding(.horizontal, 24)
                     .padding(.bottom, 16)
 
-                ZashiButton("Continue") {
+                ZashiButton(String(localizable: .coinVoteCommonContinue)) {
                     store.send(.howToVoteContinueTapped)
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, 24)
             }
             .applyScreenBackground()
-            .screenTitle("Coinholder Polling")
+            .screenTitle(String(localizable: .coinVoteCommonScreenTitle))
             .zashiBack { store.send(.dismissFlow) }
         }
     }
@@ -97,8 +97,7 @@ struct HowToVoteView: View {
             Asset.Assets.infoOutline.image
                 .zImage(size: 16, style: Design.Text.tertiary)
 
-            // swiftlint:disable:next line_length
-            Text("Your balance at the snapshot time determines your voting weight. You don't need to move your funds anywhere.")
+            Text(localizable: .coinVoteHowToVoteInfoCard)
                 .zFont(size: 12, style: Design.Text.tertiary)
                 .fixedSize(horizontal: false, vertical: true)
         }

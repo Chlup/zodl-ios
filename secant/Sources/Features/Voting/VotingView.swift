@@ -27,12 +27,12 @@ struct VotingView: View {
         }
         .votingSheet(
             isPresented: pollClosedBinding,
-            title: "Poll Closed",
-            message: "The voting period closed. Your responses cannot be saved.",
-            primary: .init(title: "View results", style: .primary) {
+            title: String(localizable: .coinVoteVotingViewPollClosedTitle),
+            message: String(localizable: .coinVoteVotingViewPollClosedMessage),
+            primary: .init(title: String(localizable: .coinVoteCommonViewResults), style: .primary) {
                 store.send(.viewPollClosedResults)
             },
-            secondary: .init(title: "Close", style: .secondary) {
+            secondary: .init(title: String(localizable: .coinVoteCommonClose), style: .secondary) {
                 store.send(.dismissPollClosedSheet)
             }
         )
@@ -136,16 +136,16 @@ struct NoRoundsView: View {
             Image(systemName: "rectangle.slash")
                 .font(.system(size: 28))
                 .foregroundStyle(.secondary)
-            Text("No Voting Rounds")
+            Text(localizable: .coinVoteVotingViewNoRoundsTitle)
                 .font(.headline)
-            Text("There are no voting rounds available right now.")
+            Text(localizable: .coinVoteVotingViewNoRoundsMessage)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)
             Spacer()
         }
-        .navigationTitle("Governance")
+        .navigationTitle(String(localizable: .coinVoteCommonGovernanceTitle))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {

@@ -32,23 +32,23 @@ struct ConfirmSubmissionView: View {
             }
             .votingSheet(
                 isPresented: authorizationFailedBinding,
-                title: "Authorization Failed",
-                message: "The voting transaction couldn't be authorized. Check your connection and try again.",
-                primary: .init(title: "Try again", style: .primary) {
+                title: String(localizable: .coinVoteConfirmSubmissionAuthorizationFailedTitle),
+                message: String(localizable: .coinVoteConfirmSubmissionAuthorizationFailedMessage),
+                primary: .init(title: String(localizable: .coinVoteCommonTryAgain), style: .primary) {
                     store.send(.retryBatchSubmission)
                 },
-                secondary: .init(title: "Cancel", style: .secondary) {
+                secondary: .init(title: String(localizable: .coinVoteCommonCancel), style: .secondary) {
                     store.send(.dismissBatchResults)
                 }
             )
             .votingSheet(
                 isPresented: submissionFailedBinding,
-                title: "Submission Failed",
-                message: "The vote submission failed. Check your connection and try again.",
-                primary: .init(title: "Try again", style: .primary) {
+                title: String(localizable: .coinVoteConfirmSubmissionSubmissionFailedTitle),
+                message: String(localizable: .coinVoteConfirmSubmissionSubmissionFailedMessage),
+                primary: .init(title: String(localizable: .coinVoteCommonTryAgain), style: .primary) {
                     store.send(.retryBatchSubmission)
                 },
-                secondary: .init(title: "Cancel", style: .secondary) {
+                secondary: .init(title: String(localizable: .coinVoteCommonCancel), style: .secondary) {
                     store.send(.dismissBatchResults)
                 }
             )
@@ -91,8 +91,10 @@ struct ConfirmSubmissionView: View {
     }
 
     private var navTitle: String {
-        if case .idle = status { return "Confirmation" }
-        return "Submission"
+        if case .idle = status {
+            return String(localizable: .coinVoteCommonConfirmation)
+        }
+        return String(localizable: .coinVoteCommonSubmission)
     }
 
     // MARK: - Header
@@ -117,13 +119,13 @@ struct ConfirmSubmissionView: View {
     private var headerTitle: String {
         switch status {
         case .idle:
-            return "Confirm & Submit"
+            return String(localizable: .coinVoteConfirmSubmissionHeaderTitleIdle)
         case .authorizing, .submitting, .authorizationFailed, .submissionFailed:
             // Failure overlays (.authorizationFailed / .submissionFailed) keep
             // the in-progress appearance underneath while the sheet drives UX.
-            return "Submitting vote..."
+            return String(localizable: .coinVoteConfirmSubmissionHeaderTitleSubmitting)
         case .completed:
-            return "Submission Confirmed!"
+            return String(localizable: .coinVoteConfirmSubmissionHeaderTitleCompleted)
         }
     }
 
@@ -131,14 +133,13 @@ struct ConfirmSubmissionView: View {
         switch status {
         case .idle:
             if store.isKeystoneUser {
-                // swiftlint:disable:next line_length
-                return "Review before signing the voting authorization with your Keystone. This is final. Your vote will be published and cannot be changed."
+                return String(localizable: .coinVoteConfirmSubmissionHeaderSubtitleIdleKeystone)
             }
-            return "Review before confirming the voting authorization. This is final. Your vote will be published and cannot be changed."
+            return String(localizable: .coinVoteConfirmSubmissionHeaderSubtitleIdle)
         case .authorizing, .submitting, .authorizationFailed, .submissionFailed:
-            return "Vote submission is in progress, please don\u{2019}t leave this screen until it is finished."
+            return String(localizable: .coinVoteConfirmSubmissionHeaderSubtitleSubmitting)
         case .completed:
-            return "Your vote was successfully published and cannot be changed."
+            return String(localizable: .coinVoteConfirmSubmissionHeaderSubtitleCompleted)
         }
     }
 
@@ -149,21 +150,30 @@ struct ConfirmSubmissionView: View {
         let isIdle = { if case .idle = status { return true }; return false }()
 
         VStack(spacing: 0) {
-            detailRow(label: "Poll", value: store.votingRound.title)
+            detailRow(label: String(localizable: .coinVoteConfirmSubmissionDetailPoll), value: store.votingRound.title)
 
             Divider()
 
             if isIdle {
-                detailRow(label: "Amount", value: "0.00000001 ZEC")
+                detailRow(
+                    label: String(localizable: .coinVoteConfirmSubmissionDetailAmount),
+                    value: String(localizable: .coinVoteConfirmSubmissionDetailAmountValue)
+                )
                 Divider()
-                detailRow(label: "Fee", value: "0 ZEC")
+                detailRow(
+                    label: String(localizable: .coinVoteConfirmSubmissionDetailFee),
+                    value: String(localizable: .coinVoteConfirmSubmissionDetailFeeValue)
+                )
                 Divider()
             } else {
-                detailRow(label: "Voting power", value: "\(store.votingWeightZECString) ZEC")
+                detailRow(
+                    label: String(localizable: .coinVoteConfirmSubmissionDetailVotingPower),
+                    value: String(localizable: .coinVoteConfirmSubmissionDetailVotingPowerValue(store.votingWeightZECString))
+                )
                 Divider()
             }
 
-            detailRow(label: "Voting hotkey", value: truncatedHotkey)
+            detailRow(label: String(localizable: .coinVoteConfirmSubmissionDetailVotingHotkey), value: truncatedHotkey)
 
             if isIdle {
                 Divider()
@@ -191,10 +201,10 @@ struct ConfirmSubmissionView: View {
     @ViewBuilder
     private func memoRow() -> some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("Memo")
+            Text(localizable: .coinVoteConfirmSubmissionDetailMemo)
                 .zFont(size: 14, style: Design.Text.secondary)
 
-            Text("I am authorizing this hotkey managed by my wallet to vote on \(store.votingRound.title) with \(store.votingWeightZECString) ZEC.")
+            Text(localizable: .coinVoteConfirmSubmissionMemoMessage(store.votingRound.title, store.votingWeightZECString))
                 .zFont(.medium, size: 14, style: Design.Text.primary)
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -225,21 +235,21 @@ struct ConfirmSubmissionView: View {
             case .complete: p = 1.0
             default: p = 0
             }
-            return (p * delegationWeight, "Authorizing...")
+            return (p * delegationWeight, String(localizable: .coinVoteConfirmSubmissionProgressAuthorizing))
 
         case let .submitting(currentIndex, totalCount, _):
             let offset = store.delegationProofStatus == .complete ? delegationWeight : 0.0
             let fraction = Double(currentIndex + 1) / Double(max(totalCount, 1))
             let overall = min(1.0, offset + fraction * (1.0 - offset))
-            return (overall, "Submitting your votes...")
+            return (overall, String(localizable: .coinVoteConfirmSubmissionProgressSubmittingVotes))
 
         case .authorizationFailed:
-            return (0, "Authorizing...")
+            return (0, String(localizable: .coinVoteConfirmSubmissionProgressAuthorizing))
 
         case let .submissionFailed(_, submittedCount, totalCount):
             let fraction = Double(submittedCount) / Double(max(totalCount, 1))
             let overall = min(1.0, delegationWeight + fraction * (1.0 - delegationWeight))
-            return (overall, "Submitting your votes...")
+            return (overall, String(localizable: .coinVoteConfirmSubmissionProgressSubmittingVotes))
 
         default:
             return (0, "")
@@ -252,7 +262,11 @@ struct ConfirmSubmissionView: View {
     private func bottomSection() -> some View {
         switch status {
         case .idle:
-            ZashiButton(store.isKeystoneUser ? "Confirm with Keystone" : "Confirm") {
+            ZashiButton(
+                store.isKeystoneUser
+                    ? String(localizable: .coinVoteConfirmSubmissionConfirmWithKeystone)
+                    : String(localizable: .coinVoteCommonConfirm)
+            ) {
                 store.send(.submitAllDrafts)
             }
 
@@ -287,7 +301,7 @@ struct ConfirmSubmissionView: View {
             }
 
         case .completed:
-            ZashiButton("Done") {
+            ZashiButton(String(localizable: .coinVoteCommonDone)) {
                 store.send(.doneTapped)
             }
         }

@@ -14,7 +14,7 @@ extension Voting {
 
         case .verifyWitnesses:
             guard let activeSession = state.activeSession else {
-                state.witnessStatus = .failed(VotingErrorMapper.userFriendlyMessage(from: "missing active session"))
+                state.witnessStatus = .failed(String(localizable: .coinVoteStoreErrorMissingActiveSession))
                 return .none
             }
             state.witnessTiming = nil
@@ -205,7 +205,9 @@ extension Voting {
                         await send(.bundleCountRestored(count))
                     } catch: { error, send in
                         votingLogger.error("Failed to restore bundle count: \(error)")
-                        await send(.witnessVerificationFailed("Failed to restore voting state: \(error.localizedDescription)"))
+                        await send(.witnessVerificationFailed(
+                            String(localizable: .coinVoteDelegationRestoreVotingStateFailed(error.localizedDescription))
+                        ))
                     },
                     .publisher {
                         votingCrypto.stateStream()
@@ -471,7 +473,7 @@ extension Voting {
         case .openKeystoneSignatureScan:
             keystoneHandler.resetQRDecoder()
             var scanState = Scan.State.initial
-            scanState.instructions = "Scan Keystone QR code\nto sign the transaction"
+            scanState.instructions = String(localizable: .coinVoteDelegationSigningScanInstructions)
             scanState.checkers = [.keystoneVotingDelegationPCZTScanChecker]
             state.keystoneScan = scanState
             return .none
@@ -809,12 +811,12 @@ extension Voting {
             state.keystoneBundleSignatures = []
             let userMessage: String
             if error.contains("total_weight must yield at least 1 ballot") {
-                let weightStr = Zatoshi(Int64(state.votingWeight)).decimalString()
-                let requiredStr = Zatoshi(Int64(ballotDivisor)).decimalString()
-                userMessage = """
-                    Your shielded balance at the snapshot (\(weightStr) ZEC) \
-                    is below the minimum required to vote (\(requiredStr) ZEC).
-                    """
+                userMessage = String(
+                    localizable: .coinVoteDelegationInsufficientSnapshotBalance(
+                        Zatoshi(Int64(state.votingWeight)).decimalString(),
+                        Zatoshi(Int64(ballotDivisor)).decimalString()
+                    )
+                )
             } else {
                 userMessage = VotingErrorMapper.userFriendlyMessage(from: error)
             }

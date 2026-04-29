@@ -29,7 +29,7 @@ struct ProposalListView: View {
                 }
             }
             .applyScreenBackground()
-            .screenTitle("Coinholder Polling")
+            .screenTitle(String(localizable: .coinVoteCommonScreenTitle))
             .zashiBack { store.send(.backToList) }
             .overlay(alignment: .bottom) {
                 bottomCTA()
@@ -117,12 +117,12 @@ struct ProposalListView: View {
     @ViewBuilder
     private func reviewHeader() -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Review and submit vote")
+            Text(localizable: .coinVoteProposalListReviewTitle)
                 .zFont(.semiBold, size: 24, style: Design.Text.primary)
                 .tracking(-0.384)
                 .fixedSize(horizontal: false, vertical: true)
 
-            Text("Tap on the question to edit any of your answers. After you review your answers, tap on Confirm & Submit.")
+            Text(localizable: .coinVoteProposalListReviewSubtitle)
                 .zFont(size: 14, style: Design.Text.secondary)
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -182,7 +182,7 @@ struct ProposalListView: View {
             showDescriptionSheet = true
         } label: {
             HStack(spacing: 4) {
-                Text("View more")
+                Text(localizable: .coinVoteProposalListViewMore)
                     .zFont(.medium, size: 14, style: Design.Text.tertiary)
                     .tracking(-0.224)
                 Image(systemName: "chevron.down")
@@ -212,7 +212,7 @@ struct ProposalListView: View {
                         .clipShape(Circle())
                 }
                 Spacer()
-                Text("Poll Description")
+                Text(localizable: .coinVoteCommonPollDescription)
                     .zFont(.semiBold, size: 14, style: Design.Text.primary)
                     .textCase(.uppercase)
                 Spacer()
@@ -255,7 +255,7 @@ struct ProposalListView: View {
                     .foregroundStyle(Design.Text.primary.color(colorScheme))
             }
 
-            Text("View Forum Discussions")
+            Text(localizable: .coinVoteProposalListViewForumDiscussions)
                 .zFont(.medium, size: 16, style: Design.Text.primary)
 
             Spacer()
@@ -358,52 +358,24 @@ struct ProposalListView: View {
         dateFormatter.dateFormat = "MMM d, yyyy"
 
         if let record = store.voteRecord {
-            dateString = "Voted \(dateFormatter.string(from: record.votedAt))"
+            dateString = String(localizable: .coinVoteCommonVotedDate(dateFormatter.string(from: record.votedAt)))
         } else if let session = store.activeSession {
-            dateString = "Ends \(dateFormatter.string(from: session.voteEndTime))"
+            dateString = String(localizable: .coinVoteCommonEndsDate(dateFormatter.string(from: session.voteEndTime)))
         } else {
             dateString = ""
         }
 
-        votingPowerString = "Voting Power \(store.votingWeightZECString) ZEC"
+        votingPowerString = String(localizable: .coinVoteCommonVotingPower(store.votingWeightZECString))
         timeLeftString = timeLeftLabel
 
         return [dateString, votingPowerString, timeLeftString]
             .filter { !$0.isEmpty }
     }
 
-    private var metaLine: String {
-        let dateString: String
-        let votingPowerString: String
-        let timeLeftString: String
-
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM d, yyyy"
-
-        if let record = store.voteRecord {
-            // Already voted — show voted date
-            dateString = "Voted \(dateFormatter.string(from: record.votedAt))"
-            votingPowerString = "Voting Power \(store.votingWeightZECString) ZEC"
-            timeLeftString = timeLeftLabel
-        } else if let session = store.activeSession {
-            dateString = "Ends \(dateFormatter.string(from: session.voteEndTime))"
-            votingPowerString = "Voting Power \(store.votingWeightZECString) ZEC"
-            timeLeftString = timeLeftLabel
-        } else {
-            dateString = ""
-            votingPowerString = "Voting Power \(store.votingWeightZECString) ZEC"
-            timeLeftString = timeLeftLabel
-        }
-
-        return [dateString, votingPowerString, timeLeftString]
-            .filter { !$0.isEmpty }
-            .joined(separator: "  ·  ")
-    }
-
     private var timeLeftLabel: String {
         guard let session = store.activeSession else { return "" }
         let remaining = session.voteEndTime.timeIntervalSince(now)
-        guard remaining > 0 else { return "Ended" }
+        guard remaining > 0 else { return String(localizable: .coinVoteProposalListTimeLeftEnded) }
 
         let days = Int(remaining) / 86_400
         let hours = (Int(remaining) % 86_400) / 3600
@@ -413,11 +385,14 @@ struct ProposalListView: View {
         // Hours/minutes use compact forms so the meta line doesn't wrap when
         // the round is in its final stretch.
         if days > 0 {
-            return "\(days) day\(days == 1 ? "" : "s") left"
+            if days == 1 {
+                return String(localizable: .coinVoteProposalListTimeLeftDay(String(days)))
+            }
+            return String(localizable: .coinVoteProposalListTimeLeftDays(String(days)))
         } else if hours > 0 {
-            return "\(hours)h left"
+            return String(localizable: .coinVoteProposalListTimeLeftHours(String(hours)))
         } else {
-            return "\(minutes)m left"
+            return String(localizable: .coinVoteProposalListTimeLeftMinutes(String(minutes)))
         }
     }
 
@@ -437,10 +412,10 @@ struct ProposalListView: View {
                 .font(.system(size: 28))
                 .foregroundStyle(Design.Text.tertiary.color(colorScheme))
 
-            Text("No Active Voting Round")
+            Text(localizable: .coinVoteProposalListNoActiveRoundTitle)
                 .zFont(.semiBold, size: 18, style: Design.Text.primary)
 
-            Text("There are no voting rounds in progress. Rounds are created by governance administrators — check back later.")
+            Text(localizable: .coinVoteProposalListNoActiveRoundMessage)
                 .zFont(.regular, size: 13, style: Design.Text.secondary)
                 .multilineTextAlignment(.center)
         }
@@ -464,7 +439,7 @@ extension ProposalListView {
 
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                ZIPBadge(zipNumber: proposal.zipNumber ?? "ZIP-TBD")
+                ZIPBadge(zipNumber: proposal.zipNumber ?? String(localizable: .coinVoteCommonZipPlaceholder))
                 Spacer()
                 if let choice {
                     let info = voteBadgeInfo(for: choice, proposal: proposal, colorScheme: colorScheme)
@@ -538,7 +513,7 @@ extension ProposalListView {
         switch mode {
         case .review:
             return CTAButtonSpec(
-                label: "Confirm & Submit",
+                label: String(localizable: .coinVoteProposalListCtaConfirmSubmit),
                 action: { store.send(.navigateToConfirmation) },
                 disabled: false
             )
@@ -551,29 +526,36 @@ extension ProposalListView {
             let firstUndrafted = proposals.first { drafts[$0.id] == nil }
 
             if total == 0 {
-                return CTAButtonSpec(label: "Start Voting", action: {}, disabled: true)
+                return CTAButtonSpec(label: String(localizable: .coinVoteProposalListCtaStartVoting), action: {}, disabled: true)
             }
 
             if draftCount == 0 {
                 let action: () -> Void = firstUndrafted.map { target in
                     { store.send(.proposalTapped(target.id)) }
                 } ?? {}
-                return CTAButtonSpec(label: "Start Voting", action: action, disabled: false)
+                return CTAButtonSpec(
+                    label: String(localizable: .coinVoteProposalListCtaStartVoting),
+                    action: action,
+                    disabled: false
+                )
             }
 
             if draftCount < total {
                 let action: () -> Void = firstUndrafted.map { target in
                     { store.send(.proposalTapped(target.id)) }
                 } ?? {}
-                return CTAButtonSpec(label: "Continue Voting", action: action, disabled: false)
+                return CTAButtonSpec(
+                    label: String(localizable: .coinVoteProposalListCtaContinueVoting),
+                    action: action,
+                    disabled: false
+                )
             }
 
             return CTAButtonSpec(
-                label: "Review & Submit",
+                label: String(localizable: .coinVoteProposalListCtaReviewSubmit),
                 action: { store.send(.navigateToReview) },
                 disabled: false
             )
         }
     }
 }
-

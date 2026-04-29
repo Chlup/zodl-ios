@@ -151,13 +151,18 @@ enum VotingConfigError: Error, Equatable, LocalizedError {
     var errorDescription: String? {
         switch self {
         case .decodeFailed(let detail):
-            return "Voting config decode failed: \(detail)"
+            return String(localizable: .coinVoteConfigErrorDecodeFailed(detail))
         case .unsupportedVersion(let component, let advertised):
-            return "Wallet does not support \(component) version \"\(advertised)\". Please update the wallet."
+            return String(localizable: .coinVoteConfigErrorUnsupportedVersion(component, advertised))
         case .proposalsHashMismatch:
-            return "Voting config proposals don't match the active round. Please update the wallet."
+            return String(localizable: .coinVoteConfigErrorProposalsHashMismatch)
         case .roundIdMismatch(let configRoundId, let chainRoundId):
-            return "Voting config is for round \(configRoundId.prefix(16))… but the active round is \(chainRoundId.prefix(16))…. Please update the wallet."
+            return String(
+                localizable: .coinVoteConfigErrorRoundIdMismatch(
+                    String(configRoundId.prefix(16)),
+                    String(chainRoundId.prefix(16))
+                )
+            )
         }
     }
 }

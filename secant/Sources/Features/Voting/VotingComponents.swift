@@ -57,7 +57,7 @@ struct PrototypeBanner: View {
         HStack(spacing: 8) {
             Image(systemName: "wrench.and.screwdriver")
                 .font(.caption)
-            Text("Prototype \u{2014} some features are mocked")
+            Text(localizable: .coinVoteComponentsPrototypeBanner)
                 .font(.caption)
         }
         .foregroundStyle(Design.Surfaces.bgPrimary.color(colorScheme))
@@ -121,11 +121,11 @@ func voteBadgeInfo(for choice: VoteChoice, proposal: VotingProposal, colorScheme
     let synthesizedAbstainIndex = (options.map(\.index).max() ?? 0) + 1
     if !options.contains(where: { $0.label.localizedCaseInsensitiveContains("abstain") })
         && choice.index == synthesizedAbstainIndex {
-        let synthetic = VoteOption(index: choice.index, label: "Abstain")
+        let synthetic = VoteOption(index: choice.index, label: String(localizable: .coinVoteCommonAbstain))
         return (synthetic.label, voteOptionColor(for: synthetic, total: options.count + 1, colorScheme: colorScheme))
     }
 
-    return ("Voted", Design.Utility.Gray._500.color(colorScheme))
+    return (String(localizable: .coinVoteCommonVoted), Design.Utility.Gray._500.color(colorScheme))
 }
 
 struct VoteBadgePill: View {
@@ -167,8 +167,8 @@ struct VoteChip: View {
 
     private var resolvedLabel: String {
         if let label { return label }
-        guard choice != nil else { return "Not voted" }
-        return "Voted"
+        guard choice != nil else { return String(localizable: .coinVoteComponentsNotVoted) }
+        return String(localizable: .coinVoteCommonVoted)
     }
 
     private var resolvedBackground: Color {
@@ -214,17 +214,17 @@ struct ZKPStatusBanner: View {
                 ProgressView()
                     .scaleEffect(0.8)
                 if isPreparingWitnesses {
-                    Text("Preparing note witnesses...")
+                    Text(localizable: .coinVoteComponentsPreparingNoteWitnesses)
                         .font(.caption)
                 } else {
-                    Text("Preparing voting authorization... \(Int(progress * 100))%")
+                    Text(localizable: .coinVoteComponentsPreparingVotingAuthorization(String(Int(progress * 100))))
                         .font(.caption)
                 }
             case .complete:
                 Image(systemName: "checkmark.circle.fill")
                     .foregroundStyle(Design.Utility.SuccessGreen._500.color(colorScheme))
                     .font(.caption)
-                Text("Ready to vote")
+                Text(localizable: .coinVoteComponentsReadyToVote)
                     .font(.caption)
             case .failed(let error):
                 Image(systemName: "exclamationmark.triangle.fill")
@@ -251,20 +251,20 @@ struct VoteCommitmentStubCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Prototype VC Stub")
+            Text(localizable: .coinVoteComponentsPrototypeVcStub)
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(.secondary)
 
-            Text("commitment: \(bundle.voteCommitment.shortHex)")
+            Text(localizable: .coinVoteComponentsCommitment(bundle.voteCommitment.shortHex))
                 .font(.caption.monospaced())
                 .foregroundStyle(.secondary)
 
-            Text("van nullifier: \(bundle.vanNullifier.shortHex)")
+            Text(localizable: .coinVoteComponentsVanNullifier(bundle.vanNullifier.shortHex))
                 .font(.caption.monospaced())
                 .foregroundStyle(.secondary)
 
             if let txHash, !txHash.isEmpty {
-                Text("tx: \(txHash)")
+                Text(localizable: .coinVoteComponentsTransaction(txHash))
                     .font(.caption.monospaced())
                     .foregroundStyle(.secondary)
             }
@@ -294,14 +294,14 @@ struct ShareSubmissionStatus: View {
                 Image(systemName: "checkmark.circle.fill")
                     .foregroundStyle(Design.Utility.SuccessGreen._500.color(colorScheme))
                     .font(.caption)
-                Text("Vote confirmed")
+                Text(localizable: .coinVoteComponentsVoteConfirmed)
                     .font(.caption)
                     .foregroundStyle(Design.Utility.SuccessGreen._500.color(colorScheme))
             } else {
                 Image(systemName: "clock.arrow.circlepath")
                     .foregroundStyle(Design.Utility.WarningYellow._500.color(colorScheme))
                     .font(.caption)
-                Text("Submitting vote")
+                Text(localizable: .coinVoteComponentsSubmittingVote)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -388,15 +388,15 @@ struct ShareInfoSheet: View {
             .padding(.bottom, 16)
 
             // Title
-            Text(allConfirmed ? "Vote Confirmed" : "Submitting Vote")
+            Text(localizable: allConfirmed ? .coinVoteComponentsShareInfoTitleConfirmed : .coinVoteComponentsShareInfoTitleSubmitting)
                 .font(.title3)
                 .fontWeight(.semibold)
                 .padding(.bottom, 4)
 
             // Subtitle
-            Text(allConfirmed
-                 ? "All shares have been confirmed on-chain."
-                 : "Your vote is being submitted in multiple shares to protect your privacy.")
+            Text(localizable: allConfirmed
+                 ? .coinVoteComponentsShareInfoSubtitleConfirmed
+                 : .coinVoteComponentsShareInfoSubtitleSubmitting)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
@@ -410,7 +410,7 @@ struct ShareInfoSheet: View {
                         Image(systemName: "clock")
                             .font(.subheadline)
                             .foregroundStyle(Design.Utility.WarningYellow._500.color(colorScheme))
-                        Text("Expected by \(formatted)")
+                        Text(localizable: .coinVoteComponentsExpectedBy(formatted))
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
@@ -420,7 +420,7 @@ struct ShareInfoSheet: View {
                         Image(systemName: "clock")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
-                        Text("Finishing up…")
+                        Text(localizable: .coinVoteComponentsFinishingUp)
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
@@ -435,7 +435,7 @@ struct ShareInfoSheet: View {
                     .foregroundStyle(Design.Utility.WarningYellow._500.color(colorScheme))
                     .padding(.top, 2)
 
-                Text("Each share is sent at different times across various servers throughout the vote period to further protect your privacy. Each value is encrypted, and only the total amount across all voters will be revealed at the end of the vote period.")
+                Text(localizable: .coinVoteComponentsPrivacyExplanation)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }

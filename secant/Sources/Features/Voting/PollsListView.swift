@@ -30,16 +30,16 @@ struct PollsListView: View {
                 .padding(.bottom, 24)
             }
             .applyScreenBackground()
-            .screenTitle("Coinholder Polling")
+            .screenTitle(String(localizable: .coinVoteCommonScreenTitle))
             .zashiBack { store.send(.dismissFlow) }
             .votingSheet(
                 isPresented: loadErrorBinding,
-                title: "Couldn't load polls",
-                message: "Check your connection and try again. If the problem persists, come back later.",
-                primary: .init(title: "Try again", style: .primary) {
+                title: String(localizable: .coinVotePollsListLoadErrorTitle),
+                message: String(localizable: .coinVotePollsListLoadErrorMessage),
+                primary: .init(title: String(localizable: .coinVoteCommonTryAgain), style: .primary) {
                     store.send(.retryLoadRounds)
                 },
-                secondary: .init(title: "Go back", style: .secondary) {
+                secondary: .init(title: String(localizable: .coinVoteCommonGoBack), style: .secondary) {
                     store.send(.dismissFlow)
                 }
             )
@@ -128,7 +128,7 @@ struct PollsListView: View {
             // "Poll Description" label + description
             if !item.session.description.isEmpty {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Poll Description")
+                    Text(localizable: .coinVoteCommonPollDescription)
                         .zFont(.medium, size: 14, style: Design.Text.tertiary)
                         .tracking(-0.224)
 
@@ -174,7 +174,7 @@ struct PollsListView: View {
     @ViewBuilder
     private func votedIndicator(votedCount: Int, total: Int) -> some View {
         HStack(spacing: 12) {
-            Text("\(votedCount) of \(total) voted")
+            Text(localizable: .coinVotePollsListVotedCount(String(votedCount), String(total)))
                 .zFont(.medium, size: 14, style: Design.Text.primary)
 
             Spacer()
@@ -202,21 +202,21 @@ struct PollsListView: View {
             case .active:
                 return (
                     "clock",
-                    "Active",
+                    String(localizable: .coinVotePollsListStatusActive),
                     Design.Utility.SuccessGreen._700.color(colorScheme),
                     Design.Utility.SuccessGreen._50.color(colorScheme)
                 )
             case .voted:
                 return (
                     "checkmark",
-                    "Voted",
+                    String(localizable: .coinVoteCommonVoted),
                     Design.Utility.SuccessGreen._700.color(colorScheme),
                     Design.Utility.SuccessGreen._50.color(colorScheme)
                 )
             case .closed:
                 return (
                     "clock",
-                    "Closed",
+                    String(localizable: .coinVotePollsListStatusClosed),
                     Design.Utility.ErrorRed._700.color(colorScheme),
                     Design.Utility.ErrorRed._50.color(colorScheme)
                 )
@@ -245,9 +245,9 @@ struct PollsListView: View {
         let formatted = formatter.string(from: item.session.voteEndTime)
         switch state {
         case .active, .voted:
-            return "Closes \(formatted)"
+            return String(localizable: .coinVotePollsListDateCloses(formatted))
         case .closed:
-            return "Closed \(formatted)"
+            return String(localizable: .coinVotePollsListDateClosed(formatted))
         }
     }
 
@@ -257,15 +257,15 @@ struct PollsListView: View {
     private func actionButton(for state: CardState, item: Voting.State.RoundListItem) -> some View {
         switch state {
         case .active:
-            ZashiButton("Enter Poll", infinityWidth: false) {
+            ZashiButton(String(localizable: .coinVotePollsListEnterPoll), infinityWidth: false) {
                 store.send(.roundTapped(item.id))
             }
         case .voted:
-            ZashiButton("View My Votes", infinityWidth: false) {
+            ZashiButton(String(localizable: .coinVotePollsListViewMyVotes), infinityWidth: false) {
                 store.send(.viewMyVotesTapped(roundId: item.id))
             }
         case .closed:
-            ZashiButton("View Results", type: .tertiary, infinityWidth: false) {
+            ZashiButton(String(localizable: .coinVoteCommonViewResults), type: .tertiary, infinityWidth: false) {
                 store.send(.roundTapped(item.id))
             }
         }

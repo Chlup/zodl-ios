@@ -33,7 +33,7 @@ struct DelegationSigningView: View {
                     .padding(.bottom, 24)
             }
         }
-        .screenTitle("Confirmation")
+        .screenTitle(String(localizable: .coinVoteCommonConfirmation))
         .zashiBack {
             store.send(.delegationRejected)
         }
@@ -105,7 +105,7 @@ struct DelegationSigningView: View {
             VStack {
                 ProgressView()
                     .padding(.bottom, 8)
-                Text("Building delegation request...")
+                Text(localizable: .coinVoteDelegationSigningBuildingRequest)
                     .zFont(.medium, size: 13, style: Design.Text.tertiary)
             }
             .frame(width: 216, height: 216)
@@ -134,7 +134,7 @@ struct DelegationSigningView: View {
                             }
                     }
             } else {
-                Text("QR encoding failed. Tap Cancel and try again.")
+                Text(localizable: .coinVoteDelegationSigningQrEncodingFailed)
                     .zFont(size: 13, style: Design.Text.tertiary)
                     .multilineTextAlignment(.center)
                     .padding(24)
@@ -144,7 +144,7 @@ struct DelegationSigningView: View {
             VStack {
                 ProgressView()
                     .padding(.bottom, 8)
-                Text("Processing signature...")
+                Text(localizable: .coinVoteDelegationSigningProcessingSignature)
                     .zFont(.medium, size: 13, style: Design.Text.tertiary)
             }
             .frame(width: 216, height: 216)
@@ -178,7 +178,12 @@ struct DelegationSigningView: View {
     private func instructionText() -> some View {
         VStack(spacing: 4) {
             if store.bundleCount > 1 {
-                Text("Bundle \(store.currentKeystoneBundleIndex + 1) of \(store.bundleCount)")
+                Text(
+                    localizable: .coinVoteDelegationSigningBundleProgress(
+                        String(store.currentKeystoneBundleIndex + 1),
+                        String(store.bundleCount)
+                    )
+                )
                     .zFont(.semiBold, size: 14, style: Design.Text.primary)
                     .padding(.bottom, 4)
             }
@@ -186,8 +191,7 @@ struct DelegationSigningView: View {
             Text(localizable: .keystoneSignWithTitle)
                 .zFont(.medium, size: 16, style: Design.Text.primary)
 
-            // swiftlint:disable:next line_length
-            Text("After you have signed with Keystone, tap on the Scan Signature button below.")
+            Text(localizable: .coinVoteDelegationSigningInstruction)
                 .zFont(size: 14, style: Design.Text.tertiary)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
@@ -201,31 +205,31 @@ struct DelegationSigningView: View {
         VStack(spacing: 8) {
             switch store.keystoneSigningStatus {
             case .idle, .preparingRequest:
-                ZashiButton("Cancel", type: .ghost) {
+                ZashiButton(String(localizable: .coinVoteCommonCancel), type: .ghost) {
                     store.send(.delegationRejected)
                 }
-                ZashiButton("Scan Signature") { }
+                ZashiButton(String(localizable: .coinVoteDelegationSigningScanSignature)) { }
                     .disabled(true)
                     .opacity(0.5)
 
             case .awaitingSignature:
-                ZashiButton("Cancel", type: .ghost) {
+                ZashiButton(String(localizable: .coinVoteCommonCancel), type: .ghost) {
                     store.send(.delegationRejected)
                 }
-                ZashiButton("Scan Signature") {
+                ZashiButton(String(localizable: .coinVoteDelegationSigningScanSignature)) {
                     store.send(.openKeystoneSignatureScan)
                 }
 
             case .parsingSignature:
-                ZashiButton("Processing...") { }
+                ZashiButton(String(localizable: .coinVoteDelegationSigningProcessing)) { }
                     .disabled(true)
                     .opacity(0.5)
 
             case .failed:
-                ZashiButton("Cancel", type: .ghost) {
+                ZashiButton(String(localizable: .coinVoteCommonCancel), type: .ghost) {
                     store.send(.delegationRejected)
                 }
-                ZashiButton("Retry") {
+                ZashiButton(String(localizable: .coinVoteCommonRetry)) {
                     store.send(.retryKeystoneSigning)
                 }
             }
@@ -246,7 +250,12 @@ extension DelegationSigningView {
         let signed = store.keystoneBundleSignatures.count
         let remaining = Int(store.bundleCount) - signed
 
-        ZashiButton("Skip Remaining \(remaining) Bundle\(remaining == 1 ? "" : "s")", type: .ghost) {
+        ZashiButton(
+            remaining == 1
+                ? String(localizable: .coinVoteDelegationSigningSkipRemainingBundle(String(remaining)))
+                : String(localizable: .coinVoteDelegationSigningSkipRemainingBundles(String(remaining))),
+            type: .ghost
+        ) {
             store.send(.skipRemainingKeystoneBundles)
         }
     }
