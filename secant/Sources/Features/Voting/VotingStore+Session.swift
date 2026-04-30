@@ -34,10 +34,8 @@ extension Voting {
 
         case .allRoundsLoaded(let sessions):
             state.pollsLoadError = false
-            // Bind the CDN config to its chain round and verify proposals match.
-            // Per ZIP 1244, the config is published per-round and must pin exactly
-            // one on-chain round via `vote_round_id`; the `proposals_hash` commits
-            // to the proposals the user will see.
+            // Bind the CDN config to its chain round. Proposal metadata is
+            // displayed from the chain-backed round response, not the CDN config.
             //
             // Skip the binding check when the chain has no rounds at all — that's a
             // legitimate "no active voting" state, not a tampered config, and the
@@ -83,16 +81,7 @@ extension Voting {
                     state.screenStack = [.configError(error.errorDescription ?? String(localizable: .coinVoteConfigErrorInvalidConfig))]
                     return .none
                 }
-                let computed = VotingServiceConfig.computeProposalsHash(config.proposals)
-                if computed != matchingSession.proposalsHash {
-                    votingLogger.error("proposals_hash mismatch: expected=\(matchingSession.proposalsHash.base64EncodedString()) got=\(computed.base64EncodedString())")
-                    let error = VotingConfigError.proposalsHashMismatch(
-                        expected: matchingSession.proposalsHash,
-                        actual: computed
-                    )
-                    state.screenStack = [.configError(error.errorDescription ?? String(localizable: .coinVoteConfigErrorInvalidConfig))]
-                    return .none
-                }
+                votingLogger.info("Config round \(configRoundId.prefix(16))... matched chain round with proposals_hash=\(matchingSession.proposalsHash.base64EncodedString())")
 
                 // Binding succeeded. Reset the one-shot retry flag so a later round
                 // transition in this session can still get its own auto-retry attempt.
@@ -167,8 +156,11 @@ extension Voting {
         // MARK: - Initialization
 
         case .initialize:
-            // Guard against onAppear re-firing while already initialized
-            guard state.currentScreen == .loading else { return .none }
+            // Re-fetch service discovery whenever the governance flow is opened.
+            // This keeps vote/PIR endpoints fresh while proposal data stays sourced
+            // from the chain round queries below.
+            guard state.currentScreen != .howToVote else { return .none }
+            guard !state.isSubmittingVote else { return .none }
             // Reset the one-shot auto-retry gate so a cold re-entry into voting
             // (e.g. after dismissing from .configError) gets its own retry allotment
             // instead of inheriting a stuck-true flag from the prior session.

@@ -341,29 +341,31 @@ private func parseVotingSession(from round: [String: Any]) throws -> VotingSessi
     let ceremonyStart = Date(timeIntervalSince1970: TimeInterval(ceremonyStartUnix))
     let statusRaw = parseUInt32(round["status"])
 
-    // Parse proposals array with options
-    var proposals: [VotingProposal] = []
-    if let proposalsJSON = round["proposals"] as? [[String: Any]] {
-        proposals = proposalsJSON.map { p in
-            var options: [VoteOption] = []
-            if let optionsJSON = p["options"] as? [[String: Any]] {
-                options = optionsJSON.map { o in
-                    VoteOption(
-                        index: parseUInt32(o["index"]),
-                        label: o["label"] as? String ?? "Option \(parseUInt32(o["index"]))"
-                    )
-                }
-            }
-            let forumURLString = p["forum_url"] as? String
-            return VotingProposal(
-                id: parseUInt32(p["id"]),
-                title: p["title"] as? String ?? "",
-                description: p["description"] as? String ?? "",
-                options: options,
-                zipNumber: (p["zip_number"] ?? p["zipNumber"] ?? p["zip"]) as? String,
-                forumURL: forumURLString.flatMap { URL(string: $0) }
+    // Proposal metadata is authoritative chain state. The CDN config only
+    // provides endpoint discovery, so malformed proposal arrays should fail the
+    // round query instead of rendering empty fallback ballots.
+    guard let proposalsJSON = round["proposals"] as? [[String: Any]] else {
+        throw SvAPIError.invalidResponse("missing proposals in round")
+    }
+    let proposals: [VotingProposal] = try proposalsJSON.map { p in
+        guard let optionsJSON = p["options"] as? [[String: Any]] else {
+            throw SvAPIError.invalidResponse("missing options in proposal")
+        }
+        let options = optionsJSON.map { o in
+            VoteOption(
+                index: parseUInt32(o["index"]),
+                label: o["label"] as? String ?? "Option \(parseUInt32(o["index"]))"
             )
         }
+        let forumURLString = p["forum_url"] as? String
+        return VotingProposal(
+            id: parseUInt32(p["id"]),
+            title: p["title"] as? String ?? "",
+            description: p["description"] as? String ?? "",
+            options: options,
+            zipNumber: (p["zip_number"] ?? p["zipNumber"] ?? p["zip"]) as? String,
+            forumURL: forumURLString.flatMap { URL(string: $0) }
+        )
     }
 
     let discussionURLString = round["discussion_url"] as? String

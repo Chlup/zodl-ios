@@ -1,4 +1,3 @@
-import CryptoKit
 import Foundation
 
 /// CDN-hosted voting service configuration as specified in ZIP 1244 §"Vote Configuration Format".
@@ -12,7 +11,6 @@ struct VotingServiceConfig: Codable, Equatable, Sendable {
     let pirEndpoints: [ServiceEndpoint]
     let snapshotHeight: UInt64
     let voteEndTime: UInt64
-    let proposals: [Proposal]
     let supportedVersions: SupportedVersions
 
     struct ServiceEndpoint: Codable, Equatable, Sendable {
@@ -46,30 +44,6 @@ struct VotingServiceConfig: Codable, Equatable, Sendable {
         }
     }
 
-    struct Proposal: Codable, Equatable, Sendable {
-        let id: Int
-        let title: String
-        let description: String
-        let options: [Option]
-
-        init(id: Int, title: String, description: String, options: [Option]) {
-            self.id = id
-            self.title = title
-            self.description = description
-            self.options = options
-        }
-
-        struct Option: Codable, Equatable, Sendable {
-            let index: Int
-            let label: String
-
-            init(index: Int, label: String) {
-                self.index = index
-                self.label = label
-            }
-        }
-    }
-
     init(
         configVersion: Int,
         voteRoundId: String,
@@ -77,7 +51,6 @@ struct VotingServiceConfig: Codable, Equatable, Sendable {
         pirEndpoints: [ServiceEndpoint],
         snapshotHeight: UInt64,
         voteEndTime: UInt64,
-        proposals: [Proposal],
         supportedVersions: SupportedVersions
     ) {
         self.configVersion = configVersion
@@ -86,7 +59,6 @@ struct VotingServiceConfig: Codable, Equatable, Sendable {
         self.pirEndpoints = pirEndpoints
         self.snapshotHeight = snapshotHeight
         self.voteEndTime = voteEndTime
-        self.proposals = proposals
         self.supportedVersions = supportedVersions
     }
 
@@ -97,7 +69,6 @@ struct VotingServiceConfig: Codable, Equatable, Sendable {
         case pirEndpoints = "pir_endpoints"
         case snapshotHeight = "snapshot_height"
         case voteEndTime = "vote_end_time"
-        case proposals
         case supportedVersions = "supported_versions"
     }
 
@@ -117,7 +88,6 @@ struct VotingServiceConfig: Codable, Equatable, Sendable {
         pirEndpoints: [ServiceEndpoint(url: "https://pir.valargroup.org", label: "PIR Server")],
         snapshotHeight: 0,
         voteEndTime: 0,
-        proposals: [],
         supportedVersions: SupportedVersions(
             pir: ["v0"],
             voteProtocol: "v0",
@@ -145,7 +115,6 @@ enum WalletCapabilities {
 enum VotingConfigError: Error, Equatable, LocalizedError {
     case decodeFailed(String)
     case unsupportedVersion(component: String, advertised: String)
-    case proposalsHashMismatch(expected: Data, actual: Data)
     case roundIdMismatch(configRoundId: String, chainRoundId: String)
 
     var errorDescription: String? {
@@ -154,8 +123,6 @@ enum VotingConfigError: Error, Equatable, LocalizedError {
             return String(localizable: .coinVoteConfigErrorDecodeFailed(detail))
         case .unsupportedVersion(let component, let advertised):
             return String(localizable: .coinVoteConfigErrorUnsupportedVersion(component, advertised))
-        case .proposalsHashMismatch:
-            return String(localizable: .coinVoteConfigErrorProposalsHashMismatch)
         case .roundIdMismatch(let configRoundId, let chainRoundId):
             return String(
                 localizable: .coinVoteConfigErrorRoundIdMismatch(
@@ -196,41 +163,5 @@ extension VotingServiceConfig {
                 advertised: supportedVersions.pir.joined(separator: ",")
             )
         }
-    }
-}
-
-// MARK: - Proposals hash (ZIP 1244 §"Proposals Hash")
-
-extension VotingServiceConfig {
-    /// SHA-256 of the canonical JSON serialization of the proposals array.
-    static func computeProposalsHash(_ proposals: [Proposal]) -> Data {
-        Data(SHA256.hash(data: Data(canonicalProposalsJSON(proposals).utf8)))
-    }
-
-    /// Canonical JSON form per ZIP 1244: proposals sorted by `id` ascending, options by `index` ascending,
-    /// no whitespace, keys in order `id`, `title`, `description`, `options` (and `index`, `label` for each option).
-    static func canonicalProposalsJSON(_ proposals: [Proposal]) -> String {
-        let sortedProposals = proposals.sorted { $0.id < $1.id }
-        let parts = sortedProposals.map { proposal -> String in
-            let sortedOptions = proposal.options.sorted { $0.index < $1.index }
-            let optionParts = sortedOptions.map { option -> String in
-                "{\"index\":\(option.index),\"label\":\(jsonEncodedString(option.label))}"
-            }
-            return "{\"id\":\(proposal.id),\"title\":\(jsonEncodedString(proposal.title)),\"description\":\(jsonEncodedString(proposal.description)),\"options\":[\(optionParts.joined(separator: ","))]}"
-        }
-        return "[\(parts.joined(separator: ","))]"
-    }
-
-    /// JSON-encode a Swift string to match the Rust `serde_json::to_string` byte output.
-    /// `JSONEncoder` with `.withoutEscapingSlashes` leaves `/` un-escaped (Swift default: `\/`);
-    /// otherwise defaults match serde_json (UTF-8 for non-ASCII, `\uXXXX` for control chars).
-    /// The chain server computes `proposals_hash` using `serde_json`, so divergence here would
-    /// cause a hard-fail `proposalsHashMismatch` any time a proposal title or label contained `/`.
-    // swiftlint:disable:next force_try
-    private static func jsonEncodedString(_ s: String) -> String {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.withoutEscapingSlashes]
-        let data = try! encoder.encode(s)
-        return String(decoding: data, as: UTF8.self)
     }
 }
