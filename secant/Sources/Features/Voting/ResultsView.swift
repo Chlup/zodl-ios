@@ -29,6 +29,8 @@ private func tallyEntryColor(
 struct ResultsView: View {
     @Environment(\.colorScheme)
     var colorScheme
+    @State private var loadErrorSheetPresented = true
+    @State private var dismissFlowAfterLoadErrorSheetDismiss = false
 
     let store: StoreOf<Voting>
 
@@ -40,7 +42,7 @@ struct ResultsView: View {
                     // sheet, per the Figma. Replaces the real header + cards
                     // so the surface doesn't read as empty.
                     VStack(alignment: .leading, spacing: 16) {
-                        resultsSkeletonCard
+                        ResultsSkeletonCard()
                     }
                     .padding(.horizontal, 24)
                     .padding(.top, 8)
@@ -82,6 +84,12 @@ struct ResultsView: View {
                     store.send(.retryLoadTallyResults)
                 },
                 secondary: .init(title: String(localizable: .coinVoteCommonGoBack), style: .secondary) {
+                    dismissFlowAfterLoadErrorSheetDismiss = true
+                    loadErrorSheetPresented = false
+                },
+                onDismiss: {
+                    guard dismissFlowAfterLoadErrorSheetDismiss else { return }
+                    dismissFlowAfterLoadErrorSheetDismiss = false
                     store.send(.dismissFlow)
                 }
             )
@@ -90,10 +98,15 @@ struct ResultsView: View {
 
     private var loadErrorBinding: Binding<Bool> {
         Binding(
-            get: { store.resultsLoadError },
+            get: { loadErrorSheetPresented && store.resultsLoadError },
             // Drag-dismiss mirrors Go back for the same reason as PollsListView.
             set: { newValue in
-                if !newValue { store.send(.dismissFlow) }
+                if newValue {
+                    loadErrorSheetPresented = true
+                } else if store.resultsLoadError {
+                    dismissFlowAfterLoadErrorSheetDismiss = true
+                    loadErrorSheetPresented = false
+                }
             }
         )
     }
@@ -129,32 +142,6 @@ struct ResultsView: View {
                 formatWeightZEC(record.votingWeight)
             )
         )
-    }
-
-    // MARK: - Skeleton Placeholder
-
-    private var resultsSkeletonCard: some View {
-        let barFill = Design.Surfaces.bgTertiary.color(colorScheme)
-        return VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                RoundedRectangle(cornerRadius: 4).fill(barFill).frame(width: 60, height: 12)
-                Spacer()
-                RoundedRectangle(cornerRadius: 4).fill(barFill).frame(width: 80, height: 12)
-            }
-            RoundedRectangle(cornerRadius: 4).fill(barFill).frame(height: 14)
-            RoundedRectangle(cornerRadius: 4).fill(barFill).frame(height: 10)
-            RoundedRectangle(cornerRadius: 4).fill(barFill).frame(width: 200, height: 10)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            VStack(spacing: 10) {
-                RoundedRectangle(cornerRadius: 4).fill(barFill).frame(height: 10)
-                RoundedRectangle(cornerRadius: 4).fill(barFill).frame(height: 10)
-            }
-            .padding(.top, 4)
-        }
-        .padding(16)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Design.Surfaces.bgSecondary.color(colorScheme))
-        .clipShape(RoundedRectangle(cornerRadius: Design.Radius._2xl))
     }
 
     // MARK: - VotingProposal Result Card
@@ -323,5 +310,36 @@ struct ResultsView: View {
         case 1: return String(localizable: .coinVoteCommonOppose)
         default: return String(localizable: .coinVoteResultsOption(String(decision)))
         }
+    }
+}
+
+private struct ResultsSkeletonCard: View {
+    @Environment(\.colorScheme)
+    var colorScheme
+
+    var body: some View {
+        let barFill = Design.Surfaces.bgTertiary.color(colorScheme)
+        return VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                RoundedRectangle(cornerRadius: 4).fill(barFill).frame(width: 60, height: 12)
+                Spacer()
+                RoundedRectangle(cornerRadius: 4).fill(barFill).frame(width: 80, height: 12)
+            }
+            RoundedRectangle(cornerRadius: 4).fill(barFill).frame(height: 14)
+            RoundedRectangle(cornerRadius: 4).fill(barFill).frame(height: 10)
+            RoundedRectangle(cornerRadius: 4)
+                .fill(barFill)
+                .frame(width: 200, height: 10)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            VStack(spacing: 10) {
+                RoundedRectangle(cornerRadius: 4).fill(barFill).frame(height: 10)
+                RoundedRectangle(cornerRadius: 4).fill(barFill).frame(height: 10)
+            }
+            .padding(.top, 4)
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Design.Surfaces.bgSecondary.color(colorScheme))
+        .clipShape(RoundedRectangle(cornerRadius: Design.Radius._2xl))
     }
 }

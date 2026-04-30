@@ -1109,6 +1109,17 @@
         }
       }
     },
+    "coinVote.common.gotIt" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Got it"
+          }
+        }
+      }
+    },
     "coinVote.common.governanceTitle" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1149,6 +1160,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Poll Description"
+          }
+        }
+      }
+    },
+    "coinVote.common.refresh" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Refresh"
           }
         }
       }
@@ -1577,7 +1599,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The voting transaction couldn't be authorized. Check your connection and try again."
+            "value" : "The authorization transaction failed. Check your connection and try again."
           }
         }
       }
@@ -2249,6 +2271,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Enter Poll"
+          }
+        }
+      }
+    },
+    "coinVote.pollsList.emptyMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There aren\u2019t any active polls at the moment.\nCheck back later."
+          }
+        }
+      }
+    },
+    "coinVote.pollsList.emptyTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No polls right now"
           }
         }
       }
@@ -3117,7 +3161,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The voting period closed. Your responses cannot be saved."
+            "value" : "The voting period closed. Your responses cannot be submitted."
           }
         }
       }

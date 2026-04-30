@@ -110,7 +110,7 @@ extension Voting {
 
             // Always land on the polls list when there are any rounds, so the
             // user explicitly chooses which one to enter — even if there's only
-            // one. Empty case still shows the noRounds empty state. Guards
+            // one. Empty case shows the no-polls sheet over the list backdrop. Guards
             // against onAppear re-firing while the user is mid-vote.
             if state.allRounds.isEmpty {
                 state.screenStack = [.noRounds]

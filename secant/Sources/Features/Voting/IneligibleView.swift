@@ -9,53 +9,53 @@ struct IneligibleView: View {
 
     var body: some View {
         WithPerceptionTracking {
-            VStack(spacing: 0) {
-                ScrollView {
-                    VStack(spacing: 24) {
-                        Spacer().frame(height: 40)
-
-                        // Icon
-                        ZStack {
-                            Circle()
-                                .fill(Design.Utility.WarningYellow._500.color(colorScheme).opacity(0.12))
-                                .frame(width: 72, height: 72)
-                            Image(systemName: "exclamationmark.triangle")
-                                .font(.system(size: 32))
-                                .foregroundStyle(Design.Utility.WarningYellow._500.color(colorScheme))
-                        }
-
-                        // Title
-                        Text(localizable: .coinVoteIneligibleTitle)
-                            .zFont(.semiBold, size: 22, style: Design.Text.primary)
-
-                        // Explanation card
-                        explanationCard()
-
-                        // Info card
-                        infoCard()
-
-                        Spacer().frame(height: 8)
-                    }
-                    .padding(.horizontal, 24)
+            VotingBlockingBackdrop(store: store)
+                .votingBlockingSheet(
+                    isActive: { store.currentScreen == .ineligible },
+                    onExit: { store.send(.dismissFlow) }
+                ) { dismiss in
+                    sheetContent(dismiss: dismiss)
                 }
+        }
+    }
 
-                ZashiButton(String(localizable: .coinVoteCommonClose), type: .ghost) {
-                    store.send(.dismissFlow)
-                }
-                .padding(.horizontal, 24)
+    // MARK: - Sheet
+
+    @ViewBuilder
+    private func sheetContent(dismiss: @escaping () -> Void) -> some View {
+        VStack(spacing: 0) {
+            sheetIcon()
+                .padding(.top, 16)
+                .padding(.bottom, 16)
+
+            Text(localizable: .coinVoteIneligibleTitle)
+                .zFont(.semiBold, size: 22, style: Design.Text.primary)
+                .multilineTextAlignment(.center)
+                .padding(.bottom, 16)
+
+            explanationCard()
+                .padding(.bottom, 12)
+
+            infoCard()
                 .padding(.bottom, 24)
+
+            ZashiButton(String(localizable: .coinVoteCommonClose)) {
+                dismiss()
             }
-            .navigationTitle(String(localizable: .coinVoteCommonGovernanceTitle))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        store.send(.dismissFlow)
-                    } label: {
-                        Image(systemName: "xmark")
-                    }
-                }
-            }
+            .padding(.bottom, Design.Spacing.sheetBottomSpace)
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    @ViewBuilder
+    private func sheetIcon() -> some View {
+        ZStack {
+            Circle()
+                .fill(Design.Utility.WarningYellow._500.color(colorScheme).opacity(0.1))
+                .frame(width: 48, height: 48)
+            Image(systemName: "exclamationmark.triangle")
+                .font(.system(size: 24, weight: .medium))
+                .foregroundStyle(Design.Utility.WarningYellow._500.color(colorScheme).opacity(0.8))
         }
     }
 
@@ -66,20 +66,20 @@ struct IneligibleView: View {
         let reason = store.ineligibilityReason ?? .noNotes
 
         VStack(alignment: .leading, spacing: 12) {
-            // Description text
             switch reason {
             case .noNotes:
                 Text(localizable: .coinVoteIneligibleNoNotesMessage(snapshotHeightFormatted))
                     .zFont(.regular, size: 15, style: Design.Text.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
 
             case .balanceTooLow:
                 Text(localizable: .coinVoteIneligibleBalanceTooLowMessage(balanceFormatted))
                     .zFont(.regular, size: 15, style: Design.Text.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
 
             Divider()
 
-            // Detail rows
             detailRow(
                 label: String(localizable: .coinVoteIneligibleDetailSnapshot),
                 value: String(localizable: .coinVoteCommonBlockNumber(snapshotHeightFormatted))
@@ -100,6 +100,7 @@ struct IneligibleView: View {
                 detailRow(label: String(localizable: .coinVoteIneligibleDetailBallots), value: "0")
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(16)
         .background(Design.Surfaces.bgPrimary.color(colorScheme))
         .clipShape(RoundedRectangle(cornerRadius: 14))
@@ -120,7 +121,9 @@ struct IneligibleView: View {
 
             Text(localizable: .coinVoteIneligibleInfo)
                 .zFont(.regular, size: 14, style: Design.Text.secondary)
+                .fixedSize(horizontal: false, vertical: true)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(14)
         .background(Design.Text.secondary.color(colorScheme).opacity(0.06))
         .clipShape(RoundedRectangle(cornerRadius: 12))
@@ -133,10 +136,12 @@ struct IneligibleView: View {
         HStack {
             Text(label)
                 .zFont(.medium, size: 14, style: Design.Text.tertiary)
-            Spacer()
+            Spacer(minLength: 12)
             Text(value)
                 .font(.system(size: 14, weight: .medium, design: .monospaced))
                 .foregroundStyle(Design.Text.primary.color(colorScheme))
+                .multilineTextAlignment(.trailing)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
 

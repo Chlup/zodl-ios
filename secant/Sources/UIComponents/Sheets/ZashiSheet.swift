@@ -53,12 +53,13 @@ struct ContentHeightKey: PreferenceKey {
 struct ZashiSheetModifier<SheetContent: View>: ViewModifier {
     @Binding var isPresented: Bool
     let horizontalPadding: CGFloat
+    let onDismiss: (() -> Void)?
     @State var sheetHeight: CGFloat = .zero
     var sheetContent: SheetContent
 
     func body(content: Content) -> some View {
         content
-            .sheet(isPresented: $isPresented) {
+            .sheet(isPresented: $isPresented, onDismiss: onDismiss) {
                 if #available(iOS 26.0, *) {
                     mainBody26()
                         .presentationDetents([.height(sheetHeight)])
@@ -87,7 +88,7 @@ struct ZashiSheetModifier<SheetContent: View>: ViewModifier {
                 }
             }
     }
-    
+
     @ViewBuilder func mainBody(stickToBottom: Bool = false) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             if stickToBottom {
@@ -105,7 +106,7 @@ struct ZashiSheetModifier<SheetContent: View>: ViewModifier {
             }
         }
     }
-    
+
     @ViewBuilder func mainBody26(stickToBottom: Bool = false) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             if stickToBottom {
@@ -126,10 +127,16 @@ extension View {
     func zashiSheet(
         isPresented: Binding<Bool>,
         horizontalPadding: CGFloat = Design.Spacing._3xl,
+        onDismiss: (() -> Void)? = nil,
         content: @escaping () -> some View
     ) -> some View {
         modifier(
-            ZashiSheetModifier(isPresented: isPresented, horizontalPadding: horizontalPadding, sheetContent: content())
+            ZashiSheetModifier(
+                isPresented: isPresented,
+                horizontalPadding: horizontalPadding,
+                onDismiss: onDismiss,
+                sheetContent: content()
+            )
         )
     }
 }

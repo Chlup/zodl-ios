@@ -83,9 +83,10 @@ extension View {
         title: String,
         message: String,
         primary: VotingSheetContent.ButtonConfig,
-        secondary: VotingSheetContent.ButtonConfig? = nil
+        secondary: VotingSheetContent.ButtonConfig? = nil,
+        onDismiss: (() -> Void)? = nil
     ) -> some View {
-        zashiSheet(isPresented: isPresented) {
+        zashiSheet(isPresented: isPresented, onDismiss: onDismiss) {
             VotingSheetContent(
                 iconSystemName: iconSystemName,
                 iconStyle: iconStyle,
@@ -95,5 +96,62 @@ extension View {
                 secondary: secondary
             )
         }
+    }
+}
+
+private struct VotingBlockingSheetModifier<SheetContent: View>: ViewModifier {
+    let isActive: () -> Bool
+    let onExit: () -> Void
+    let sheetContent: (_ dismissAndExit: @escaping () -> Void) -> SheetContent
+
+    @State private var sheetPresented = true
+    @State private var exitAfterSheetDismiss = false
+
+    func body(content: Content) -> some View {
+        content
+            .zashiSheet(isPresented: sheetBinding, onDismiss: exitIfNeeded) {
+                sheetContent(dismissSheetAndExit)
+            }
+    }
+
+    private var sheetBinding: Binding<Bool> {
+        Binding(
+            get: { sheetPresented && isActive() },
+            set: { newValue in
+                if !newValue && isActive() {
+                    exitAfterSheetDismiss = true
+                }
+                sheetPresented = newValue
+            }
+        )
+    }
+
+    private func dismissSheetAndExit() {
+        exitAfterSheetDismiss = true
+        sheetPresented = false
+    }
+
+    private func exitIfNeeded() {
+        guard exitAfterSheetDismiss else { return }
+        exitAfterSheetDismiss = false
+        onExit()
+    }
+}
+
+extension View {
+    /// Presents a blocking voting sheet and exits the voting flow only after
+    /// the sheet dismiss animation finishes.
+    func votingBlockingSheet<SheetContent: View>(
+        isActive: @escaping () -> Bool,
+        onExit: @escaping () -> Void,
+        @ViewBuilder content: @escaping (_ dismissAndExit: @escaping () -> Void) -> SheetContent
+    ) -> some View {
+        modifier(
+            VotingBlockingSheetModifier(
+                isActive: isActive,
+                onExit: onExit,
+                sheetContent: content
+            )
+        )
     }
 }

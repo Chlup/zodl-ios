@@ -125,34 +125,49 @@ struct VotingView: View {
     }
 }
 
+struct VotingBlockingBackdrop: View {
+    let store: StoreOf<Voting>
+
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 16) {
+                PollsListSkeletonCard()
+            }
+            .padding(.horizontal, 24)
+            .padding(.top, 8)
+            .padding(.bottom, 24)
+        }
+        .applyScreenBackground()
+        .screenTitle(String(localizable: .coinVoteCommonScreenTitle))
+        .zashiBack { store.send(.dismissFlow) }
+    }
+}
+
 // MARK: - No Rounds
 
 struct NoRoundsView: View {
     let store: StoreOf<Voting>
 
     var body: some View {
-        VStack(spacing: 12) {
-            Spacer()
-            Image(systemName: "rectangle.slash")
-                .font(.system(size: 28))
-                .foregroundStyle(.secondary)
-            Text(localizable: .coinVoteVotingViewNoRoundsTitle)
-                .font(.headline)
-            Text(localizable: .coinVoteVotingViewNoRoundsMessage)
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 32)
-            Spacer()
-        }
-        .navigationTitle(String(localizable: .coinVoteCommonGovernanceTitle))
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button { store.send(.dismissFlow) } label: {
-                    Image(systemName: "xmark")
+        WithPerceptionTracking {
+            VotingBlockingBackdrop(store: store)
+                .votingBlockingSheet(
+                    isActive: { store.currentScreen == .noRounds },
+                    onExit: { store.send(.dismissFlow) }
+                ) { dismiss in
+                    VotingSheetContent(
+                        iconSystemName: "exclamationmark.circle",
+                        iconStyle: Design.Utility.ErrorRed._500,
+                        title: String(localizable: .coinVotePollsListEmptyTitle),
+                        message: String(localizable: .coinVotePollsListEmptyMessage),
+                        primary: .init(title: String(localizable: .coinVoteCommonGotIt), style: .primary) {
+                            dismiss()
+                        },
+                        secondary: .init(title: String(localizable: .coinVoteCommonRefresh), style: .secondary) {
+                            store.send(.retryLoadRounds)
+                        }
+                    )
                 }
-            }
         }
     }
 }
