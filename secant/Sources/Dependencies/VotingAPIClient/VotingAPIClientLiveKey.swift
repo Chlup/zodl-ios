@@ -48,6 +48,118 @@ private enum SvAPIError: LocalizedError {
     }
 }
 
+enum SvAPIResponseParser {
+    static func parseJSONObject(
+        _ data: Data,
+        response: HTTPURLResponse,
+        context: String
+    ) throws -> [String: Any] {
+        do {
+            let object = try JSONSerialization.jsonObject(with: data, options: [.fragmentsAllowed])
+            return try unwrapJSONObject(object, data: data, response: response, context: context)
+        } catch {
+            throw SvAPIError.invalidResponse(
+                "\(context): JSON parse failed (\(responseMetadata(response))) — \(bodySnippet(data))"
+            )
+        }
+    }
+
+    static func parseTxResult(_ json: [String: Any]) throws -> TxResult {
+        for candidate in txResultCandidates(from: json) {
+            let hasResultFields =
+                candidate["tx_hash"] != nil ||
+                candidate["txhash"] != nil ||
+                candidate["hash"] != nil ||
+                candidate["code"] != nil ||
+                candidate["log"] != nil ||
+                candidate["raw_log"] != nil ||
+                candidate["error"] != nil
+            guard hasResultFields else { continue }
+
+            let txHash =
+                (candidate["tx_hash"] as? String) ??
+                (candidate["txhash"] as? String) ??
+                (candidate["hash"] as? String) ??
+                ""
+            let code = parseUInt32(candidate["code"])
+            let log =
+                (candidate["log"] as? String) ??
+                (candidate["raw_log"] as? String) ??
+                (candidate["error"] as? String) ??
+                ""
+
+            if code != 0 {
+                throw SvAPIError.txFailed(code: code, log: log)
+            }
+            return TxResult(txHash: txHash, code: code, log: log)
+        }
+
+        if let error = json["error"] as? String, !error.isEmpty {
+            throw SvAPIError.invalidResponse("tx submission returned error: \(error)")
+        }
+        throw SvAPIError.invalidResponse("missing tx result fields")
+    }
+
+    private static func unwrapJSONObject(
+        _ object: Any,
+        data: Data,
+        response: HTTPURLResponse,
+        context: String
+    ) throws -> [String: Any] {
+        if let json = object as? [String: Any] {
+            return json
+        }
+
+        // Some upstreams double-encode JSON objects as a top-level JSON string.
+        if let string = object as? String {
+            let trimmed = string.trimmingCharacters(in: .whitespacesAndNewlines)
+            if let nestedData = trimmed.data(using: .utf8),
+               let nested = try? JSONSerialization.jsonObject(with: nestedData) as? [String: Any] {
+                logger.error("[VotingAPI] \(context) returned double-encoded JSON")
+                return nested
+            }
+        }
+
+        throw SvAPIError.invalidResponse(
+            "\(context): expected JSON object, got \(describeJSONValue(object)) (\(responseMetadata(response))) — \(bodySnippet(data))"
+        )
+    }
+
+    private static func txResultCandidates(from json: [String: Any]) -> [[String: Any]] {
+        [
+            json,
+            json["tx_response"] as? [String: Any],
+            json["result"] as? [String: Any]
+        ].compactMap { $0 }
+    }
+
+    private static func describeJSONValue(_ value: Any) -> String {
+        switch value {
+        case is [Any]:
+            return "array"
+        case is String:
+            return "string"
+        case is NSNumber:
+            return "number"
+        case is NSNull:
+            return "null"
+        default:
+            return String(describing: type(of: value))
+        }
+    }
+
+    private static func responseMetadata(_ response: HTTPURLResponse) -> String {
+        let contentType = response.value(forHTTPHeaderField: "Content-Type") ?? "unknown content type"
+        return "HTTP \(response.statusCode), Content-Type: \(contentType)"
+    }
+
+    private static func bodySnippet(_ data: Data, limit: Int = 512) -> String {
+        guard !data.isEmpty else { return "<empty body>" }
+        let snippet = String(data: data.prefix(limit), encoding: .utf8) ?? "<non-utf8>"
+        return snippet.replacingOccurrences(of: "\n", with: "\\n")
+    }
+}
+
 // MARK: - HTTP Helpers
 
 /// URLSession configured with a long timeout to accommodate ZKP verification (30-60s).
@@ -73,7 +185,9 @@ private func getJSON(_ path: String, baseURL: String? = nil) async throws -> [St
     guard let url = URL(string: "\(base)\(path)") else {
         throw SvAPIError.invalidResponse("invalid URL: \(base)\(path)")
     }
-    let (data, response) = try await httpSession.data(from: url)
+    var request = URLRequest(url: url)
+    request.setValue("application/json", forHTTPHeaderField: "Accept")
+    let (data, response) = try await httpSession.data(for: request)
     guard let http = response as? HTTPURLResponse else {
         throw SvAPIError.invalidResponse("not an HTTP response")
     }
@@ -81,10 +195,7 @@ private func getJSON(_ path: String, baseURL: String? = nil) async throws -> [St
         let body = String(data: data, encoding: .utf8) ?? ""
         throw SvAPIError.httpError(statusCode: http.statusCode, message: body)
     }
-    guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-        throw SvAPIError.invalidResponse("expected JSON object")
-    }
-    return json
+    return try SvAPIResponseParser.parseJSONObject(data, response: http, context: "GET \(path)")
 }
 
 private func postJSON(_ path: String, body: [String: Any], baseURL: String? = nil) async throws -> [String: Any] {
@@ -96,6 +207,7 @@ private func postJSON(_ path: String, body: [String: Any], baseURL: String? = ni
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.setValue("application/json", forHTTPHeaderField: "Accept")
     request.httpBody = try JSONSerialization.data(withJSONObject: body)
 
     let (data, response) = try await httpSession.data(for: request)
@@ -106,7 +218,7 @@ private func postJSON(_ path: String, body: [String: Any], baseURL: String? = ni
         // 422 = chain processed the request but rejected the TX (non-zero CheckTx code).
         // Parse the structured body for code/log instead of returning a raw HTTP error.
         if http.statusCode == 422,
-           let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+           let json = try? SvAPIResponseParser.parseJSONObject(data, response: http, context: "POST \(path)") {
             let code = (json["code"] as? NSNumber)?.uint32Value ?? 0
             let log = json["log"] as? String ?? ""
             if code != 0 {
@@ -116,10 +228,7 @@ private func postJSON(_ path: String, body: [String: Any], baseURL: String? = ni
         let body = String(data: data, encoding: .utf8) ?? ""
         throw SvAPIError.httpError(statusCode: http.statusCode, message: body)
     }
-    guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-        throw SvAPIError.invalidResponse("expected JSON object")
-    }
-    return json
+    return try SvAPIResponseParser.parseJSONObject(data, response: http, context: "POST \(path)")
 }
 
 /// POST JSON to a specific vote server URL. Returns parsed JSON response.
@@ -130,6 +239,7 @@ private func postServerJSON(_ serverURL: String, _ path: String, body: [String: 
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.setValue("application/json", forHTTPHeaderField: "Accept")
     request.httpBody = try JSONSerialization.data(withJSONObject: body)
 
     let (data, response) = try await fastHttpSession.data(for: request)
@@ -140,21 +250,12 @@ private func postServerJSON(_ serverURL: String, _ path: String, body: [String: 
         let body = String(data: data, encoding: .utf8) ?? ""
         throw SvAPIError.httpError(statusCode: http.statusCode, message: body)
     }
-    guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-        throw SvAPIError.invalidResponse("expected JSON object")
-    }
-    return json
+    return try SvAPIResponseParser.parseJSONObject(data, response: http, context: "POST \(path)")
 }
 
 /// Parse a broadcast TX response into TxResult. Throws on non-zero code.
 private func parseTxResult(_ json: [String: Any]) throws -> TxResult {
-    let txHash = json["tx_hash"] as? String ?? ""
-    let code = (json["code"] as? NSNumber)?.uint32Value ?? 0
-    let log = json["log"] as? String ?? ""
-    if code != 0 {
-        throw SvAPIError.txFailed(code: code, log: log)
-    }
-    return TxResult(txHash: txHash, code: code, log: log)
+    try SvAPIResponseParser.parseTxResult(json)
 }
 
 // MARK: - Broadcast Retry
@@ -748,4 +849,3 @@ extension VotingAPIClient: DependencyKey {
         )
     }
 }
-
