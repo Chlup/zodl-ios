@@ -19,7 +19,8 @@ extension Voting {
                 .cancel(id: cancelStatusPollingId),
                 .cancel(id: cancelPipelineId),
                 .cancel(id: cancelNewRoundPollingId),
-                .cancel(id: cancelShareTrackingId)
+                .cancel(id: cancelShareTrackingId),
+                .cancel(id: cancelDelegationProofPrecomputeId)
             )
 
         case .goBack:
@@ -55,12 +56,15 @@ extension Voting {
             state.witnessStatus = .notStarted
             state.delegationProofStatus = .notStarted
             state.isDelegationProofInFlight = false
+            state.delegationProofPrecomputeStatus = .notStarted
+            state.isDelegationProofPrecomputeInFlight = false
             state.hotkeyAddress = nil
             state.isSubmittingVote = false
             state.submittingProposalId = nil
             state.voteSubmissionStep = nil
             state.currentVoteBundleIndex = nil
             state.draftVotes = [:]
+            state.pendingBatchSubmission = false
             state.batchSubmissionStatus = .idle
             state.batchVoteErrors = [:]
             state.tallyResults = [:]
@@ -77,6 +81,7 @@ extension Voting {
                 .cancel(id: cancelPipelineId),
                 .cancel(id: cancelNewRoundPollingId),
                 .cancel(id: cancelShareTrackingId),
+                .cancel(id: cancelDelegationProofPrecomputeId),
                 .run { [votingAPI] send in
                     let allRounds = try await votingAPI.fetchAllRounds()
                     await send(.allRoundsLoaded(allRounds))
@@ -409,6 +414,11 @@ extension Voting {
                 state.screenStack.removeLast()
             } else if case .proposalList = state.currentScreen, state.screenStack.count > 1 {
                 state.screenStack.removeLast()
+                state.isDelegationProofPrecomputeInFlight = false
+                if case .generating = state.delegationProofPrecomputeStatus {
+                    state.delegationProofPrecomputeStatus = .notStarted
+                }
+                return .cancel(id: cancelDelegationProofPrecomputeId)
             }
             return .none
 

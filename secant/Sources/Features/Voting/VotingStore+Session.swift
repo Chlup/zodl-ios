@@ -122,8 +122,15 @@ extension Voting {
         case .roundTapped(let roundId):
             guard let item = state.allRounds.first(where: { $0.id == roundId }) else { return .none }
             let session = item.session
+            let isSwitchingRounds = state.roundId != session.voteRoundId.hexString
             state.activeSession = session
             state.roundId = session.voteRoundId.hexString
+            if isSwitchingRounds {
+                state.delegationProofStatus = .notStarted
+                state.isDelegationProofInFlight = false
+                state.delegationProofPrecomputeStatus = .notStarted
+                state.isDelegationProofPrecomputeInFlight = false
+            }
             state.votingRound = sessionBackedRound(from: session, title: item.title, fallback: state.votingRound)
             state.voteRecord = Self.loadCompletedVoteRecord(walletId: state.walletId, roundId: state.roundId)
             reconcileProposalState(&state)
@@ -135,6 +142,7 @@ extension Voting {
                 state.screenStack = [.pollsList, .proposalList]
                 return .merge(
                     .cancel(id: cancelNewRoundPollingId),
+                    .cancel(id: cancelDelegationProofPrecomputeId),
                     .send(.startRoundStatusPolling),
                     // Defer pipeline start so SwiftUI renders the navigation
                     // transition before the reducer processes the pipeline action.
@@ -368,7 +376,7 @@ extension Voting {
 
         case .hotkeyLoaded(let address):
             state.hotkeyAddress = address
-            return .none
+            return startSoftwareDelegationProofPrecomputationIfReady(state)
 
         // MARK: - Round Status Polling
 
@@ -546,6 +554,7 @@ extension Voting {
             // Proof status: if DB says proof succeeded and we're not actively generating, sync it
             if dbState.roundState.proofGenerated && state.delegationProofStatus != .complete {
                 state.delegationProofStatus = .complete
+                state.delegationProofPrecomputeStatus = .complete
             }
             // Sync hotkey address from DB if available
             if let addr = dbState.roundState.hotkeyAddress {

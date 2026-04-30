@@ -7,6 +7,18 @@ import os
 // MARK: - Delegation (Witness Verification, Round Resume, Delegation Signing, Background ZKP)
 
 extension Voting {
+    func startSoftwareDelegationProofPrecomputationIfReady(_ state: State) -> Effect<Action> {
+        guard !state.isKeystoneUser else { return .none }
+        guard state.activeSession?.status == .active else { return .none }
+        guard state.hotkeyAddress != nil else { return .none }
+        guard state.witnessStatus == .completed else { return .none }
+        guard state.bundleCount > 0 else { return .none }
+        guard state.delegationProofStatus != .complete else { return .none }
+        guard state.delegationProofPrecomputeStatus == .notStarted else { return .none }
+        guard !state.isDelegationProofPrecomputeInFlight && !state.isDelegationProofInFlight else { return .none }
+        return .send(.startDelegationProofPrecomputation)
+    }
+
     func reduceDelegation(_ state: inout State, _ action: Action) -> Effect<Action> {
         switch action {
 
@@ -150,7 +162,7 @@ extension Voting {
             // Only shown for fresh rounds (not cached). This avoids a brief
             // flash of "Preparing note witnesses..." when resuming a round.
             state.witnessStatus = .inProgress
-            state.delegationProofStatus = .generating(progress: 0)
+            state.delegationProofStatus = .notStarted
             return .none
 
         case .rerunWitnessVerification:
@@ -158,7 +170,12 @@ extension Voting {
             state.noteWitnessResults = []
             state.cachedWitnesses = []
             state.witnessTiming = nil
-            return .send(.verifyWitnesses)
+            state.delegationProofPrecomputeStatus = .notStarted
+            state.isDelegationProofPrecomputeInFlight = false
+            return .merge(
+                .cancel(id: cancelDelegationProofPrecomputeId),
+                .send(.verifyWitnesses)
+            )
 
         case let .witnessVerificationCompleted(results, witnesses, timing, bundleCount):
             state.noteWitnessResults = results
@@ -176,15 +193,17 @@ extension Voting {
                     return total + quantizeWeight(raw)
                 }
             }
-            // Delegation (ZKP #1) is deferred until the user submits their vote.
-            // Witnesses are ready; delegation will use them at submission time.
-            return .none
+            // Software wallets can precompute ZKP #1 locally now that note
+            // witnesses are ready. On-chain delegation remains deferred until
+            // final submission.
+            return startSoftwareDelegationProofPrecomputationIfReady(state)
 
         case .witnessVerificationFailed(let error):
             let message = VotingErrorMapper.userFriendlyMessage(from: error)
             state.witnessStatus = .failed(message)
             state.delegationProofStatus = .failed(message)
             state.isDelegationProofInFlight = false
+            state.isDelegationProofPrecomputeInFlight = false
             return .none
 
         // MARK: - Round Resume
@@ -314,6 +333,70 @@ extension Voting {
             return .send(.startDelegationProof)
 
         // MARK: - Background ZKP Delegation
+
+        case .startDelegationProofPrecomputation:
+            guard !state.isKeystoneUser else { return .none }
+            guard !state.isDelegationProofPrecomputeInFlight,
+                  !state.isDelegationProofInFlight,
+                  state.activeSession?.status == .active,
+                  state.hotkeyAddress != nil,
+                  state.witnessStatus == .completed,
+                  state.bundleCount > 0,
+                  state.delegationProofPrecomputeStatus == .notStarted,
+                  state.delegationProofStatus != .complete
+            else {
+                return .none
+            }
+            guard let activeSession = state.activeSession else { return .none }
+            guard
+                let pirEndpoints = state.serviceConfig?.pirEndpoints.map(\.url),
+                !pirEndpoints.isEmpty
+            else {
+                votingLogger.error("serviceConfig unexpectedly nil during delegation proof precompute; aborting")
+                return .none
+            }
+
+            state.isDelegationProofPrecomputeInFlight = true
+            state.delegationProofPrecomputeStatus = .generating(progress: 0)
+
+            let roundId = activeSession.voteRoundId.hexString
+            let expectedSnapshotHeight = activeSession.snapshotHeight
+            let cachedNotes = state.walletNotes
+            let network = zcashSDKEnvironment.network
+            let networkId: UInt32 = network.networkType == .mainnet ? 0 : 1
+            let roundName = state.votingRound.title
+
+            return .run { [backgroundTask, votingCrypto, mnemonic, walletStorage] send in
+                let bgTaskId = await backgroundTask.beginTask("Delegation proof precomputation")
+                do {
+                    let senderPhrase = try walletStorage.exportWallet().seedPhrase.value()
+                    let senderSeed = try mnemonic.toSeed(senderPhrase)
+                    let hotkeyPhrase = try walletStorage.exportVotingHotkey("").seedPhrase.value()
+                    let hotkeySeed = try mnemonic.toSeed(hotkeyPhrase)
+
+                    try await Self.runDelegationProofPrecomputation(
+                        roundId: roundId,
+                        cachedNotes: cachedNotes,
+                        senderSeed: senderSeed,
+                        hotkeySeed: hotkeySeed,
+                        networkId: networkId,
+                        accountIndex: 0,
+                        roundName: roundName,
+                        pirEndpoints: pirEndpoints,
+                        expectedSnapshotHeight: expectedSnapshotHeight,
+                        votingCrypto: votingCrypto,
+                        send: send
+                    )
+                    await backgroundTask.endTask(bgTaskId)
+                    await send(.delegationProofPrecomputationCompleted)
+                } catch {
+                    await backgroundTask.endTask(bgTaskId)
+                    throw error
+                }
+            } catch: { error, send in
+                await send(.delegationProofPrecomputationFailed(error.localizedDescription))
+            }
+            .cancellable(id: cancelDelegationProofPrecomputeId, cancelInFlight: true)
 
         case .startDelegationProof:
             guard !state.isDelegationProofInFlight && state.delegationProofStatus != .complete else {
@@ -775,9 +858,32 @@ extension Voting {
             state.delegationProofStatus = .generating(progress: progress)
             return .none
 
+        case .delegationProofPrecomputationProgress(let progress):
+            if state.delegationProofPrecomputeStatus != .complete {
+                state.delegationProofPrecomputeStatus = .generating(progress: progress)
+            }
+            if state.isBatchSubmitting && state.delegationProofStatus != .complete {
+                state.delegationProofStatus = .generating(progress: progress)
+            }
+            return .none
+
+        case .delegationProofPrecomputationCompleted:
+            state.delegationProofPrecomputeStatus = .complete
+            state.isDelegationProofPrecomputeInFlight = false
+            if state.isBatchSubmitting && state.delegationProofStatus != .complete {
+                state.delegationProofStatus = .generating(progress: 1)
+            }
+            if state.pendingBatchSubmission {
+                state.pendingBatchSubmission = false
+                return .send(.authenticationSucceeded)
+            }
+            return .none
+
         case .delegationProofCompleted:
             state.delegationProofStatus = .complete
+            state.delegationProofPrecomputeStatus = .complete
             state.isDelegationProofInFlight = false
+            state.isDelegationProofPrecomputeInFlight = false
             state.currentKeystoneBundleIndex = 0
             state.keystoneBundleSignatures = []
 
@@ -825,13 +931,96 @@ extension Voting {
             state.isDelegationProofInFlight = false
             return .none
 
+        case .delegationProofPrecomputationFailed(let error):
+            state.isDelegationProofPrecomputeInFlight = false
+            // Keep the failed state sticky so background precompute does not retry
+            // in a loop; foreground submission still falls back to fresh delegation.
+            state.delegationProofPrecomputeStatus = .failed(
+                VotingErrorMapper.userFriendlyMessage(from: error)
+            )
+            if state.pendingBatchSubmission {
+                state.pendingBatchSubmission = false
+                return .send(.authenticationSucceeded)
+            }
+            return .none
+
         default:
             return .none
         }
     }
 
-    /// Run the non-Keystone delegation pipeline (ZKP #1) for all bundles.
-    /// Called inline from submitAllDrafts before the vote pipeline.
+    /// Precompute non-Keystone ZKP #1 locally for all bundles.
+    /// This intentionally does not submit anything on-chain; it only builds the
+    /// voting PCZT metadata and proof artifacts needed for a later delegation TX.
+    static func runDelegationProofPrecomputation(
+        roundId: String,
+        cachedNotes: [NoteInfo],
+        senderSeed: [UInt8],
+        hotkeySeed: [UInt8],
+        networkId: UInt32,
+        accountIndex: UInt32,
+        roundName: String,
+        pirEndpoints: [String],
+        expectedSnapshotHeight: UInt64,
+        votingCrypto: VotingCryptoClient,
+        send: Send<Action>
+    ) async throws {
+        let noteChunks = cachedNotes.smartBundles().bundles
+        let bundleCount = UInt32(noteChunks.count)
+
+        for bundleIndex: UInt32 in 0..<bundleCount {
+            if case .present? = try? await votingCrypto.getDelegationTxHash(roundId, bundleIndex) {
+                votingLogger.debug(
+                    "Delegation proof precompute: bundle \(bundleIndex + 1)/\(bundleCount) already submitted, skipping"
+                )
+                await send(.delegationProofPrecomputationProgress(Double(bundleIndex + 1) / Double(bundleCount)))
+                continue
+            }
+
+            if (try? await votingCrypto.getDelegationSubmission(
+                roundId, bundleIndex, senderSeed, networkId, accountIndex
+            )) != nil {
+                votingLogger.debug(
+                    "Delegation proof precompute: bundle \(bundleIndex + 1)/\(bundleCount) already cached, skipping"
+                )
+                await send(.delegationProofPrecomputationProgress(Double(bundleIndex + 1) / Double(bundleCount)))
+                continue
+            }
+
+            let bundleNotes = noteChunks[Int(bundleIndex)]
+            votingLogger.info(
+                "Precomputing ZKP #1 bundle \(bundleIndex + 1)/\(bundleCount) (\(bundleNotes.count) notes)"
+            )
+
+            _ = try await votingCrypto.buildVotingPczt(
+                roundId, bundleIndex, bundleNotes,
+                senderSeed, hotkeySeed, networkId, accountIndex, roundName,
+                nil, nil
+            )
+
+            for try await event in votingCrypto.buildAndProveDelegation(
+                roundId, bundleIndex, bundleNotes,
+                senderSeed, hotkeySeed, networkId, accountIndex,
+                pirEndpoints, expectedSnapshotHeight
+            ) {
+                switch event {
+                case .progress(let progress):
+                    let overallProgress = (Double(bundleIndex) + progress) / Double(bundleCount)
+                    votingLogger.debug("ZKP #1 precompute bundle \(bundleIndex) progress: \(Int(progress * 100))%")
+                    await send(.delegationProofPrecomputationProgress(overallProgress))
+                case .completed(let proof):
+                    votingLogger.info(
+                        "ZKP #1 precompute bundle \(bundleIndex) COMPLETE — proof size: \(proof.count) bytes"
+                    )
+                }
+            }
+        }
+    }
+
+    /// Run the non-Keystone delegation pipeline for all bundles.
+    /// Called inline from submitAllDrafts before the vote pipeline. If ZKP #1
+    /// was precomputed, this reuses the cached proof and only performs the
+    /// chain submission/confirmation work.
     /// The SDK selects a fresh PIR endpoint from `pirEndpoints` per bundle (see
     /// `VotingCryptoClient.buildAndProveDelegation`); pass the entire configured
     /// list and the round's `expectedSnapshotHeight` so stale servers are
@@ -867,30 +1056,38 @@ extension Voting {
             let bundleNotes = noteChunks[Int(bundleIndex)]
             votingLogger.info("Delegation bundle \(bundleIndex + 1)/\(bundleCount) (\(bundleNotes.count) notes)")
 
-            _ = try await votingCrypto.buildVotingPczt(
-                roundId, bundleIndex, bundleNotes,
-                senderSeed, hotkeySeed, networkId, accountIndex, roundName,
-                nil, nil
-            )
-
-            for try await event in votingCrypto.buildAndProveDelegation(
-                roundId, bundleIndex, bundleNotes,
-                senderSeed, hotkeySeed, networkId, accountIndex,
-                pirEndpoints, expectedSnapshotHeight
-            ) {
-                switch event {
-                case .progress(let progress):
-                    let overallProgress = (Double(bundleIndex) + progress) / Double(bundleCount)
-                    votingLogger.debug("ZKP #1 bundle \(bundleIndex) progress: \(Int(progress * 100))%")
-                    await send(.delegationProofProgress(overallProgress))
-                case .completed(let proof):
-                    votingLogger.info("ZKP #1 bundle \(bundleIndex) COMPLETE — proof size: \(proof.count) bytes")
-                }
-            }
-
-            let registration = try await votingCrypto.getDelegationSubmission(
+            let registration: DelegationRegistration
+            if let cachedRegistration = try? await votingCrypto.getDelegationSubmission(
                 roundId, bundleIndex, senderSeed, networkId, accountIndex
-            )
+            ) {
+                votingLogger.debug("Delegation bundle \(bundleIndex + 1)/\(bundleCount) using cached ZKP #1 proof")
+                registration = cachedRegistration
+            } else {
+                _ = try await votingCrypto.buildVotingPczt(
+                    roundId, bundleIndex, bundleNotes,
+                    senderSeed, hotkeySeed, networkId, accountIndex, roundName,
+                    nil, nil
+                )
+
+                for try await event in votingCrypto.buildAndProveDelegation(
+                    roundId, bundleIndex, bundleNotes,
+                    senderSeed, hotkeySeed, networkId, accountIndex,
+                    pirEndpoints, expectedSnapshotHeight
+                ) {
+                    switch event {
+                    case .progress(let progress):
+                        let overallProgress = (Double(bundleIndex) + progress) / Double(bundleCount)
+                        votingLogger.debug("ZKP #1 bundle \(bundleIndex) progress: \(Int(progress * 100))%")
+                        await send(.delegationProofProgress(overallProgress))
+                    case .completed(let proof):
+                        votingLogger.info("ZKP #1 bundle \(bundleIndex) COMPLETE — proof size: \(proof.count) bytes")
+                    }
+                }
+
+                registration = try await votingCrypto.getDelegationSubmission(
+                    roundId, bundleIndex, senderSeed, networkId, accountIndex
+                )
+            }
             let delegTxResult = try await votingAPI.submitDelegation(registration)
             votingLogger.info("Delegation TX \(bundleIndex) submitted: \(delegTxResult.txHash)")
 
