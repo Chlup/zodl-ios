@@ -427,7 +427,17 @@ extension VotingAPIClient: DependencyKey {
                 let data: Data
                 let response: URLResponse
                 do {
-                    (data, response) = try await httpSession.data(from: configURL)
+                    // Always re-fetch the config from the network instead of trusting
+                    // a persisted URLCache entry. GitHub Pages serves a short TTL, but
+                    // mobile restarts during a round rollover can otherwise keep an old
+                    // round binding alive long enough to brick voting on launch.
+                    var request = URLRequest(
+                        url: configURL,
+                        cachePolicy: .reloadIgnoringLocalCacheData
+                    )
+                    request.setValue("no-cache", forHTTPHeaderField: "Cache-Control")
+                    request.setValue("no-cache", forHTTPHeaderField: "Pragma")
+                    (data, response) = try await httpSession.data(for: request)
                 } catch {
                     throw VotingConfigError.decodeFailed("CDN fetch failed: \(error.localizedDescription)")
                 }
