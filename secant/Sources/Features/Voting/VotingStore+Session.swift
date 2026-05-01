@@ -130,10 +130,22 @@ extension Voting {
                 state.isDelegationProofInFlight = false
                 state.delegationProofPrecomputeStatus = .notStarted
                 state.isDelegationProofPrecomputeInFlight = false
+                state.pendingBatchSubmission = false
+                state.currentKeystoneBundleIndex = 0
+                state.keystoneBundleSignatures = []
+                state.pendingVotingPczt = nil
+                state.pendingUnsignedDelegationPczt = nil
+                state.keystoneSigningStatus = .idle
             }
             state.votingRound = sessionBackedRound(from: session, title: item.title, fallback: state.votingRound)
             state.voteRecord = Self.loadCompletedVoteRecord(walletId: state.walletId, roundId: state.roundId)
             reconcileProposalState(&state)
+            let cancelStaleDelegation: Effect<Action> = isSwitchingRounds
+                ? .merge(
+                    .cancel(id: cancelDelegationProofId),
+                    .cancel(id: cancelDelegationProofPrecomputeId)
+                )
+                : .none
 
             switch session.status {
             case .active:
@@ -141,6 +153,7 @@ extension Voting {
                 // runs in the background once voting weight is loaded.
                 state.screenStack = [.pollsList, .proposalList]
                 return .merge(
+                    cancelStaleDelegation,
                     .cancel(id: cancelNewRoundPollingId),
                     .cancel(id: cancelDelegationProofPrecomputeId),
                     .send(.startRoundStatusPolling),
@@ -150,10 +163,11 @@ extension Voting {
                 )
             case .tallying:
                 state.screenStack = [.tallying]
-                return .send(.startRoundStatusPolling)
+                return .merge(cancelStaleDelegation, .send(.startRoundStatusPolling))
             case .finalized:
                 state.screenStack = [.results]
                 return .merge(
+                    cancelStaleDelegation,
                     .send(.fetchTallyResults),
                     .send(.startNewRoundPolling)
                 )

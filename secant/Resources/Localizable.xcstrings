@@ -2946,6 +2946,17 @@
         }
       }
     },
+    "coinVote.store.userError.noReachableVoteServers" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to reach any vote server. Please check your internet connection and try again."
+          }
+        }
+      }
+    },
     "coinVote.store.userError.nullifierAlreadySpent" : {
       "extractionState" : "manual",
       "localizations" : {

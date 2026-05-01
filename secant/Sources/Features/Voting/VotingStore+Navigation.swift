@@ -6,6 +6,92 @@ import os
 
 // MARK: - Navigation, VotingProposal List/Detail, Share Info, Share Delegation Tracking
 
+struct ShareDelegationKey: Equatable, Sendable {
+    let bundleIndex: UInt32
+    let proposalId: UInt32
+    let shareIndex: UInt32
+}
+
+struct ShareRecoveryPollResult: Equatable, Sendable {
+    let confirmedShares: [ShareDelegationKey]
+    let resubmissionShares: [VotingShareDelegation]
+    let queriedCount: Int
+}
+
+func shareRecoveryBaseTime(_ share: VotingShareDelegation) -> UInt64 {
+    share.submitAt > 0 ? share.submitAt : share.createdAt
+}
+
+func isShareReadyForStatusCheck(
+    _ share: VotingShareDelegation,
+    now: UInt64,
+    checkGrace: UInt64 = 10
+) -> Bool {
+    now >= shareRecoveryBaseTime(share) + checkGrace
+}
+
+func shouldResubmitShare(
+    _ share: VotingShareDelegation,
+    now: UInt64,
+    voteEndTime: UInt64,
+    resubmitCutoff: UInt64 = 10
+) -> Bool {
+    let baseTime = shareRecoveryBaseTime(share)
+    let remainingWindow = voteEndTime > baseTime ? voteEndTime - baseTime : 0
+    let overdueThreshold: UInt64 = max(30, min(3600, remainingWindow / 4))
+
+    return now >= baseTime + overdueThreshold && voteEndTime > now + resubmitCutoff
+}
+
+func pollShareStatusesForRecovery(
+    readyShares: [VotingShareDelegation],
+    roundId: String,
+    now: UInt64,
+    voteEndTime: UInt64,
+    fetchShareStatus: @escaping @Sendable (
+        _ helperBaseURL: String,
+        _ roundIdHex: String,
+        _ nullifierHex: String
+    ) async throws -> ShareConfirmationResult
+) async -> ShareRecoveryPollResult {
+    var confirmedShares: [ShareDelegationKey] = []
+    var resubmissionShares: [VotingShareDelegation] = []
+    var queriedCount = 0
+
+    for share in readyShares {
+        let nullifierHex = share.nullifier.map { String(format: "%02x", $0) }.joined()
+        var confirmed = false
+
+        for helperURL in share.sentToURLs {
+            queriedCount += 1
+            do {
+                let result = try await fetchShareStatus(helperURL, roundId, nullifierHex)
+                if result == .confirmed {
+                    confirmedShares.append(ShareDelegationKey(
+                        bundleIndex: share.bundleIndex,
+                        proposalId: share.proposalId,
+                        shareIndex: share.shareIndex
+                    ))
+                    confirmed = true
+                    break
+                }
+            } catch {
+                votingLogger.warning("Share status check failed for helper \(helperURL), share \(share.shareIndex): \(error)")
+            }
+        }
+
+        if !confirmed && shouldResubmitShare(share, now: now, voteEndTime: voteEndTime) {
+            resubmissionShares.append(share)
+        }
+    }
+
+    return ShareRecoveryPollResult(
+        confirmedShares: confirmedShares,
+        resubmissionShares: resubmissionShares,
+        queriedCount: queriedCount
+    )
+}
+
 extension Voting {
     func reduceNavigation(_ state: inout State, _ action: Action) -> Effect<Action> {
         switch action {
@@ -18,6 +104,7 @@ extension Voting {
                 .cancel(id: cancelStateStreamId),
                 .cancel(id: cancelStatusPollingId),
                 .cancel(id: cancelPipelineId),
+                .cancel(id: cancelDelegationProofId),
                 .cancel(id: cancelNewRoundPollingId),
                 .cancel(id: cancelShareTrackingId),
                 .cancel(id: cancelDelegationProofPrecomputeId)
@@ -58,13 +145,18 @@ extension Voting {
             state.isDelegationProofInFlight = false
             state.delegationProofPrecomputeStatus = .notStarted
             state.isDelegationProofPrecomputeInFlight = false
+            state.pendingBatchSubmission = false
+            state.currentKeystoneBundleIndex = 0
+            state.keystoneBundleSignatures = []
+            state.pendingVotingPczt = nil
+            state.pendingUnsignedDelegationPczt = nil
+            state.keystoneSigningStatus = .idle
             state.hotkeyAddress = nil
             state.isSubmittingVote = false
             state.submittingProposalId = nil
             state.voteSubmissionStep = nil
             state.currentVoteBundleIndex = nil
             state.draftVotes = [:]
-            state.pendingBatchSubmission = false
             state.batchSubmissionStatus = .idle
             state.batchVoteErrors = [:]
             state.tallyResults = [:]
@@ -79,6 +171,7 @@ extension Voting {
                 .cancel(id: cancelStateStreamId),
                 .cancel(id: cancelStatusPollingId),
                 .cancel(id: cancelPipelineId),
+                .cancel(id: cancelDelegationProofId),
                 .cancel(id: cancelNewRoundPollingId),
                 .cancel(id: cancelShareTrackingId),
                 .cancel(id: cancelDelegationProofPrecomputeId),
@@ -152,7 +245,6 @@ extension Voting {
             guard state.shareTrackingStatus == .tracking else { return .none }
             return .run { [
                 roundId = state.votingRound.id,
-                voteServers = state.serviceConfig?.voteServers ?? [],
                 votes = state.votes,
                 proposals = state.votingRound.proposals,
                 singleShare = state.activeSession?.isLastMoment ?? false,
@@ -175,62 +267,46 @@ extension Voting {
                 }
                 var resubmitQueue: [ResubmitCandidate] = []
 
-                // Check confirmation status of shares past their submitAt.
-                // Wait until submitAt + 10s before first check — gives the helper server
-                // time to process and submit the share on-chain.
+                // Check confirmation after the helper had time to process the share.
+                // Delayed shares use submitAt; immediate shares use createdAt.
                 let checkGrace: UInt64 = 10
                 let readyShares = unconfirmed.filter { share in
-                    let readyAt = share.submitAt > 0 ? share.submitAt + checkGrace : 0
-                    return now >= readyAt
+                    isShareReadyForStatusCheck(share, now: now, checkGrace: checkGrace)
                 }
                 let futureCount = unconfirmed.count - readyShares.count
 
                 votingLogger.debug("[SharePoll] ready=\(readyShares.count) future=\(futureCount)")
 
-                if let helperURL = voteServers.first?.url {
-                    var newlyConfirmed = 0
-                    for share in readyShares {
-                        let nullifierHex = share.nullifier.map { String(format: "%02x", $0) }.joined()
-                        do {
-                            let result = try await votingAPI.fetchShareStatus(helperURL, roundId, nullifierHex)
-                            if result == .confirmed {
-                                try await votingCrypto.markShareConfirmed(
-                                    roundId, share.bundleIndex, share.proposalId, share.shareIndex
-                                )
-                                newlyConfirmed += 1
-                            } else if share.submitAt > 0 {
-                                // Adaptive overdue threshold: wait 25% of the share's
-                                // remaining window after submitAt before resubmitting,
-                                // clamped to [30s, 3600s]. Lets resubmission fire within
-                                // a normal round (e.g. 15-min round → 30–200 s) instead of
-                                // a fixed 1 h threshold, which was always past voteEndTime
-                                // and so never saved a round where a helper silently
-                                // dropped shares at its broadcast step.
-                                let remainingAtSubmit = voteEndTime > share.submitAt
-                                    ? voteEndTime - share.submitAt : 0
-                                let overdueThreshold: UInt64 = max(30, min(3600, remainingAtSubmit / 4))
-                                // Skip resubmission if the round is already closing — chain
-                                // rejects MsgRevealShare after voteEndTime, so a resubmit
-                                // would only waste a POST and noise the log.
-                                let resubmitCutoff: UInt64 = 10
-                                if now >= share.submitAt + overdueThreshold,
-                                   voteEndTime > now + resubmitCutoff {
-                                    resubmitQueue.append(ResubmitCandidate(
-                                        share: share,
-                                        proposalId: share.proposalId,
-                                        bundleIndex: share.bundleIndex
-                                    ))
-                                }
-                            }
-                        } catch {
-                            // On error, skip remaining shares this cycle
-                            votingLogger.warning("Share status check failed for share \(share.shareIndex): \(error)")
-                            break
-                        }
+                let pollResult = await pollShareStatusesForRecovery(
+                    readyShares: readyShares,
+                    roundId: roundId,
+                    now: now,
+                    voteEndTime: voteEndTime,
+                    fetchShareStatus: votingAPI.fetchShareStatus
+                )
+
+                var newlyConfirmed = 0
+                for key in pollResult.confirmedShares {
+                    do {
+                        try await votingCrypto.markShareConfirmed(
+                            roundId, key.bundleIndex, key.proposalId, key.shareIndex
+                        )
+                        newlyConfirmed += 1
+                    } catch {
+                        votingLogger.warning("Failed to mark share confirmed for proposal \(key.proposalId), share \(key.shareIndex): \(error)")
                     }
-                    if !readyShares.isEmpty {
-                        votingLogger.debug("[SharePoll] queried=\(readyShares.count) newlyConfirmed=\(newlyConfirmed)")
-                    }
+                }
+
+                resubmitQueue = pollResult.resubmissionShares.map {
+                    ResubmitCandidate(
+                        share: $0,
+                        proposalId: $0.proposalId,
+                        bundleIndex: $0.bundleIndex
+                    )
+                }
+
+                if !readyShares.isEmpty {
+                    votingLogger.debug("[SharePoll] queried=\(pollResult.queriedCount) newlyConfirmed=\(newlyConfirmed)")
                 }
 
                 // Phase 2: Resubmit overdue pending shares
@@ -265,8 +341,14 @@ extension Voting {
                                 $0.encShare.shareIndex == candidate.share.shareIndex
                             }) else { continue }
 
-                            let excludeURLs = candidate.share.sentToURLs
-                            let newServers = try await votingAPI.resubmitShare(payload, roundId, excludeURLs)
+                            let acceptedServers = try await votingAPI.resubmitShare(
+                                payload,
+                                roundId,
+                                candidate.share.sentToURLs
+                            )
+                            let newServers = acceptedServers.filter {
+                                !candidate.share.sentToURLs.contains($0)
+                            }
 
                             if !newServers.isEmpty {
                                 // Record the new servers in DB
@@ -290,9 +372,9 @@ extension Voting {
                 let refreshedNow = UInt64(Date().timeIntervalSince1970)
                 let stillUnconfirmed = updatedDelegations.filter { !$0.confirmed }
 
-                // Find the soonest unconfirmed share's check time (submitAt + grace)
+                // Find the soonest unconfirmed share's check time.
                 let futureCheckTimes = stillUnconfirmed.compactMap { share -> UInt64? in
-                    let readyAt = share.submitAt > 0 ? share.submitAt + checkGrace : 0
+                    let readyAt = shareRecoveryBaseTime(share) + checkGrace
                     return readyAt > refreshedNow ? readyAt : nil
                 }
 

@@ -77,6 +77,8 @@ extension Voting {
             let networkId: UInt32 = network.networkType == .mainnet ? 0 : 1
             guard
                 let chainNodeUrl = state.serviceConfig?.voteServers.first?.url,
+                let voteServerURLs = state.serviceConfig?.voteServers.map(\.url),
+                !voteServerURLs.isEmpty,
                 let pirEndpoints = state.serviceConfig?.pirEndpoints.map(\.url),
                 !pirEndpoints.isEmpty,
                 let expectedSnapshotHeight = state.activeSession?.snapshotHeight
@@ -155,8 +157,9 @@ extension Voting {
 
                 var successCount = 0
                 var failCount = 0
+                var shareServerURLs = voteServerURLs
 
-                for (draftIndex, draft) in drafts.enumerated() {
+                draftLoop: for (draftIndex, draft) in drafts.enumerated() {
                     let proposalId = draft.key
                     let choice = draft.value
                     let proposal = proposals.first { $0.id == proposalId }
@@ -202,6 +205,9 @@ extension Voting {
                                        let vcIdx = UInt64(leafParts[1]) {
                                         try await votingCrypto.storeVanPosition(roundId, bundleIndex, vanIdx)
                                         if let savedBundle = try? await votingCrypto.getVoteCommitmentBundle(roundId, bundleIndex, proposalId) {
+                                            try await votingCrypto.storeVoteCommitmentBundle(
+                                                roundId, bundleIndex, proposalId, savedBundle, vcIdx
+                                            )
                                             await send(.voteSubmissionStepUpdated(.sendingShares))
                                             var payloads = try await votingCrypto.buildSharePayloads(
                                                 savedBundle.encShares, savedBundle, choice, numOptions, vcIdx, singleShare
@@ -214,8 +220,14 @@ extension Voting {
                                                     payloads[i].submitAt = 0
                                                 }
                                             }
-                                            let recoveryInfos = try await Self.delegateSharesWithRetry(payloads, roundId: roundId, votingAPI: votingAPI)
-                                            for info in recoveryInfos {
+                                            let recoveryResult = try await Self.delegateSharesWithFallback(
+                                                payloads,
+                                                roundId: roundId,
+                                                votingAPI: votingAPI,
+                                                serverURLs: shareServerURLs
+                                            )
+                                            shareServerURLs = recoveryResult.remainingServerURLs
+                                            for info in recoveryResult.delegatedShares {
                                                 guard let payload = payloads.first(where: {
                                                     $0.encShare.shareIndex == info.shareIndex && $0.proposalId == info.proposalId
                                                 }) else { continue }
@@ -309,8 +321,14 @@ extension Voting {
                                 }
                             }
                             try await votingCrypto.storeVoteCommitmentBundle(roundId, bundleIndex, proposalId, builtBundle, vcIdx)
-                            let batchDelegatedInfos = try await Self.delegateSharesWithRetry(payloads, roundId: roundId, votingAPI: votingAPI)
-                            for info in batchDelegatedInfos {
+                            let batchDelegationResult = try await Self.delegateSharesWithFallback(
+                                payloads,
+                                roundId: roundId,
+                                votingAPI: votingAPI,
+                                serverURLs: shareServerURLs
+                            )
+                            shareServerURLs = batchDelegationResult.remainingServerURLs
+                            for info in batchDelegationResult.delegatedShares {
                                 guard let payload = payloads.first(where: {
                                     $0.encShare.shareIndex == info.shareIndex && $0.proposalId == info.proposalId
                                 }) else { continue }
@@ -339,10 +357,17 @@ extension Voting {
                     } catch {
                         failCount += 1
                         votingLogger.error("Batch vote failed for proposal \(proposalId): \(error)")
+                        let shouldStopBatch = error as? ShareDelegationError == .noReachableVoteServers
+                        if shouldStopBatch {
+                            shareServerURLs = []
+                        }
                         await send(.batchVoteFailed(
                             proposalId: proposalId,
-                            error: VotingErrorMapper.userFriendlyMessage(from: error.localizedDescription)
+                            error: VotingErrorMapper.userFriendlyMessage(from: error)
                         ))
+                        if shouldStopBatch {
+                            break draftLoop
+                        }
                     }
                 }
 

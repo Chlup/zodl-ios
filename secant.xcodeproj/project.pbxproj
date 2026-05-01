@@ -2469,6 +2469,7 @@
 		9E41FFB62CB2814500783CFD /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E5AAEBF2A67CEC4003F283D /* Colors.xcassets */; };
 		9E46919A2AD5735E0082D7DF /* TabsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4691992AD5735E0082D7DF /* TabsTests.swift */; };
 		9E4841532F869F5F00D0649B /* ZcashLightClientKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9E4841522F869F5F00D0649B /* ZcashLightClientKit */; };
+		9E4841542F869F5F00D0649B /* ZcashLightClientKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9E4841522F869F5F00D0649B /* ZcashLightClientKit */; };
 		9E48423E2F87C40400D0649B /* ResyncWalletStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E48423D2F87C40400D0649B /* ResyncWalletStore.swift */; };
 		9E48423F2F87C40400D0649B /* ResyncWalletStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E48423D2F87C40400D0649B /* ResyncWalletStore.swift */; };
 		9E4842402F87C40400D0649B /* ResyncWalletStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E48423D2F87C40400D0649B /* ResyncWalletStore.swift */; };
@@ -3134,6 +3135,7 @@
 				34AA777B2F8582CC00D244E2 /* ZcashPaymentURI in Frameworks */,
 				34AA77432F85812500D244E2 /* URLRouting in Frameworks */,
 				34B9675C2F8CC47200823B20 /* Atomics in Frameworks */,
+				9E4841542F869F5F00D0649B /* ZcashLightClientKit in Frameworks */,
 				34AA77232F857E2300D244E2 /* XCTestDynamicOverlay in Frameworks */,
 				34AA77142F857DA300D244E2 /* ComposableArchitecture in Frameworks */,
 				34AA77862F85830C00D244E2 /* Lottie in Frameworks */,
@@ -5319,6 +5321,7 @@
 				34AA779B2F8583A500D244E2 /* BigDecimal */,
 				34AA77B72F85860300D244E2 /* UInt128 */,
 				34B9675B2F8CC47200823B20 /* Atomics */,
+				9E4841522F869F5F00D0649B /* ZcashLightClientKit */,
 			);
 			productName = secant;
 			productReference = 0D4E7A0526B364170058B01E /* secant-testnet.app */;
@@ -9807,6 +9810,7 @@
 		};
 		9E4841522F869F5F00D0649B /* ZcashLightClientKit */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 9E4841512F869F5E00D0649B /* XCLocalSwiftPackageReference "../zcash-swift-wallet-sdk" */;
 			productName = ZcashLightClientKit;
 		};
 		9E9643212FB2601700931706 /* ZcashLightClientKit */ = {

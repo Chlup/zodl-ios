@@ -388,13 +388,13 @@ extension Voting {
                         send: send
                     )
                     await backgroundTask.endTask(bgTaskId)
-                    await send(.delegationProofPrecomputationCompleted)
+                    await send(.delegationProofPrecomputationCompleted(roundId: roundId))
                 } catch {
                     await backgroundTask.endTask(bgTaskId)
                     throw error
                 }
             } catch: { error, send in
-                await send(.delegationProofPrecomputationFailed(error.localizedDescription))
+                await send(.delegationProofPrecomputationFailed(roundId: roundId, error: error.localizedDescription))
             }
             .cancellable(id: cancelDelegationProofPrecomputeId, cancelInFlight: true)
 
@@ -405,9 +405,11 @@ extension Voting {
             state.isDelegationProofInFlight = true
             guard let activeSession = state.activeSession else {
                 return .send(.delegationProofFailed(
-                    VotingFlowError.missingActiveSession.localizedDescription
+                    roundId: state.roundId,
+                    error: VotingFlowError.missingActiveSession.localizedDescription
                 ))
             }
+            let roundId = activeSession.voteRoundId.hexString
             let keystoneMetadata: (seedFingerprint: Data, accountIndex: UInt32)?
             if state.isKeystoneUser {
                 guard
@@ -415,7 +417,8 @@ extension Voting {
                     let zip32AccountIndex = account.zip32AccountIndex
                 else {
                     return .send(.delegationProofFailed(
-                        VotingFlowError.missingSigningAccount.localizedDescription
+                        roundId: roundId,
+                        error: VotingFlowError.missingSigningAccount.localizedDescription
                     ))
                 }
                 guard
@@ -423,7 +426,8 @@ extension Voting {
                     seedFingerprint.count == 32
                 else {
                     return .send(.delegationProofFailed(
-                        VotingFlowError.missingSigningAccount.localizedDescription
+                        roundId: roundId,
+                        error: VotingFlowError.missingSigningAccount.localizedDescription
                     ))
                 }
                 keystoneMetadata = (Data(seedFingerprint), UInt32(zip32AccountIndex.index))
@@ -435,7 +439,6 @@ extension Voting {
             } else {
                 state.delegationProofStatus = .generating(progress: 0)
             }
-            let roundId = activeSession.voteRoundId.hexString
             let cachedNotes = state.walletNotes
             let network = zcashSDKEnvironment.network
             let walletDbPath = databaseFiles.dataDbURLFor(network).path
@@ -478,7 +481,7 @@ extension Voting {
                         if isKeystoneUser {
                             guard bundleCount > 0 else {
                                 await backgroundTask.endTask(bgTaskId)
-                                await send(.delegationProofCompleted)
+                                await send(.delegationProofCompleted(roundId: roundId))
                                 return
                             }
                             // Build voting PCZT for the current bundle — its single Orchard
@@ -509,7 +512,7 @@ extension Voting {
                             let redactedPczt = try await sdkSynchronizer
                                 .redactPCZTForSigner(govPczt.pcztBytes)
                             await backgroundTask.endTask(bgTaskId)
-                            await send(.keystoneSigningPrepared(govPczt, redactedPczt))
+                            await send(.keystoneSigningPrepared(roundId: roundId, govPczt, redactedPczt))
                             return
                         }
 
@@ -535,21 +538,24 @@ extension Voting {
                     await backgroundTask.endTask(bgTaskId)
                 } catch: { error, send in
                     if isKeystoneUser {
-                        await send(.keystoneSigningFailed(error.localizedDescription))
+                        await send(.keystoneSigningFailed(roundId: roundId, error: error.localizedDescription))
                     } else {
-                        await send(.delegationProofFailed(error.localizedDescription))
+                        await send(.delegationProofFailed(roundId: roundId, error: error.localizedDescription))
                     }
                 }
+                .cancellable(id: cancelDelegationProofId, cancelInFlight: true)
             )
 
-        case let .keystoneSigningPrepared(govPczt, unsignedPczt):
+        case let .keystoneSigningPrepared(roundId, govPczt, unsignedPczt):
+            guard state.roundId == roundId else { return .none }
             state.pendingVotingPczt = govPczt
 
             state.pendingUnsignedDelegationPczt = unsignedPczt
             state.keystoneSigningStatus = .awaitingSignature
             return .none
 
-        case .keystoneSigningFailed(let error):
+        case .keystoneSigningFailed(let roundId, let error):
+            guard state.roundId == roundId else { return .none }
             state.keystoneSigningStatus = .failed(VotingErrorMapper.userFriendlyMessage(from: error))
             return .none
 
@@ -591,7 +597,8 @@ extension Voting {
         case let .spendAuthSignatureExtracted(keystoneSig, signedPczt):
             guard let rk = state.pendingVotingPczt?.rk else { // swiftlint:disable:this identifier_name
                 return .send(.delegationProofFailed(
-                    VotingFlowError.missingPendingUnsignedPczt.localizedDescription
+                    roundId: state.roundId,
+                    error: VotingFlowError.missingPendingUnsignedPczt.localizedDescription
                 ))
             }
 
@@ -651,7 +658,8 @@ extension Voting {
         case .keystoneAllBundlesSigned:
             guard let activeSession = state.activeSession else {
                 return .send(.delegationProofFailed(
-                    VotingFlowError.missingActiveSession.localizedDescription
+                    roundId: state.roundId,
+                    error: VotingFlowError.missingActiveSession.localizedDescription
                 ))
             }
 
@@ -691,7 +699,7 @@ extension Voting {
                         if completedBundles.contains(bundleIdx) {
                             votingLogger.debug("Keystone delegation bundle \(bundleIdx) already submitted, skipping")
                             let overallProgress = Double(bundleIndex + 1) / Double(signedCount)
-                            await send(.delegationProofProgress(overallProgress))
+                            await send(.delegationProofProgress(roundId: roundId, progress: overallProgress))
                             continue
                         }
                         let bundleNotes = noteChunks[bundleIndex]
@@ -712,7 +720,7 @@ extension Voting {
                             case .progress(let progress):
                                 let overallProgress = (Double(bundleIndex) + progress) / Double(signedCount)
                                 votingLogger.debug("ZKP #1 bundle \(bundleIdx) progress: \(Int(progress * 100))%")
-                                await send(.delegationProofProgress(overallProgress))
+                                await send(.delegationProofProgress(roundId: roundId, progress: overallProgress))
                             case .completed(let proof):
                                 votingLogger.info("ZKP #1 bundle \(bundleIdx) COMPLETE — proof size: \(proof.count) bytes")
                             }
@@ -762,15 +770,16 @@ extension Voting {
                         votingLogger.debug("VAN position stored for bundle \(bundleIdx): \(vanPosition)")
                     }
 
-                    await send(.delegationProofCompleted)
+                    await send(.delegationProofCompleted(roundId: roundId))
                 } catch {
                     await backgroundTask.endTask(bgTaskId)
                     throw error
                 }
                 await backgroundTask.endTask(bgTaskId)
             } catch: { error, send in
-                await send(.delegationProofFailed(error.localizedDescription))
+                await send(.delegationProofFailed(roundId: roundId, error: error.localizedDescription))
             }
+            .cancellable(id: cancelDelegationProofId, cancelInFlight: true)
 
         case .keystoneSignaturesRestored(let savedSigs):
             // Restore in-memory signatures from persisted recovery state
@@ -843,7 +852,7 @@ extension Voting {
                 try await votingCrypto.deleteSkippedBundles(roundId, signedCount)
                 await send(.keystoneAllBundlesSigned)
             } catch: { error, send in
-                await send(.delegationProofFailed(error.localizedDescription))
+                await send(.delegationProofFailed(roundId: roundId, error: error.localizedDescription))
             }
 
         case .keystoneBundleAdvance:
@@ -854,11 +863,13 @@ extension Voting {
             state.keystoneSigningStatus = .failed(VotingErrorMapper.userFriendlyMessage(from: error))
             return .none
 
-        case .delegationProofProgress(let progress):
+        case .delegationProofProgress(let roundId, let progress):
+            guard state.roundId == roundId else { return .none }
             state.delegationProofStatus = .generating(progress: progress)
             return .none
 
-        case .delegationProofPrecomputationProgress(let progress):
+        case .delegationProofPrecomputationProgress(let roundId, let progress):
+            guard state.roundId == roundId else { return .none }
             if state.delegationProofPrecomputeStatus != .complete {
                 state.delegationProofPrecomputeStatus = .generating(progress: progress)
             }
@@ -867,7 +878,8 @@ extension Voting {
             }
             return .none
 
-        case .delegationProofPrecomputationCompleted:
+        case .delegationProofPrecomputationCompleted(let roundId):
+            guard state.roundId == roundId, state.activeSession != nil else { return .none }
             state.delegationProofPrecomputeStatus = .complete
             state.isDelegationProofPrecomputeInFlight = false
             if state.isBatchSubmitting && state.delegationProofStatus != .complete {
@@ -879,7 +891,8 @@ extension Voting {
             }
             return .none
 
-        case .delegationProofCompleted:
+        case .delegationProofCompleted(let roundId):
+            guard state.roundId == roundId, state.activeSession != nil else { return .none }
             state.delegationProofStatus = .complete
             state.delegationProofPrecomputeStatus = .complete
             state.isDelegationProofInFlight = false
@@ -892,7 +905,6 @@ extension Voting {
                 state.screenStack.removeLast()
             }
 
-            let roundId = state.roundId
             // Auto-resume batch submission immediately so the UI transitions
             // to .submitting without a visible gap. Run cleanup in parallel.
             if state.pendingBatchSubmission {
@@ -913,7 +925,8 @@ extension Voting {
                 try await votingCrypto.clearRecoveryState(roundId)
             }
 
-        case .delegationProofFailed(let error):
+        case .delegationProofFailed(let roundId, let error):
+            guard state.roundId == roundId else { return .none }
             state.currentKeystoneBundleIndex = 0
             state.keystoneBundleSignatures = []
             let userMessage: String
@@ -931,7 +944,8 @@ extension Voting {
             state.isDelegationProofInFlight = false
             return .none
 
-        case .delegationProofPrecomputationFailed(let error):
+        case .delegationProofPrecomputationFailed(let roundId, let error):
+            guard state.roundId == roundId else { return .none }
             state.isDelegationProofPrecomputeInFlight = false
             // Keep the failed state sticky so background precompute does not retry
             // in a loop; foreground submission still falls back to fresh delegation.
@@ -973,7 +987,10 @@ extension Voting {
                 votingLogger.debug(
                     "Delegation proof precompute: bundle \(bundleIndex + 1)/\(bundleCount) already submitted, skipping"
                 )
-                await send(.delegationProofPrecomputationProgress(Double(bundleIndex + 1) / Double(bundleCount)))
+                await send(.delegationProofPrecomputationProgress(
+                    roundId: roundId,
+                    progress: Double(bundleIndex + 1) / Double(bundleCount)
+                ))
                 continue
             }
 
@@ -983,7 +1000,10 @@ extension Voting {
                 votingLogger.debug(
                     "Delegation proof precompute: bundle \(bundleIndex + 1)/\(bundleCount) already cached, skipping"
                 )
-                await send(.delegationProofPrecomputationProgress(Double(bundleIndex + 1) / Double(bundleCount)))
+                await send(.delegationProofPrecomputationProgress(
+                    roundId: roundId,
+                    progress: Double(bundleIndex + 1) / Double(bundleCount)
+                ))
                 continue
             }
 
@@ -1007,7 +1027,7 @@ extension Voting {
                 case .progress(let progress):
                     let overallProgress = (Double(bundleIndex) + progress) / Double(bundleCount)
                     votingLogger.debug("ZKP #1 precompute bundle \(bundleIndex) progress: \(Int(progress * 100))%")
-                    await send(.delegationProofPrecomputationProgress(overallProgress))
+                    await send(.delegationProofPrecomputationProgress(roundId: roundId, progress: overallProgress))
                 case .completed(let proof):
                     votingLogger.info(
                         "ZKP #1 precompute bundle \(bundleIndex) COMPLETE — proof size: \(proof.count) bytes"
@@ -1078,7 +1098,7 @@ extension Voting {
                     case .progress(let progress):
                         let overallProgress = (Double(bundleIndex) + progress) / Double(bundleCount)
                         votingLogger.debug("ZKP #1 bundle \(bundleIndex) progress: \(Int(progress * 100))%")
-                        await send(.delegationProofProgress(overallProgress))
+                        await send(.delegationProofProgress(roundId: roundId, progress: overallProgress))
                     case .completed(let proof):
                         votingLogger.info("ZKP #1 bundle \(bundleIndex) COMPLETE — proof size: \(proof.count) bytes")
                     }
@@ -1114,28 +1134,38 @@ extension Voting {
             votingLogger.debug("VAN position stored for bundle \(bundleIndex): \(vanPosition)")
         }
 
-        await send(.delegationProofCompleted)
+        await send(.delegationProofCompleted(roundId: roundId))
     }
 
-    /// Retry share delegation up to 3 times with 2-second backoff.
+    /// Delegate shares using the supplied active-submission server candidates.
     @discardableResult
-    static func delegateSharesWithRetry(
+    static func delegateSharesWithFallback(
         _ payloads: [SharePayload],
         roundId: String,
-        votingAPI: VotingAPIClient
-    ) async throws -> [DelegatedShareInfo] {
-        var lastShareError: Error?
+        votingAPI: VotingAPIClient,
+        serverURLs: [String],
+        retryDelay: Duration = .seconds(2)
+    ) async throws -> ShareDelegationResult {
+        guard !serverURLs.isEmpty else {
+            throw ShareDelegationError.noReachableVoteServers
+        }
+
+        var lastExhaustionError: ShareDelegationError?
         for attempt in 1...3 {
             do {
-                return try await votingAPI.delegateShares(payloads, roundId)
-            } catch {
-                lastShareError = error
-                votingLogger.warning("delegateShares attempt \(attempt)/3 failed: \(error)")
+                return try await votingAPI.delegateShares(payloads, roundId, serverURLs)
+            } catch let error as ShareDelegationError where error == .noReachableVoteServers {
+                lastExhaustionError = error
+                votingLogger.warning("delegateShares attempt \(attempt)/3 exhausted vote servers")
                 if attempt < 3 {
-                    try await Task.sleep(for: .seconds(2))
+                    try await Task.sleep(for: retryDelay)
                 }
+            } catch {
+                votingLogger.warning("delegateShares failed with non-exhaustion error: \(error)")
+                throw error
             }
         }
-        throw lastShareError!
+
+        throw lastExhaustionError ?? ShareDelegationError.noReachableVoteServers
     }
 }
