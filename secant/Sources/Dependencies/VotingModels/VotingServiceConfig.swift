@@ -9,8 +9,6 @@ struct VotingServiceConfig: Codable, Equatable, Sendable {
     let voteRoundId: String
     let voteServers: [ServiceEndpoint]
     let pirEndpoints: [ServiceEndpoint]
-    let snapshotHeight: UInt64
-    let voteEndTime: UInt64
     let supportedVersions: SupportedVersions
 
     struct ServiceEndpoint: Codable, Equatable, Sendable {
@@ -49,16 +47,12 @@ struct VotingServiceConfig: Codable, Equatable, Sendable {
         voteRoundId: String,
         voteServers: [ServiceEndpoint],
         pirEndpoints: [ServiceEndpoint],
-        snapshotHeight: UInt64,
-        voteEndTime: UInt64,
         supportedVersions: SupportedVersions
     ) {
         self.configVersion = configVersion
         self.voteRoundId = voteRoundId
         self.voteServers = voteServers
         self.pirEndpoints = pirEndpoints
-        self.snapshotHeight = snapshotHeight
-        self.voteEndTime = voteEndTime
         self.supportedVersions = supportedVersions
     }
 
@@ -67,8 +61,6 @@ struct VotingServiceConfig: Codable, Equatable, Sendable {
         case voteRoundId = "vote_round_id"
         case voteServers = "vote_servers"
         case pirEndpoints = "pir_endpoints"
-        case snapshotHeight = "snapshot_height"
-        case voteEndTime = "vote_end_time"
         case supportedVersions = "supported_versions"
     }
 
@@ -86,8 +78,6 @@ struct VotingServiceConfig: Codable, Equatable, Sendable {
         voteRoundId: String(repeating: "0", count: 64),
         voteServers: [ServiceEndpoint(url: "https://vote-chain-primary.valargroup.org", label: "Primary")],
         pirEndpoints: [ServiceEndpoint(url: "https://pir.valargroup.org", label: "PIR Server")],
-        snapshotHeight: 0,
-        voteEndTime: 0,
         supportedVersions: SupportedVersions(
             pir: ["v0"],
             voteProtocol: "v0",

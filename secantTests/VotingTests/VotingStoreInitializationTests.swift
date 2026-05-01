@@ -58,8 +58,6 @@ final class VotingStoreInitializationTests: XCTestCase {
             voteRoundId: String(repeating: "a", count: 64),
             voteServers: [.init(url: "https://vote.example.com", label: "vote")],
             pirEndpoints: [.init(url: "https://pir.example.com", label: "pir")],
-            snapshotHeight: 1,
-            voteEndTime: 1,
             supportedVersions: .init(
                 pir: ["v0"],
                 voteProtocol: "v0",

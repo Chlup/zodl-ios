@@ -18,8 +18,6 @@ final class VotingServiceConfigTests: XCTestCase {
           "pir_endpoints": [
             {"url": "https://pir1.example.com", "label": "pir-1"}
           ],
-          "snapshot_height": 2800000,
-          "vote_end_time": 1735689600,
           "supported_versions": {
             "pir": ["v0", "v1"],
             "vote_protocol": "v0",
@@ -35,21 +33,17 @@ final class VotingServiceConfigTests: XCTestCase {
         XCTAssertEqual(config.voteRoundId, "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899")
         XCTAssertEqual(config.voteServers.count, 1)
         XCTAssertEqual(config.pirEndpoints.first?.label, "pir-1")
-        XCTAssertEqual(config.snapshotHeight, 2_800_000)
-        XCTAssertEqual(config.voteEndTime, 1_735_689_600)
         XCTAssertEqual(config.supportedVersions.voteServer, "v1")
         XCTAssertEqual(config.supportedVersions.pir, ["v0", "v1"])
     }
 
-    func testDecodeAcceptsConfigWithoutProposals() {
+    func testDecodeAcceptsConfigWithoutProposalsSnapshotOrDeadline() {
         let json = """
         {
           "config_version": 1,
           "vote_round_id": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
           "vote_servers": [{"url": "https://x", "label": "a"}],
           "pir_endpoints": [{"url": "https://y", "label": "b"}],
-          "snapshot_height": 1,
-          "vote_end_time": 1,
           "supported_versions": {"pir": ["v0"], "vote_protocol": "v0", "tally": "v0", "vote_server": "v1"}
         }
         """
@@ -64,8 +58,6 @@ final class VotingServiceConfigTests: XCTestCase {
             voteRoundId: String(repeating: "a", count: 64),
             voteServers: [.init(url: "https://x", label: "a")],
             pirEndpoints: [.init(url: "https://y", label: "b")],
-            snapshotHeight: 1,
-            voteEndTime: 1,
             supportedVersions: supportedVersions
         )
     }

@@ -13,7 +13,7 @@ Implementation lives in [`VotingAPIClientLiveKey.swift`](../secant/Sources/Depen
 
 ## Config format
 
-Per ZIP 1244 §"Vote Configuration Format":
+Per the [Vote Configuration Format ZIP](https://github.com/zcash/zips/pull/1244):
 
 ```json
 {
@@ -26,8 +26,6 @@ Per ZIP 1244 §"Vote Configuration Format":
   "pir_endpoints": [
     {"url": "https://pir.valargroup.org", "label": "PIR primary"}
   ],
-  "snapshot_height": 3312900,
-  "vote_end_time": 1735689600,
   "supported_versions": {
     "pir": ["v0"],
     "vote_protocol": "v0",
@@ -37,7 +35,7 @@ Per ZIP 1244 §"Vote Configuration Format":
 }
 ```
 
-All fields are required. `JSONDecoder` throws on any missing field, which surfaces as a `.configError` with `VotingConfigError.decodeFailed`.
+All fields are required. `JSONDecoder` throws on any missing field, which surfaces as a `.configError` with `VotingConfigError.decodeFailed`. Extra CDN fields are ignored by the wallet unless they are explicitly added to `VotingServiceConfig`.
 
 | Field                | Purpose                                                                                                                                                                     |
 | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -45,8 +43,6 @@ All fields are required. `JSONDecoder` throws on any missing field, which surfac
 | `vote_round_id`      | Lowercase hex (64 chars) id of the voting round this config is published for. The wallet checks that the chain returns a matching round.                                |
 | `vote_servers`       | Chain REST + helper API endpoints. The wallet's first entry serves API traffic; all entries are used for distributing share submissions.                                    |
 | `pir_endpoints`      | PIR servers for nullifier-exclusion proofs. The first entry is used.                                                                                                        |
-| `snapshot_height`    | Zcash block height the Orchard-pool voting snapshot was taken at. Informational in config; voting uses chain round data.                                                    |
-| `vote_end_time`      | Unix timestamp after which votes are no longer accepted. Informational in config; voting uses chain round data.                                                             |
 | `supported_versions` | What versions of each component the server speaks. See "Version handling" below.                                                                                            |
 
 ## Version handling
@@ -71,7 +67,7 @@ The CDN config does not carry proposals. After each config fetch, the wallet con
 - `/shielded-vote/v1/round/{round_id}`
 - `/shielded-vote/v1/tally-results/{round_id}`
 
-`VoteRound.proposals` is the authoritative source for proposal IDs, titles, descriptions, options, forum links, and result labels. `VoteRound.proposals_hash` remains chain state and can be shown/debugged, but the wallet no longer recomputes it from CDN JSON because the CDN no longer publishes proposal JSON.
+`VoteRound.proposals` is the authoritative source for proposal IDs, titles, descriptions, options, forum links, and result labels. `VoteRound.snapshot_height` and `VoteRound.vote_end_time` are the authoritative snapshot and deadline values used by the wallet. `VoteRound.proposals_hash` remains chain state and can be shown/debugged, but the wallet no longer recomputes it from CDN JSON because the CDN no longer publishes proposal JSON.
 
 On `.allRoundsLoaded`, the wallet still checks that `config.vote_round_id` exists in the chain rounds. A missing match triggers one fresh CDN fetch to recover from a stale config before surfacing `.configError`.
 
@@ -84,7 +80,7 @@ On `.allRoundsLoaded`, the wallet still checks that `config.vote_round_id` exist
 
 The config publisher (currently [`valargroup/token-holder-voting-config`](https://github.com/valargroup/token-holder-voting-config)) must:
 
-1. Update `vote_round_id`, `vote_end_time`, and `snapshot_height` at or before each on-chain round activates. Any window where the CDN is behind the chain causes transient `.configError`s for wallets booted during that window (auto-retry covers most cases, but the publisher pipeline should be fast).
+1. Update `vote_round_id` at or before each on-chain round activates. Any window where the CDN is behind the chain causes transient `.configError`s for wallets booted during that window (auto-retry covers most cases, but the publisher pipeline should be fast).
 2. Ensure the configured vote servers expose the chain round and its `VoteRound.proposals` via `/shielded-vote/v1/rounds` and `/shielded-vote/v1/round/{round_id}`.
 3. Keep `supported_versions.vote_server` aligned with the REST path prefix the deployed server actually serves (the wallet hits `/shielded-vote/v1/` when `vote_server: "v1"`).
 
