@@ -106,8 +106,7 @@ extension Voting {
                 .cancel(id: cancelPipelineId),
                 .cancel(id: cancelDelegationProofId),
                 .cancel(id: cancelNewRoundPollingId),
-                .cancel(id: cancelShareTrackingId),
-                .cancel(id: cancelDelegationProofPrecomputeId)
+                .cancel(id: cancelShareTrackingId)
             )
 
         case .goBack:
@@ -143,8 +142,6 @@ extension Voting {
             state.witnessStatus = .notStarted
             state.delegationProofStatus = .notStarted
             state.isDelegationProofInFlight = false
-            state.delegationProofPrecomputeStatus = .notStarted
-            state.isDelegationProofPrecomputeInFlight = false
             state.pendingBatchSubmission = false
             state.currentKeystoneBundleIndex = 0
             state.keystoneBundleSignatures = []
@@ -174,7 +171,6 @@ extension Voting {
                 .cancel(id: cancelDelegationProofId),
                 .cancel(id: cancelNewRoundPollingId),
                 .cancel(id: cancelShareTrackingId),
-                .cancel(id: cancelDelegationProofPrecomputeId),
                 .run { [votingAPI] send in
                     let allRounds = try await votingAPI.fetchAllRounds()
                     await send(.allRoundsLoaded(allRounds))
@@ -496,11 +492,6 @@ extension Voting {
                 state.screenStack.removeLast()
             } else if case .proposalList = state.currentScreen, state.screenStack.count > 1 {
                 state.screenStack.removeLast()
-                state.isDelegationProofPrecomputeInFlight = false
-                if case .generating = state.delegationProofPrecomputeStatus {
-                    state.delegationProofPrecomputeStatus = .notStarted
-                }
-                return .cancel(id: cancelDelegationProofPrecomputeId)
             }
             return .none
 

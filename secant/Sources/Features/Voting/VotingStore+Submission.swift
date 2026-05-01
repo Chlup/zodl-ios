@@ -54,21 +54,12 @@ extension Voting {
             let drafts = state.draftVotes.sorted { $0.key < $1.key }
             let totalCount = drafts.count
             let delegationDone = state.isDelegationReady
-            if !delegationDone && state.isDelegationProofPrecomputeInFlight {
-                state.pendingBatchSubmission = true
-                state.batchSubmissionStatus = .authorizing
-                state.voteSubmissionStep = .authorizingVote
-                state.batchVoteErrors = [:]
-                return .none
-            }
             state.batchSubmissionStatus = delegationDone
                 ? .submitting(currentIndex: 0, totalCount: totalCount, currentProposalId: drafts[0].key)
                 : .authorizing
             state.voteSubmissionStep = delegationDone ? nil : .authorizingVote
             if !delegationDone {
-                state.delegationProofStatus = state.delegationProofPrecomputeStatus == .complete
-                    ? .generating(progress: 1)
-                    : .generating(progress: 0)
+                state.delegationProofStatus = .generating(progress: 0)
             }
             state.batchVoteErrors = [:]
 

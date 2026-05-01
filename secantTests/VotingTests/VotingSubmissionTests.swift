@@ -89,64 +89,18 @@ final class VotingSubmissionTests: XCTestCase {
         XCTAssertNil(state.currentVoteBundleIndex)
     }
 
-    func testPrecomputeCompletionDoesNotMarkDelegationReady() {
-        var state = makeState(walletId: UUID().uuidString, roundId: UUID().uuidString, proposalCount: 1)
-        state.isDelegationProofPrecomputeInFlight = true
-
-        _ = Voting().reduceDelegation(&state, .delegationProofPrecomputationCompleted)
-
-        XCTAssertEqual(state.delegationProofPrecomputeStatus, .complete)
-        XCTAssertEqual(state.delegationProofStatus, .notStarted)
-        XCTAssertFalse(state.isDelegationReady)
-        XCTAssertFalse(state.isDelegationProofPrecomputeInFlight)
-    }
-
-    func testPrecomputeProgressAndCompletionDoNotDowngradeCompletedDelegation() {
-        var state = makeState(walletId: UUID().uuidString, roundId: UUID().uuidString, proposalCount: 1)
-        state.batchSubmissionStatus = .authorizing
-        state.delegationProofStatus = .complete
-        state.delegationProofPrecomputeStatus = .complete
-        state.isDelegationProofPrecomputeInFlight = true
-
-        _ = Voting().reduceDelegation(&state, .delegationProofPrecomputationProgress(0.42))
-
-        XCTAssertEqual(state.delegationProofStatus, .complete)
-        XCTAssertEqual(state.delegationProofPrecomputeStatus, .complete)
-
-        _ = Voting().reduceDelegation(&state, .delegationProofPrecomputationCompleted)
-
-        XCTAssertEqual(state.delegationProofStatus, .complete)
-        XCTAssertEqual(state.delegationProofPrecomputeStatus, .complete)
-        XCTAssertFalse(state.isDelegationProofPrecomputeInFlight)
-    }
-
-    func testAuthenticationSucceededWaitsForInFlightPrecompute() {
+    func testAuthenticationSucceededStartsSoftwareDelegationAtSubmitTime() {
         var state = makeState(walletId: UUID().uuidString, roundId: UUID().uuidString, proposalCount: 1)
         state.activeSession = makeSession(proposals: state.votingRound.proposals)
         state.bundleCount = 1
         state.draftVotes = [1: .option(0)]
-        state.isDelegationProofPrecomputeInFlight = true
 
         _ = Voting().reduceSubmission(&state, .authenticationSucceeded)
 
-        XCTAssertTrue(state.pendingBatchSubmission)
+        XCTAssertFalse(state.pendingBatchSubmission)
         XCTAssertEqual(state.batchSubmissionStatus, .authorizing)
         XCTAssertEqual(state.voteSubmissionStep, .authorizingVote)
-    }
-
-    func testAuthenticationSucceededUsesPrecomputedProofProgressWithoutMarkingReady() {
-        var state = makeState(walletId: UUID().uuidString, roundId: UUID().uuidString, proposalCount: 1)
-        state.activeSession = makeSession(proposals: state.votingRound.proposals)
-        state.bundleCount = 1
-        state.draftVotes = [1: .option(0)]
-        state.delegationProofPrecomputeStatus = .complete
-
-        _ = Voting().reduceSubmission(&state, .authenticationSucceeded)
-
-        XCTAssertFalse(state.isDelegationReady)
-        XCTAssertEqual(state.batchSubmissionStatus, .authorizing)
-        XCTAssertEqual(state.voteSubmissionStep, .authorizingVote)
-        XCTAssertEqual(state.delegationProofStatus, .generating(progress: 1))
+        XCTAssertEqual(state.delegationProofStatus, .generating(progress: 0))
     }
 
     func testNativeAbstainIsNotSyntheticAbstain() {

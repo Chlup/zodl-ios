@@ -365,8 +365,7 @@ struct Voting {
         /// `.retryLoadTallyResults` (on success) or by dismissing the flow.
         var resultsLoadError: Bool = false
 
-        /// Signals that batch submission should resume after deferred delegation work
-        /// finishes, either Keystone signing or software proof precomputation.
+        /// Signals that batch submission should resume after Keystone signing completes.
         var pendingBatchSubmission: Bool = false
 
         /// Prevents repeated screen appearances from starting duplicate cache warm-up work.
@@ -385,10 +384,6 @@ struct Voting {
         /// True while the delegation proof `.run` effect is in-flight. Guards against
         /// re-entrant `.startDelegationProof` dispatches from round polling re-triggers.
         var isDelegationProofInFlight: Bool = false
-        /// Local-only ZKP #1 precomputation. `.complete` means the proof bytes
-        /// are cached locally, not that the delegation TX has landed on-chain.
-        var delegationProofPrecomputeStatus: ProofStatus = .notStarted
-        var isDelegationProofPrecomputeInFlight: Bool = false
         var keystoneSigningStatus: KeystoneSigningStatus = .idle
 
         /// Which bundle the Keystone signing loop is currently processing (0-based).
@@ -518,8 +513,7 @@ struct Voting {
 
         /// Whether the user can start a submission: bundles resolved,
         /// no other submission in-flight, and at least one draft exists.
-        /// The delegation TX runs at submission time; software wallets may have
-        /// local ZKP #1 artifacts precomputed before then.
+        /// Delegation (ZKP #1) runs at submission time, not upfront.
         var canSubmitBatch: Bool {
             bundleCount > 0 && !isSubmittingVote && !isBatchSubmitting && !draftVotes.isEmpty
         }
@@ -679,7 +673,6 @@ struct Voting {
     let cancelDelegationProofId = UUID()
     let cancelNewRoundPollingId = UUID()
     let cancelShareTrackingId = UUID()
-    let cancelDelegationProofPrecomputeId = UUID()
 
     enum Action: Equatable {
         // Navigation
@@ -744,12 +737,8 @@ struct Voting {
         case skipRemainingKeystoneBundlesConfirmed
         case keystoneScan(PresentationAction<Scan.Action>)
 
-        // Background ZKP delegation
+        // ZKP delegation
         case startDelegationProof
-        case startDelegationProofPrecomputation
-        case delegationProofPrecomputationProgress(roundId: String, progress: Double)
-        case delegationProofPrecomputationCompleted(roundId: String)
-        case delegationProofPrecomputationFailed(roundId: String, error: String)
         case delegationProofProgress(roundId: String, progress: Double)
         case delegationProofCompleted(roundId: String)
         case delegationProofFailed(roundId: String, error: String)
@@ -911,7 +900,7 @@ struct Voting {
                 .retryKeystoneSigning:
                 return reduceDelegation(&state, action)
 
-            // MARK: - Background ZKP Delegation
+            // MARK: - ZKP Delegation
             case .startDelegationProof,
                 .keystoneSigningPrepared,
                 .keystoneSigningFailed,
@@ -927,10 +916,6 @@ struct Voting {
                 .skipBundlesAlert,
                 .skipRemainingKeystoneBundlesConfirmed,
                 .keystoneBundleAdvance,
-                .startDelegationProofPrecomputation,
-                .delegationProofPrecomputationProgress,
-                .delegationProofPrecomputationCompleted,
-                .delegationProofPrecomputationFailed,
                 .delegationProofProgress,
                 .delegationProofCompleted,
                 .delegationProofFailed:
