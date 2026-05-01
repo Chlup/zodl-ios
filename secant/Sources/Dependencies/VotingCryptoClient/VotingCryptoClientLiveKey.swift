@@ -96,6 +96,11 @@ extension VotingCryptoClient: DependencyKey {
                 let backend = try await dbActor.backend()
                 _ = try backend.deleteSkippedBundles(roundId: roundId, keepCount: keepCount)
             },
+            warmProvingCaches: {
+                try await Task.detached(priority: .background) {
+                    try VotingRustBackend.warmProvingCaches()
+                }.value
+            },
             getWalletNotes: { walletDbPath, snapshotHeight, networkId, accountUUID in
                 let backend = try await dbActor.backend()
                 let notes = try backend.getWalletNotes(

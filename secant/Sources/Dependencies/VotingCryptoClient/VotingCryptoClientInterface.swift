@@ -31,6 +31,9 @@ struct VotingCryptoClient {
     /// so that proof_generated only considers signed+proven bundles.
     var deleteSkippedBundles: @Sendable (_ roundId: String, _ keepCount: UInt32) async throws -> Void
 
+    /// Warm process-lifetime proving-key caches before the first proof needs them.
+    var warmProvingCaches: @Sendable () async throws -> Void = {}
+
     // --- Wallet notes ---
     var getWalletNotes: @Sendable (
         _ walletDbPath: String,

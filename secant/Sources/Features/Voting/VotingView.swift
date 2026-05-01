@@ -19,6 +19,7 @@ struct VotingView: View {
         .navigationBarBackButtonHidden(true)
         .onAppear {
             store.send(.initialize)
+            store.send(.warmProvingCaches)
         }
         .sheet(
             store: store.scope(state: \.$keystoneScan, action: \.keystoneScan)

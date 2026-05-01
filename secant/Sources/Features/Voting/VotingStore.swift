@@ -369,6 +369,9 @@ struct Voting {
         /// finishes, either Keystone signing or software proof precomputation.
         var pendingBatchSubmission: Bool = false
 
+        /// Prevents repeated screen appearances from starting duplicate cache warm-up work.
+        var hasStartedProvingCacheWarmup: Bool = false
+
         // Witness verification results
         var noteWitnessResults: [NoteWitnessResult] = []
         var witnessStatus: WitnessStatus = .notStarted
@@ -695,6 +698,7 @@ struct Voting {
 
         // Initialization (DB, wallet notes, hotkey)
         case initialize
+        case warmProvingCaches
         case serviceConfigLoaded(VotingServiceConfig)
         case configUnsupported(String)
         case activeSessionLoaded(VotingSession)
@@ -839,6 +843,7 @@ struct Voting {
 
             // MARK: - Initialization
             case .initialize,
+                .warmProvingCaches,
                 .serviceConfigLoaded,
                 .configUnsupported,
                 .startActiveRoundPipeline,

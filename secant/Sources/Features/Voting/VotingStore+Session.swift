@@ -177,6 +177,16 @@ extension Voting {
 
         // MARK: - Initialization
 
+        case .warmProvingCaches:
+            guard !state.hasStartedProvingCacheWarmup else { return .none }
+            state.hasStartedProvingCacheWarmup = true
+            return .run { [votingCrypto] _ in
+                try await votingCrypto.warmProvingCaches()
+                votingLogger.info("Voting proving caches warmed")
+            } catch: { error, _ in
+                votingLogger.error("Voting proving cache warm-up failed: \(error)")
+            }
+
         case .initialize:
             // Re-fetch service discovery whenever the governance flow is opened.
             // This keeps vote/PIR endpoints fresh while proposal data stays sourced
