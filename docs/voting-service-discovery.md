@@ -5,7 +5,7 @@ How zodl-ios discovers vote servers and PIR endpoints at runtime. The wallet imp
 ## Resolution order
 
 1. **Static config** — fetched from a hash-pinned URL embedded in the signed app binary using `URL?checksum=sha256:HEX`. It carries the `dynamic_config_url` and trusted voting admin keys.
-2. **Dynamic config** — fetched from the verified static config's `dynamic_config_url`, currently [`https://valargroup.github.io/token-holder-voting-config/dynamic-voting-config.json`](https://valargroup.github.io/token-holder-voting-config/dynamic-voting-config.json), served via GitHub Pages from [`valargroup/token-holder-voting-config`](https://github.com/valargroup/token-holder-voting-config).
+2. **Dynamic config** — fetched from the verified static config's `dynamic_config_url`, currently [`https://voting.valargroup.org/dynamic-voting-config.json`](https://voting.valargroup.org/dynamic-voting-config.json), served through the Cloudflare-managed config host from [`valargroup/token-holder-voting-config`](https://github.com/valargroup/token-holder-voting-config).
 
 There is no silent fallback. If the pinned static config source is malformed, the static config fetch fails, the SHA-256 does not match, or the dynamic config is unreachable, returns non-200, decodes to an unsupported shape, or advertises a version the wallet doesn't speak, the wallet routes to the `.configError` screen (`VotingConfigErrorView`) and voting is blocked for the session.
 
