@@ -62,13 +62,11 @@ final class VotingServiceConfigTests: XCTestCase {
     }
 
     private func makeStaticConfig(
-        dynamicConfigSHA256: String? = nil,
         trustedKeyBytes: Data = Data(repeating: 0x01, count: 32)
     ) -> StaticVotingConfig {
         StaticVotingConfig(
             staticConfigVersion: 1,
             dynamicConfigURL: URL(string: "https://example.com/dynamic-voting-config.json")!,
-            dynamicConfigSHA256: dynamicConfigSHA256,
             trustedKeys: [
                 .init(keyId: "test", alg: "ed25519", pubkey: trustedKeyBytes, notes: nil)
             ]
@@ -112,33 +110,6 @@ final class VotingServiceConfigTests: XCTestCase {
         let config = makeStaticConfig(trustedKeyBytes: Data(repeating: 0x01, count: 31))
 
         XCTAssertThrowsError(try config.validate())
-    }
-
-    func testStaticConfigValidationAcceptsMissingDynamicConfigPin() {
-        XCTAssertNoThrow(try makeStaticConfig().validate())
-    }
-
-    func testStaticConfigValidationAcceptsValidDynamicConfigPin() {
-        let pin = String(repeating: "a", count: 64)
-        XCTAssertNoThrow(try makeStaticConfig(dynamicConfigSHA256: pin).validate())
-    }
-
-    func testStaticConfigValidationRejectsMalformedDynamicConfigPin() {
-        XCTAssertThrowsError(try makeStaticConfig(dynamicConfigSHA256: String(repeating: "a", count: 63)).validate())
-        XCTAssertThrowsError(try makeStaticConfig(dynamicConfigSHA256: String(repeating: "A", count: 64)).validate())
-    }
-
-    func testDynamicConfigPinAcceptsMatchingFetchedBytes() {
-        let data = Data("dynamic config".utf8)
-        let config = makeStaticConfig(dynamicConfigSHA256: StaticVotingConfig.sha256Hex(of: data))
-
-        XCTAssertNoThrow(try config.validateDynamicConfigPin(for: data))
-    }
-
-    func testDynamicConfigPinRejectsMismatchedFetchedBytes() {
-        let config = makeStaticConfig(dynamicConfigSHA256: String(repeating: "0", count: 64))
-
-        XCTAssertThrowsError(try config.validateDynamicConfigPin(for: Data("dynamic config".utf8)))
     }
 
     func testStaticConfigLoadFromBundleRejectsMissingResource() {

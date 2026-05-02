@@ -725,7 +725,6 @@ extension VotingAPIClient: DependencyKey {
                 if let http = response as? HTTPURLResponse, http.statusCode != 200 {
                     throw VotingConfigError.decodeFailed("CDN returned HTTP \(http.statusCode)")
                 }
-                try staticConfig.validateDynamicConfigPin(for: data)
                 let config: VotingServiceConfig
                 do {
                     config = try JSONDecoder().decode(VotingServiceConfig.self, from: data)
