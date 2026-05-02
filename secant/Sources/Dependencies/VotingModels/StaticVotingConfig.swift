@@ -1,15 +1,16 @@
+import CryptoKit
 import Foundation
 
-/// Wallet-bundled voting trust anchor.
+/// Hash-pinned static voting trust anchor.
 ///
-/// This file is shipped inside the signed app bundle, so changing it requires a
-/// wallet release. It intentionally contains only slow-moving trust material and
-/// the URL for the dynamic config. Vote/PIR endpoints and rounds live in the
-/// fetched dynamic config.
+/// The signed wallet binary pins the URL and SHA-256 of a published static
+/// config. The fetched bytes are trusted only after the hash matches.
 struct StaticVotingConfig: Codable, Equatable, Sendable {
-    static let bundleResourceName = "static-voting-config"
     static let supportedVersion = 1
     static let algEd25519 = "ed25519"
+    static let bundledPinnedSource =
+        "https://valargroup.github.io/token-holder-voting-config/static-voting-config.json" +
+        "?checksum=sha256:286aa889988eba839101dce8b46ec07e9531eabf86e92b823199221eda5fd16b"
 
     let staticConfigVersion: Int
     let dynamicConfigURL: URL
@@ -50,23 +51,39 @@ struct StaticVotingConfig: Codable, Equatable, Sendable {
         case trustedKeys = "trusted_keys"
     }
 
-    /// Load the static config from the app bundle and validate it before use.
+    /// Fetch the static config from its hash-pinned URL and validate it before use.
     ///
-    /// A missing or malformed static config is a release/configuration error.
-    /// There is no network fallback because this document is the wallet's trust
-    /// anchor for voting.
-    static func loadFromBundle(_ bundle: Bundle = .main) throws -> StaticVotingConfig {
-        guard let url = bundle.url(forResource: bundleResourceName, withExtension: "json") else {
-            throw VotingConfigError.decodeFailed("static config resource missing: \(bundleResourceName).json")
-        }
-
+    /// There is no fallback: a transport failure, decode failure, or hash
+    /// mismatch blocks voting until the user can fetch a trusted config.
+    static func loadFromNetwork(
+        source: PinnedConfigSource,
+        session: URLSession
+    ) async throws -> StaticVotingConfig {
         let data: Data
+        let response: URLResponse
         do {
-            data = try Data(contentsOf: url)
+            var request = URLRequest(url: source.url, cachePolicy: .reloadIgnoringLocalCacheData)
+            request.setValue("no-cache", forHTTPHeaderField: "Cache-Control")
+            request.setValue("no-cache", forHTTPHeaderField: "Pragma")
+            (data, response) = try await session.data(for: request)
         } catch {
-            throw VotingConfigError.decodeFailed("static config unreadable: \(error.localizedDescription)")
+            throw VotingConfigError.staticConfigFetchFailed(error.localizedDescription)
         }
+        if let http = response as? HTTPURLResponse, http.statusCode != 200 {
+            throw VotingConfigError.staticConfigFetchFailed("HTTP \(http.statusCode)")
+        }
+        return try decodeAndVerify(data: data, expectedSHA256: source.sha256)
+    }
 
+    /// Verify the raw bytes before decoding; SHA-256 covers the exact response body.
+    static func decodeAndVerify(data: Data, expectedSHA256: Data) throws -> StaticVotingConfig {
+        let actualSHA256 = Data(SHA256.hash(data: data))
+        guard actualSHA256 == expectedSHA256 else {
+            throw VotingConfigError.staticConfigHashMismatch(
+                expected: expectedSHA256.lowercaseHexString,
+                actual: actualSHA256.lowercaseHexString
+            )
+        }
         let config: StaticVotingConfig
         do {
             config = try JSONDecoder().decode(StaticVotingConfig.self, from: data)
@@ -98,5 +115,82 @@ struct StaticVotingConfig: Codable, Equatable, Sendable {
                 throw VotingConfigError.decodeFailed("trusted_keys[\(key.keyId)].pubkey must decode to 32 bytes")
             }
         }
+    }
+}
+
+/// Format: `URL?checksum=sha256:{lowercase-hex}` source.
+struct PinnedConfigSource: Equatable, Sendable {
+    let url: URL
+    let sha256: Data
+
+    static func parse(_ raw: String) throws -> PinnedConfigSource {
+        guard var components = URLComponents(string: raw),
+              components.scheme == "https",
+              components.host != nil
+        else {
+            throw VotingConfigError.staticConfigSourceMalformed("not an HTTPS URL: \(raw)")
+        }
+
+        let queryItems = components.queryItems ?? []
+        guard let checksum = queryItems.first(where: { $0.name == "checksum" })?.value else {
+            throw VotingConfigError.staticConfigSourceMalformed("missing ?checksum=sha256:HEX")
+        }
+
+        let prefix = "sha256:"
+        guard checksum.hasPrefix(prefix) else {
+            throw VotingConfigError.staticConfigSourceMalformed("checksum must start with sha256:")
+        }
+
+        let hex = String(checksum.dropFirst(prefix.count))
+        guard hex.count == 64,
+              let sha256 = Data(lowercaseHexString: hex),
+              sha256.count == 32
+        else {
+            throw VotingConfigError.staticConfigSourceMalformed(
+                "sha256 must be 64 lowercase hex chars (32 bytes); got \(hex.count)"
+            )
+        }
+
+        components.queryItems = queryItems.filter { $0.name != "checksum" }
+        if components.queryItems?.isEmpty == true {
+            components.queryItems = nil
+        }
+        guard let url = components.url else {
+            throw VotingConfigError.staticConfigSourceMalformed("could not rebuild URL after stripping checksum")
+        }
+        return PinnedConfigSource(url: url, sha256: sha256)
+    }
+}
+
+private extension Data {
+    init?(lowercaseHexString hex: String) {
+        guard hex.count.isMultiple(of: 2),
+              hex.utf8.allSatisfy({ byte in
+                  (byte >= CharacterCode.zero && byte <= CharacterCode.nine) ||
+                  (byte >= CharacterCode.lowercaseA && byte <= CharacterCode.lowercaseF)
+              })
+        else { return nil }
+
+        var bytes: [UInt8] = []
+        bytes.reserveCapacity(hex.count / 2)
+        var index = hex.startIndex
+        while index < hex.endIndex {
+            let nextIndex = hex.index(index, offsetBy: 2)
+            guard let byte = UInt8(hex[index..<nextIndex], radix: 16) else { return nil }
+            bytes.append(byte)
+            index = nextIndex
+        }
+        self.init(bytes)
+    }
+
+    var lowercaseHexString: String {
+        map { String(format: "%02x", $0) }.joined()
+    }
+
+    private enum CharacterCode {
+        static let zero = UInt8(ascii: "0")
+        static let nine = UInt8(ascii: "9")
+        static let lowercaseA = UInt8(ascii: "a")
+        static let lowercaseF = UInt8(ascii: "f")
     }
 }

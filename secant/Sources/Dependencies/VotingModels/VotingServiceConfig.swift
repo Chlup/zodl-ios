@@ -106,6 +106,9 @@ enum WalletCapabilities {
 enum VotingConfigError: Error, Equatable, LocalizedError {
     case decodeFailed(String)
     case unsupportedVersion(component: String, advertised: String)
+    case staticConfigSourceMalformed(String)
+    case staticConfigFetchFailed(String)
+    case staticConfigHashMismatch(expected: String, actual: String)
 
     var errorDescription: String? {
         switch self {
@@ -113,6 +116,16 @@ enum VotingConfigError: Error, Equatable, LocalizedError {
             return String(localizable: .coinVoteConfigErrorDecodeFailed(detail))
         case .unsupportedVersion(let component, let advertised):
             return String(localizable: .coinVoteConfigErrorUnsupportedVersion(component, advertised))
+        case .staticConfigSourceMalformed(let detail):
+            return String(localizable: .coinVoteConfigErrorDecodeFailed("static config source malformed: \(detail)"))
+        case .staticConfigFetchFailed(let detail):
+            return String(localizable: .coinVoteConfigErrorDecodeFailed("static config fetch failed: \(detail)"))
+        case .staticConfigHashMismatch(let expected, let actual):
+            return String(
+                localizable: .coinVoteConfigErrorDecodeFailed(
+                    "static config hash mismatch: expected \(expected), got \(actual)"
+                )
+            )
         }
     }
 }

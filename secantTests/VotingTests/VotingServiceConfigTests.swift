@@ -1,5 +1,6 @@
 import XCTest
 import ComposableArchitecture
+import CryptoKit
 import ZcashLightClientKit
 @testable import secant_testnet
 
@@ -112,8 +113,65 @@ final class VotingServiceConfigTests: XCTestCase {
         XCTAssertThrowsError(try config.validate())
     }
 
-    func testStaticConfigLoadFromBundleRejectsMissingResource() {
-        XCTAssertThrowsError(try StaticVotingConfig.loadFromBundle(Bundle(for: Self.self)))
+    func testPinnedConfigSourceParseAcceptsCosmovisorChecksumAndStripsIt() throws {
+        let hex = String(repeating: "0a", count: 32)
+        let source = try PinnedConfigSource.parse(
+            "https://example.com/static-voting-config.json?foo=bar&checksum=sha256:\(hex)&baz=qux"
+        )
+
+        XCTAssertEqual(source.url.absoluteString, "https://example.com/static-voting-config.json?foo=bar&baz=qux")
+        XCTAssertEqual(source.sha256.count, 32)
+        XCTAssertEqual(source.sha256.first, 0x0a)
+    }
+
+    func testPinnedConfigSourceParseRejectsMalformedSources() {
+        let validHex = String(repeating: "0a", count: 32)
+        let cases = [
+            "https://example.com/static-voting-config.json",
+            "https://example.com/static-voting-config.json?checksum=sha512:\(validHex)",
+            "https://example.com/static-voting-config.json?checksum=sha256:\(String(repeating: "0A", count: 32))",
+            "https://example.com/static-voting-config.json?checksum=sha256:\(String(repeating: "0g", count: 32))",
+            "https://example.com/static-voting-config.json?checksum=sha256:\(String(repeating: "0a", count: 31))",
+            "not a url?checksum=sha256:\(validHex)"
+        ]
+
+        for raw in cases {
+            XCTAssertThrowsError(try PinnedConfigSource.parse(raw), raw) { error in
+                guard case VotingConfigError.staticConfigSourceMalformed = error else {
+                    return XCTFail("expected malformed source, got \(error)")
+                }
+            }
+        }
+    }
+
+    func testStaticConfigDecodeAndVerifyAcceptsMatchingSHA256() throws {
+        let config = makeStaticConfig()
+        let data = try JSONEncoder().encode(config)
+        let sha256 = Data(SHA256.hash(data: data))
+
+        let decoded = try StaticVotingConfig.decodeAndVerify(data: data, expectedSHA256: sha256)
+
+        XCTAssertEqual(decoded, config)
+    }
+
+    func testStaticConfigDecodeAndVerifyRejectsHashMismatch() throws {
+        let data = try JSONEncoder().encode(makeStaticConfig())
+
+        XCTAssertThrowsError(
+            try StaticVotingConfig.decodeAndVerify(data: data, expectedSHA256: Data(repeating: 0, count: 32))
+        ) { error in
+            guard case VotingConfigError.staticConfigHashMismatch = error else {
+                return XCTFail("expected hash mismatch, got \(error)")
+            }
+        }
+    }
+
+    func testStaticConfigDecodeAndVerifyStillValidatesDecodedConfig() throws {
+        let config = makeStaticConfig(trustedKeyBytes: Data(repeating: 0x01, count: 31))
+        let data = try JSONEncoder().encode(config)
+        let sha256 = Data(SHA256.hash(data: data))
+
+        XCTAssertThrowsError(try StaticVotingConfig.decodeAndVerify(data: data, expectedSHA256: sha256))
     }
 
     func testValidateAcceptsCurrentWalletCapabilities() throws {

@@ -700,7 +700,11 @@ extension VotingAPIClient: DependencyKey {
     static var liveValue: Self {
         Self(
             fetchServiceConfig: {
-                let staticConfig = try StaticVotingConfig.loadFromBundle()
+                let source = try PinnedConfigSource.parse(StaticVotingConfig.bundledPinnedSource)
+                let staticConfig = try await StaticVotingConfig.loadFromNetwork(
+                    source: source,
+                    session: httpSession
+                )
 
                 // Fetch and decode the CDN config. Any failure (transport, HTTP, decode,
                 // or version-validation) surfaces as a VotingConfigError — no silent fallback.
