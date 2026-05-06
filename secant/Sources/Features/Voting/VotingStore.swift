@@ -300,6 +300,8 @@ struct Voting {
         var toast: Toast.Edge?
         @Shared(.appStorage(.hasSeenHowToVote))
         var hasSeenHowToVote: Bool = false
+        @Shared(.appStorage(.votingConfigOverrideURL))
+        var votingConfigOverrideURL: String = ""
 
         /// Persisted record of when the current round finished submitting,
         /// loaded from UserDefaults in `roundTapped`. Used by Results to

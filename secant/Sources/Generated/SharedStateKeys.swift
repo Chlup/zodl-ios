@@ -24,4 +24,5 @@ public extension String {
     static let swapAssets = "sharedStateKey_swapAssets"
     static let swapAPIAccess = "sharedStateKey_swapAPIAccess"
     static let hasSeenHowToVote = "sharedStateKey_hasSeenHowToVote"
+    static let votingConfigOverrideURL = "sharedStateKey_votingConfigOverrideURL"
 }

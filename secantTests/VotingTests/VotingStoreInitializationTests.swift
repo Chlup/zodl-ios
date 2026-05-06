@@ -5,6 +5,45 @@ import XCTest
 
 @MainActor
 final class VotingStoreInitializationTests: XCTestCase {
+    func testPinnedConfigSourceAllowsMissingChecksum() throws {
+        let source = try PinnedConfigSource.parse("https://override.example.com/static-voting-config.json?foo=bar")
+
+        XCTAssertEqual(source.url.absoluteString, "https://override.example.com/static-voting-config.json?foo=bar")
+        XCTAssertNil(source.sha256)
+    }
+
+    func testPinnedConfigSourceStripsAndParsesChecksumWhenPresent() throws {
+        let source = try PinnedConfigSource.parse(
+            "https://override.example.com/static-voting-config.json" +
+            "?foo=bar&checksum=sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        )
+
+        XCTAssertEqual(source.url.absoluteString, "https://override.example.com/static-voting-config.json?foo=bar")
+        XCTAssertEqual(source.sha256, Data(repeating: 0xAA, count: 32))
+    }
+
+    func testStaticVotingConfigDecodeSkipsHashCheckWhenChecksumIsMissing() throws {
+        let data = """
+        {
+          "static_config_version": 1,
+          "dynamic_config_url": "https://override.example.com/dynamic-voting-config.json",
+          "trusted_keys": [
+            {
+              "key_id": "test-key",
+              "alg": "ed25519",
+              "pubkey": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+            }
+          ]
+        }
+        """.data(using: .utf8)!
+
+        let config = try StaticVotingConfig.decodeAndVerify(data: data, expectedSHA256: nil)
+
+        XCTAssertEqual(config.staticConfigVersion, 1)
+        XCTAssertEqual(config.dynamicConfigURL.absoluteString, "https://override.example.com/dynamic-voting-config.json")
+        XCTAssertEqual(config.trustedKeys.count, 1)
+    }
+
     func testInitializeRefreshesConfigAndRoundsWhenReopeningPollsList() async {
         let callCounter = CallCounter()
         let config = makeConfig()
@@ -17,7 +56,7 @@ final class VotingStoreInitializationTests: XCTestCase {
         ) {
             Voting()
         }
-        store.dependencies.votingAPI.fetchServiceConfig = {
+        store.dependencies.votingAPI.fetchServiceConfig = { _ in
             await callCounter.incrementConfigFetches()
             return config
         }
@@ -138,7 +177,7 @@ final class VotingStoreInitializationTests: XCTestCase {
         ) {
             Voting()
         }
-        store.dependencies.votingAPI.fetchServiceConfig = {
+        store.dependencies.votingAPI.fetchServiceConfig = { _ in
             throw TestConfigError()
         }
 
@@ -165,6 +204,114 @@ final class VotingStoreInitializationTests: XCTestCase {
         await store.receive(.configUnsupported("Pinned config failed")) {
             $0.screenStack = [.configError("Pinned config failed")]
         }
+    }
+
+    func testInitializePassesPersistedConfigOverrideToServiceConfigFetch() async {
+        let recorder = OverrideRecorder()
+        let config = makeConfig()
+        var initialState = Voting.State()
+        initialState.screenStack = [.pollsList]
+        initialState.votingConfigOverrideURL =
+            "https://override.example.com/static-voting-config.json" +
+            "?foo=bar&checksum=sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+        let store = TestStore(
+            initialState: initialState
+        ) {
+            Voting()
+        }
+        store.dependencies.votingAPI.fetchServiceConfig = { override in
+            await recorder.record(override)
+            return config
+        }
+        store.dependencies.votingAPI.configureURLs = { _ in }
+        store.dependencies.votingAPI.fetchAllRounds = { [] }
+        store.dependencies.votingAPI.fetchZodlEndorsedRoundIds = { [] }
+        store.dependencies.votingCrypto.openDatabase = { _ in }
+        store.dependencies.votingCrypto.setWalletId = { _ in }
+
+        await store.send(.initialize) {
+            $0.votingRound = VotingRound(
+                id: "",
+                title: "",
+                description: "",
+                snapshotHeight: 0,
+                snapshotDate: Date(timeIntervalSince1970: 0),
+                votingStart: Date(timeIntervalSince1970: 0),
+                votingEnd: Date(timeIntervalSince1970: 0),
+                proposals: []
+            )
+            $0.screenStack = [.loading]
+        }
+        await store.receive(.serviceConfigLoaded(config)) {
+            $0.serviceConfig = config
+        }
+        await store.receive(.allRoundsLoaded([])) {
+            $0.allRounds = []
+            $0.screenStack = [.noRounds]
+            $0.voteRecords = [:]
+        }
+
+        let overrides = await recorder.snapshot()
+        XCTAssertEqual(overrides.count, 1)
+        guard let override = overrides.first ?? nil else {
+            XCTFail("Expected initialize to pass a parsed config override")
+            return
+        }
+        XCTAssertEqual(
+            override.url.absoluteString,
+            "https://override.example.com/static-voting-config.json?foo=bar"
+        )
+        XCTAssertEqual(override.sha256, Data(repeating: 0xAA, count: 32))
+    }
+
+    func testInitializeFallsBackToBundledConfigWhenPersistedOverrideIsMalformed() async {
+        let recorder = OverrideRecorder()
+        let config = makeConfig()
+        var initialState = Voting.State()
+        initialState.screenStack = [.pollsList]
+        initialState.votingConfigOverrideURL = "http://override.example.com/static-voting-config.json"
+
+        let store = TestStore(
+            initialState: initialState
+        ) {
+            Voting()
+        }
+        store.dependencies.votingAPI.fetchServiceConfig = { override in
+            await recorder.record(override)
+            return config
+        }
+        store.dependencies.votingAPI.configureURLs = { _ in }
+        store.dependencies.votingAPI.fetchAllRounds = { [] }
+        store.dependencies.votingAPI.fetchZodlEndorsedRoundIds = { [] }
+        store.dependencies.votingCrypto.openDatabase = { _ in }
+        store.dependencies.votingCrypto.setWalletId = { _ in }
+
+        await store.send(.initialize) {
+            $0.votingRound = VotingRound(
+                id: "",
+                title: "",
+                description: "",
+                snapshotHeight: 0,
+                snapshotDate: Date(timeIntervalSince1970: 0),
+                votingStart: Date(timeIntervalSince1970: 0),
+                votingEnd: Date(timeIntervalSince1970: 0),
+                proposals: []
+            )
+            $0.screenStack = [.loading]
+        }
+        await store.receive(.serviceConfigLoaded(config)) {
+            $0.serviceConfig = config
+        }
+        await store.receive(.allRoundsLoaded([])) {
+            $0.allRounds = []
+            $0.screenStack = [.noRounds]
+            $0.voteRecords = [:]
+        }
+
+        let overrides = await recorder.snapshot()
+        XCTAssertEqual(overrides.count, 1)
+        XCTAssertNil(overrides.first ?? nil)
     }
 
     func testFetchZodlEndorsementsStoresLoadedRoundIds() async {
@@ -257,6 +404,18 @@ private struct TestConfigError: LocalizedError {
 }
 
 private struct TestEndorsementError: Error {}
+
+private actor OverrideRecorder {
+    private var overrides: [PinnedConfigSource?] = []
+
+    func record(_ override: PinnedConfigSource?) {
+        overrides.append(override)
+    }
+
+    func snapshot() -> [PinnedConfigSource?] {
+        overrides
+    }
+}
 
 private actor CallCounter {
     private(set) var configFetches = 0

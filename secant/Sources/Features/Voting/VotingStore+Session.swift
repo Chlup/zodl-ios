@@ -143,11 +143,18 @@ extension Voting {
             guard state.currentScreen != .howToVote else { return .none }
             guard !state.isSubmittingVote else { return .none }
             state.prepareForServiceConfigRefresh()
-            return .run { [votingAPI] send in
+            let overrideURLString = state.votingConfigOverrideURL
+            return .run { [votingAPI, overrideURLString] send in
                 // 1. Fetch service config (local override -> CDN). Decode or version failures
                 //    surface as VotingConfigError and block the voting feature entirely;
                 //    the wallet must be updated before the user can proceed.
-                let config = try await votingAPI.fetchServiceConfig()
+                let override: PinnedConfigSource?
+                if overrideURLString.isEmpty {
+                    override = nil
+                } else {
+                    override = try? PinnedConfigSource.parse(overrideURLString)
+                }
+                let config = try await votingAPI.fetchServiceConfig(override)
                 await send(.serviceConfigLoaded(config))
             } catch: { error, send in
                 votingLogger.error("Service config unavailable: \(error)")

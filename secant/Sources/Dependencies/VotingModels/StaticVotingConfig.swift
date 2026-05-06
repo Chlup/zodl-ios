@@ -75,14 +75,16 @@ struct StaticVotingConfig: Codable, Equatable, Sendable {
         return try decodeAndVerify(data: data, expectedSHA256: source.sha256)
     }
 
-    /// Verify the raw bytes before decoding; SHA-256 covers the exact response body.
-    static func decodeAndVerify(data: Data, expectedSHA256: Data) throws -> StaticVotingConfig {
-        let actualSHA256 = Data(SHA256.hash(data: data))
-        guard actualSHA256 == expectedSHA256 else {
-            throw VotingConfigError.staticConfigHashMismatch(
-                expected: expectedSHA256.lowercaseHexString,
-                actual: actualSHA256.lowercaseHexString
-            )
+    /// Verify the raw bytes before decoding when a pin is provided.
+    static func decodeAndVerify(data: Data, expectedSHA256: Data?) throws -> StaticVotingConfig {
+        if let expectedSHA256 {
+            let actualSHA256 = Data(SHA256.hash(data: data))
+            guard actualSHA256 == expectedSHA256 else {
+                throw VotingConfigError.staticConfigHashMismatch(
+                    expected: expectedSHA256.lowercaseHexString,
+                    actual: actualSHA256.lowercaseHexString
+                )
+            }
         }
         let config: StaticVotingConfig
         do {
@@ -118,10 +120,10 @@ struct StaticVotingConfig: Codable, Equatable, Sendable {
     }
 }
 
-/// Format: `URL?checksum=sha256:{lowercase-hex}` source.
+/// Format: `URL` with an optional `?checksum=sha256:{lowercase-hex}` pin.
 struct PinnedConfigSource: Equatable, Sendable {
     let url: URL
-    let sha256: Data
+    let sha256: Data?
 
     static func parse(_ raw: String) throws -> PinnedConfigSource {
         guard var components = URLComponents(string: raw),
@@ -132,28 +134,34 @@ struct PinnedConfigSource: Equatable, Sendable {
         }
 
         let queryItems = components.queryItems ?? []
-        guard let checksum = queryItems.first(where: { $0.name == "checksum" })?.value else {
-            throw VotingConfigError.staticConfigSourceMalformed("missing ?checksum=sha256:HEX")
-        }
+        let sha256: Data?
+        if let checksumItem = queryItems.first(where: { $0.name == "checksum" }) {
+            guard let checksum = checksumItem.value else {
+                throw VotingConfigError.staticConfigSourceMalformed("missing checksum value")
+            }
 
-        let prefix = "sha256:"
-        guard checksum.hasPrefix(prefix) else {
-            throw VotingConfigError.staticConfigSourceMalformed("checksum must start with sha256:")
-        }
+            let prefix = "sha256:"
+            guard checksum.hasPrefix(prefix) else {
+                throw VotingConfigError.staticConfigSourceMalformed("checksum must start with sha256:")
+            }
 
-        let hex = String(checksum.dropFirst(prefix.count))
-        guard hex.count == 64,
-              let sha256 = Data(lowercaseHexString: hex),
-              sha256.count == 32
-        else {
-            throw VotingConfigError.staticConfigSourceMalformed(
-                "sha256 must be 64 lowercase hex chars (32 bytes); got \(hex.count)"
-            )
-        }
+            let hex = String(checksum.dropFirst(prefix.count))
+            guard hex.count == 64,
+                  let parsedSHA256 = Data(lowercaseHexString: hex),
+                  parsedSHA256.count == 32
+            else {
+                throw VotingConfigError.staticConfigSourceMalformed(
+                    "sha256 must be 64 lowercase hex chars (32 bytes); got \(hex.count)"
+                )
+            }
 
-        components.queryItems = queryItems.filter { $0.name != "checksum" }
-        if components.queryItems?.isEmpty == true {
-            components.queryItems = nil
+            sha256 = parsedSHA256
+            components.queryItems = queryItems.filter { $0.name != "checksum" }
+            if components.queryItems?.isEmpty == true {
+                components.queryItems = nil
+            }
+        } else {
+            sha256 = nil
         }
         guard let url = components.url else {
             throw VotingConfigError.staticConfigSourceMalformed("could not rebuild URL after stripping checksum")

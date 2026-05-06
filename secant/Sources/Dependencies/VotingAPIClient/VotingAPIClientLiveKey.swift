@@ -699,8 +699,13 @@ func serviceConfigRetainingRoundsWithValidSignatures(
 extension VotingAPIClient: DependencyKey {
     static var liveValue: Self {
         Self(
-            fetchServiceConfig: {
-                let source = try PinnedConfigSource.parse(StaticVotingConfig.bundledPinnedSource)
+            fetchServiceConfig: { override in
+                let source: PinnedConfigSource
+                if let override {
+                    source = override
+                } else {
+                    source = try PinnedConfigSource.parse(StaticVotingConfig.bundledPinnedSource)
+                }
                 let staticConfig = try await StaticVotingConfig.loadFromNetwork(
                     source: source,
                     session: httpSession
