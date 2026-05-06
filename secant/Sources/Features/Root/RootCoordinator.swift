@@ -124,16 +124,30 @@ extension Root {
                 state.$walletStatus.withLock { $0 = .resyncing }
                 let leavesScreenOpenFixed = leavesScreenOpen
                 return .concatenate(
-                    .run { send in
+                    .run { _ in
                         await autolockHandler.value(leavesScreenOpenFixed)
-                        do {
-                            try await sdkSynchronizer.rescanFrom(birthday)
-                        } catch {
-                            // TODO: error handling
-                        }
                     },
+                    .publisher {
+                        sdkSynchronizer.rewind(.height(blockheight: birthday))
+                            .replaceEmpty(with: Void())
+                            .map { _ in
+                                Root.Action.rewindDone(nil)
+                            }
+                            .catch { error in
+                                Just(Root.Action.rewindDone(error.toZcashError()))
+                                    .eraseToAnyPublisher()
+                            }
+                            .receive(on: mainQueue)
+                    }
+                    .cancellable(id: state.CancelResyncStateId, cancelInFlight: true),
                     .send(.batteryStateChanged(nil))
                 )
+                
+            case .rewindDone(let zcashError):
+                if zcashError == nil {
+                    //return .send(.home(.smartBanner(.evaluatePriority45)))
+                }
+                return .none
 
                 // MARK: - Flexa
 

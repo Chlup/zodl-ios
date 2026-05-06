@@ -28,6 +28,7 @@ struct SmartBanner {
             case priority2 // syncing error
             case priority3 // restoring
             case priority4 // syncing
+            case priority45 // resyncing
             case priority5 // updating balance
             case priority6 // wallet backup
             case priority7 // shielding
@@ -113,6 +114,7 @@ struct SmartBanner {
         case evaluatePriority2
         case evaluatePriority3
         case evaluatePriority4
+        case evaluatePriority45
         case evaluatePriority5
         case evaluatePriority6
         case evaluatePriority7
@@ -363,7 +365,7 @@ struct SmartBanner {
                     switch snapshot.syncStatus {
                     case .upToDate:
                         state.isSyncTimedOutAutoAppeareDisabled = false
-                        if state.priorityContent == .priority3 || state.priorityContent == .priority4 {
+                        if state.priorityContent == .priority3 || state.priorityContent == .priority45 || state.priorityContent == .priority4 {
                             return .send(.closeAndCleanupBanner)
                         }
                     case .error, .unprepared:
@@ -395,7 +397,9 @@ struct SmartBanner {
                     // return of restoring/syncing
                     let isSyncingHigherPriority = (state.priorityContent?.rawValue ?? 0) > State.PriorityContent.priority4.rawValue
                     if isSyncing && (state.priorityContent == nil || isSyncingHigherPriority) {
-                        if state.walletStatus == .restoring {
+                        if state.walletStatus == .resyncing {
+                            //return .send(.triggerPriority(.priority45))
+                        } else if state.walletStatus == .restoring {
                             return .send(.triggerPriority(.priority3))
                         } else if state.lastKnownSyncPercentage >= 0 && state.lastKnownSyncPercentage < Constants.smartBannerSyncingThreshold {
                             return .send(.triggerPriority(.priority4))
@@ -424,6 +428,13 @@ struct SmartBanner {
             case .evaluatePriority4:
                 if state.walletStatus != .restoring && state.lastKnownSyncPercentage >= 0 && state.lastKnownSyncPercentage < Constants.smartBannerSyncingThreshold {
                     return .send(.triggerPriority(.priority4))
+                }
+                return .send(.evaluatePriority45)
+
+                // resyncing
+            case .evaluatePriority45:
+                if state.walletStatus == .resyncing {
+                    //return .send(.triggerPriority(.priority45))
                 }
                 return .send(.evaluatePriority5)
 

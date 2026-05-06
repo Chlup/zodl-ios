@@ -30,6 +30,7 @@ struct Root {
         
         var CancelEventId = UUID()
         var CancelId = UUID()
+        var CancelResyncStateId = UUID()
         var CancelStateId = UUID()
         var CancelTransactionsStateId = UUID()
         var CancelBatteryStateId = UUID()
@@ -232,6 +233,9 @@ struct Root {
         case checkFundsFoundSomething
         case checkFundsNothingFound
         case checkFundsTorRequired
+        
+        // Resync
+        case rewindDone(ZcashError?)
     }
 
     @Dependency(\.addressBook) var addressBook

@@ -24,6 +24,7 @@ extension SmartBannerView {
             case .priority2: syncingErrorContent()
             case .priority3: restoringContent()
             case .priority4: syncingContent()
+            case .priority45: resyncingContent()
             case .priority5: updatingBalanceContent()
             case .priority6: walletBackupContent()
             case .priority7: shieldingContent()
@@ -85,6 +86,24 @@ extension SmartBannerView {
                      ? String(localizable: .smartBannerContentRestoreInfoSpendable)
                      : String(localizable: .smartBannerContentRestoreInfo)
                 )
+                .zFont(.medium, size: 12, color: infoStyle())
+            }
+            
+            Spacer()
+        }
+    }
+
+    @ViewBuilder func resyncingContent() -> some View {
+        HStack(spacing: 0) {
+            ProgressView()
+                .frame(width: 20, height: 20)
+                .padding(.trailing, 12)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(localizable: .smartBannerContentResyncing)
+                    .zFont(.medium, size: 14, color: titleStyle())
+                
+                Text(localizable: .smartBannerContentRestoreInfo)
                 .zFont(.medium, size: 12, color: infoStyle())
             }
             

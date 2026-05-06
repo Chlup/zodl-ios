@@ -9277,6 +9277,17 @@
         }
       }
     },
+    "smartBanner.help.resync.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wallet Resync in Progress"
+          }
+        }
+      }
+    },
     "smartBanner.help.shield.doNotShowAgain" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -9460,6 +9471,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Actualizando Balance"
+          }
+        }
+      }
+    },
+    "smartBannerContentResyncing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resyncing"
           }
         }
       }
