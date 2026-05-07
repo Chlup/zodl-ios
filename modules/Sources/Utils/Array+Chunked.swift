@@ -14,3 +14,10 @@ extension Array {
         }
     }
 }
+
+extension Array where Element: Identifiable {
+    public func removingDuplicates() -> [Element] {
+        var seen = Set<Element.ID>()
+        return filter { seen.insert($0.id).inserted }
+    }
+}

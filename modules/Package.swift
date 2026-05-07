@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -96,7 +96,7 @@ let package = Package(
         .library(name: "ZecKeyboard", targets: ["ZecKeyboard"])
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.23.1"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.25.4"),
         .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.7.2"),
         .package(url: "https://github.com/pointfreeco/swift-url-routing", from: "0.6.2"),
         .package(url: "https://github.com/zcash-hackworks/MnemonicSwift", from: "2.2.5"),
@@ -108,7 +108,8 @@ let package = Package(
         .package(url: "https://github.com/mgriebling/BigDecimal.git", from: Version(stringLiteral: "2.2.3")),
         .package(url: "https://github.com/siteline/swiftui-introspect", from: "26.0.0"),
         .package(url: "https://github.com/pointfreeco/swift-navigation", from: "2.5.1"),
-        .package(url: "https://github.com/liamnichols/xcstrings-tool-plugin", from: "1.2.0")
+        .package(url: "https://github.com/liamnichols/xcstrings-tool-plugin", from: "1.2.0"),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "1.9.0")
     ],
     targets: [
         .target(

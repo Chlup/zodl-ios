@@ -226,7 +226,7 @@ extension Near1Click {
                 )
             }
             
-            return IdentifiedArrayOf(uniqueElements: chainAssets)
+            return IdentifiedArrayOf(uniqueElements: chainAssets.removingDuplicates())
         },
         quote: { dry, isSwapToZec, exactInput, slippageTolerance, zecAsset, toAsset, refundTo, destination, amount in
             // Deadline in ISO 8601 UTC format
