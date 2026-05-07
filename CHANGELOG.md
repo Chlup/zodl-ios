@@ -6,6 +6,11 @@ directly impact users rather than highlighting other crucial architectural updat
 
 ## [Unreleased]
 
+## 3.3.1 build 1 (2026-05-06)
+
+### Fixed
+- We fixed a crash in the Swap/Pay flow.
+
 ## 3.3.0 build 2 (2026-04-07)
 
 ### Added
