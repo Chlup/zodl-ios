@@ -116,33 +116,24 @@ struct PollsListView: View {
             // Top row: state pill + closes/closed date
             HStack(spacing: 0) {
                 pollStatusPill(state)
-                if store.isOnDefaultConfig, store.zodlEndorsedRoundIds.contains(item.id) {
-                    zodlTrustIndicator(fontSize: 12, iconSize: 14)
-                        .padding(.leading, 8)
-                } else if !store.isOnDefaultConfig {
-                    unverifiedIssuerIndicator(fontSize: 12, iconSize: 14)
-                        .padding(.leading, 8)
-                }
                 Spacer()
                 Text(dateLabel(for: state, item: item))
                     .zFont(.medium, size: 14, style: Design.Text.tertiary)
                     .tracking(-0.224) // -1.6% × 14pt
             }
 
-            // Title
-            Text(item.title)
-                .zFont(.semiBold, size: 16, style: Design.Text.primary)
-                .tracking(-0.256) // -1.6% × 16pt
-                .fixedSize(horizontal: false, vertical: true)
+            VStack(alignment: .leading, spacing: 8) {
+                Text(item.title)
+                    .zFont(.semiBold, size: 16, style: Design.Text.primary)
+                    .tracking(-0.256) // -1.6% × 16pt
+                    .fixedSize(horizontal: false, vertical: true)
 
-            // "X of Y voted" indicator — shown on Voted and Closed cards
-            // whenever the user has actually voted in this round. Active
-            // cards (no vote yet) skip it.
-            if (state == .voted || state == .closed)
-                && store.voteRecords[item.id] != nil
-                && totalProposals > 0 {
-                votedIndicator(votedCount: votedCount, total: totalProposals)
+                if totalProposals > 0 {
+                    votedIndicator(votedCount: votedCount, total: totalProposals)
+                }
             }
+
+            issuerTrustIndicator(for: item)
 
             // "Poll Description" label + description
             if !item.session.description.isEmpty {
@@ -179,6 +170,15 @@ struct PollsListView: View {
     }
 
     private static let shadowSm = Color(red: 35.0 / 255.0, green: 31.0 / 255.0, blue: 32.0 / 255.0).opacity(0.04)
+
+    @ViewBuilder
+    private func issuerTrustIndicator(for item: Voting.State.RoundListItem) -> some View {
+        if store.isOnDefaultConfig, store.zodlEndorsedRoundIds.contains(item.id) {
+            zodlTrustIndicator(fontSize: 14, iconSize: 16)
+        } else if !store.isOnDefaultConfig {
+            unverifiedIssuerIndicator(fontSize: 12, iconSize: 14)
+        }
+    }
 
     private func zodlTrustIndicator(fontSize: CGFloat, iconSize: CGFloat) -> some View {
         let backdropSize = iconSize + 8
