@@ -514,7 +514,7 @@ struct VotingConfigSettingsView: View {
                 .disabled(saveDisabled)
             }
         }
-        .padding(.top, 8)
+        .padding(.top, 24)
         .padding(.bottom, 32)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
