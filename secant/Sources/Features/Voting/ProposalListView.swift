@@ -165,7 +165,7 @@ struct ProposalListView: View {
             if !store.votingRound.description.isEmpty {
                 VStack(alignment: .trailing, spacing: 4) {
                     Text(store.votingRound.description)
-                        .zFont(size: 14, style: Design.Text.primary)
+                        .zFont(size: 14, style: Design.Text.tertiary)
                         .lineLimit(1)
                         .truncationMode(.tail)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -183,16 +183,13 @@ struct ProposalListView: View {
         } label: {
             HStack(spacing: 4) {
                 Text(localizable: .coinVoteProposalListViewMore)
-                    .zFont(.medium, size: 14, style: Design.Text.tertiary)
+                    .zFont(.medium, size: 14, style: Design.Text.primary)
                     .tracking(-0.224)
                 Image(systemName: "chevron.down")
-                    .font(.system(size: 12, weight: .medium))
-                    .foregroundStyle(Design.Text.tertiary.color(colorScheme))
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundStyle(Design.Text.primary.color(colorScheme))
             }
-            .padding(.horizontal, 8)
             .frame(height: 20)
-            .background(Design.Surfaces.bgSecondary.color(colorScheme))
-            .clipShape(RoundedRectangle(cornerRadius: Design.Radius._md))
         }
     }
 
@@ -283,40 +280,44 @@ struct ProposalListView: View {
         // post-submit abstain fallback).
         let choices = store.effectiveChoices
         let voted = store.votingRound.proposals.filter { choices[$0.id] != nil }.count
-        let ratio = Double(voted) / Double(total)
+        let completedSteps = min(voted, max(total - 1, 0))
 
         GeometryReader { geo in
             let barHeight: CGFloat = 10
-            let knobDiameter: CGFloat = 10
             let dotDiameter: CGFloat = 4
-            // Reserve half the knob on each side so the knob can sit fully
-            // inside the bar at 0% and 100% without clipping.
-            let usableWidth = geo.size.width - knobDiameter
-            let leadingInset = knobDiameter / 2
+            let firstDotX: CGFloat = 20
+            let lastDotX = max(firstDotX, geo.size.width - 24)
+            let dotCount = max(total - 1, 0)
+            let stepWidth = dotCount <= 1 ? 0 : (lastDotX - firstDotX) / CGFloat(dotCount - 1)
+            let progressWidth: CGFloat = {
+                if voted >= total {
+                    return geo.size.width
+                }
+                if completedSteps == 0 {
+                    return barHeight
+                }
+                return min(geo.size.width, firstDotX + stepWidth * CGFloat(completedSteps - 1) + barHeight / 2)
+            }()
 
             ZStack(alignment: .leading) {
                 // Bar background.
                 Capsule()
-                    .fill(Design.Surfaces.bgTertiary.color(colorScheme))
+                    .fill(Design.Surfaces.bgQuaternary.color(colorScheme))
                     .frame(height: barHeight)
 
-                // Filled portion — dark fill from left edge to the knob.
-                let fillWidth = knobDiameter + usableWidth * ratio
+                // Filled portion starts as the 10pt marker shown in Figma, then
+                // advances across the evenly spaced proposal dots as votes land.
                 Capsule()
                     .fill(Design.Text.primary.color(colorScheme))
-                    .frame(width: fillWidth, height: barHeight)
+                    .frame(width: progressWidth, height: barHeight)
 
-                // Per-proposal dots — only show unvoted dots (ahead of fill).
-                ForEach(0..<total, id: \.self) { index in
-                    let dotRatio: CGFloat = total <= 1
-                        ? 0
-                        : CGFloat(index) / CGFloat(total - 1)
-                    if dotRatio > ratio {
-                        let position = usableWidth * dotRatio
+                // Figma shows upcoming proposals as 4pt dots inset from both ends.
+                ForEach(0..<dotCount, id: \.self) { index in
+                    if index >= completedSteps {
                         Circle()
-                            .fill(Design.Text.tertiary.color(colorScheme).opacity(0.35))
+                            .fill(Design.Utility.Gray._300.color(colorScheme))
                             .frame(width: dotDiameter, height: dotDiameter)
-                            .offset(x: leadingInset + position - dotDiameter / 2)
+                            .offset(x: firstDotX + stepWidth * CGFloat(index) - dotDiameter / 2)
                     }
                 }
             }
@@ -438,12 +439,18 @@ extension ProposalListView {
         let choice = store.effectiveChoices[proposal.id]
 
         VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                ZIPBadge(zipNumber: proposal.zipNumber ?? String(localizable: .coinVoteCommonZipPlaceholder))
-                Spacer()
-                if let choice {
-                    let info = voteBadgeInfo(for: choice, proposal: proposal, colorScheme: colorScheme)
-                    VoteBadgePill(label: info.label, color: info.color)
+            if proposal.zipNumber != nil || choice != nil {
+                HStack {
+                    if let zipNumber = proposal.zipNumber {
+                        ZIPBadge(zipNumber: zipNumber)
+                    }
+
+                    Spacer()
+
+                    if let choice {
+                        let info = voteBadgeInfo(for: choice, proposal: proposal, colorScheme: colorScheme)
+                        VoteBadgePill(label: info.label, color: info.color)
+                    }
                 }
             }
 
@@ -454,8 +461,8 @@ extension ProposalListView {
 
             if !proposal.description.isEmpty {
                 Text(proposal.description)
-                    .zFont(.medium, size: 14, style: Design.Text.tertiary)
-                    .tracking(-0.224)
+                    .zFont(size: 12, style: Design.Text.tertiary)
+                    .tracking(-0.072)
                     .lineLimit(2)
                     .truncationMode(.tail)
                     .fixedSize(horizontal: false, vertical: true)
