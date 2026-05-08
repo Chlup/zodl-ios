@@ -122,16 +122,17 @@ extension Voting {
             return .send(.initialize)
 
         case .openConfigSettings:
-            let currentOverride = state.votingConfigOverrideURL
-            state.configSettingsOpenedOverride = currentOverride
             state.configSettings = .init()
-            state.configSettings?.urlInput = currentOverride
             return .none
 
         case .configSettings(.dismiss):
-            let previousOverride = state.configSettingsOpenedOverride
-            state.configSettingsOpenedOverride = nil
-            guard previousOverride != state.votingConfigOverrideURL else {
+            // Always re-fetch service config + rounds after the sheet closes.
+            // Equality on `votingConfigOverrideURL` alone is unreliable: the
+            // child's `@Shared(.appStorage(.votingConfigOverrideURL))` write can
+            // land before the parent's `State` field observes the new value when
+            // this dismiss runs, so we'd skip `.initialize` and stay on stale
+            // endpoints / default-unverified behavior until another trigger.
+            guard !state.isSubmittingVote else {
                 return .none
             }
             return .send(.initialize)

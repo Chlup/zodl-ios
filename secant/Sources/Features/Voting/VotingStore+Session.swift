@@ -68,61 +68,29 @@ extension Voting {
 
         case .roundTapped(let roundId):
             guard let item = state.allRounds.first(where: { $0.id == roundId }) else { return .none }
-            let session = item.session
-            let isSwitchingRounds = state.roundId != session.voteRoundId.hexString
-            state.activeSession = session
-            state.roundId = session.voteRoundId.hexString
-            if isSwitchingRounds {
-                state.delegationProofStatus = .notStarted
-                state.isDelegationProofInFlight = false
-                state.delegationPrecomputeStatus = .notStarted
-                state.isDelegationPrecomputeInFlight = false
-                state.pendingBatchSubmission = false
-                state.currentKeystoneBundleIndex = 0
-                state.keystoneBundleSignatures = []
-                state.pendingVotingPczt = nil
-                state.pendingUnsignedDelegationPczt = nil
-                state.keystoneSigningStatus = .idle
-            }
-            state.votingRound = sessionBackedRound(from: session, title: item.title, fallback: state.votingRound)
-            state.voteRecord = Self.loadCompletedVoteRecord(walletId: state.walletId, roundId: state.roundId)
-            reconcileProposalState(&state)
-            let cancelStaleDelegation: Effect<Action> = isSwitchingRounds
-                ? .cancel(id: cancelDelegationProofId)
-                : .none
-            let cancelStalePrecompute: Effect<Action> = isSwitchingRounds
-                ? .cancel(id: cancelDelegationPrecomputeId)
-                : .none
-
-            switch session.status {
-            case .active:
-                // Go straight to proposal list — the witness/proof pipeline
-                // runs in the background once voting weight is loaded.
-                state.screenStack = [.pollsList, .proposalList]
-                return .merge(
-                    cancelStaleDelegation,
-                    cancelStalePrecompute,
-                    .cancel(id: cancelNewRoundPollingId),
-                    .send(.startRoundStatusPolling),
-                    // Defer pipeline start so SwiftUI renders the navigation
-                    // transition before the reducer processes the pipeline action.
-                    .run { send in await send(.startActiveRoundPipeline) }
-                )
-            case .tallying:
-                state.screenStack = [.tallying]
-                return .merge(cancelStaleDelegation, cancelStalePrecompute, .send(.startRoundStatusPolling))
-            case .finalized:
-                state.screenStack = [.results]
-                return .merge(
-                    cancelStaleDelegation,
-                    cancelStalePrecompute,
-                    .send(.fetchTallyResults),
-                    .send(.fetchZodlEndorsements),
-                    .send(.startNewRoundPolling)
-                )
-            case .unspecified:
+            if shouldShowUnverifiedPollSheet(state, roundId: roundId) {
+                state.showUnverifiedPollWarning = true
+                state.pendingUnverifiedRoundTapId = roundId
                 return .none
             }
+            return openRound(&state, item: item)
+
+        case .unverifiedPollWarningProceedTapped:
+            guard let roundId = state.pendingUnverifiedRoundTapId,
+                  let item = state.allRounds.first(where: { $0.id == roundId })
+            else {
+                state.showUnverifiedPollWarning = false
+                state.pendingUnverifiedRoundTapId = nil
+                return .none
+            }
+            state.showUnverifiedPollWarning = false
+            state.pendingUnverifiedRoundTapId = nil
+            return openRound(&state, item: item)
+
+        case .unverifiedPollWarningGoBackTapped:
+            state.showUnverifiedPollWarning = false
+            state.pendingUnverifiedRoundTapId = nil
+            return .none
 
         // MARK: - Initialization
 
@@ -143,7 +111,13 @@ extension Voting {
             guard state.currentScreen != .howToVote else { return .none }
             guard !state.isSubmittingVote else { return .none }
             state.prepareForServiceConfigRefresh()
-            let overrideURLString = state.votingConfigOverrideURL
+            // Read straight from UserDefaults rather than `state.votingConfigOverrideURL`
+            // so this picks up the value `VotingConfigSettings` just wrote, even when
+            // its `@Shared(.appStorage(.votingConfigOverrideURL))` change has not yet
+            // propagated to the parent state at dismiss time. Otherwise the first save
+            // after a chain switch refetches with the previous override.
+            let overrideURLString = UserDefaults.standard
+                .string(forKey: .votingConfigOverrideURL) ?? ""
             return .run { [votingAPI, overrideURLString] send in
                 // 1. Fetch service config (local override -> CDN). Decode or version failures
                 //    surface as VotingConfigError and block the voting feature entirely;
@@ -464,6 +438,14 @@ extension Voting {
             guard let session = state.activeSession else {
                 return .send(.backToRoundsList)
             }
+            let roundIdHex = session.voteRoundId.hexString
+            if shouldShowUnverifiedPollSheet(state, roundId: roundIdHex),
+               state.allRounds.contains(where: { $0.id == roundIdHex })
+            {
+                state.showUnverifiedPollWarning = true
+                state.pendingUnverifiedRoundTapId = roundIdHex
+                return .none
+            }
             switch session.status {
             case .finalized:
                 state.screenStack = [.results]
@@ -587,6 +569,66 @@ extension Voting {
             return .none
         }
     }
+
+    /// Gate before entering a poll or viewing results whenever a custom chain URL is selected.
+    /// Endorsement from the chain applies only to Default config (and the list hides unendorsed rounds there).
+    fileprivate func shouldShowUnverifiedPollSheet(_ state: State, roundId _: String) -> Bool {
+        !state.isOnDefaultConfig
+    }
+
+    fileprivate func openRound(_ state: inout State, item: State.RoundListItem) -> Effect<Action> {
+        let session = item.session
+        let isSwitchingRounds = state.roundId != session.voteRoundId.hexString
+        state.activeSession = session
+        state.roundId = session.voteRoundId.hexString
+        if isSwitchingRounds {
+            state.delegationProofStatus = .notStarted
+            state.isDelegationProofInFlight = false
+            state.delegationPrecomputeStatus = .notStarted
+            state.isDelegationPrecomputeInFlight = false
+            state.pendingBatchSubmission = false
+            state.currentKeystoneBundleIndex = 0
+            state.keystoneBundleSignatures = []
+            state.pendingVotingPczt = nil
+            state.pendingUnsignedDelegationPczt = nil
+            state.keystoneSigningStatus = .idle
+        }
+        state.votingRound = sessionBackedRound(from: session, title: item.title, fallback: state.votingRound)
+        state.voteRecord = Self.loadCompletedVoteRecord(walletId: state.walletId, roundId: state.roundId)
+        reconcileProposalState(&state)
+        let cancelStaleDelegation: Effect<Action> = isSwitchingRounds
+            ? .cancel(id: cancelDelegationProofId)
+            : .none
+        let cancelStalePrecompute: Effect<Action> = isSwitchingRounds
+            ? .cancel(id: cancelDelegationPrecomputeId)
+            : .none
+
+        switch session.status {
+        case .active:
+            state.screenStack = [.pollsList, .proposalList]
+            return .merge(
+                cancelStaleDelegation,
+                cancelStalePrecompute,
+                .cancel(id: cancelNewRoundPollingId),
+                .send(.startRoundStatusPolling),
+                .run { send in await send(.startActiveRoundPipeline) }
+            )
+        case .tallying:
+            state.screenStack = [.tallying]
+            return .merge(cancelStaleDelegation, cancelStalePrecompute, .send(.startRoundStatusPolling))
+        case .finalized:
+            state.screenStack = [.results]
+            return .merge(
+                cancelStaleDelegation,
+                cancelStalePrecompute,
+                .send(.fetchTallyResults),
+                .send(.fetchZodlEndorsements),
+                .send(.startNewRoundPolling)
+            )
+        case .unspecified:
+            return .none
+        }
+    }
 }
 
 extension Voting.State {
@@ -623,6 +665,8 @@ extension Voting.State {
         pollsLoadError = false
         resultsLoadError = false
         showPollClosedSheet = false
+        showUnverifiedPollWarning = false
+        pendingUnverifiedRoundTapId = nil
         shareTrackingStatus = .idle
         shareDelegations = []
         showShareInfoSheet = false

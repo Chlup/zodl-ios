@@ -42,6 +42,20 @@ struct VotingView: View {
                 store.send(.dismissPollClosedSheet)
             }
         )
+        .votingSheet(
+            isPresented: unverifiedPollWarningBinding,
+            iconSystemName: "exclamationmark.triangle",
+            title: String(localized: "Unverified Poll"),
+            message: String(
+                localized: "This poll hasn't been verified or endorsed. We can't confirm its legitimacy or how results will be used."
+            ),
+            primary: .init(title: String(localized: "Go back"), style: .primary) {
+                store.send(.unverifiedPollWarningGoBackTapped)
+            },
+            secondary: .init(title: String(localized: "Proceed anyway"), style: .secondary) {
+                store.send(.unverifiedPollWarningProceedTapped)
+            }
+        )
     }
 
     private var pollClosedBinding: Binding<Bool> {
@@ -59,6 +73,17 @@ struct VotingView: View {
             set: { newValue in
                 if !newValue && store.showPollClosedSheet {
                     store.send(.dismissPollClosedSheet)
+                }
+            }
+        )
+    }
+
+    private var unverifiedPollWarningBinding: Binding<Bool> {
+        Binding(
+            get: { store.showUnverifiedPollWarning },
+            set: { newValue in
+                if !newValue && store.showUnverifiedPollWarning {
+                    store.send(.unverifiedPollWarningGoBackTapped)
                 }
             }
         )

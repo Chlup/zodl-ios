@@ -11,15 +11,16 @@ struct PollsListView: View {
 
     var body: some View {
         WithPerceptionTracking {
+            let visiblePolls = self.visiblePolls
             ScrollView {
                 VStack(spacing: 16) {
-                    if store.pollsLoadError || store.allRounds.isEmpty {
+                    if store.pollsLoadError || visiblePolls.isEmpty {
                         PollsListSkeletonCard()
                     } else {
                         // Newest polls first. allRounds is stored ascending so the
                         // assigned round numbers stay sane (round 1 = oldest), but
                         // the list shows the latest at the top.
-                        ForEach(Array(store.allRounds.reversed()), id: \.id) { item in
+                        ForEach(Array(visiblePolls.reversed()), id: \.id) { item in
                             pollCard(for: item)
                         }
                     }
@@ -61,6 +62,13 @@ struct PollsListView: View {
                 }
             )
         }
+    }
+
+    private var visiblePolls: [Voting.State.RoundListItem] {
+        guard store.isOnDefaultConfig else {
+            return store.allRounds
+        }
+        return store.allRounds.filter { store.zodlEndorsedRoundIds.contains($0.id) }
     }
 
     // MARK: - Load Error Sheet
@@ -108,8 +116,11 @@ struct PollsListView: View {
             // Top row: state pill + closes/closed date
             HStack(spacing: 0) {
                 pollStatusPill(state)
-                if store.zodlEndorsedRoundIds.contains(item.id) {
-                    endorsementIndicator(fontSize: 12, iconSize: 14)
+                if store.isOnDefaultConfig, store.zodlEndorsedRoundIds.contains(item.id) {
+                    zodlTrustIndicator(fontSize: 12, iconSize: 14)
+                        .padding(.leading, 8)
+                } else if !store.isOnDefaultConfig {
+                    unverifiedIssuerIndicator(fontSize: 12, iconSize: 14)
                         .padding(.leading, 8)
                 }
                 Spacer()
@@ -169,17 +180,45 @@ struct PollsListView: View {
 
     private static let shadowSm = Color(red: 35.0 / 255.0, green: 31.0 / 255.0, blue: 32.0 / 255.0).opacity(0.04)
 
-    private func endorsementIndicator(fontSize: CGFloat, iconSize: CGFloat) -> some View {
-        HStack(spacing: 4) {
-            Image(systemName: "checkmark.seal.fill")
+    private func zodlTrustIndicator(fontSize: CGFloat, iconSize: CGFloat) -> some View {
+        let backdropSize = iconSize + 8
+        let zodlTextColor = colorScheme == .light ? Color.black : Design.Text.primary.color(colorScheme)
+
+        return HStack(spacing: 6) {
+            ZStack {
+                Circle()
+                    .fill(Color.black)
+                    .frame(width: backdropSize, height: backdropSize)
+
+                Asset.Assets.zashiLogo.image
+                    .zImage(size: iconSize, color: .white)
+            }
+
+            Text("Zodl")
+                .zFont(.medium, size: fontSize, color: zodlTextColor)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(Text("Verified by Zodl"))
+    }
+
+    private func unverifiedIssuerIndicator(fontSize: CGFloat, iconSize: CGFloat) -> some View {
+        let foregroundColor = Design.Utility.WarningYellow._700.color(colorScheme)
+        let backgroundColor = Design.Utility.WarningYellow._50.color(colorScheme)
+
+        return HStack(spacing: 4) {
+            Image(systemName: "exclamationmark.triangle.fill")
                 .font(.system(size: iconSize, weight: .medium))
 
-            Text("Endorsed by ZODL")
-                .zFont(.medium, size: fontSize, style: Design.Text.tertiary)
+            Text("Unverified Poll")
+                .zFont(.medium, size: fontSize, color: foregroundColor)
         }
-        .foregroundStyle(Design.Text.tertiary.color(colorScheme))
+        .foregroundStyle(foregroundColor)
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+        .background(backgroundColor)
+        .clipShape(Capsule())
         .accessibilityElement(children: .combine)
-        .accessibilityLabel(Text("Endorsed by ZODL"))
+        .accessibilityLabel(Text("Unverified Poll"))
     }
 
     /// Per-round count of proposals the user voted on. Falls back to the total

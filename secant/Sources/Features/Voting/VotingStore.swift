@@ -303,6 +303,10 @@ struct Voting {
         @Shared(.appStorage(.votingConfigOverrideURL))
         var votingConfigOverrideURL: String = ""
 
+        var isOnDefaultConfig: Bool {
+            votingConfigOverrideURL.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        }
+
         /// Persisted record of when the current round finished submitting,
         /// loaded from UserDefaults in `roundTapped`. Used by Results to
         /// render "Voted MMM d - Voting Power X.XXX ZEC" days after submission.
@@ -370,6 +374,11 @@ struct Voting {
         /// either `.dismissPollClosedSheet` or `.viewPollClosedResults`.
         var showPollClosedSheet: Bool = false
 
+        /// Shown before entering a poll that isn't Zodl-endorsed while a custom chain config is selected.
+        var showUnverifiedPollWarning: Bool = false
+        /// Round id (hex) captured when `.roundTapped` is gated behind the sheet.
+        var pendingUnverifiedRoundTapId: String?
+
         /// True while the "Couldn't load polls" bottom sheet is visible —
         /// driven by a failed `fetchAllRounds` call. Cleared by
         /// `.retryLoadRounds` (on success) or by dismissing the flow.
@@ -423,8 +432,6 @@ struct Voting {
         @Presents var configSettings: VotingConfigSettings.State?
         @Presents var keystoneScan: Scan.State?
         @Presents var skipBundlesAlert: AlertState<Action>?
-        /// Snapshot of the active override when settings opens; used to decide whether to refresh after dismissal.
-        var configSettingsOpenedOverride: String?
 
         /// Whether a vote commitment is being built and submitted to chain.
         var isSubmittingVote: Bool = false
@@ -712,6 +719,8 @@ struct Voting {
         // Rounds list
         case allRoundsLoaded([VotingSession])
         case roundTapped(String)
+        case unverifiedPollWarningProceedTapped
+        case unverifiedPollWarningGoBackTapped
         case startNewRoundPolling
         case roundsLoadFailed
         case retryLoadRounds
@@ -859,6 +868,8 @@ struct Voting {
             // MARK: - Rounds List
             case .allRoundsLoaded,
                 .roundTapped,
+                .unverifiedPollWarningProceedTapped,
+                .unverifiedPollWarningGoBackTapped,
                 .startNewRoundPolling,
                 .roundsLoadFailed,
                 .retryLoadRounds:

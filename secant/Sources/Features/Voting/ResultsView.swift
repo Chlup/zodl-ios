@@ -12,17 +12,46 @@ private func formatWeightZEC(_ weight: UInt64) -> String {
     return String(format: "%.3f", zec)
 }
 
-private func zodlEndorsementIndicator(colorScheme: ColorScheme) -> some View {
-    HStack(spacing: 4) {
-        Image(systemName: "checkmark.seal.fill")
+private func zodlTrustIndicator(colorScheme: ColorScheme) -> some View {
+    let logoSize: CGFloat = 16
+    let backdropSize = logoSize + 8
+    let zodlTextColor = colorScheme == .light ? Color.black : Design.Text.primary.color(colorScheme)
+
+    return HStack(spacing: 6) {
+        ZStack {
+            Circle()
+                .fill(Color.black)
+                .frame(width: backdropSize, height: backdropSize)
+
+            Asset.Assets.zashiLogo.image
+                .zImage(size: logoSize, color: .white)
+        }
+
+        Text("Zodl")
+            .zFont(.medium, size: 12, color: zodlTextColor)
+    }
+    .accessibilityElement(children: .combine)
+    .accessibilityLabel(Text("Approved by Zodl"))
+}
+
+private func unverifiedIssuerIndicator(colorScheme: ColorScheme) -> some View {
+    let foregroundColor = Design.Utility.WarningYellow._700.color(colorScheme)
+    let backgroundColor = Design.Utility.WarningYellow._50.color(colorScheme)
+
+    return HStack(spacing: 4) {
+        Image(systemName: "exclamationmark.triangle.fill")
             .font(.system(size: 18, weight: .medium))
 
-        Text("Endorsed by ZODL")
-            .zFont(.medium, size: 12, style: Design.Text.tertiary)
+        Text("Unverified Poll")
+            .zFont(.medium, size: 12, color: foregroundColor)
     }
-    .foregroundStyle(Design.Text.tertiary.color(colorScheme))
+    .foregroundStyle(foregroundColor)
+    .padding(.horizontal, 8)
+    .padding(.vertical, 4)
+    .background(backgroundColor)
+    .clipShape(Capsule())
     .accessibilityElement(children: .combine)
-    .accessibilityLabel(Text("Endorsed by ZODL"))
+    .accessibilityLabel(Text("Unverified Poll"))
 }
 
 /// Color for a tally entry. Looks the option up on the proposal so Abstain
@@ -134,8 +163,10 @@ struct ResultsView: View {
                     .zFont(.semiBold, size: 24, style: Design.Text.primary)
                     .fixedSize(horizontal: false, vertical: true)
 
-                if store.zodlEndorsedRoundIds.contains(store.roundId) {
-                    zodlEndorsementIndicator(colorScheme: colorScheme)
+                if store.isOnDefaultConfig, store.zodlEndorsedRoundIds.contains(store.roundId) {
+                    zodlTrustIndicator(colorScheme: colorScheme)
+                } else if !store.isOnDefaultConfig {
+                    unverifiedIssuerIndicator(colorScheme: colorScheme)
                 }
             }
 
