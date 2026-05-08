@@ -197,7 +197,6 @@ extension VotingCryptoClient: DependencyKey {
                         fvkBytes: [UInt8](orchardFvkOverride),
                         hotkeySeed: hotkeySeed,
                         networkId: networkId,
-                        accountIndex: accountIndex,
                         seedFingerprint: [UInt8](keystoneSeedFingerprintOverride)
                     )
                     actualFvkBytes = [UInt8](orchardFvkOverride)
