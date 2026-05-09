@@ -32,10 +32,7 @@ struct ProposalListView: View {
             .screenTitle(String(localizable: .coinVoteCommonScreenTitle))
             .zashiBack { store.send(.backToList) }
             .overlay(alignment: .bottom) {
-                bottomCTA()
-                    .padding(.horizontal, 24)
-                    .padding(.top, 8)
-                    .padding(.bottom, 16)
+                bottomCTAOverlay()
             }
             .onReceive(timer) { self.now = $0 }
             .onAppear { store.send(.governanceTabAppeared) }
@@ -78,7 +75,7 @@ struct ProposalListView: View {
                         reviewHeader()
                     }
 
-                    VStack(spacing: 16) {
+                    VStack(spacing: mode == .review ? 8 : 16) {
                         ForEach(store.votingRound.proposals) { proposal in
                             proposalCard(proposal)
                                 .id(proposal.id)
@@ -448,23 +445,25 @@ extension ProposalListView {
 
                     if let choice {
                         let info = voteBadgeInfo(for: choice, proposal: proposal, colorScheme: colorScheme)
-                        VoteBadgePill(label: info.label, color: info.color)
+                        VoteBadgePill(info: info)
                     }
                 }
             }
 
-            Text(proposal.title)
-                .zFont(.semiBold, size: 16, style: Design.Text.primary)
-                .tracking(-0.256)
-                .fixedSize(horizontal: false, vertical: true)
-
-            if !proposal.description.isEmpty {
-                Text(proposal.description)
-                    .zFont(size: 12, style: Design.Text.tertiary)
-                    .tracking(-0.072)
-                    .lineLimit(2)
-                    .truncationMode(.tail)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(proposal.title)
+                    .zFont(.semiBold, size: 16, style: Design.Text.primary)
+                    .tracking(-0.256)
                     .fixedSize(horizontal: false, vertical: true)
+
+                if !proposal.description.isEmpty {
+                    Text(proposal.description)
+                        .zFont(size: 12, style: Design.Text.tertiary)
+                        .tracking(-0.072)
+                        .lineLimit(2)
+                        .truncationMode(.tail)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
         }
         .padding(Design.Spacing._xl)
@@ -475,7 +474,7 @@ extension ProposalListView {
             RoundedRectangle(cornerRadius: Design.Radius._2xl)
                 .stroke(Design.Surfaces.strokeSecondary.color(colorScheme), lineWidth: 1)
         )
-        .shadow(color: Self.shadowSm, radius: 12, x: 0, y: 24)
+        .shadow(color: Self.shadowSm, radius: 24, x: 0, y: 24)
         .shadow(color: Self.shadowSm, radius: 1.5, x: 0, y: 3)
         .shadow(color: Self.shadowSm, radius: 0.5, x: 0, y: 1)
         .contentShape(Rectangle())
@@ -490,6 +489,29 @@ extension ProposalListView {
 // MARK: - Bottom CTA
 
 extension ProposalListView {
+    @ViewBuilder
+    func bottomCTAOverlay() -> some View {
+        if store.voteRecord == nil {
+            ZStack(alignment: .bottom) {
+                LinearGradient(
+                    colors: [
+                        Design.Surfaces.bgPrimary.color(colorScheme).opacity(0),
+                        Design.Surfaces.bgPrimary.color(colorScheme)
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .frame(height: 64)
+                .allowsHitTesting(false)
+
+                ctaButton()
+                    .padding(.horizontal, 24)
+                    .padding(.top, 8)
+                    .padding(.bottom, 16)
+            }
+        }
+    }
+
     @ViewBuilder
     func bottomCTA() -> some View {
         if store.voteRecord != nil {

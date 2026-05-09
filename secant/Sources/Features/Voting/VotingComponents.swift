@@ -108,10 +108,17 @@ func voteOptionIcon(for index: UInt32, total: Int) -> String {
 // MARK: - Vote Badge (for proposal cards)
 
 /// Resolves a `VoteChoice` to a human label and color for display on proposal cards.
-func voteBadgeInfo(for choice: VoteChoice, proposal: VotingProposal, colorScheme: ColorScheme) -> (label: String, color: Color) {
+struct VoteBadgeInfo {
+    let label: String
+    let foreground: Color
+    let background: Color
+    let border: Color
+}
+
+func voteBadgeInfo(for choice: VoteChoice, proposal: VotingProposal, colorScheme: ColorScheme) -> VoteBadgeInfo {
     let options = proposal.options
     if let matched = options.first(where: { $0.index == choice.index }) {
-        return (matched.label, voteOptionColor(for: matched, total: options.count, colorScheme: colorScheme))
+        return VoteBadgeInfo(label: matched.label, style: voteBadgeStyle(for: matched, total: options.count, colorScheme: colorScheme))
     }
 
     // Synthesized Abstain: the user confirmed "abstain on unanswered" for a
@@ -122,24 +129,75 @@ func voteBadgeInfo(for choice: VoteChoice, proposal: VotingProposal, colorScheme
     if !options.contains(where: { $0.label.localizedCaseInsensitiveContains("abstain") })
         && choice.index == synthesizedAbstainIndex {
         let synthetic = VoteOption(index: choice.index, label: String(localizable: .coinVoteCommonAbstain))
-        return (synthetic.label, voteOptionColor(for: synthetic, total: options.count + 1, colorScheme: colorScheme))
+        return VoteBadgeInfo(label: synthetic.label, style: voteBadgeStyle(for: synthetic, total: options.count + 1, colorScheme: colorScheme))
     }
 
-    return (String(localizable: .coinVoteCommonVoted), Design.Utility.Gray._500.color(colorScheme))
+    return VoteBadgeInfo(
+        label: String(localizable: .coinVoteCommonVoted),
+        foreground: Design.Utility.Gray._700.color(colorScheme),
+        background: Design.Utility.Gray._100.color(colorScheme),
+        border: Design.Utility.Gray._200.color(colorScheme)
+    )
+}
+
+private extension VoteBadgeInfo {
+    init(label: String, style: (foreground: Color, background: Color, border: Color)) {
+        self.label = label
+        self.foreground = style.foreground
+        self.background = style.background
+        self.border = style.border
+    }
+}
+
+private func voteBadgeStyle(for option: VoteOption, total: Int, colorScheme: ColorScheme) -> (foreground: Color, background: Color, border: Color) {
+    if option.label.localizedCaseInsensitiveContains("abstain") {
+        return (
+            Design.Utility.HyperBlue._700.color(colorScheme),
+            Design.Utility.HyperBlue._50.color(colorScheme),
+            Design.Utility.HyperBlue._200.color(colorScheme)
+        )
+    }
+
+    if total == 2 {
+        if option.index == 0 {
+            return (
+                Design.Utility.SuccessGreen._500.color(colorScheme),
+                Design.Utility.SuccessGreen._50.color(colorScheme),
+                Design.Utility.SuccessGreen._200.color(colorScheme)
+            )
+        }
+
+        return (
+            Design.Utility.ErrorRed._500.color(colorScheme),
+            Design.Utility.ErrorRed._50.color(colorScheme),
+            Design.Utility.ErrorRed._200.color(colorScheme)
+        )
+    }
+
+    let foreground = voteOptionColor(for: option, total: total, colorScheme: colorScheme)
+    return (
+        foreground,
+        foreground.opacity(0.12),
+        foreground.opacity(0.24)
+    )
 }
 
 struct VoteBadgePill: View {
-    let label: String
-    let color: Color
+    let info: VoteBadgeInfo
 
     var body: some View {
-        Text(label)
-            .font(.system(size: 12, weight: .semibold))
-            .foregroundStyle(color)
-            .padding(.horizontal, 10)
-            .padding(.vertical, 4)
-            .background(color.opacity(0.12))
-            .clipShape(Capsule())
+        Text(info.label)
+            .zFont(.medium, size: 12, style: Design.Text.primary)
+            .tracking(-0.072)
+            .foregroundStyle(info.foreground)
+            .padding(.horizontal, 6)
+            .padding(.vertical, 2)
+            .background(info.background)
+            .clipShape(RoundedRectangle(cornerRadius: Design.Radius._sm))
+            .overlay(
+                RoundedRectangle(cornerRadius: Design.Radius._sm)
+                    .stroke(info.border, lineWidth: 1)
+            )
     }
 }
 
@@ -185,16 +243,23 @@ struct VoteChip: View {
 // MARK: - ZIP Badge
 
 struct ZIPBadge: View {
+    @Environment(\.colorScheme) var colorScheme
+
     let zipNumber: String
 
     var body: some View {
         Text(zipNumber)
-            .font(.system(size: 11, weight: .medium, design: .monospaced))
-            .foregroundStyle(.secondary)
+            .zFont(.medium, size: 12, style: Design.Text.primary)
+            .tracking(-0.072)
+            .foregroundStyle(Design.Utility.Gray._700.color(colorScheme))
             .padding(.horizontal, 8)
-            .padding(.vertical, 3)
-            .background(Color.secondary.opacity(0.12))
-            .clipShape(Capsule())
+            .padding(.vertical, 2)
+            .background(Design.Utility.Gray._100.color(colorScheme))
+            .clipShape(RoundedRectangle(cornerRadius: Design.Radius._2xl))
+            .overlay(
+                RoundedRectangle(cornerRadius: Design.Radius._2xl)
+                    .stroke(Design.Utility.Gray._200.color(colorScheme), lineWidth: 1)
+            )
     }
 }
 
