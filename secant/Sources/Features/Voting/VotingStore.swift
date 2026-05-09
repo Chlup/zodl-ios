@@ -299,8 +299,14 @@ struct Voting {
         var toast: Toast.Edge?
         @Shared(.appStorage(.hasSeenHowToVote))
         var hasSeenHowToVote: Bool = false
+        @Shared(.appStorage(.hasSeenHowToVoteKeystone))
+        var hasSeenHowToVoteKeystone: Bool = false
         @Shared(.appStorage(.votingConfigOverrideURL))
         var votingConfigOverrideURL: String = ""
+
+        var hasSeenHowToVoteForCurrentWallet: Bool {
+            isKeystoneUser ? hasSeenHowToVoteKeystone : hasSeenHowToVote
+        }
 
         var isOnDefaultConfig: Bool {
             votingConfigOverrideURL.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty

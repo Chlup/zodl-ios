@@ -5,6 +5,22 @@ import XCTest
 
 @MainActor
 final class VotingStoreInitializationTests: XCTestCase {
+    func testHowToVoteSeenFlagIsWalletTypeSpecific() {
+        var state = Voting.State()
+
+        state.hasSeenHowToVote = true
+        state.hasSeenHowToVoteKeystone = false
+
+        state.isKeystoneUser = false
+        XCTAssertTrue(state.hasSeenHowToVoteForCurrentWallet)
+
+        state.isKeystoneUser = true
+        XCTAssertFalse(state.hasSeenHowToVoteForCurrentWallet)
+
+        state.hasSeenHowToVoteKeystone = true
+        XCTAssertTrue(state.hasSeenHowToVoteForCurrentWallet)
+    }
+
     func testPinnedConfigSourceAllowsMissingChecksum() throws {
         let source = try PinnedConfigSource.parse("https://override.example.com/static-voting-config.json?foo=bar")
 

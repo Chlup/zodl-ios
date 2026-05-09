@@ -117,7 +117,11 @@ extension Voting {
             return .none
 
         case .howToVoteContinueTapped:
-            state.$hasSeenHowToVote.withLock { $0 = true }
+            if state.isKeystoneUser {
+                state.$hasSeenHowToVoteKeystone.withLock { $0 = true }
+            } else {
+                state.$hasSeenHowToVote.withLock { $0 = true }
+            }
             state.screenStack = [.loading]
             return .send(.initialize)
 
