@@ -725,6 +725,8 @@ struct Voting {
         case allRoundsLoaded([VotingSession])
         case roundTapped(String)
         case unverifiedPollWarningProceedTapped
+        case openPendingUnverifiedRound
+        case openPendingUnverifiedRoundNow(String)
         case unverifiedPollWarningGoBackTapped
         case startNewRoundPolling
         case roundsLoadFailed
@@ -874,6 +876,8 @@ struct Voting {
             case .allRoundsLoaded,
                 .roundTapped,
                 .unverifiedPollWarningProceedTapped,
+                .openPendingUnverifiedRound,
+                .openPendingUnverifiedRoundNow,
                 .unverifiedPollWarningGoBackTapped,
                 .startNewRoundPolling,
                 .roundsLoadFailed,

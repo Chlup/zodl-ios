@@ -13,6 +13,7 @@ struct VotingView: View {
             let screen = store.screenStack.last ?? .pollsList
             screenView(for: screen)
                 .id(screenId(screen))
+                .animation(.easeInOut(duration: 0.22), value: screenId(screen))
                 .animation(.easeInOut(duration: 0.3), value: store.selectedProposal?.id)
         }
         .navigationBarTitleDisplayMode(.inline)
@@ -55,7 +56,12 @@ struct VotingView: View {
             secondary: .init(title: String(localized: "Proceed anyway"), style: .secondary) {
                 store.send(.unverifiedPollWarningProceedTapped)
             },
-            visualStyle: .unverifiedWarning
+            visualStyle: .unverifiedWarning,
+            onDismiss: {
+                if store.pendingUnverifiedRoundTapId != nil {
+                    store.send(.openPendingUnverifiedRound)
+                }
+            }
         )
     }
 
@@ -128,6 +134,7 @@ struct VotingView: View {
             DelegationSigningView(store: store)
         case .proposalList:
             ProposalListView(store: store, mode: .voting)
+                .transition(.opacity)
         case .reviewVotes:
             ProposalListView(store: store, mode: .review)
         case .confirmSubmission:

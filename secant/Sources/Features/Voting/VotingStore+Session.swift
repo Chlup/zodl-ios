@@ -76,14 +76,23 @@ extension Voting {
             return openRound(&state, item: item)
 
         case .unverifiedPollWarningProceedTapped:
-            guard let roundId = state.pendingUnverifiedRoundTapId,
+            state.showUnverifiedPollWarning = false
+            return .none
+
+        case .openPendingUnverifiedRound:
+            guard let roundId = state.pendingUnverifiedRoundTapId else { return .none }
+            return .run { send in
+                try await Task.sleep(for: .milliseconds(220))
+                await send(.openPendingUnverifiedRoundNow(roundId))
+            } catch: { _, _ in }
+
+        case .openPendingUnverifiedRoundNow(let roundId):
+            guard state.pendingUnverifiedRoundTapId == roundId,
                   let item = state.allRounds.first(where: { $0.id == roundId })
             else {
-                state.showUnverifiedPollWarning = false
                 state.pendingUnverifiedRoundTapId = nil
                 return .none
             }
-            state.showUnverifiedPollWarning = false
             state.pendingUnverifiedRoundTapId = nil
             return openRound(&state, item: item)
 
