@@ -76,7 +76,8 @@ extension SDKSynchronizerClient: TestDependencyKey {
         checkSingleUseTransparentAddresses: unimplemented("\(Self.self).checkSingleUseTransparentAddresses", placeholder: .notFound),
         updateTransparentAddressTransactions: unimplemented("\(Self.self).updateTransparentAddressTransactions", placeholder: .notFound),
         fetchUTXOsByAddress: unimplemented("\(Self.self).fetchUTXOsByAddress", placeholder: .notFound),
-        enhanceTransactionBy: unimplemented("\(Self.self).enhanceTransactionBy")
+        enhanceTransactionBy: unimplemented("\(Self.self).enhanceTransactionBy"),
+        getTreeState: unimplemented("\(Self.self).getTreeState", placeholder: Data())
     )
 }
 
@@ -132,7 +133,8 @@ extension SDKSynchronizerClient {
         checkSingleUseTransparentAddresses: { _ in .notFound },
         updateTransparentAddressTransactions: { _ in .notFound },
         fetchUTXOsByAddress: { _, _ in .notFound },
-        enhanceTransactionBy: { _ in }
+        enhanceTransactionBy: { _ in },
+        getTreeState: { _ in Data() }
     )
 
     static let mock = Self.mocked()
@@ -259,7 +261,8 @@ extension SDKSynchronizerClient {
         checkSingleUseTransparentAddresses: @escaping (AccountUUID) async throws -> TransparentAddressCheckResult = { _ in .notFound },
         updateTransparentAddressTransactions: @escaping (String) async throws -> TransparentAddressCheckResult = { _ in .notFound },
         fetchUTXOsByAddress: @escaping (String, AccountUUID) async throws -> TransparentAddressCheckResult = { _, _ in .notFound },
-        enhanceTransactionBy: @escaping (String) async throws -> Void = { _ in }
+        enhanceTransactionBy: @escaping (String) async throws -> Void = { _ in },
+        getTreeState: @escaping @Sendable (UInt64) async throws -> Data = { _ in Data() }
     ) -> SDKSynchronizerClient {
         SDKSynchronizerClient(
             stateStream: stateStream,
@@ -310,7 +313,8 @@ extension SDKSynchronizerClient {
             checkSingleUseTransparentAddresses: checkSingleUseTransparentAddresses,
             updateTransparentAddressTransactions: updateTransparentAddressTransactions,
             fetchUTXOsByAddress: fetchUTXOsByAddress,
-            enhanceTransactionBy: enhanceTransactionBy
+            enhanceTransactionBy: enhanceTransactionBy,
+            getTreeState: getTreeState
         )
     }
 }

@@ -103,4 +103,8 @@ struct WalletStorageClient {
     /// Tor setup flag
     var importTorSetupFlag: @Sendable (Bool) throws -> Void
     var exportTorSetupFlag: @Sendable () -> Bool? = { nil }
+
+    /// Voting hotkey
+    var importVotingHotkey: @Sendable (_ phrase: String, _ accountTag: String) throws -> Void
+    var exportVotingHotkey: @Sendable (_ accountTag: String) throws -> StoredVotingHotkey
 }

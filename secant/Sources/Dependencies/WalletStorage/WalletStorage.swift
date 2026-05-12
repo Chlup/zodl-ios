@@ -27,6 +27,7 @@ struct WalletStorage {
         static let zcashStoredWalletBackupAcknowledged = "zcashStoredWalletBackupAcknowledged"
         static let zcashStoredShieldingAcknowledged = "zcashStoredShieldingAcknowledged"
         static let zcashStoredTorSetupFlag = "zcashStoredTorSetupFlag"
+        static let zcashStoredVotingHotkey = "zcashStoredVotingHotkey"
         static let zcashStoredZodlAnnouncementFlag = "zcashStoredZodlAnnouncementFlag"
 
         /// Versioning of the stored data
@@ -416,6 +417,39 @@ struct WalletStorage {
         }
         
         return try? decode(json: reqData, as: Bool.self)
+    }
+
+    // MARK: - Voting Hotkey
+
+    func importVotingHotkey(_ phrase: String, accountTag: String) throws {
+        let hotkey = StoredVotingHotkey(seedPhrase: SeedPhrase(phrase), version: Constants.zcashKeychainVersion)
+        let key = "\(Constants.zcashStoredVotingHotkey)_\(accountTag)"
+        do {
+            guard let data = try encode(object: hotkey) else { throw KeychainError.encoding }
+            try setData(data, forKey: key)
+        } catch KeychainError.duplicate {
+            throw WalletStorageError.alreadyImported
+        } catch {
+            throw WalletStorageError.storageError(error)
+        }
+    }
+
+    func exportVotingHotkey(accountTag: String) throws -> StoredVotingHotkey {
+        let key = "\(Constants.zcashStoredVotingHotkey)_\(accountTag)"
+        let reqData: Data?
+        do {
+            reqData = try data(forKey: key)
+        } catch KeychainError.noDataFound {
+            throw WalletStorageError.uninitializedWallet
+        }
+        guard let reqData else { throw WalletStorageError.uninitializedWallet }
+        guard let hotkey = try decode(json: reqData, as: StoredVotingHotkey.self) else {
+            throw WalletStorageError.uninitializedWallet
+        }
+        guard hotkey.version == Constants.zcashKeychainVersion else {
+            throw WalletStorageError.unsupportedVersion(hotkey.version)
+        }
+        return hotkey
     }
 
     // MARK: - Wallet Storage Codable & Query helpers

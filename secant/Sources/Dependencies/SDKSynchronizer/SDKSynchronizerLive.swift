@@ -79,8 +79,7 @@ extension SDKSynchronizerClient: DependencyKey {
                     zip32AccountIndex: zip32AccountIndex,
                     purpose: purpose,
                     name: name,
-                    keySource: keySource,
-                    birthday: birthday
+                    keySource: keySource
                 )
             },
             deleteAccount: { accountUUID in
@@ -331,6 +330,9 @@ extension SDKSynchronizerClient: DependencyKey {
             },
             enhanceTransactionBy: { txId in
                 try await synchronizer.enhanceTransactionBy(txId: TxId(txId))
+            },
+            getTreeState: { height in
+                try await synchronizer.getTreeState(height: height)
             }
         )
     }

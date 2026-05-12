@@ -33,6 +33,13 @@ struct SettingsView: View {
                             }
                             
                             ActionRow(
+                                icon: Image(systemName: "checkmark.seal"),
+                                title: "Coinholder Polling"
+                            ) {
+                                store.send(.coinholderPollingTapped)
+                            }
+
+                            ActionRow(
                                 icon: Asset.Assets.Icons.settings.image,
                                 title: String(localizable: .settingsAdvanced)
                             ) {
@@ -139,6 +146,8 @@ struct SettingsView: View {
                     SendFeedbackView(store: store)
                 case let .torSetup(store):
                     TorSetupView(store: store)
+                case let .voting(store):
+                    VotingView(store: store)
                 case let .whatsNew(store):
                     WhatsNewView(store: store)
                 }

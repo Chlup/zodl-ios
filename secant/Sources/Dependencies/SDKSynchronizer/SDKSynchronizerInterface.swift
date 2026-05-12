@@ -104,5 +104,7 @@ struct SDKSynchronizerClient {
     var updateTransparentAddressTransactions: (String) async throws -> TransparentAddressCheckResult = { _ in .notFound }
     var fetchUTXOsByAddress: (String, AccountUUID) async throws -> TransparentAddressCheckResult = { _, _ in .notFound }
     var enhanceTransactionBy: (String) async throws -> Void
+
+    var getTreeState: @Sendable (_ height: UInt64) async throws -> Data
 }
 

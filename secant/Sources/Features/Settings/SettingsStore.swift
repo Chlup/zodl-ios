@@ -27,6 +27,7 @@ struct Settings {
         case scan(Scan)
         case sendUsFeedback(SendFeedback)
         case torSetup(TorSetup)
+        case voting(Voting)
         case whatsNew(WhatsNew)
     }
     
@@ -73,6 +74,7 @@ struct Settings {
         case binding(BindingAction<Settings.State>)
         case checkFundsForAddress(String)
         case closeResyncHelpSheetTapped
+        case coinholderPollingTapped
         case currencyConversionTapped
         case enableEnhanceTransactionMode
         case enableRecoverFundsMode
@@ -129,6 +131,9 @@ struct Settings {
                         await send(.addressBookTapped)
                     }
                 }
+
+            case .coinholderPollingTapped:
+                return .none
 
             case .currencyConversionTapped:
                 return .none

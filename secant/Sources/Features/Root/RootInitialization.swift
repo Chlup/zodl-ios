@@ -507,6 +507,14 @@ extension Root {
                 userDefaults.remove(Constants.udIsRestoringWallet)
                 userDefaults.remove(Constants.udIsResyncingWallet)
                 userDefaults.remove(Constants.udLeavesScreenOpen)
+                userDefaults.remove(.hasSeenHowToVote)
+                userDefaults.remove(.hasSeenHowToVoteKeystone)
+                // Wipe persisted per-round vote records written by the Voting module.
+                let standardDefaults = UserDefaults.standard
+                for key in standardDefaults.dictionaryRepresentation().keys
+                    where key.hasPrefix("voting.voteRecord.") || key.hasPrefix("voting.draftVotes.") {
+                    standardDefaults.removeObject(forKey: key)
+                }
                 flexaHandler.signOut()
                 userStoredPreferences.removeAll()
                 try? readTransactionsStorage.resetZashi()

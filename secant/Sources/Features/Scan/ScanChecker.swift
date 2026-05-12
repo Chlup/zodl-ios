@@ -102,6 +102,28 @@ struct SwapStringScanChecker: ScanChecker, Equatable {
     }
 }
 
+struct KeystoneVotingDelegationPcztScanChecker: ScanChecker, Equatable {
+    let id = 5
+
+    func checkQRCode(_ qrCode: String) -> Scan.Action? {
+        @Dependency(\.keystoneHandler) var keystoneHandler
+
+        if let result = keystoneHandler.decodeQR(qrCode) {
+            if result.progress < 100 {
+                return ScanCheckerWrapper.reportCheck(qrCode, progress: result.progress)
+            }
+
+            if let resultUR = result.ur, result.progress == 100 {
+                if let zcashPCZT = try? KeystoneZcashSDK().parseZcashPczt(ur: resultUR) {
+                    return .foundVotingDelegationPCZT(zcashPCZT)
+                }
+            }
+        }
+
+        return nil
+    }
+}
+
 struct ScanCheckerWrapper: Equatable {
     let checker: any ScanChecker
 
@@ -110,6 +132,7 @@ struct ScanCheckerWrapper: Equatable {
     static let keystoneScanChecker = ScanCheckerWrapper(KeystoneScanChecker())
     static let keystonePCZTScanChecker = ScanCheckerWrapper(KeystonePcztScanChecker())
     static let swapStringScanChecker = ScanCheckerWrapper(SwapStringScanChecker())
+    static let keystoneVotingDelegationPCZTScanChecker = ScanCheckerWrapper(KeystoneVotingDelegationPcztScanChecker())
 
     static func == (lhs: ScanCheckerWrapper, rhs: ScanCheckerWrapper) -> Bool {
         return lhs.checker.id == rhs.checker.id
