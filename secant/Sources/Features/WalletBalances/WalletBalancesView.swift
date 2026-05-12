@@ -195,7 +195,7 @@ struct WalletBalancesView: View {
 // MARK: - Store
 
 extension WalletBalances {
-    static var initial = StoreOf<WalletBalances>(
+    @MainActor static var initial = StoreOf<WalletBalances>(
         initialState: .initial
     ) {
         WalletBalances()
@@ -205,7 +205,7 @@ extension WalletBalances {
 // MARK: - Placeholders
 
 extension WalletBalances.State {
-    static let initial = WalletBalances.State(
-        shieldedBalance: .zero
-    )
+    static var initial: WalletBalances.State {
+        WalletBalances.State(shieldedBalance: .zero)
+    }
 }

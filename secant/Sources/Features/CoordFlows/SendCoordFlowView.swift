@@ -92,11 +92,11 @@ struct SendCoordFlowView: View {
 // MARK: - Placeholders
 
 extension SendCoordFlow.State {
-    static let initial = SendCoordFlow.State()
+    static var initial: SendCoordFlow.State { SendCoordFlow.State() }
 }
 
 extension SendCoordFlow {
-    static let placeholder = StoreOf<SendCoordFlow>(
+    @MainActor static let placeholder = StoreOf<SendCoordFlow>(
         initialState: .initial
     ) {
         SendCoordFlow()

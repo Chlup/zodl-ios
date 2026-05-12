@@ -140,7 +140,7 @@ struct DeleteWalletView: View {
 // MARK: - Store
 
 extension DeleteWallet {
-    static var demo = StoreOf<DeleteWallet>(
+    @MainActor static var demo = StoreOf<DeleteWallet>(
         initialState: .initial
     ) {
         DeleteWallet()
@@ -150,5 +150,5 @@ extension DeleteWallet {
 // MARK: - Placeholders
 
 extension DeleteWallet.State {
-    static let initial = DeleteWallet.State()
+    static var initial: DeleteWallet.State { DeleteWallet.State() }
 }

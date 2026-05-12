@@ -157,7 +157,7 @@ struct ResyncWalletView: View {
 // MARK: - Store
 
 extension ResyncWallet {
-    static var initial = StoreOf<ResyncWallet>(
+    @MainActor static var initial = StoreOf<ResyncWallet>(
         initialState: .initial
     ) {
         ResyncWallet()
@@ -167,5 +167,5 @@ extension ResyncWallet {
 // MARK: - Placeholders
 
 extension ResyncWallet.State {
-    static let initial = ResyncWallet.State()
+    static var initial: ResyncWallet.State { ResyncWallet.State() }
 }

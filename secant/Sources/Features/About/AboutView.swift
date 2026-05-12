@@ -87,7 +87,7 @@ struct AboutView: View {
 // MARK: Placeholders
 
 extension About.State {
-    static let initial = About.State()
+    static var initial: About.State { About.State() }
 }
 
 extension About {

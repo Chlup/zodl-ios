@@ -167,11 +167,11 @@ struct RestoreWalletCoordFlowView: View {
 // MARK: - Placeholders
 
 extension RestoreWalletCoordFlow.State {
-    static let initial = RestoreWalletCoordFlow.State()
+    static var initial: RestoreWalletCoordFlow.State { RestoreWalletCoordFlow.State() }
 }
 
 extension RestoreWalletCoordFlow {
-    static let placeholder = StoreOf<RestoreWalletCoordFlow>(
+    @MainActor static let placeholder = StoreOf<RestoreWalletCoordFlow>(
         initialState: .initial
     ) {
         RestoreWalletCoordFlow()

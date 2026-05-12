@@ -427,11 +427,11 @@ struct ReceiveView: View {
 // MARK: - Placeholders
 
 extension Receive.State {
-    static let initial = Receive.State()
+    static var initial: Receive.State { Receive.State() }
 }
 
 extension Receive {
-    static let placeholder = StoreOf<Receive>(
+    @MainActor static let placeholder = StoreOf<Receive>(
         initialState: .initial
     ) {
         Receive()

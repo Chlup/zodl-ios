@@ -352,11 +352,11 @@ struct ScanView_Previews: PreviewProvider {
 // MARK: Placeholders
 
 extension Scan.State {
-    static var initial = Scan.State()
+    static var initial: Scan.State { Scan.State() }
 }
 
 extension Scan {
-    static let placeholder = StoreOf<Scan>(
+    @MainActor static let placeholder = StoreOf<Scan>(
         initialState: .initial
     ) {
         Scan()

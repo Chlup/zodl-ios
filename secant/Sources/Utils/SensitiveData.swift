@@ -62,7 +62,7 @@ struct RedactableString: Equatable, Hashable, Redactable {
     
     init(_ data: String = "") { self.data = data }
     
-    static var empty = "".redacted
+    static let empty = "".redacted
 }
 
 /// Utility that converts a string to a redacted counterpart.

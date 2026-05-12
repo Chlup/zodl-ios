@@ -65,7 +65,9 @@ extension AddressBookClient: DependencyKey {
     }
 }
 
-private final class AddressBookImpl: Sendable {
+// TCA's `@Dependency` property wrapper synthesizes `var` storage but is itself thread-safe (task-local
+// dependency lookup on each access). Mutable contact cache is guarded by `OSAllocatedUnfairLock`.
+private final class AddressBookImpl: @unchecked Sendable {
     @Dependency(\.remoteStorage) var remoteStorage
     private let latestKnownContacts = OSAllocatedUnfairLock<AddressBookContacts?>(initialState: nil)
 

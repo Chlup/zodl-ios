@@ -320,7 +320,7 @@ extension CurrencyConversionSetupView {
 // MARK: - Store
 
 extension CurrencyConversionSetup {
-    static var initial = StoreOf<CurrencyConversionSetup>(
+    @MainActor static var initial = StoreOf<CurrencyConversionSetup>(
         initialState: .init(isSettingsView: false)
     ) {
         CurrencyConversionSetup()
@@ -330,5 +330,5 @@ extension CurrencyConversionSetup {
 // MARK: - Placeholders
 
 extension CurrencyConversionSetup.State {
-    static let initial = CurrencyConversionSetup.State()
+    static var initial: CurrencyConversionSetup.State { CurrencyConversionSetup.State() }
 }

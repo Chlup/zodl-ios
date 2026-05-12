@@ -177,7 +177,7 @@ extension SendFeedbackView {
 // MARK: - Store
 
 extension SendFeedback {
-    static var initial = StoreOf<SendFeedback>(
+    @MainActor static var initial = StoreOf<SendFeedback>(
         initialState: .initial
     ) {
         SendFeedback()
@@ -187,7 +187,7 @@ extension SendFeedback {
 // MARK: - Placeholders
 
 extension SendFeedback.State {
-    static let initial = SendFeedback.State()
+    static var initial: SendFeedback.State { SendFeedback.State() }
 }
 
 extension StoreOf<SendFeedback> {

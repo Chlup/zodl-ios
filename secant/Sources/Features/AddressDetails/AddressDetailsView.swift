@@ -178,11 +178,11 @@ extension AddressDetailsView {
 // MARK: - Placeholders
 
 extension AddressDetails.State {
-    static let initial = AddressDetails.State()
+    static var initial: AddressDetails.State { AddressDetails.State() }
 }
 
 extension AddressDetails {
-    static let placeholder = StoreOf<AddressDetails>(
+    @MainActor static let placeholder = StoreOf<AddressDetails>(
         initialState: .initial
     ) {
         AddressDetails()

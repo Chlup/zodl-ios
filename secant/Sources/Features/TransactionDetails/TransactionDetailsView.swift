@@ -843,7 +843,7 @@ extension TransactionDetailsView {
 // MARK: - Store
 
 extension TransactionDetails {
-    static var initial = StoreOf<TransactionDetails>(
+    @MainActor static var initial = StoreOf<TransactionDetails>(
         initialState: .initial
     ) {
         TransactionDetails()
@@ -853,5 +853,5 @@ extension TransactionDetails {
 // MARK: - Placeholders
 
 extension TransactionDetails.State {
-    static let initial = TransactionDetails.State(transaction: .placeholder())
+    static var initial: TransactionDetails.State { TransactionDetails.State(transaction: .placeholder()) }
 }

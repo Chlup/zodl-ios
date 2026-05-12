@@ -61,13 +61,10 @@ struct LogChangesReducer<Base: Reducer>: Reducer {
         guard let logger else {
             return self.base.reduce(into: &state, action: action)
         }
-        
+
         let oldState = state
         let effects = self.base.reduce(into: &state, action: action)
-        return effects.merge(
-            with: .run { [newState = state] _ in
-                logger.logChange(receivedAction: action, oldState: oldState, newState: newState)
-            }
-        )
+        logger.logChange(receivedAction: action, oldState: oldState, newState: state)
+        return effects
     }
 }

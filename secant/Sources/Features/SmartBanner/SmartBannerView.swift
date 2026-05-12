@@ -180,7 +180,7 @@ extension SmartBannerView {
 // MARK: - Store
 
 extension SmartBanner {
-    static var initial = StoreOf<SmartBanner>(
+    @MainActor static var initial = StoreOf<SmartBanner>(
         initialState: .initial
     ) {
         SmartBanner()
@@ -190,7 +190,7 @@ extension SmartBanner {
 // MARK: - Placeholders
 
 extension SmartBanner.State {
-    static let initial = SmartBanner.State()
+    static var initial: SmartBanner.State { SmartBanner.State() }
 }
 
 // MARK: - Helpers

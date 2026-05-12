@@ -8,6 +8,7 @@
 import SwiftUI
 
 extension Image {
+    @MainActor
     func zImage(
         width: CGFloat,
         height: CGFloat,
@@ -44,6 +45,7 @@ extension Image {
             .foregroundColor(color)
     }
     
+    @MainActor
     func zImage(
         size: CGFloat,
         style: Colorable

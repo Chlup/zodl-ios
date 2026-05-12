@@ -11,7 +11,9 @@ import Foundation
 import ComposableArchitecture
 @preconcurrency import ZcashLightClientKit
 
-@MainActor final class ExchangeRateProvider {
+// Thread-safety is managed manually: subscriptions run on Combine's emitting queue, timers and `eventStream.send`
+// are hopped onto the main queue. The compiler can't prove this, so we opt out of strict checking here.
+final class ExchangeRateProvider: @unchecked Sendable {
     enum Constants {
         static let cmcRateURL = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=ZEC&convert=USD"
         static let zecKey = "ZEC"

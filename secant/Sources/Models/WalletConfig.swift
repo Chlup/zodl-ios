@@ -32,7 +32,7 @@ struct WalletConfig: Equatable {
         return flags[featureFlag, default: false]
     }
 
-    static var initial: WalletConfig = {
+    static let initial: WalletConfig = {
         let defaultSettings = FeatureFlag.allCases
             .filter { $0 != .testFlag1 && $0 != .testFlag2 }
             .map { ($0, $0.enabledByDefault) }

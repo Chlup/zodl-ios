@@ -23,7 +23,10 @@ extension ShieldingProcessorClient: DependencyKey {
     }
 }
 
-private final class ShieldingProcessorImpl: Sendable {
+// TCA's `@Dependency` and `@Shared` property wrappers synthesize `var` storage but are themselves
+// thread-safe (task-local dependency lookup / shared-state machinery). The Combine `subject` is
+// reference-counted Sendable storage.
+private final class ShieldingProcessorImpl: @unchecked Sendable {
     @Dependency(\.derivationTool) var derivationTool
     @Dependency(\.mnemonic) var mnemonic
     @Dependency(\.sdkSynchronizer) var sdkSynchronizer

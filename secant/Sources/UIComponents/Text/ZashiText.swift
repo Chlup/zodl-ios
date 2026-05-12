@@ -68,7 +68,7 @@ enum ZashiTextAttribute: CodableAttributedStringKey, MarkdownDecodableAttributed
         case link
     }
     
-    static var name: String = "style"
+    static let name: String = "style"
 }
 
 extension AttributeScopes {

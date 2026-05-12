@@ -286,14 +286,13 @@ struct RecoveryPhraseDisplayView: View {
 // MARK: Placeholders
 
 extension RecoveryPhraseDisplay.State {
-    static let initial = RecoveryPhraseDisplay.State(
-        birthday: nil,
-        phrase: nil
-    )
+    static var initial: RecoveryPhraseDisplay.State {
+        RecoveryPhraseDisplay.State(birthday: nil, phrase: nil)
+    }
 }
 
 extension RecoveryPhraseDisplay {
-    static let placeholder = StoreOf<RecoveryPhraseDisplay>(
+    @MainActor static let placeholder = StoreOf<RecoveryPhraseDisplay>(
         initialState: .initial
     ) {
         RecoveryPhraseDisplay()

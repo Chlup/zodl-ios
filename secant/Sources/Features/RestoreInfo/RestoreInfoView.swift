@@ -134,7 +134,7 @@ struct RestoreInfoView: View {
 // MARK: - Store
 
 extension RestoreInfo {
-    static var initial = StoreOf<RestoreInfo>(
+    @MainActor static var initial = StoreOf<RestoreInfo>(
         initialState: .initial
     ) {
         RestoreInfo()
@@ -144,5 +144,5 @@ extension RestoreInfo {
 // MARK: - Placeholders
 
 extension RestoreInfo.State {
-    static let initial = RestoreInfo.State()
+    static var initial: RestoreInfo.State { RestoreInfo.State() }
 }

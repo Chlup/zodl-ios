@@ -15,7 +15,12 @@ enum LoggerConstants {
     static let walletLogs = "walletLogs"
 }
 
-var walletLogger: ZcashLightClientKit.Logger?
+private let walletLoggerLock = OSAllocatedUnfairLock<ZcashLightClientKit.Logger?>(initialState: nil)
+
+var walletLogger: ZcashLightClientKit.Logger? {
+    get { walletLoggerLock.withLock { $0 } }
+    set { walletLoggerLock.withLock { $0 = newValue } }
+}
 
 enum LoggerProxy {
     static func debug(_ message: String, file: StaticString = #file, function: StaticString = #function, line: Int = #line) {

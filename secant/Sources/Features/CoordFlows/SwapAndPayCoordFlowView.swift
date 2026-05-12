@@ -188,11 +188,11 @@ struct SwapAndPayCoordFlowView: View {
 // MARK: - Placeholders
 
 extension SwapAndPayCoordFlow.State {
-    static let initial = SwapAndPayCoordFlow.State()
+    static var initial: SwapAndPayCoordFlow.State { SwapAndPayCoordFlow.State() }
 }
 
 extension SwapAndPayCoordFlow {
-    static let placeholder = StoreOf<SwapAndPayCoordFlow>(
+    @MainActor static let placeholder = StoreOf<SwapAndPayCoordFlow>(
         initialState: .initial
     ) {
         SwapAndPayCoordFlow()

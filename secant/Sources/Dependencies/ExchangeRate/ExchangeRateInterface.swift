@@ -18,14 +18,14 @@ extension DependencyValues {
 }
 
 @DependencyClient
-struct ExchangeRateClient {
-    enum EchangeRateEvent: Equatable {
+struct ExchangeRateClient: Sendable {
+    enum EchangeRateEvent: Equatable, Sendable {
         case value(FiatCurrencyResult?)
         case refreshEnable(FiatCurrencyResult?)
         case stale(FiatCurrencyResult?)
     }
     
-    enum RateSource: Equatable {
+    enum RateSource: Equatable, Sendable {
         case coinMarketCap
         case sdk
     }

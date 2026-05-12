@@ -10,7 +10,7 @@ import SwiftUI
 struct ExchangeRateFeaturePreferenceKey: PreferenceKey {
     typealias Value = Anchor<CGRect>?
 
-    static var defaultValue: Value = nil
+    static let defaultValue: Value = nil
 
     static func reduce(
         value: inout Value,

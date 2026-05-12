@@ -174,11 +174,11 @@ struct ZecKeyboardView: View {
 // MARK: - Placeholders
 
 extension ZecKeyboard.State {
-    static let initial = ZecKeyboard.State()
+    static var initial: ZecKeyboard.State { ZecKeyboard.State() }
 }
 
 extension ZecKeyboard {
-    static let placeholder = StoreOf<ZecKeyboard>(
+    @MainActor static let placeholder = StoreOf<ZecKeyboard>(
         initialState: .initial
     ) {
         ZecKeyboard()

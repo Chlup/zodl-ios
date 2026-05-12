@@ -64,7 +64,7 @@ struct DeeplinkWarningView: View {
 // MARK: - Store
 
 extension DeeplinkWarning {
-    static var initial = StoreOf<DeeplinkWarning>(
+    @MainActor static var initial = StoreOf<DeeplinkWarning>(
         initialState: .initial
     ) {
         DeeplinkWarning()
@@ -74,5 +74,5 @@ extension DeeplinkWarning {
 // MARK: - Placeholders
 
 extension DeeplinkWarning.State {
-    static let initial = DeeplinkWarning.State()
+    static var initial: DeeplinkWarning.State { DeeplinkWarning.State() }
 }

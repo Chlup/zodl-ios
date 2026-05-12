@@ -111,14 +111,13 @@ private extension OSStatusErrorView {
 // MARK: Placeholders
 
 extension OSStatusError.State {
-    static let initial = OSStatusError.State(
-        message: "",
-        osStatus: errSecSuccess
-    )
+    static var initial: OSStatusError.State {
+        OSStatusError.State(message: "", osStatus: errSecSuccess)
+    }
 }
 
 extension OSStatusError {
-    static let placeholder = StoreOf<OSStatusError>(
+    @MainActor static let placeholder = StoreOf<OSStatusError>(
         initialState: .initial
     ) {
         OSStatusError()

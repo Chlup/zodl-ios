@@ -66,11 +66,11 @@ struct TransactionsCoordFlowView: View {
 // MARK: - Placeholders
 
 extension TransactionsCoordFlow.State {
-    static let initial = TransactionsCoordFlow.State()
+    static var initial: TransactionsCoordFlow.State { TransactionsCoordFlow.State() }
 }
 
 extension TransactionsCoordFlow {
-    static let placeholder = StoreOf<TransactionsCoordFlow>(
+    @MainActor static let placeholder = StoreOf<TransactionsCoordFlow>(
         initialState: .initial
     ) {
         TransactionsCoordFlow()

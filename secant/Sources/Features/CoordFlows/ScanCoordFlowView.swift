@@ -75,11 +75,11 @@ struct ScanCoordFlowView: View {
 // MARK: - Placeholders
 
 extension ScanCoordFlow.State {
-    static let initial = ScanCoordFlow.State()
+    static var initial: ScanCoordFlow.State { ScanCoordFlow.State() }
 }
 
 extension ScanCoordFlow {
-    static let placeholder = StoreOf<ScanCoordFlow>(
+    @MainActor static let placeholder = StoreOf<ScanCoordFlow>(
         initialState: .initial
     ) {
         ScanCoordFlow()

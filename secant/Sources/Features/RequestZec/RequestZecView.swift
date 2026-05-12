@@ -121,11 +121,11 @@ struct RequestZecView: View {
 // MARK: - Placeholders
 
 extension RequestZec.State {
-    static let initial = RequestZec.State()
+    static var initial: RequestZec.State { RequestZec.State() }
 }
 
 extension RequestZec {
-    static let placeholder = StoreOf<RequestZec>(
+    @MainActor static let placeholder = StoreOf<RequestZec>(
         initialState: .initial
     ) {
         RequestZec()
