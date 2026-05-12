@@ -9358,10 +9358,10 @@
 /* Begin XCRemoteSwiftPackageReference section */
 		9E4841512F869F5E00D0649B /* XCRemoteSwiftPackageReference "zcash-swift-wallet-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/valargroup/zcash-swift-wallet-sdk.git";
+			repositoryURL = "https://github.com/zcash/zcash-swift-wallet-sdk.git";
 			requirement = {
 				kind = revision;
-				revision = f4ef4f5e0af9165ac59c3591212364157f54eafc;
+				revision = b3675ba9ecadd2b777f21d8b770e88cba294d26e;
 			};
 		};
 		34AA77122F857DA300D244E2 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
