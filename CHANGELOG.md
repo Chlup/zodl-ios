@@ -19,6 +19,11 @@ directly impact users rather than highlighting other crucial architectural updat
 ### Fixed
 - We fixed a few UX/UI issues, including a stuck Wallet Birthday Height entry screen and Address Book entries not appearing until the panel was reloaded.
 
+## 3.3.1 build 1 (2026-05-06)
+
+### Fixed
+- We fixed a crash in the Swap/Pay flow.
+
 ## 3.3.0 build 2 (2026-04-07)
 
 ### Added

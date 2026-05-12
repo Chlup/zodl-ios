@@ -219,7 +219,7 @@ extension Near1Click {
                     decimals: decimals
                 )
             }
-
+            
             return IdentifiedArrayOf(uniqueElements: chainAssets.removingDuplicates())
         },
         quote: { dry, isSwapToZec, exactInput, slippageTolerance, zecAsset, toAsset, refundTo, destination, amount in
