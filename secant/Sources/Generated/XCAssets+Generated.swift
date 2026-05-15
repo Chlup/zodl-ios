@@ -235,6 +235,7 @@ public enum Asset {
       public static let calendar = ImageAsset(name: "calendar")
       public static let chainLink = ImageAsset(name: "chainLink")
       public static let checkSolid = ImageAsset(name: "checkSolid")
+      public static let checkVerified = ImageAsset(name: "checkVerified")
       public static let coinsHand = ImageAsset(name: "coinsHand")
       public static let coinsSwap = ImageAsset(name: "coinsSwap")
       public static let connectWallet = ImageAsset(name: "connectWallet")
