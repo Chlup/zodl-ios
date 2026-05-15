@@ -522,8 +522,8 @@ extension ProposalListView {
             }
 
             return CTAButtonSpec(
-                label: String(localizable: .coinVoteProposalListCtaReviewSubmit),
-                action: { store.send(.navigateToReview) },
+                label: String(localizable: .coinVoteProposalListCtaConfirmSubmit),
+                action: { store.send(.navigateToConfirmation) },
                 disabled: false
             )
         }

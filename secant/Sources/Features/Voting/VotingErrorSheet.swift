@@ -16,6 +16,15 @@ struct VotingSheetContent: View {
     enum VisualStyle {
         case standard
         case unverifiedWarning
+
+        var horizontalPadding: CGFloat {
+            switch self {
+            case .standard:
+                return Design.Spacing._3xl
+            case .unverifiedWarning:
+                return 0
+            }
+        }
     }
 
     struct ButtonConfig {
@@ -251,7 +260,7 @@ extension View {
     ) -> some View {
         zashiSheet(
             isPresented: isPresented,
-            horizontalPadding: visualStyle == .unverifiedWarning ? 0 : Design.Spacing._3xl,
+            horizontalPadding: visualStyle.horizontalPadding,
             onDismiss: onDismiss
         ) {
             VotingSheetContent(
@@ -269,6 +278,7 @@ extension View {
 
 private struct VotingBlockingSheetModifier<SheetContent: View>: ViewModifier {
     let isActive: () -> Bool
+    let visualStyle: VotingSheetContent.VisualStyle
     let onExit: () -> Void
     let sheetContent: (_ dismissAndExit: @escaping () -> Void) -> SheetContent
 
@@ -277,7 +287,11 @@ private struct VotingBlockingSheetModifier<SheetContent: View>: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .zashiSheet(isPresented: sheetBinding, onDismiss: exitIfNeeded) {
+            .zashiSheet(
+                isPresented: sheetBinding,
+                horizontalPadding: visualStyle.horizontalPadding,
+                onDismiss: exitIfNeeded
+            ) {
                 sheetContent(dismissSheetAndExit)
             }
     }
@@ -311,12 +325,14 @@ extension View {
     /// the sheet dismiss animation finishes.
     func votingBlockingSheet<SheetContent: View>(
         isActive: @escaping () -> Bool,
+        visualStyle: VotingSheetContent.VisualStyle = .standard,
         onExit: @escaping () -> Void,
         @ViewBuilder content: @escaping (_ dismissAndExit: @escaping () -> Void) -> SheetContent
     ) -> some View {
         modifier(
             VotingBlockingSheetModifier(
                 isActive: isActive,
+                visualStyle: visualStyle,
                 onExit: onExit,
                 sheetContent: content
             )

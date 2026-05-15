@@ -800,7 +800,6 @@ struct Voting {
         case backToList
         case nextProposalDetail
         case previousProposalDetail
-        case navigateToReview
         case confirmUnanswered
         case dismissUnanswered
         case navigateToConfirmation
@@ -989,7 +988,6 @@ struct Voting {
                 .backToList,
                 .nextProposalDetail,
                 .previousProposalDetail,
-                .navigateToReview,
                 .confirmUnanswered,
                 .dismissUnanswered,
                 .navigateToConfirmation,

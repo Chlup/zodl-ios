@@ -541,9 +541,9 @@ extension Voting {
 
             if isLast {
                 if state.allDrafted {
-                    // All answered -> review
+                    // All answered -> final confirmation.
                     state.screenStack.removeLast()
-                    state.screenStack.append(.reviewVotes)
+                    state.screenStack.append(.confirmSubmission)
                 }
                 // If unanswered -> .none; view handles sheet display
             } else {
@@ -554,17 +554,13 @@ extension Voting {
             }
             return .none
 
-        case .navigateToReview:
-            state.screenStack.append(.reviewVotes)
-            return .none
-
         case .navigateToConfirmation:
             state.screenStack.append(.confirmSubmission)
             return .none
 
         case .confirmUnanswered:
             guard state.voteRecord == nil else { return .none }
-            // Auto-draft Abstain for every unanswered proposal, then go to review.
+            // Auto-draft Abstain for every unanswered proposal, then go to final confirmation.
             for proposal in state.votingRound.proposals
                 where state.draftVotes[proposal.id] == nil && state.votes[proposal.id] == nil {
                 let abstainIndex: UInt32
@@ -579,7 +575,7 @@ extension Voting {
             }
             Self.persistDrafts(state.draftVotes, walletId: state.walletId, roundId: state.roundId)
             state.screenStack.removeLast()
-            state.screenStack.append(.reviewVotes)
+            state.screenStack.append(.confirmSubmission)
             return .none
 
         case .dismissUnanswered:

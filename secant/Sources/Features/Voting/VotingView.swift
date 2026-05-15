@@ -190,6 +190,7 @@ struct NoRoundsView: View {
             VotingBlockingBackdrop(store: store)
                 .votingBlockingSheet(
                     isActive: { store.currentScreen == .noRounds },
+                    visualStyle: .unverifiedWarning,
                     onExit: { store.send(.dismissFlow) }
                 ) { dismiss in
                     VotingSheetContent(

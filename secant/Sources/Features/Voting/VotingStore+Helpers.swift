@@ -210,7 +210,7 @@ extension AlertState where Action == Voting.Action {
                 TextState(String(localizable: .coinVoteDelegationSigningSkipAlertPrimary))
             }
             ButtonState(role: .cancel, action: .skipBundlesAlert(.dismiss)) {
-                TextState(String(localizable: .coinVoteCommonCancel))
+                TextState(String(localizable: .coinVoteDelegationSigningSkipAlertCancel))
             }
         } message: {
             TextState(String(localizable: .coinVoteDelegationSigningSkipAlertMessage(lockedIn, givingUp)))

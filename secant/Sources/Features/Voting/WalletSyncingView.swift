@@ -9,6 +9,7 @@ struct WalletSyncingView: View {
             VotingBlockingBackdrop(store: store)
                 .votingBlockingSheet(
                     isActive: { store.currentScreen == .walletSyncing },
+                    visualStyle: .unverifiedWarning,
                     onExit: { store.send(.dismissFlow) }
                 ) { dismiss in
                     VotingSheetContent(

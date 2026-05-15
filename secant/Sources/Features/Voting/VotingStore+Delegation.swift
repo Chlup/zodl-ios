@@ -324,6 +324,7 @@ extension Voting {
             state.pendingVotingPczt = nil
             state.pendingUnsignedDelegationPczt = nil
             state.keystoneSigningStatus = .idle
+            state.currentKeystoneBundleIndex = 0
             state.keystoneBundleSignatures = []
             state.isDelegationProofInFlight = false
             // Cancel any pending submission that triggered delegation.
@@ -332,9 +333,12 @@ extension Voting {
             // Pop the delegation signing screen back to proposals.
             if state.screenStack.last == .delegationSigning {
                 state.screenStack.removeLast()
-                return .none
+                return .cancel(id: cancelDelegationProofId)
             }
-            return .send(.dismissFlow)
+            return .merge(
+                .cancel(id: cancelDelegationProofId),
+                .send(.dismissFlow)
+            )
 
         case .retryKeystoneSigning:
             state.pendingVotingPczt = nil
