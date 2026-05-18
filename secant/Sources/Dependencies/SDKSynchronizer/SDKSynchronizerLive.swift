@@ -79,7 +79,8 @@ extension SDKSynchronizerClient: DependencyKey {
                     zip32AccountIndex: zip32AccountIndex,
                     purpose: purpose,
                     name: name,
-                    keySource: keySource
+                    keySource: keySource,
+                    birthday: birthday
                 )
             },
             deleteAccount: { accountUUID in
