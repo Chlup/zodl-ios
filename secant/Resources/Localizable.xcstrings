@@ -11231,13 +11231,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Transparent Balance Detected"
+            "value" : "Unshielded Balance"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Saldo Transparente Detectado"
+            "value" : "Saldo No Protegido"
           }
         }
       }
