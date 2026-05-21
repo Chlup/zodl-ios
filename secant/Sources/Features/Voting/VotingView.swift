@@ -214,7 +214,8 @@ struct NoRoundsView: View {
 // MARK: - Placeholders
 
 extension Voting.State {
-    static let initial = Voting.State()
+    // @MainActor-isolated: only consumed by SwiftUI previews and StoreOf<Voting>.placeholder, both MainActor-bound.
+    @MainActor static let initial = Voting.State()
 }
 
 extension StoreOf<Voting> {

@@ -3,7 +3,9 @@
 //  Zashi
 //
 
-import BackgroundTasks
+// @preconcurrency: BGContinuedProcessingTask is an Apple framework class (BackgroundTasks)
+// not yet annotated Sendable. The compiler itself recommends this import in its hint.
+@preconcurrency import BackgroundTasks
 import ComposableArchitecture
 import UIKit
 import os
@@ -30,8 +32,10 @@ private final class ContinuedProcessingState: Sendable {
 
 extension BackgroundTaskClient: DependencyKey {
     static let liveValue: Self = {
-        // iOS 26 continued processing state (lazy, only allocated on iOS 26+)
-        let cpState: Any? = {
+        // iOS 26 continued processing state (lazy, only allocated on iOS 26+).
+        // Typed as `(any Sendable)?` rather than `Any?` so it can be captured by the
+        // @Sendable closures below; ContinuedProcessingState is declared Sendable.
+        let cpState: (any Sendable)? = {
             if #available(iOS 26.0, *) { return ContinuedProcessingState() }
             return nil
         }()

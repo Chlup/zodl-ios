@@ -12,7 +12,7 @@ private func formatWeightZEC(_ weight: UInt64) -> String {
     return String(format: "%.3f", zec)
 }
 
-private func zodlTrustIndicator(colorScheme: ColorScheme) -> some View {
+@MainActor private func zodlTrustIndicator(colorScheme: ColorScheme) -> some View {
     let logoSize: CGFloat = 16
     let backdropSize = logoSize + 8
     let zodlTextColor = colorScheme == .light ? Color.black : Design.Text.primary.color(colorScheme)

@@ -11,7 +11,8 @@ extension VotingCryptoClient: DependencyKey {
         let stateSubject = CurrentValueSubject<VotingDbState, Never>(.initial)
 
         /// Query rounds + votes tables and publish combined state.
-        func publishState(backend: VotingRustBackend, roundId: String) {
+        // @Sendable: captured by Task.detached closures; only touches Sendable stateSubject and parameters.
+        @Sendable func publishState(backend: VotingRustBackend, roundId: String) {
             guard let roundState = try? backend.getRoundState(roundId: roundId) else { return }
             let votes = (try? backend.getVotes(roundId: roundId)) ?? []
             let bundleCount = (try? backend.getBundleCount(roundId: roundId)) ?? 0
